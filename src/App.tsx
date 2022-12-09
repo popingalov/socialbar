@@ -1,18 +1,12 @@
 import React, { useId, Suspense } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import styled, { createGlobalStyle } from 'styled-components';
+
 import NavigationBar from './Components/NavigationBar';
-const Global = createGlobalStyle`
-* {
-       margin:0;
-       padding:0;
-       box-sizing:border-box;
-       }`;
 
 function App() {
   return (
     <>
-      <Global />
       <NavigationBar />
       <Suspense fallback={<p>Крутий спінер</p>}>
         <Routes>
