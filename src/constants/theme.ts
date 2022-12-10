@@ -31,16 +31,16 @@ declare module 'styled-components' {
 
 export const theme: DefaultTheme = {
   colors: {
-    lightText: '#ebebeb',
-    mainText: '#333333',
-    secondaryText: '#757575',
-    accent: '#2B7A78',
-    secondaryAccent: '#17252A',
-    accentBackgroundColor: '#3AAFA9',
-    mainBackgroundColor: '#f5f4fa',
-    secondaryBackgroundColor: '#cdf7f5',
-    backdropColor: ' rgba(0, 0, 0, 0.5)',
-    inputError: ' rgba(142, 22, 0, 0.08)',
+    lightText: '#ebebeb', // white text color on blue bg
+    mainText: '#333333', // main dark black color
+    secondaryText: '#757575', // lighter grey text color
+    accent: '#2B7A78', // dark green-blue color -- for hover
+    secondaryAccent: '#17252A', // the most dark -- additional color / just in case
+    accentBackgroundColor: '#3AAFA9', // header-navigation color
+    mainBackgroundColor: '#f5f4fa', // very light white color
+    secondaryBackgroundColor: '#cdf7f5', // very light blue color
+    backdropColor: ' rgba(0, 0, 0, 0.5)', // backdrop grey shadow color
+    inputError: ' rgba(142, 22, 0, 0.08)', // red input error color
   },
 
   space: [0, 4, 8, 16, 32, 64, 128, 256, 512],

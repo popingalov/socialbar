@@ -33,6 +33,7 @@ export const Link = styled(NavLink)`
   }
 
   &.active {
-    border-color: ${p => p.theme.colors.accent};
+    /* color: ${p => p.theme.colors.accent}; */
+    border-bottom: 3px solid ${p => p.theme.colors.accent};
   }
 `;
