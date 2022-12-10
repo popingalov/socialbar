@@ -1,106 +1,119 @@
 import React, { Suspense } from 'react';
 import { Routes, Route } from 'react-router-dom';
+import { Loader } from 'Components/loader/Loader';
+import {
+  useTakeIngredientsQuery,
+  useTakeCocktailsQuery,
+} from '../../redux/apis/operation';
 import { GlobalStyle } from './App.styled';
-import { Loader } from 'Components/Loader/Loader';
 
 const AllCocktails: React.FC = React.lazy(() =>
-  import('Components/AllCocktails/AllCocktails').then(module => ({
+  import('Components/allCocktails/AllCocktails').then(module => ({
     default: module.AllCocktails,
   })),
 );
 const Cocktails: React.FC = React.lazy(() =>
-  import('pages/Cocktails/Cocktails').then(module => ({
+  import('pages/cocktails/Cocktails').then(module => ({
     default: module.Cocktails,
   })),
 );
 const CocktailsDetails: React.FC = React.lazy(() =>
-  import('pages/CocktailsDetails/CocktailsDetails').then(module => ({
+  import('pages/cocktailsDetails/CocktailsDetails').then(module => ({
     default: module.CocktailsDetails,
   })),
 );
 const FavoriteCocktails: React.FC = React.lazy(() =>
-  import('Components/FavoriteCocktails/FavoriteCocktails').then(module => ({
+  import('Components/favoriteCocktails/FavoriteCocktails').then(module => ({
     default: module.FavoriteCocktails,
   })),
 );
 const Home: React.FC = React.lazy(() =>
-  import('pages/Home/Home').then(module => ({
+  import('pages/home/Home').then(module => ({
     default: module.Home,
   })),
 );
 const IngredientDetails: React.FC = React.lazy(() =>
-  import('pages/IngredientDetails/IngredientDetails').then(module => ({
+  import('pages/ingredientDetails/IngredientDetails').then(module => ({
     default: module.IngredientDetails,
   })),
 );
 const Ingredients: React.FC = React.lazy(() =>
-  import('pages/Ingredients/Ingredients').then(module => ({
+  import('pages/ingredients/Ingredients').then(module => ({
     default: module.Ingredients,
   })),
 );
-const Layout: React.FC = React.lazy(() =>
-  import('Components/Layout/Layout').then(module => ({
-    default: module.Layout,
+const MainLayout: React.FC = React.lazy(() =>
+  import('Components/mainLayout/MainLayout').then(module => ({
+    default: module.MainLayout,
   })),
 );
 const ManageBarShelf: React.FC = React.lazy(() =>
-  import('Components/ManageBarShelf/ManageBarShelf').then(module => ({
+  import('Components/manageBarShelf/ManageBarShelf').then(module => ({
     default: module.ManageBarShelf,
   })),
 );
 const MyBarShelf: React.FC = React.lazy(() =>
-  import('Components/MyBarShelf/MyBarShelf').then(module => ({
+  import('Components/myBarShelf/MyBarShelf').then(module => ({
     default: module.MyBarShelf,
   })),
 );
 const MyCocktails: React.FC = React.lazy(() =>
-  import('Components/MyCocktails/MyCocktails').then(module => ({
+  import('Components/myCocktails/MyCocktails').then(module => ({
     default: module.MyCocktails,
   })),
 );
 const Settings: React.FC = React.lazy(() =>
-  import('pages/Settings/Settings').then(module => ({
+  import('pages/settings/Settings').then(module => ({
     default: module.Settings,
   })),
 );
 const ShoppingList: React.FC = React.lazy(() =>
-  import('Components/ShoppingList/ShoppingList').then(module => ({
+  import('Components/shoppingList/ShoppingList').then(module => ({
     default: module.ShoppingList,
+  })),
+);
+const ShortLayout: React.FC = React.lazy(() =>
+  import('Components/shortLayout/ShortLayout').then(module => ({
+    default: module.ShortLayout,
   })),
 );
 
 function App() {
+  const { data: ing } = useTakeIngredientsQuery('');
+  const { data: coc, isLoading, isFetching } = useTakeCocktailsQuery('');
+
   return (
     <>
       <GlobalStyle />
       <Suspense fallback={<Loader />}>
         <Routes>
-          <Route path="/" element={<Layout />}>
+          <Route path="/" element={<MainLayout />}>
             <Route index element={<Home />} />
 
-            <Route path="ingredients" element={<Ingredients />}>
-              <Route index element={<MyBarShelf />} />
-              <Route path="myBarShelf" element={<MyBarShelf />} />
-              <Route path="manageBarShelf" element={<ManageBarShelf />} />
-              <Route path="shoppingList" element={<ShoppingList />} />
-            </Route>
-            <Route
-              path="ingredients/:ingredientId"
-              element={<IngredientDetails />}
-            />
-
             <Route path="cocktails" element={<Cocktails />}>
-              <Route index element={<MyCocktails />} />
-              <Route path="myCocktails" element={<MyCocktails />} />
-              <Route path="allCocktails" element={<AllCocktails />} />
-              <Route path="favoriteCocktails" element={<FavoriteCocktails />} />
+              <Route path="my" element={<MyCocktails />} />
+              <Route path="all" element={<AllCocktails />} />
+              <Route path="favorite" element={<FavoriteCocktails />} />
             </Route>
+
+            <Route path="ingredients" element={<Ingredients />}>
+              <Route path="my" element={<MyBarShelf />} />
+              <Route path="shelf" element={<ManageBarShelf />} />
+              <Route path="shopping" element={<ShoppingList />} />
+            </Route>
+          </Route>
+
+          <Route path="/" element={<ShortLayout />}>
             <Route
               path="cocktails/:cocktailId"
               element={<CocktailsDetails />}
             />
+            <Route
+              path="ingredients/:ingredientId"
+              element={<IngredientDetails />}
+            />
+            <Route path="settings" element={<Settings />} />
           </Route>
-          <Route path="settings" element={<Settings />} />
         </Routes>
       </Suspense>
     </>

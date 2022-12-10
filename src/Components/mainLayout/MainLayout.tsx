@@ -1,10 +1,10 @@
 import { Suspense } from 'react';
 import { Outlet } from 'react-router-dom';
-import { AppBar } from '../AppBar/AppBar';
-import { Box } from 'Components/Box/Box';
-import { Loader } from '../Loader/Loader';
+import { AppBar } from '../appBar/AppBar';
+import { Box } from 'Components/box/Box';
+import { Loader } from '../loader/Loader';
 
-export const Layout = () => {
+export const MainLayout = () => {
   return (
     <>
       <AppBar />

@@ -5,9 +5,9 @@ import { Provider } from 'react-redux';
 import store from 'redux/store';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import { ThemeProvider } from 'styled-components';
-import App from 'Components/App/App';
 import { theme } from 'constants/theme';
 import './index.css';
+import App from 'Components/app/App';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,

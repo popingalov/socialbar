@@ -10,13 +10,13 @@ export const mainNavItems: INavLink[] = [
 ];
 
 export const ingredientsNavItems: INavLink[] = [
-  { href: 'myBarShelf', label: 'My Bar Shelf' },
-  { href: 'manageBarShelf', label: 'Manage Bar Shelf' },
-  { href: 'shoppingList', label: 'Shopping List' },
+  { href: 'my', label: 'My Bar Shelf' },
+  { href: 'shelf', label: 'Manage Bar Shelf' },
+  { href: 'shopping', label: 'Shopping List' },
 ];
 
 export const cocktailsNavItems: INavLink[] = [
-  { href: 'myCocktails', label: 'My Cocktails' },
-  { href: 'allCocktails', label: 'All Cocktails' },
-  { href: 'favoriteCocktails', label: 'Favorite Cocktails' },
+  { href: 'my', label: 'My Cocktails' },
+  { href: 'all', label: 'All Cocktails' },
+  { href: 'favorite', label: 'Favorite Cocktails' },
 ];

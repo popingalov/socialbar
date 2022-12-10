@@ -1,0 +1,864 @@
+{
+  "ingredients": [
+    { "name": "Absent", "des": "Very strong alco be careful", "type": "Hard" },
+    {
+      "name": "Apple juice",
+      "des": "Very strong juice be careful",
+      "type": "juice"
+    },
+    {
+      "name": "Water",
+      "des": "Very strong water be careful",
+      "type": "water"
+    },
+    {
+      "name": "Bear",
+      "des": "Very strong bear be careful",
+      "type": "Normal"
+    },
+    {
+      "name": "basil",
+      "des": "Very strong basil be careful",
+      "type": "Other"
+    },
+    {
+      "name": "Banana",
+      "des": "Very strong Banana be careful",
+      "type": "fruits"
+    },
+    { "name": "Absent", "des": "Very strong alco be careful", "type": "Hard" },
+    {
+      "name": "Apple juice",
+      "des": "Very strong juice be careful",
+      "type": "juice"
+    },
+    {
+      "name": "Water",
+      "des": "Very strong water be careful",
+      "type": "water"
+    },
+    {
+      "name": "Bear",
+      "des": "Very strong bear be careful",
+      "type": "Normal"
+    },
+    {
+      "name": "basil",
+      "des": "Very strong basil be careful",
+      "type": "Other"
+    },
+    {
+      "name": "Banana",
+      "des": "Very strong Banana be careful",
+      "type": "fruits"
+    },
+    { "name": "Absent", "des": "Very strong alco be careful", "type": "Hard" },
+    {
+      "name": "Apple juice",
+      "des": "Very strong juice be careful",
+      "type": "juice"
+    },
+    {
+      "name": "Water",
+      "des": "Very strong water be careful",
+      "type": "water"
+    },
+    {
+      "name": "Bear",
+      "des": "Very strong bear be careful",
+      "type": "Normal"
+    },
+    {
+      "name": "basil",
+      "des": "Very strong basil be careful",
+      "type": "Other"
+    },
+    {
+      "name": "Banana",
+      "des": "Very strong Banana be careful",
+      "type": "fruits"
+    },
+    { "name": "Absent", "des": "Very strong alco be careful", "type": "Hard" },
+    {
+      "name": "Apple juice",
+      "des": "Very strong juice be careful",
+      "type": "juice"
+    },
+    {
+      "name": "Water",
+      "des": "Very strong water be careful",
+      "type": "water"
+    },
+    {
+      "name": "Bear",
+      "des": "Very strong bear be careful",
+      "type": "Normal"
+    },
+    {
+      "name": "basil",
+      "des": "Very strong basil be careful",
+      "type": "Other"
+    },
+    {
+      "name": "Banana",
+      "des": "Very strong Banana be careful",
+      "type": "fruits"
+    },
+    { "name": "Absent", "des": "Very strong alco be careful", "type": "Hard" },
+    {
+      "name": "Apple juice",
+      "des": "Very strong juice be careful",
+      "type": "juice"
+    },
+    {
+      "name": "Water",
+      "des": "Very strong water be careful",
+      "type": "water"
+    },
+    {
+      "name": "Bear",
+      "des": "Very strong bear be careful",
+      "type": "Normal"
+    },
+    {
+      "name": "basil",
+      "des": "Very strong basil be careful",
+      "type": "Other"
+    },
+    {
+      "name": "Banana",
+      "des": "Very strong Banana be careful",
+      "type": "fruits"
+    },
+    { "name": "Absent", "des": "Very strong alco be careful", "type": "Hard" },
+    {
+      "name": "Apple juice",
+      "des": "Very strong juice be careful",
+      "type": "juice"
+    },
+    {
+      "name": "Water",
+      "des": "Very strong water be careful",
+      "type": "water"
+    },
+    {
+      "name": "Bear",
+      "des": "Very strong bear be careful",
+      "type": "Normal"
+    },
+    {
+      "name": "basil",
+      "des": "Very strong basil be careful",
+      "type": "Other"
+    },
+    {
+      "name": "Banana",
+      "des": "Very strong Banana be careful",
+      "type": "fruits"
+    },
+    { "name": "Absent", "des": "Very strong alco be careful", "type": "Hard" },
+    {
+      "name": "Apple juice",
+      "des": "Very strong juice be careful",
+      "type": "juice"
+    },
+    {
+      "name": "Water",
+      "des": "Very strong water be careful",
+      "type": "water"
+    },
+    {
+      "name": "Bear",
+      "des": "Very strong bear be careful",
+      "type": "Normal"
+    },
+    {
+      "name": "basil",
+      "des": "Very strong basil be careful",
+      "type": "Other"
+    },
+    {
+      "name": "Banana",
+      "des": "Very strong Banana be careful",
+      "type": "fruits"
+    },
+    { "name": "Absent", "des": "Very strong alco be careful", "type": "Hard" },
+    {
+      "name": "Apple juice",
+      "des": "Very strong juice be careful",
+      "type": "juice"
+    },
+    {
+      "name": "Water",
+      "des": "Very strong water be careful",
+      "type": "water"
+    },
+    {
+      "name": "Bear",
+      "des": "Very strong bear be careful",
+      "type": "Normal"
+    },
+    {
+      "name": "basil",
+      "des": "Very strong basil be careful",
+      "type": "Other"
+    },
+    {
+      "name": "Banana",
+      "des": "Very strong Banana be careful",
+      "type": "fruits"
+    },
+    { "name": "Absent", "des": "Very strong alco be careful", "type": "Hard" },
+    {
+      "name": "Apple juice",
+      "des": "Very strong juice be careful",
+      "type": "juice"
+    },
+    {
+      "name": "Water",
+      "des": "Very strong water be careful",
+      "type": "water"
+    },
+    {
+      "name": "Bear",
+      "des": "Very strong bear be careful",
+      "type": "Normal"
+    },
+    {
+      "name": "basil",
+      "des": "Very strong basil be careful",
+      "type": "Other"
+    },
+    {
+      "name": "Banana",
+      "des": "Very strong Banana be careful",
+      "type": "fruits"
+    },
+    { "name": "Absent", "des": "Very strong alco be careful", "type": "Hard" },
+    {
+      "name": "Apple juice",
+      "des": "Very strong juice be careful",
+      "type": "juice"
+    },
+    {
+      "name": "Water",
+      "des": "Very strong water be careful",
+      "type": "water"
+    },
+    {
+      "name": "Bear",
+      "des": "Very strong bear be careful",
+      "type": "Normal"
+    },
+    {
+      "name": "basil",
+      "des": "Very strong basil be careful",
+      "type": "Other"
+    },
+    {
+      "name": "Banana",
+      "des": "Very strong Banana be careful",
+      "type": "fruits"
+    },
+    { "name": "Absent", "des": "Very strong alco be careful", "type": "Hard" },
+    {
+      "name": "Apple juice",
+      "des": "Very strong juice be careful",
+      "type": "juice"
+    },
+    {
+      "name": "Water",
+      "des": "Very strong water be careful",
+      "type": "water"
+    },
+    {
+      "name": "Bear",
+      "des": "Very strong bear be careful",
+      "type": "Normal"
+    },
+    {
+      "name": "basil",
+      "des": "Very strong basil be careful",
+      "type": "Other"
+    },
+    {
+      "name": "Banana",
+      "des": "Very strong Banana be careful",
+      "type": "fruits"
+    },
+    { "name": "Absent", "des": "Very strong alco be careful", "type": "Hard" },
+    {
+      "name": "Apple juice",
+      "des": "Very strong juice be careful",
+      "type": "juice"
+    },
+    {
+      "name": "Water",
+      "des": "Very strong water be careful",
+      "type": "water"
+    },
+    {
+      "name": "Bear",
+      "des": "Very strong bear be careful",
+      "type": "Normal"
+    },
+    {
+      "name": "basil",
+      "des": "Very strong basil be careful",
+      "type": "Other"
+    },
+    {
+      "name": "Banana",
+      "des": "Very strong Banana be careful",
+      "type": "fruits"
+    }
+  ],
+  "cocktail": [
+    {
+      "name": "b-52",
+      "des": "Very strong b-52 be careful",
+      "recipe": [
+        "do something",
+        "do something, twice",
+        "And more",
+        "MB stop??",
+        "Ok, now you cant drink"
+      ],
+      "type": ["shot", "strong"],
+      "ingredients": ["banana", "basil", "Water", "Absent"]
+    },
+    {
+      "name": "b-152",
+      "des": "Very strong b-52 be careful",
+      "recipe": [
+        "do something",
+        "do something, twice",
+        "And more",
+        "MB stop??",
+        "Ok, now you cant drink"
+      ],
+      "type": ["long"],
+      "ingredients": ["banana", "basil", "Water", "Absent"]
+    },
+    {
+      "name": "Bambo",
+      "des": "Very strong b-52 be careful",
+      "recipe": [
+        "do something",
+        "do something, twice",
+        "And more",
+        "MB stop??",
+        "Ok, now you cant drink"
+      ],
+      "type": ["strong"],
+      "ingredients": ["banana", "basil", "Water", "Absent"]
+    },
+    {
+      "name": "b-52",
+      "des": "Very strong b-52 be careful",
+      "recipe": [
+        "do something",
+        "do something, twice",
+        "And more",
+        "MB stop??",
+        "Ok, now you cant drink"
+      ],
+      "type": ["shot", "strong"],
+      "ingredients": ["banana", "basil", "Water", "Absent"]
+    },
+    {
+      "name": "b-152",
+      "des": "Very strong b-52 be careful",
+      "recipe": [
+        "do something",
+        "do something, twice",
+        "And more",
+        "MB stop??",
+        "Ok, now you cant drink"
+      ],
+      "type": ["long"],
+      "ingredients": ["banana", "basil", "Water", "Absent"]
+    },
+    {
+      "name": "Bambo",
+      "des": "Very strong b-52 be careful",
+      "recipe": [
+        "do something",
+        "do something, twice",
+        "And more",
+        "MB stop??",
+        "Ok, now you cant drink"
+      ],
+      "type": ["strong"],
+      "ingredients": ["banana", "basil", "Water", "Absent"]
+    },
+    {
+      "name": "b-52",
+      "des": "Very strong b-52 be careful",
+      "recipe": [
+        "do something",
+        "do something, twice",
+        "And more",
+        "MB stop??",
+        "Ok, now you cant drink"
+      ],
+      "type": ["shot", "strong"],
+      "ingredients": ["banana", "basil", "Water", "Absent"]
+    },
+    {
+      "name": "b-152",
+      "des": "Very strong b-52 be careful",
+      "recipe": [
+        "do something",
+        "do something, twice",
+        "And more",
+        "MB stop??",
+        "Ok, now you cant drink"
+      ],
+      "type": ["long"],
+      "ingredients": ["banana", "basil", "Water", "Absent"]
+    },
+    {
+      "name": "Bambo",
+      "des": "Very strong b-52 be careful",
+      "recipe": [
+        "do something",
+        "do something, twice",
+        "And more",
+        "MB stop??",
+        "Ok, now you cant drink"
+      ],
+      "type": ["strong"],
+      "ingredients": ["banana", "basil", "Water", "Absent"]
+    },
+    {
+      "name": "b-52",
+      "des": "Very strong b-52 be careful",
+      "recipe": [
+        "do something",
+        "do something, twice",
+        "And more",
+        "MB stop??",
+        "Ok, now you cant drink"
+      ],
+      "type": ["shot", "strong"],
+      "ingredients": ["banana", "basil", "Water", "Absent"]
+    },
+    {
+      "name": "b-152",
+      "des": "Very strong b-52 be careful",
+      "recipe": [
+        "do something",
+        "do something, twice",
+        "And more",
+        "MB stop??",
+        "Ok, now you cant drink"
+      ],
+      "type": ["long"],
+      "ingredients": ["banana", "basil", "Water", "Absent"]
+    },
+    {
+      "name": "Bambo",
+      "des": "Very strong b-52 be careful",
+      "recipe": [
+        "do something",
+        "do something, twice",
+        "And more",
+        "MB stop??",
+        "Ok, now you cant drink"
+      ],
+      "type": ["strong"],
+      "ingredients": ["banana", "basil", "Water", "Absent"]
+    },
+    {
+      "name": "b-52",
+      "des": "Very strong b-52 be careful",
+      "recipe": [
+        "do something",
+        "do something, twice",
+        "And more",
+        "MB stop??",
+        "Ok, now you cant drink"
+      ],
+      "type": ["shot", "strong"],
+      "ingredients": ["banana", "basil", "Water", "Absent"]
+    },
+    {
+      "name": "b-152",
+      "des": "Very strong b-52 be careful",
+      "recipe": [
+        "do something",
+        "do something, twice",
+        "And more",
+        "MB stop??",
+        "Ok, now you cant drink"
+      ],
+      "type": ["long"],
+      "ingredients": ["banana", "basil", "Water", "Absent"]
+    },
+    {
+      "name": "Bambo",
+      "des": "Very strong b-52 be careful",
+      "recipe": [
+        "do something",
+        "do something, twice",
+        "And more",
+        "MB stop??",
+        "Ok, now you cant drink"
+      ],
+      "type": ["strong"],
+      "ingredients": ["banana", "basil", "Water", "Absent"]
+    },
+    {
+      "name": "b-52",
+      "des": "Very strong b-52 be careful",
+      "recipe": [
+        "do something",
+        "do something, twice",
+        "And more",
+        "MB stop??",
+        "Ok, now you cant drink"
+      ],
+      "type": ["shot", "strong"],
+      "ingredients": ["banana", "basil", "Water", "Absent"]
+    },
+    {
+      "name": "b-152",
+      "des": "Very strong b-52 be careful",
+      "recipe": [
+        "do something",
+        "do something, twice",
+        "And more",
+        "MB stop??",
+        "Ok, now you cant drink"
+      ],
+      "type": ["long"],
+      "ingredients": ["banana", "basil", "Water", "Absent"]
+    },
+    {
+      "name": "Bambo",
+      "des": "Very strong b-52 be careful",
+      "recipe": [
+        "do something",
+        "do something, twice",
+        "And more",
+        "MB stop??",
+        "Ok, now you cant drink"
+      ],
+      "type": ["strong"],
+      "ingredients": ["banana", "basil", "Water", "Absent"]
+    },
+    {
+      "name": "b-52",
+      "des": "Very strong b-52 be careful",
+      "recipe": [
+        "do something",
+        "do something, twice",
+        "And more",
+        "MB stop??",
+        "Ok, now you cant drink"
+      ],
+      "type": ["shot", "strong"],
+      "ingredients": ["banana", "basil", "Water", "Absent"]
+    },
+    {
+      "name": "b-152",
+      "des": "Very strong b-52 be careful",
+      "recipe": [
+        "do something",
+        "do something, twice",
+        "And more",
+        "MB stop??",
+        "Ok, now you cant drink"
+      ],
+      "type": ["long"],
+      "ingredients": ["banana", "basil", "Water", "Absent"]
+    },
+    {
+      "name": "Bambo",
+      "des": "Very strong b-52 be careful",
+      "recipe": [
+        "do something",
+        "do something, twice",
+        "And more",
+        "MB stop??",
+        "Ok, now you cant drink"
+      ],
+      "type": ["strong"],
+      "ingredients": ["banana", "basil", "Water", "Absent"]
+    },
+    {
+      "name": "b-52",
+      "des": "Very strong b-52 be careful",
+      "recipe": [
+        "do something",
+        "do something, twice",
+        "And more",
+        "MB stop??",
+        "Ok, now you cant drink"
+      ],
+      "type": ["shot", "strong"],
+      "ingredients": ["banana", "basil", "Water", "Absent"]
+    },
+    {
+      "name": "b-152",
+      "des": "Very strong b-52 be careful",
+      "recipe": [
+        "do something",
+        "do something, twice",
+        "And more",
+        "MB stop??",
+        "Ok, now you cant drink"
+      ],
+      "type": ["long"],
+      "ingredients": ["banana", "basil", "Water", "Absent"]
+    },
+    {
+      "name": "Bambo",
+      "des": "Very strong b-52 be careful",
+      "recipe": [
+        "do something",
+        "do something, twice",
+        "And more",
+        "MB stop??",
+        "Ok, now you cant drink"
+      ],
+      "type": ["strong"],
+      "ingredients": ["banana", "basil", "Water", "Absent"]
+    },
+    {
+      "name": "b-52",
+      "des": "Very strong b-52 be careful",
+      "recipe": [
+        "do something",
+        "do something, twice",
+        "And more",
+        "MB stop??",
+        "Ok, now you cant drink"
+      ],
+      "type": ["shot", "strong"],
+      "ingredients": ["banana", "basil", "Water", "Absent"]
+    },
+    {
+      "name": "b-152",
+      "des": "Very strong b-52 be careful",
+      "recipe": [
+        "do something",
+        "do something, twice",
+        "And more",
+        "MB stop??",
+        "Ok, now you cant drink"
+      ],
+      "type": ["long"],
+      "ingredients": ["banana", "basil", "Water", "Absent"]
+    },
+    {
+      "name": "Bambo",
+      "des": "Very strong b-52 be careful",
+      "recipe": [
+        "do something",
+        "do something, twice",
+        "And more",
+        "MB stop??",
+        "Ok, now you cant drink"
+      ],
+      "type": ["strong"],
+      "ingredients": ["banana", "basil", "Water", "Absent"]
+    },
+    {
+      "name": "b-52",
+      "des": "Very strong b-52 be careful",
+      "recipe": [
+        "do something",
+        "do something, twice",
+        "And more",
+        "MB stop??",
+        "Ok, now you cant drink"
+      ],
+      "type": ["shot", "strong"],
+      "ingredients": ["banana", "basil", "Water", "Absent"]
+    },
+    {
+      "name": "b-152",
+      "des": "Very strong b-52 be careful",
+      "recipe": [
+        "do something",
+        "do something, twice",
+        "And more",
+        "MB stop??",
+        "Ok, now you cant drink"
+      ],
+      "type": ["long"],
+      "ingredients": ["banana", "basil", "Water", "Absent"]
+    },
+    {
+      "name": "Bambo",
+      "des": "Very strong b-52 be careful",
+      "recipe": [
+        "do something",
+        "do something, twice",
+        "And more",
+        "MB stop??",
+        "Ok, now you cant drink"
+      ],
+      "type": ["strong"],
+      "ingredients": ["banana", "basil", "Water", "Absent"]
+    },
+    {
+      "name": "b-52",
+      "des": "Very strong b-52 be careful",
+      "recipe": [
+        "do something",
+        "do something, twice",
+        "And more",
+        "MB stop??",
+        "Ok, now you cant drink"
+      ],
+      "type": ["shot", "strong"],
+      "ingredients": ["banana", "basil", "Water", "Absent"]
+    },
+    {
+      "name": "b-152",
+      "des": "Very strong b-52 be careful",
+      "recipe": [
+        "do something",
+        "do something, twice",
+        "And more",
+        "MB stop??",
+        "Ok, now you cant drink"
+      ],
+      "type": ["long"],
+      "ingredients": ["banana", "basil", "Water", "Absent"]
+    },
+    {
+      "name": "Bambo",
+      "des": "Very strong b-52 be careful",
+      "recipe": [
+        "do something",
+        "do something, twice",
+        "And more",
+        "MB stop??",
+        "Ok, now you cant drink"
+      ],
+      "type": ["strong"],
+      "ingredients": ["banana", "basil", "Water", "Absent"]
+    },
+    {
+      "name": "b-52",
+      "des": "Very strong b-52 be careful",
+      "recipe": [
+        "do something",
+        "do something, twice",
+        "And more",
+        "MB stop??",
+        "Ok, now you cant drink"
+      ],
+      "type": ["shot", "strong"],
+      "ingredients": ["banana", "basil", "Water", "Absent"]
+    },
+    {
+      "name": "b-152",
+      "des": "Very strong b-52 be careful",
+      "recipe": [
+        "do something",
+        "do something, twice",
+        "And more",
+        "MB stop??",
+        "Ok, now you cant drink"
+      ],
+      "type": ["long"],
+      "ingredients": ["banana", "basil", "Water", "Absent"]
+    },
+    {
+      "name": "Bambo",
+      "des": "Very strong b-52 be careful",
+      "recipe": [
+        "do something",
+        "do something, twice",
+        "And more",
+        "MB stop??",
+        "Ok, now you cant drink"
+      ],
+      "type": ["strong"],
+      "ingredients": ["banana", "basil", "Water", "Absent"]
+    },
+    {
+      "name": "b-52",
+      "des": "Very strong b-52 be careful",
+      "recipe": [
+        "do something",
+        "do something, twice",
+        "And more",
+        "MB stop??",
+        "Ok, now you cant drink"
+      ],
+      "type": ["shot", "strong"],
+      "ingredients": ["banana", "basil", "Water", "Absent"]
+    },
+    {
+      "name": "b-152",
+      "des": "Very strong b-52 be careful",
+      "recipe": [
+        "do something",
+        "do something, twice",
+        "And more",
+        "MB stop??",
+        "Ok, now you cant drink"
+      ],
+      "type": ["long"],
+      "ingredients": ["banana", "basil", "Water", "Absent"]
+    },
+    {
+      "name": "Bambo",
+      "des": "Very strong b-52 be careful",
+      "recipe": [
+        "do something",
+        "do something, twice",
+        "And more",
+        "MB stop??",
+        "Ok, now you cant drink"
+      ],
+      "type": ["strong"],
+      "ingredients": ["banana", "basil", "Water", "Absent"]
+    },
+    {
+      "name": "b-52",
+      "des": "Very strong b-52 be careful",
+      "recipe": [
+        "do something",
+        "do something, twice",
+        "And more",
+        "MB stop??",
+        "Ok, now you cant drink"
+      ],
+      "type": ["shot", "strong"],
+      "ingredients": ["banana", "basil", "Water", "Absent"]
+    },
+    {
+      "name": "b-152",
+      "des": "Very strong b-52 be careful",
+      "recipe": [
+        "do something",
+        "do something, twice",
+        "And more",
+        "MB stop??",
+        "Ok, now you cant drink"
+      ],
+      "type": ["long"],
+      "ingredients": ["banana", "basil", "Water", "Absent"]
+    },
+    {
+      "name": "Bambo",
+      "des": "Very strong b-52 be careful",
+      "recipe": [
+        "do something",
+        "do something, twice",
+        "And more",
+        "MB stop??",
+        "Ok, now you cant drink"
+      ],
+      "type": ["strong"],
+      "ingredients": ["banana", "basil", "Water", "Absent"]
+    }
+  ]
+}
