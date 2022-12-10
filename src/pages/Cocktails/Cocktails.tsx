@@ -1,15 +1,11 @@
-import { Suspense } from 'react';
-import { Outlet } from 'react-router-dom';
-import { Loader } from 'Components/loader/Loader';
 import { PagesNavigation } from 'Components/pagesNavigation/PagesNavigation';
+import { CocktailList } from 'Components/cocktailList/CocktailList';
 
 export const Cocktails = () => {
   return (
     <div>
       <PagesNavigation type="cocktails" />
-      <Suspense fallback={<Loader />}>
-        <Outlet />
-      </Suspense>
+      <CocktailList />
     </div>
   );
 };

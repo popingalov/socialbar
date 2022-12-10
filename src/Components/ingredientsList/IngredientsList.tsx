@@ -1,8 +1,8 @@
-import { BarList } from 'Components/barList/BarList';
 import { Link } from 'react-router-dom';
 import { useTakeIngredientsQuery } from 'redux/apis/operation';
+import { BarList } from 'Components/barList/BarList';
 
-export const MyBarShelf = () => {
+export const IngredientsList = () => {
   const { data: ingredients } = useTakeIngredientsQuery(5);
 
   return (
@@ -18,9 +18,3 @@ export const MyBarShelf = () => {
     </BarList>
   );
 };
-
-// interface IIngredient {
-//   name: string;
-//   des: string;
-//   type: string;
-// }

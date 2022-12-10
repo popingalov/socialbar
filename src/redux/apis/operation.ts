@@ -1,18 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-
-interface IIngredient {
-  name: string;
-  des: string;
-  type: string;
-}
-
-interface ICocktail {
-  name: string;
-  des: string;
-  recipe: string[];
-  type: string[];
-  ingredients: string[];
-}
+import { ICocktail } from 'types/cocktail';
+import { IIngredient } from 'types/ingredient';
 
 export const startTest = createApi({
   reducerPath: 'api',
@@ -33,9 +21,9 @@ export const startTest = createApi({
     }),
     takeCocktails: builder.query({
       query: limit => ({
-        url: '/ingredients',
+        url: '/cocktail',
         params: {
-          // _limit:limit,
+          _limit: limit,
         },
       }),
       providesTags: ['api'],

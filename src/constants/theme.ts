@@ -1,35 +1,4 @@
-import { DefaultTheme } from 'styled-components';
-
-declare module 'styled-components' {
-  export interface DefaultTheme {
-    colors: {
-      [x: string]: string;
-    };
-
-    space: number[];
-
-    fontFamily: string;
-
-    fontWeight: {
-      normal: number;
-      medium: number;
-      semiBold: number;
-      bold: number;
-    };
-
-    fontSizes: {
-      xs: string;
-      s: string;
-      m: string;
-      l: string;
-      xl: string;
-    };
-
-    transitionTiming: string;
-  }
-}
-
-export const theme: DefaultTheme = {
+export const theme = {
   colors: {
     lightText: '#ebebeb', // white text color on blue bg
     mainText: '#333333', // main dark black color

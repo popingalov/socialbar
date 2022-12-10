@@ -1,18 +1,18 @@
+import React from 'react';
 import { BarList } from 'Components/barList/BarList';
 import { Link } from 'react-router-dom';
-import { useTakeIngredientsQuery } from 'redux/apis/operation';
+import { useTakeCocktailsQuery } from 'redux/apis/operation';
 
-export const ManageBarShelf = () => {
-  const { data: ingredients } = useTakeIngredientsQuery(5);
+export const CocktailList = () => {
+  const { data: cocktails } = useTakeCocktailsQuery(5);
 
   return (
     <BarList>
-      {ingredients &&
-        ingredients.map(({ name }) => (
+      {cocktails &&
+        cocktails.map(({ name }) => (
           <li key={name}>
             <Link to={`/`}>
               <p>{name}</p>
-              <button>check</button>
             </Link>
           </li>
         ))}
