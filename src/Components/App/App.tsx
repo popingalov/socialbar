@@ -15,6 +15,10 @@ import { MyBarShelf } from '../MyBarShelf/MyBarShelf';
 import { MyCocktails } from '../MyCocktails/MyCocktails';
 import { Settings } from '../../pages/Settings/Settings';
 import { ShoppingList } from '../ShoppingList/ShoppingList';
+import {
+  useTakeIngredientsQuery,
+  useTakeCocktailsQuery,
+} from '../../redux/apis/operation';
 
 const Global = createGlobalStyle`
 * {
@@ -25,6 +29,9 @@ const Global = createGlobalStyle`
       }`;
 
 function App() {
+  const { data: ing } = useTakeIngredientsQuery('');
+  const { data: coc, isLoading, isFetching } = useTakeCocktailsQuery('');
+
   return (
     <>
       <Global />

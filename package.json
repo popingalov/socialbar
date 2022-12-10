@@ -15,6 +15,7 @@
     "@types/react-redux": "^7.1.24",
     "@types/styled-system": "^5.1.15",
     "i18next": "^22.1.5",
+    "json-server": "^0.17.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^8.0.5",
@@ -44,6 +45,7 @@
     "build": "react-scripts build",
     "box": "generate-react component",
     "test": "react-scripts test",
+    "host": "json-server --watch db.json --port 5000",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
     "deploy": "netlify deploy -p"
