@@ -6,9 +6,9 @@ import { BiArrowBack, BiDotsVerticalRounded } from 'react-icons/bi';
 
 import SearchBar from 'Components/SearchBar';
 
-import { Wrapper, ButtonIcon } from './NavigationBar.styled';
+import { Wrapper, ButtonIcon } from './NavigationMain.styled';
 
-const Navigation = () => {
+const NavigationMain = () => {
   const navigate = useNavigate();
 
   const [isSearch, setSearch] = useState(false);
@@ -42,4 +42,4 @@ const Navigation = () => {
   );
 };
 
-export default Navigation;
+export default NavigationMain;
