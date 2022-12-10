@@ -7,6 +7,10 @@ export const Wrapper = styled.nav`
   background-color: #03a9f4;
 `;
 
+export const MenuHolder = styled.div`
+  display: flex;
+`;
+
 export const ButtonIcon = styled.button`
   color: #fff;
 `;

@@ -6,38 +6,39 @@ import { BiArrowBack, BiDotsVerticalRounded } from 'react-icons/bi';
 
 import SearchBar from 'Components/SearchBar';
 
-import { Wrapper, ButtonIcon } from './NavigationMain.styled';
+import { Wrapper, ButtonIcon, MenuHolder } from './NavigationMain.styled';
 
 const NavigationMain = () => {
   const navigate = useNavigate();
 
   const [isSearch, setSearch] = useState(false);
 
-  const handleBackButton = () => {
+  const handleSideMenu = () => {
     if (isSearch) setSearch(false);
     else navigate(-1);
   };
 
-  const handleSearchButton = () => {
-    setSearch(true);
-  };
+  const handleSearchButton = () => setSearch(true);
+
+  const handleAppMenu = () => console.log('Go App menu');
 
   return (
     <Wrapper>
-      <ButtonIcon onClick={handleBackButton}>
-        <BiArrowBack />
-        {/* <AiOutlineMenu /> */}
+      <ButtonIcon onClick={handleSideMenu}>
+        <AiOutlineMenu />
       </ButtonIcon>
 
       {isSearch && <SearchBar />}
 
-      <div>
+      <MenuHolder>
         <ButtonIcon onClick={handleSearchButton}>
           <AiOutlineSearch />
         </ButtonIcon>
 
-        {/* <BiDotsVerticalRounded /> */}
-      </div>
+        <ButtonIcon onClick={handleAppMenu}>
+          <BiDotsVerticalRounded />
+        </ButtonIcon>
+      </MenuHolder>
     </Wrapper>
   );
 };
