@@ -1,14 +1,17 @@
 import { Suspense } from 'react';
 import { Outlet } from 'react-router-dom';
-import { Loader } from '../../Components/Loader/Loader';
+import { PagesNavigation } from 'Components/pagesNavigation/PagesNavigation';
+import { Loader } from 'Components/loader/Loader';
+import { Box } from 'Components/box/Box';
+import { theme } from 'constants/theme';
 
 export const Ingredients = () => {
   return (
-    <div>
-      Ingredients
+    <Box backgroundColor={theme.colors.secondaryBackgroundColor}>
+      <PagesNavigation type="ingredients" />
       <Suspense fallback={<Loader />}>
         <Outlet />
       </Suspense>
-    </div>
+    </Box>
   );
 };

@@ -1,32 +1,82 @@
-import React, { useId, Suspense } from 'react';
+import React, { Suspense } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { createGlobalStyle } from 'styled-components';
-import { AllCocktails } from '../AllCocktails/AllCocktails';
-import { Cocktails } from '../../pages/Cocktails/Cocktails';
-import { CocktailsDetails } from '../../pages/CocktailsDetails/CocktailsDetails';
-import { FavoriteCocktails } from '../FavoriteCocktails/FavoriteCocktails';
-import { Home } from '../../pages/Home/Home';
-import { IngredientDetails } from '../../pages/IngredientDetails/IngredientDetails';
-import { Ingredients } from '../../pages/Ingredients/Ingredients';
-import { Layout } from '../Layout/Layout';
-import { Loader } from '../Loader/Loader';
-import { ManageBarShelf } from '../ManageBarShelf/ManageBarShelf';
-import { MyBarShelf } from '../MyBarShelf/MyBarShelf';
-import { MyCocktails } from '../MyCocktails/MyCocktails';
-import { Settings } from '../../pages/Settings/Settings';
-import { ShoppingList } from '../ShoppingList/ShoppingList';
+import { Loader } from 'Components/loader/Loader';
 import {
   useTakeIngredientsQuery,
   useTakeCocktailsQuery,
 } from '../../redux/apis/operation';
+import { GlobalStyle } from './App.styled';
 
-const Global = createGlobalStyle`
-* {
-      margin:0;
-      padding:0;
-      box-sizing:border-box;
-      color: ${p => p.theme.colors.accent};
-      }`;
+const AllCocktails: React.FC = React.lazy(() =>
+  import('Components/allCocktails/AllCocktails').then(module => ({
+    default: module.AllCocktails,
+  })),
+);
+const Cocktails: React.FC = React.lazy(() =>
+  import('pages/cocktails/Cocktails').then(module => ({
+    default: module.Cocktails,
+  })),
+);
+const CocktailsDetails: React.FC = React.lazy(() =>
+  import('pages/cocktailsDetails/CocktailsDetails').then(module => ({
+    default: module.CocktailsDetails,
+  })),
+);
+const FavoriteCocktails: React.FC = React.lazy(() =>
+  import('Components/favoriteCocktails/FavoriteCocktails').then(module => ({
+    default: module.FavoriteCocktails,
+  })),
+);
+const Home: React.FC = React.lazy(() =>
+  import('pages/home/Home').then(module => ({
+    default: module.Home,
+  })),
+);
+const IngredientDetails: React.FC = React.lazy(() =>
+  import('pages/ingredientDetails/IngredientDetails').then(module => ({
+    default: module.IngredientDetails,
+  })),
+);
+const Ingredients: React.FC = React.lazy(() =>
+  import('pages/ingredients/Ingredients').then(module => ({
+    default: module.Ingredients,
+  })),
+);
+const MainLayout: React.FC = React.lazy(() =>
+  import('Components/mainLayout/MainLayout').then(module => ({
+    default: module.MainLayout,
+  })),
+);
+const ManageBarShelf: React.FC = React.lazy(() =>
+  import('Components/manageBarShelf/ManageBarShelf').then(module => ({
+    default: module.ManageBarShelf,
+  })),
+);
+const MyBarShelf: React.FC = React.lazy(() =>
+  import('Components/myBarShelf/MyBarShelf').then(module => ({
+    default: module.MyBarShelf,
+  })),
+);
+const MyCocktails: React.FC = React.lazy(() =>
+  import('Components/myCocktails/MyCocktails').then(module => ({
+    default: module.MyCocktails,
+  })),
+);
+const Settings: React.FC = React.lazy(() =>
+  import('pages/settings/Settings').then(module => ({
+    default: module.Settings,
+  })),
+);
+const ShoppingList: React.FC = React.lazy(() =>
+  import('Components/shoppingList/ShoppingList').then(module => ({
+    default: module.ShoppingList,
+  })),
+);
+const ShortLayout: React.FC = React.lazy(() =>
+  import('Components/shortLayout/ShortLayout').then(module => ({
+    default: module.ShortLayout,
+  })),
+);
 
 function App() {
   const { data: ing } = useTakeIngredientsQuery('');
@@ -34,24 +84,26 @@ function App() {
 
   return (
     <>
-      <Global />
+      <GlobalStyle />
       <Suspense fallback={<Loader />}>
         <Routes>
-          <Route path="/" element={<Layout />}>
+          <Route path="/" element={<MainLayout />}>
             <Route index element={<Home />} />
 
-            <Route path="ingredients" element={<Ingredients />}>
-              <Route path="myBarShelf" element={<MyBarShelf />} />
-              <Route path="manageBarShelf" element={<ManageBarShelf />} />
-              <Route path="shoppingList" element={<ShoppingList />} />
-            </Route>
-
             <Route path="cocktails" element={<Cocktails />}>
-              <Route path="myCocktails" element={<MyCocktails />} />
-              <Route path="allCocktails" element={<AllCocktails />} />
-              <Route path="favoriteCocktails" element={<FavoriteCocktails />} />
+              <Route path="my" element={<MyCocktails />} />
+              <Route path="all" element={<AllCocktails />} />
+              <Route path="favorite" element={<FavoriteCocktails />} />
             </Route>
 
+            <Route path="ingredients" element={<Ingredients />}>
+              <Route path="my" element={<MyBarShelf />} />
+              <Route path="shelf" element={<ManageBarShelf />} />
+              <Route path="shopping" element={<ShoppingList />} />
+            </Route>
+          </Route>
+
+          <Route path="/" element={<ShortLayout />}>
             <Route
               path="cocktails/:cocktailId"
               element={<CocktailsDetails />}
@@ -60,8 +112,8 @@ function App() {
               path="ingredients/:ingredientId"
               element={<IngredientDetails />}
             />
+            <Route path="settings" element={<Settings />} />
           </Route>
-          <Route path="Settings" element={<Settings />} />
         </Routes>
       </Suspense>
     </>

@@ -8,9 +8,20 @@ import {
   border,
   flexbox,
   grid,
+  DisplayProps,
+  ColorProps,
+  SpaceProps,
+  FlexProps,
+  JustifyContentProps,
 } from 'styled-system';
 
-export const Box = styled('div')(
+type BoxProps = ColorProps &
+  SpaceProps &
+  DisplayProps &
+  FlexProps &
+  JustifyContentProps;
+
+export const Box = styled.div<BoxProps>(
   typography,
   color,
   space,
