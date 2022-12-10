@@ -11,7 +11,10 @@ export const NavigationListStyled = styled.ul`
 
 export const Link = styled(NavLink)`
   display: block;
-  padding: ${p => p.theme.space[2]}px;
+  padding-top: ${p => p.theme.space[2]}px;
+  padding-bottom: ${p => p.theme.space[2]}px;
+  padding-left: ${p => p.theme.space[3]}px;
+  padding-right: ${p => p.theme.space[3]}px;
   white-space: nowrap;
   color: ${p => p.theme.colors.lightText};
   font-size: ${p => p.theme.fontSizes.s};
@@ -33,7 +36,6 @@ export const Link = styled(NavLink)`
   }
 
   &.active {
-    /* color: ${p => p.theme.colors.accent}; */
     border-bottom: 3px solid ${p => p.theme.colors.accent};
   }
 `;

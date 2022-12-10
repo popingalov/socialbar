@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { Loader } from 'Components/loader/Loader';
 import {
   useTakeIngredientsQuery,
@@ -91,12 +91,14 @@ function App() {
             <Route index element={<Home />} />
 
             <Route path="cocktails" element={<Cocktails />}>
+              <Route index element={<Navigate to="my" replace />} />
               <Route path="my" element={<MyCocktails />} />
               <Route path="all" element={<AllCocktails />} />
               <Route path="favorite" element={<FavoriteCocktails />} />
             </Route>
 
             <Route path="ingredients" element={<Ingredients />}>
+              <Route index element={<Navigate to="my" replace />} />
               <Route path="my" element={<MyBarShelf />} />
               <Route path="shelf" element={<ManageBarShelf />} />
               <Route path="shopping" element={<ShoppingList />} />

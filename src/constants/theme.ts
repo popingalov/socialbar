@@ -41,6 +41,7 @@ export const theme: DefaultTheme = {
     secondaryBackgroundColor: '#cdf7f5', // very light blue color
     backdropColor: ' rgba(0, 0, 0, 0.5)', // backdrop grey shadow color
     inputError: ' rgba(142, 22, 0, 0.08)', // red input error color
+    borderBottom: 'rgba(0, 0, 0, 0.13)',
   },
 
   space: [0, 4, 8, 16, 32, 64, 128, 256, 512],
