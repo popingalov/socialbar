@@ -9,7 +9,7 @@ export const startTest = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:5000' }),
   keepUnusedDataFor: Infinity,
   endpoints: builder => ({
-    takeIngredients: builder.query({
+    takeIngredients: builder.query<IIngredient[], number>({
       query: limit => ({
         url: '/ingredients',
         params: {
@@ -19,7 +19,7 @@ export const startTest = createApi({
       providesTags: ['api'],
       transformResponse: (response: IIngredient[]) => response,
     }),
-    takeCocktails: builder.query({
+    takeCocktails: builder.query<ICocktail[], number>({
       query: limit => ({
         url: '/cocktail',
         params: {

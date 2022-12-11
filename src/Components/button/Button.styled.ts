@@ -1,10 +1,11 @@
 import styled from 'styled-components';
+import { motion } from 'framer-motion';
 
 type props = {
   selected?: boolean;
 };
 
-export const ButtonStyled = styled.button<props>`
+export const ButtonStyled = styled(motion.button)<props>`
   display: block;
   border: none;
   padding-top: ${p => p.theme.space[2]}px;
