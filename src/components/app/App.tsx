@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { Loader } from 'Components/loader/Loader';
+import { Loader } from 'components/loader/Loader';
 // import {
 //   useTakeIngredientsQuery,
 //   useTakeCocktailsQuery,
@@ -33,7 +33,7 @@ const Ingredients: React.FC = React.lazy(() =>
   })),
 );
 const MainLayout: React.FC = React.lazy(() =>
-  import('Components/mainLayout/MainLayout').then(module => ({
+  import('components/mainLayout/MainLayout').then(module => ({
     default: module.MainLayout,
   })),
 );
@@ -43,7 +43,7 @@ const Settings: React.FC = React.lazy(() =>
   })),
 );
 const ShortLayout: React.FC = React.lazy(() =>
-  import('Components/shortLayout/ShortLayout').then(module => ({
+  import('components/shortLayout/ShortLayout').then(module => ({
     default: module.ShortLayout,
   })),
 );

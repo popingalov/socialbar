@@ -1,4 +1,4 @@
-import { Button } from 'Components/button/Button';
+import { Button } from 'components/button/Button';
 import { cocktailsNavItems, ingredientsNavItems } from 'constants/navItems';
 import { useSelector } from 'react-redux';
 import {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { BarList } from 'Components/barList/BarList';
+import { BarList } from 'components/barList/BarList';
 import { Link } from 'react-router-dom';
 import { useTakeCocktailsQuery } from 'redux/apis/operation';
 import { useSelector } from 'react-redux';

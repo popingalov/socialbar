@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 import { Outlet } from 'react-router-dom';
-import { Box } from 'Components/box/Box';
+import { Box } from 'components/box/Box';
 import { Loader } from '../loader/Loader';
 
 export const ShortLayout = () => {

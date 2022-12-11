@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom';
 import { useTakeIngredientsQuery } from 'redux/apis/operation';
-import { BarList } from 'Components/barList/BarList';
+import { BarList } from 'components/barList/BarList';
 import { selectIngredientFilter } from 'redux/filter/filterSelectors';
 import { useSelector } from 'react-redux';
-import { IngredientCard } from 'Components/ingredientCard/IngredientCard';
+import { IngredientCard } from 'components/ingredientCard/IngredientCard';
 
 export const IngredientsList = () => {
   const { data: ingredients } = useTakeIngredientsQuery(5);
