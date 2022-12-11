@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux';
 export const IngredientsList = () => {
   const { data: ingredients } = useTakeIngredientsQuery(5);
   const ingredientFilter = useSelector(selectIngredientFilter);
-  console.log('ingredientFilter', ingredientFilter);
+  // console.log('ingredientFilter', ingredientFilter);
 
   return (
     <BarList>

@@ -2,10 +2,6 @@ import { Button } from 'Components/button/Button';
 import { cocktailsNavItems, ingredientsNavItems } from 'constants/navItems';
 import { useSelector } from 'react-redux';
 import {
-  cocktailFilterStatus,
-  ingredientFilterStatus,
-} from 'redux/filter/filterConstants';
-import {
   selectCocktailFilter,
   selectIngredientFilter,
 } from 'redux/filter/filterSelectors';
