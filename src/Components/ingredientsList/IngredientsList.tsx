@@ -3,6 +3,7 @@ import { useTakeIngredientsQuery } from 'redux/apis/operation';
 import { BarList } from 'Components/barList/BarList';
 import { selectIngredientFilter } from 'redux/filter/filterSelectors';
 import { useSelector } from 'react-redux';
+import { IngredientCard } from 'Components/ingredientCard/IngredientCard';
 
 export const IngredientsList = () => {
   const { data: ingredients } = useTakeIngredientsQuery(5);
@@ -15,8 +16,7 @@ export const IngredientsList = () => {
         ingredients.map(({ name }) => (
           <li key={name}>
             <Link to={`/`}>
-              <p>{ingredientFilter}</p>
-              <p>{name}</p>
+              <IngredientCard type={ingredientFilter} name={name} />
             </Link>
           </li>
         ))}

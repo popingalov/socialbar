@@ -15,7 +15,12 @@ export const Button: React.FC<IProps> = ({
   selected = false,
 }) => {
   return (
-    <ButtonStyled type={type} onClick={onClick} selected={selected}>
+    <ButtonStyled
+      whileTap={{ scale: 0.95 }}
+      type={type}
+      onClick={onClick}
+      selected={selected}
+    >
       {children}
     </ButtonStyled>
   );
