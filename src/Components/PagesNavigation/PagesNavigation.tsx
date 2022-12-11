@@ -1,5 +1,19 @@
 import { Button } from 'Components/button/Button';
 import { cocktailsNavItems, ingredientsNavItems } from 'constants/navItems';
+import { useSelector } from 'react-redux';
+import {
+  cocktailFilterStatus,
+  ingredientFilterStatus,
+} from 'redux/filter/filterConstants';
+import {
+  selectCocktailFilter,
+  selectIngredientFilter,
+} from 'redux/filter/filterSelectors';
+import {
+  setCocktailStatusFilter,
+  setIngredientStatusFilter,
+} from 'redux/filter/filterSlice';
+import { useAppDispatch } from 'redux/hooks';
 import { NavigationListStyled } from './PagesNavigation.styled';
 
 interface IProps {
@@ -9,22 +23,28 @@ interface IProps {
 export const PagesNavigation: React.FC<IProps> = ({ type }) => {
   const navigation =
     type === 'ingredients' ? ingredientsNavItems : cocktailsNavItems;
+  const filter = useSelector(
+    type === 'ingredients' ? selectIngredientFilter : selectCocktailFilter,
+  );
+  const dispatch = useAppDispatch();
+  const handleStatusFilterChange = (value: string) => {
+    const setStatusFilter =
+      type === 'ingredients'
+        ? setIngredientStatusFilter
+        : setCocktailStatusFilter;
+    dispatch(setStatusFilter(value));
+  };
 
-  // const filter = useSelector(selectStatusFilter); // to get filter status form state
-  // const dispatch = useDispatch(); // to dispatch action
-  // const handleStatusFilterChange = value => dispatch(setStatusFilter(value));
-
-  // <Button
-  //   selected={filter === statusFilter.all}
-  //   onClick={() => handleStatusFilterChange(statusFilter.all)}
-  // >
-  //   All
-  // </Button>;
   return (
     <NavigationListStyled>
-      {navigation.map(({ href, label }) => (
-        <li key={href}>
-          <Button>{label}</Button>
+      {navigation.map(({ label, statusFilter }) => (
+        <li key={label}>
+          <Button
+            selected={filter === statusFilter}
+            onClick={() => handleStatusFilterChange(statusFilter)}
+          >
+            {label}
+          </Button>
         </li>
       ))}
     </NavigationListStyled>

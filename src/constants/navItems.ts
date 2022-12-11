@@ -1,3 +1,8 @@
+import {
+  cocktailFilterStatus,
+  ingredientFilterStatus,
+} from 'redux/filter/filterConstants';
+
 interface INavLink {
   readonly href: string;
   readonly label: string;
@@ -9,14 +14,25 @@ export const mainNavItems: INavLink[] = [
   { href: 'settings', label: 'Settings' },
 ];
 
-export const ingredientsNavItems: INavLink[] = [
-  { href: 'my', label: 'My Bar Shelf' },
-  { href: 'shelf', label: 'Manage Bar Shelf' },
-  { href: 'shopping', label: 'Shopping List' },
+interface INavPageLink {
+  readonly label: string;
+  readonly statusFilter: string;
+}
+
+export const ingredientsNavItems: INavPageLink[] = [
+  { label: 'My Bar Shelf', statusFilter: ingredientFilterStatus.MyBarShelf },
+  {
+    label: 'Manage Bar Shelf',
+    statusFilter: ingredientFilterStatus.ManageBarShelf,
+  },
+  { label: 'Shopping List', statusFilter: ingredientFilterStatus.ShoppingList },
 ];
 
-export const cocktailsNavItems: INavLink[] = [
-  { href: 'my', label: 'My Cocktails' },
-  { href: 'all', label: 'All Cocktails' },
-  { href: 'favorite', label: 'Favorite Cocktails' },
+export const cocktailsNavItems: INavPageLink[] = [
+  { label: 'My Cocktails', statusFilter: cocktailFilterStatus.myCocktails },
+  { label: 'All Cocktails', statusFilter: cocktailFilterStatus.AllCocktails },
+  {
+    label: 'Favorite Cocktails',
+    statusFilter: cocktailFilterStatus.FavoriteCocktails,
+  },
 ];
