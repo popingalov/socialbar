@@ -1,17 +1,12 @@
 import React, { Suspense } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { Loader } from 'Components/loader/Loader';
-import {
-  useTakeIngredientsQuery,
-  useTakeCocktailsQuery,
-} from '../../redux/apis/operation';
+// import {
+//   useTakeIngredientsQuery,
+//   useTakeCocktailsQuery,
+// } from '../../redux/apis/operation';
 import { GlobalStyle } from './App.styled';
 
-const AllCocktails: React.FC = React.lazy(() =>
-  import('Components/allCocktails/AllCocktails').then(module => ({
-    default: module.AllCocktails,
-  })),
-);
 const Cocktails: React.FC = React.lazy(() =>
   import('pages/cocktails/Cocktails').then(module => ({
     default: module.Cocktails,
@@ -20,11 +15,6 @@ const Cocktails: React.FC = React.lazy(() =>
 const CocktailsDetails: React.FC = React.lazy(() =>
   import('pages/cocktailsDetails/CocktailsDetails').then(module => ({
     default: module.CocktailsDetails,
-  })),
-);
-const FavoriteCocktails: React.FC = React.lazy(() =>
-  import('Components/favoriteCocktails/FavoriteCocktails').then(module => ({
-    default: module.FavoriteCocktails,
   })),
 );
 const Home: React.FC = React.lazy(() =>
@@ -47,29 +37,9 @@ const MainLayout: React.FC = React.lazy(() =>
     default: module.MainLayout,
   })),
 );
-const ManageBarShelf: React.FC = React.lazy(() =>
-  import('Components/manageBarShelf/ManageBarShelf').then(module => ({
-    default: module.ManageBarShelf,
-  })),
-);
-const MyBarShelf: React.FC = React.lazy(() =>
-  import('Components/myBarShelf/MyBarShelf').then(module => ({
-    default: module.MyBarShelf,
-  })),
-);
-const MyCocktails: React.FC = React.lazy(() =>
-  import('Components/myCocktails/MyCocktails').then(module => ({
-    default: module.MyCocktails,
-  })),
-);
 const Settings: React.FC = React.lazy(() =>
   import('pages/settings/Settings').then(module => ({
     default: module.Settings,
-  })),
-);
-const ShoppingList: React.FC = React.lazy(() =>
-  import('Components/shoppingList/ShoppingList').then(module => ({
-    default: module.ShoppingList,
   })),
 );
 const ShortLayout: React.FC = React.lazy(() =>
@@ -79,8 +49,8 @@ const ShortLayout: React.FC = React.lazy(() =>
 );
 
 function App() {
-  const { data: ing } = useTakeIngredientsQuery('');
-  const { data: coc, isLoading, isFetching } = useTakeCocktailsQuery('');
+  // const { data: ing } = useTakeIngredientsQuery('');
+  // const { data: coc, isLoading, isFetching } = useTakeCocktailsQuery('');
 
   return (
     <>
@@ -90,17 +60,8 @@ function App() {
           <Route path="/" element={<MainLayout />}>
             <Route index element={<Home />} />
 
-            <Route path="cocktails" element={<Cocktails />}>
-              <Route path="my" element={<MyCocktails />} />
-              <Route path="all" element={<AllCocktails />} />
-              <Route path="favorite" element={<FavoriteCocktails />} />
-            </Route>
-
-            <Route path="ingredients" element={<Ingredients />}>
-              <Route path="my" element={<MyBarShelf />} />
-              <Route path="shelf" element={<ManageBarShelf />} />
-              <Route path="shopping" element={<ShoppingList />} />
-            </Route>
+            <Route path="cocktails" element={<Cocktails />} />
+            <Route path="ingredients" element={<Ingredients />} />
           </Route>
 
           <Route path="/" element={<ShortLayout />}>

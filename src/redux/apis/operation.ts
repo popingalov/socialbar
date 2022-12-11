@@ -1,6 +1,6 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-
-
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { ICocktail } from 'types/cocktail';
+import { IIngredient } from 'types/ingredient';
 
 export const startTest = createApi({
   reducerPath: 'api',
@@ -10,28 +10,26 @@ export const startTest = createApi({
   keepUnusedDataFor: Infinity,
   endpoints: builder => ({
     takeIngredients: builder.query({
-      query: (limit) => ({
+      query: limit => ({
         url: '/ingredients',
         params: {
-        _limit:limit,
-        }
+          _limit: limit,
+        },
       }),
       providesTags: ['api'],
-      transformResponse: (response: Response) => response
+      transformResponse: (response: IIngredient[]) => response,
     }),
     takeCocktails: builder.query({
-      query: (limit) => ({
-        url: '/ingredients',
+      query: limit => ({
+        url: '/cocktail',
         params: {
-        // _limit:limit,
-        }
+          _limit: limit,
+        },
       }),
       providesTags: ['api'],
-      transformResponse: (response: Response) => response,
-      
-    })
-  })
-})
+      transformResponse: (response: ICocktail[]) => response,
+    }),
+  }),
+});
 
-
-export const { useTakeIngredientsQuery,useTakeCocktailsQuery } = startTest
+export const { useTakeIngredientsQuery, useTakeCocktailsQuery } = startTest;

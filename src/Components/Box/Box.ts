@@ -13,13 +13,23 @@ import {
   SpaceProps,
   FlexProps,
   JustifyContentProps,
+  LayoutProps,
+  ShadowProps,
+  GridProps,
+  TypographyProps,
+  BorderProps,
 } from 'styled-system';
 
 type BoxProps = ColorProps &
   SpaceProps &
   DisplayProps &
   FlexProps &
-  JustifyContentProps;
+  JustifyContentProps &
+  LayoutProps &
+  ShadowProps &
+  GridProps &
+  TypographyProps &
+  BorderProps;
 
 export const Box = styled.div<BoxProps>(
   typography,
