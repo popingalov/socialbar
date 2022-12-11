@@ -8,7 +8,7 @@ import { selectCocktailFilter } from 'redux/filter/filterSelectors';
 export const CocktailList = () => {
   const { data: cocktails } = useTakeCocktailsQuery(5);
   const cocktailFilter = useSelector(selectCocktailFilter);
-  console.log('cocktailFilter', cocktailFilter);
+  // console.log('cocktailFilter', cocktailFilter);
 
   return (
     <BarList>
