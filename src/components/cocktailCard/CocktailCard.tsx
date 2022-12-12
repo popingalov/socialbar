@@ -1,6 +1,6 @@
 import { Icon } from './CocktailCard.styled';
-import { RiStarFill } from 'react-icons/ri';
-import { theme } from 'constants/theme';
+import { LowIcon } from 'components/lowIcon/LowIcon';
+import { Box } from 'components/box/Box';
 
 interface IProps {
   filter: string;
@@ -9,12 +9,12 @@ interface IProps {
 
 export const CocktailCard: React.FC<IProps> = ({ filter, name }) => {
   return (
-    <>
+    <Box position="relative">
       <p>{name}</p>
       <Icon viewBox="0 0 20 20" width="14px" height="14px">
         <polyline points="20 6 9 17 4 12" />
       </Icon>
-      <RiStarFill color={theme.colors.accent} />
-    </>
+      <LowIcon type="cocktails" />
+    </Box>
   );
 };

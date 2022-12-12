@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
 
-export const CheckboxContainer = styled.div`
+export const CheckboxLabel = styled.label`
   display: inline-block;
   vertical-align: middle;
   font-size: 0;
