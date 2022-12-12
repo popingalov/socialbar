@@ -10,7 +10,3 @@ export const Wrapper = styled.nav`
 export const MenuHolder = styled.div`
   display: flex;
 `;
-
-export const ButtonIcon = styled.button`
-  color: #fff;
-`;

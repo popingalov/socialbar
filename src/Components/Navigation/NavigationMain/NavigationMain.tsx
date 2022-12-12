@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import SearchBar from 'Components/SearchBar';
+import ClearButton from 'Components/UI-kit/buttons/ClearButton';
+import { Wrapper, MenuHolder } from './NavigationMain.styled';
+
 import { AiOutlineMenu, AiOutlineSearch } from 'react-icons/ai';
 import { BiArrowBack, BiDotsVerticalRounded } from 'react-icons/bi';
-
-import SearchBar from 'Components/SearchBar';
-
-import { Wrapper, ButtonIcon, MenuHolder } from './NavigationMain.styled';
 
 const NavigationMain = () => {
   const navigate = useNavigate();
@@ -22,22 +22,35 @@ const NavigationMain = () => {
 
   const handleAppMenu = () => console.log('Go App menu');
 
+  const renderSideButton = () => {
+    if (isSearch)
+      return (
+        <ClearButton onClick={handleSideMenu}>
+          <BiArrowBack />
+        </ClearButton>
+      );
+    else
+      return (
+        <ClearButton onClick={handleSideMenu}>
+          <AiOutlineMenu />
+        </ClearButton>
+      );
+  };
+
   return (
     <Wrapper>
-      <ButtonIcon onClick={handleSideMenu}>
-        <AiOutlineMenu />
-      </ButtonIcon>
+      {renderSideButton()}
 
       {isSearch && <SearchBar />}
 
       <MenuHolder>
-        <ButtonIcon onClick={handleSearchButton}>
+        <ClearButton onClick={handleSearchButton}>
           <AiOutlineSearch />
-        </ButtonIcon>
+        </ClearButton>
 
-        <ButtonIcon onClick={handleAppMenu}>
+        <ClearButton onClick={handleAppMenu}>
           <BiDotsVerticalRounded />
-        </ButtonIcon>
+        </ClearButton>
       </MenuHolder>
     </Wrapper>
   );
