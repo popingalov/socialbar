@@ -1,10 +1,10 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { Loader } from 'components/loader/Loader';
-// import {
-//   useTakeIngredientsQuery,
-//   useTakeCocktailsQuery,
-// } from '../../redux/apis/operation';
+import {
+  useTakeIngredientsQuery,
+  useTakeCocktailsQuery,
+} from '../../redux/apis/operation';
 import { GlobalStyle } from './App.styled';
 
 const Cocktails: React.FC = React.lazy(() =>
@@ -49,9 +49,8 @@ const ShortLayout: React.FC = React.lazy(() =>
 );
 
 function App() {
-  // const { data: ing } = useTakeIngredientsQuery('');
-  // const { data: coc, isLoading, isFetching } = useTakeCocktailsQuery('');
-
+  const { data: ing, isFetching } = useTakeIngredientsQuery(1);
+  const { data: coc } = useTakeCocktailsQuery(4, { skip: isFetching });
   return (
     <>
       <GlobalStyle />

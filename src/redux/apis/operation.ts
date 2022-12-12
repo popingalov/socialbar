@@ -1,13 +1,22 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { ICocktail } from 'types/cocktail';
 import { IIngredient } from 'types/ingredient';
+// import testMi from 'redux-persist/lib/storage/';
+// let token: string = 'My token';
+const baseQuery = fetchBaseQuery({
+  baseUrl: 'http://localhost:5000',
+  // prepareHeaders: headers => {
+  //   headers.set('authorization', `Bearer ${token}`);
+  // },
+});
 
 export const startTest = createApi({
   reducerPath: 'api',
   refetchOnFocus: true,
   tagTypes: ['api'],
-  baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:5000' }),
+  baseQuery,
   keepUnusedDataFor: Infinity,
+
   endpoints: builder => ({
     takeIngredients: builder.query<IIngredient[], number>({
       query: limit => ({
@@ -17,8 +26,13 @@ export const startTest = createApi({
         },
       }),
       providesTags: ['api'],
-      transformResponse: (response: IIngredient[]) => response,
+      transformResponse: (response: IIngredient[]) => {
+        // token = 'Now new token';
+
+        return response;
+      },
     }),
+
     takeCocktails: builder.query<ICocktail[], number>({
       query: limit => ({
         url: '/cocktail',
@@ -27,7 +41,9 @@ export const startTest = createApi({
         },
       }),
       providesTags: ['api'],
-      transformResponse: (response: ICocktail[]) => response,
+      transformResponse: (response: ICocktail[]) => {
+        return response;
+      },
     }),
   }),
 });

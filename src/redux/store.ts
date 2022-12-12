@@ -8,6 +8,7 @@ const store = configureStore({
     [startTest.reducerPath]: startTest.reducer,
     filters: filterReducer,
   },
+
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware().concat(startTest.middleware),
 });
