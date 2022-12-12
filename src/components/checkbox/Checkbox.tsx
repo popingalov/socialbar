@@ -23,7 +23,7 @@ export const Checkbox: React.FC<IProps> = ({
     <CheckboxContainer onClick={e => e.stopPropagation()} className={className}>
       <HiddenCheckbox checked={checked} {...props} />
       <StyledCheckbox whileTap={{ scale: 0.9 }} checked={checked}>
-        <Icon viewBox="1 0 20 20">
+        <Icon viewBox="1 1 20 20">
           <polyline points="20 6 9 17 4 12" />
         </Icon>
       </StyledCheckbox>
@@ -32,5 +32,3 @@ export const Checkbox: React.FC<IProps> = ({
 
   return labelWrap ? <label>{content}</label> : <>{content}</>;
 };
-
-export default Checkbox;

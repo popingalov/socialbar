@@ -1,5 +1,5 @@
+import { theme } from 'constants/theme';
 import BarLoader from 'react-spinners/BarLoader';
-import { theme } from '../../constants/theme';
 
 const override = {
   display: 'block',

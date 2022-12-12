@@ -1,6 +1,4 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { ICocktail } from 'types/cocktail';
-import { IIngredient } from 'types/ingredient';
 
 export const startTest = createApi({
   reducerPath: 'api',

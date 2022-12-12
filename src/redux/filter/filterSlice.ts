@@ -6,7 +6,7 @@ import {
 
 const filterInitialState = {
   cocktailsStatus: cocktailFilterStatus.myCocktails,
-  ingredientsStatus: ingredientFilterStatus.MyBarShelf,
+  ingredientsStatus: ingredientFilterStatus.myBarShelf,
 };
 
 const filterSlice = createSlice({
