@@ -4,6 +4,7 @@ import { RxCross2 } from 'react-icons/rx';
 import { Checkbox } from 'components/checkbox/Checkbox';
 import { Box } from 'components/box/Box';
 import { LowIcon } from 'components/lowIcon/LowIcon';
+import { IconButton } from 'components/iconButton/IconButton';
 
 interface IProps {
   filter: string;
@@ -39,13 +40,9 @@ export const IngredientCard: React.FC<IProps> = ({ filter, name }) => {
         <LowIcon type="ingredients" />
       )}
       {filter === ingredientFilterStatus.shoppingList && (
-        <RxCross2
-          style={{
-            position: 'absolute',
-            top: '0',
-            right: '0',
-          }}
-        />
+        <IconButton>
+          <RxCross2 aria-label="delete" />
+        </IconButton>
       )}
     </Box>
   );

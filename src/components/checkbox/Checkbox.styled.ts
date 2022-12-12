@@ -6,6 +6,7 @@ export const CheckboxLabel = styled.label`
   vertical-align: middle;
   font-size: 0;
   cursor: pointer;
+  padding: ${p => p.theme.space[1]}px;
 `;
 
 export const Icon = styled.svg`

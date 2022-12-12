@@ -13,10 +13,14 @@ export const CocktailList = () => {
   return (
     <BarList>
       {cocktails &&
-        cocktails.map(({ name }) => (
+        cocktails.map(({ name, des }) => (
           <li key={name}>
             <Link to={`/`}>
-              <CocktailCard filter={cocktailFilter} name={name} />
+              <CocktailCard
+                filter={cocktailFilter}
+                name={name}
+                description={des}
+              />
             </Link>
           </li>
         ))}

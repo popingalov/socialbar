@@ -12,10 +12,10 @@ export const LowIcon: React.FC<IProps> = ({ type }) => {
     <IconContext.Provider
       value={{
         style: {
-          color: theme.colors.accent,
+          color: theme.colors.accentBackgroundColor,
           position: 'absolute',
           bottom: '0',
-          right: '-22px',
+          right: '-12px',
           width: '10px',
           height: '10px',
         },
