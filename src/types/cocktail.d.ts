@@ -1,4 +1,4 @@
-export interface ICocktail {
+interface ICocktail {
   name: string;
   des: string;
   recipe: string[];

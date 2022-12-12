@@ -1,16 +1,17 @@
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
 
-export const CheckboxContainer = styled.div`
+export const CheckboxLabel = styled.label`
   display: inline-block;
   vertical-align: middle;
+  font-size: 0;
   cursor: pointer;
+  padding: ${p => p.theme.space[1]}px;
 `;
 
 export const Icon = styled.svg`
   fill: none;
   stroke: white;
-  transform: translateY(-3px);
   stroke-width: 2px;
 `;
 
@@ -35,8 +36,9 @@ export const StyledCheckbox = styled(motion.div)<{ checked: boolean }>`
   background-color: ${p =>
     p.checked ? p.theme.colors.accent : p.theme.colors.mainBackgroundColor};
   border: 2px solid ${p => p.theme.colors.accent};
-  border-radius: 2px;
+  border-radius: 3px;
   transition: all 150ms;
+  transition: background-color 250ms ${p => p.theme.transitionTiming};
 
   ${HiddenCheckbox}:focus + & {
     box-shadow: 0 0 0 1px ${p => p.theme.colors.secondaryAccent};

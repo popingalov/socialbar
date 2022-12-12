@@ -1,11 +1,12 @@
 import React, { Suspense } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import { Loader } from 'components/loader/Loader';
 // import {
 //   useTakeIngredientsQuery,
 //   useTakeCocktailsQuery,
 // } from '../../redux/apis/operation';
 import { GlobalStyle } from './App.styled';
+import { Routes } from 'react-router';
 
 const Cocktails: React.FC = React.lazy(() =>
   import('pages/cocktails/Cocktails').then(module => ({

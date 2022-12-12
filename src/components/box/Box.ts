@@ -4,20 +4,21 @@ import {
   color,
   space,
   layout,
-  shadow,
-  border,
   flexbox,
   grid,
+  position,
+  justifyContent,
+  alignItems,
+  PositionProps,
   DisplayProps,
   ColorProps,
   SpaceProps,
   FlexProps,
   JustifyContentProps,
   LayoutProps,
-  ShadowProps,
   GridProps,
   TypographyProps,
-  BorderProps,
+  AlignItemsProps,
 } from 'styled-system';
 
 type BoxProps = ColorProps &
@@ -26,18 +27,19 @@ type BoxProps = ColorProps &
   FlexProps &
   JustifyContentProps &
   LayoutProps &
-  ShadowProps &
   GridProps &
   TypographyProps &
-  BorderProps;
+  PositionProps &
+  AlignItemsProps;
 
 export const Box = styled.div<BoxProps>(
   typography,
   color,
   space,
   layout,
-  shadow,
-  border,
   flexbox,
   grid,
+  position,
+  justifyContent,
+  alignItems,
 );

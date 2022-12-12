@@ -1,22 +1,22 @@
 interface ICocktailFilter {
   readonly myCocktails: string;
-  readonly AllCocktails: string;
-  readonly FavoriteCocktails: string;
+  readonly allCocktails: string;
+  readonly favoriteCocktails: string;
 }
 
 export const cocktailFilterStatus: ICocktailFilter = {
   myCocktails: 'myCocktails',
-  AllCocktails: 'AllCocktails',
-  FavoriteCocktails: 'FavoriteCocktails',
+  allCocktails: 'allCocktails',
+  favoriteCocktails: 'favoriteCocktails',
 };
 
 interface IIngredientsFilter {
-  readonly MyBarShelf: string;
-  readonly ManageBarShelf: string;
-  readonly ShoppingList: string;
+  readonly myBarShelf: string;
+  readonly manageBarShelf: string;
+  readonly shoppingList: string;
 }
 export const ingredientFilterStatus: IIngredientsFilter = {
-  MyBarShelf: 'MyBarShelf',
-  ManageBarShelf: 'ManageBarShelf',
-  ShoppingList: 'ShoppingList',
+  myBarShelf: 'myBarShelf',
+  manageBarShelf: 'manageBarShelf',
+  shoppingList: 'shoppingList',
 };
