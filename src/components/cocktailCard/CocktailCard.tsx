@@ -1,7 +1,7 @@
 import { Icon } from './CocktailCard.styled';
 import { LowIcon } from 'components/lowIcon/LowIcon';
 import { Box } from 'components/box/Box';
-import { theme } from 'constants/theme';
+import fallback from '../../assets/fallback.png';
 
 interface IProps {
   filter: string;
@@ -16,12 +16,7 @@ export const CocktailCard: React.FC<IProps> = ({
 }) => {
   return (
     <Box position="relative" display="flex" alignItems="center">
-      <img
-        src="./cocktailFallback.png"
-        alt="cocktail"
-        width="32px"
-        height="32px"
-      />
+      <img src={fallback} alt="cocktail" width="32px" height="32px" />
       <Box marginRight="auto">
         <p>{name}</p>
         <p>{description}</p>
