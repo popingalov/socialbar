@@ -7,15 +7,17 @@ interface ICocktail {
 }
 
 // export interface IIngredient {
-//   id: number;
-//   name: string;
-//   image: string;
+//   id: string;
+//   ing_id: string;
+//   ing_name: string;
+//   ing_image: string;
 //   quantity: number;
 //   measure: string;
 //   garnish: boolean;
 //   optional: boolean;
-//   substitute: string | null;
+//   substitute: string | null; // id ингредиента-замены
 // }
+
 // export interface ICocktail {
 //   id: string;
 //   name: string;
@@ -23,6 +25,6 @@ interface ICocktail {
 //   glass: string;
 //   des: string;
 //   recipe: string[];
-//   type: string;
+//   type: string; // в базовом приложении у коктейля может быть только один тип
 //   ingredients: IIngredient[];
 // }
