@@ -6,31 +6,41 @@ import {
   layout,
   flexbox,
   grid,
+  border,
+  shadow,
   position,
-  justifyContent,
-  alignItems,
-  PositionProps,
-  DisplayProps,
   ColorProps,
   SpaceProps,
-  FlexProps,
-  JustifyContentProps,
+  FlexboxProps,
   LayoutProps,
   GridProps,
   TypographyProps,
-  AlignItemsProps,
+  BorderProps,
+  ShadowProps,
+  PositionProps,
 } from 'styled-system';
 
-type BoxProps = ColorProps &
-  SpaceProps &
-  DisplayProps &
-  FlexProps &
-  JustifyContentProps &
-  LayoutProps &
-  GridProps &
-  TypographyProps &
-  PositionProps &
-  AlignItemsProps;
+// type BoxProps = ColorProps &
+//   SpaceProps &
+//   DisplayProps &
+//   FlexProps &
+//   JustifyContentProps &
+//   LayoutProps &
+//   GridProps &
+//   TypographyProps &
+//   PositionProps &
+//   AlignItemsProps;
+
+interface BoxProps
+  extends SpaceProps,
+    TypographyProps,
+    ColorProps,
+    LayoutProps,
+    ShadowProps,
+    BorderProps,
+    FlexboxProps,
+    GridProps,
+    PositionProps {}
 
 export const Box = styled.div<BoxProps>(
   typography,
@@ -40,6 +50,6 @@ export const Box = styled.div<BoxProps>(
   flexbox,
   grid,
   position,
-  justifyContent,
-  alignItems,
+  border,
+  shadow,
 );

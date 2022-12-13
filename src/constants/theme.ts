@@ -11,6 +11,7 @@ export const theme = {
     backdropColor: ' rgba(0, 0, 0, 0.5)', // backdrop grey shadow color
     inputError: ' rgba(142, 22, 0, 0.08)', // red input error color
     borderBottom: 'rgba(0, 0, 0, 0.13)',
+    link: '#1155bb',
   },
 
   space: [0, 4, 8, 16, 32, 64, 128, 256, 512],
