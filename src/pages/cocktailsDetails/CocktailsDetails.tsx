@@ -1,3 +1,5 @@
+import { CocktailDescription } from 'components/cocktailsDesc/CocktailDesc';
+
 export const CocktailsDetails = () => {
-  return <div>CocktailsDetails</div>;
+  return <CocktailDescription />;
 };
