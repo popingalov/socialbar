@@ -6,8 +6,7 @@ import { Menu, MenuHeader, Overlay } from './MobileMenu.styled';
 const modalRoot: HTMLDivElement = document.querySelector('#modal')!;
 
 interface IProps {
-  closeMenu?: () => void;
-  children?: React.ReactNode;
+  closeMenu: () => void;
 }
 
 const menu = {
@@ -15,34 +14,24 @@ const menu = {
   show: { opacity: 1, translateX: 0 },
 };
 
-export const MobileMenu: React.FC<IProps> = ({ children, closeMenu }) => {
-  // useEffect(() => {
-  //   const handleKeyDown: EventListenerOrEventListenerObject = event => {
-  //     if (event instanceof KeyboardEvent && event.code === 'Escape')
-  //       closeMenu();
-  //   };
-
-  //   window.addEventListener('keydown', handleKeyDown);
-
-  //   return () => window.removeEventListener('keydown', handleKeyDown);
-  // }, [closeMenu]);
-
-  // const handleBackdrop = (event: React.MouseEvent<HTMLDivElement>) => {
-  //   if (event.target === event.currentTarget) closeMenu();
-  // };
+export const MobileMenu: React.FC<IProps> = ({ closeMenu }) => {
+  const handleBackdrop = (event: React.MouseEvent<HTMLDivElement>) => {
+    if (event.target === event.currentTarget) closeMenu();
+  };
 
   return createPortal(
     <Overlay
-      key="modal"
+      key="menu"
       variants={menu}
       initial="hidden"
       animate="show"
       exit="hidden"
-      // onClick={handleBackdrop}
+      transition={{ duration: 0.2 }}
+      onClick={handleBackdrop}
     >
       <Menu>
         <MenuHeader />
-        <Navigation />
+        <Navigation closeMenu={closeMenu} />
       </Menu>
     </Overlay>,
     modalRoot,

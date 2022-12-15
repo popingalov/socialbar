@@ -8,11 +8,11 @@ export const Overlay = styled(motion.div)`
   width: 100vw;
   height: 100vh;
   z-index: 1000;
-  background-color: ${p => p.theme.colors.backdropColor};
+  background-color: ${({ theme }) => theme.colors.backdropColor};
 `;
 
 export const Menu = styled.div`
-  background-color: ${p => p.theme.colors.mainBackgroundColor};
+  background-color: ${({ theme }) => theme.colors.mainBackgroundColor};
   width: 70%;
   height: 100%;
   overflow-y: scroll;
@@ -20,5 +20,5 @@ export const Menu = styled.div`
 
 export const MenuHeader = styled.div`
   min-height: 100px;
-  background-color: ${p => p.theme.colors.accentBackgroundColor};
+  background-color: ${({ theme }) => theme.colors.accentBackgroundColor};
 `;
