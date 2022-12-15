@@ -1,6 +1,6 @@
 import { setupListeners } from '@reduxjs/toolkit/dist/query/react';
 import { configureStore } from '@reduxjs/toolkit';
-import { startTest } from './apis/operation';
+import { startTest } from './apis/ingredients';
 import { filterReducer } from './filter/filterSlice';
 
 const store = configureStore({

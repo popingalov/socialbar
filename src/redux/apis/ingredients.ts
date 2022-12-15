@@ -4,19 +4,24 @@ export const startTest = createApi({
   reducerPath: 'api',
   refetchOnFocus: true,
   tagTypes: ['api'],
-  baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:5000' }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: 'https://back-end-socialbar.vercel.app/api',
+  }),
+
   keepUnusedDataFor: Infinity,
   endpoints: builder => ({
     takeIngredients: builder.query<IIngredient[], number>({
-      query: limit => ({
-        url: '/ingredients',
-        params: {
-          _limit: limit,
+      query: () => ({
+        url: '/inc',
+        method: 'GET',
+        headers: {
+          email: 'happy2@gmail.com',
         },
       }),
       providesTags: ['api'],
       transformResponse: (response: IIngredient[]) => response,
     }),
+
     takeCocktails: builder.query<ICocktail[], number>({
       query: limit => ({
         url: '/cocktail',
