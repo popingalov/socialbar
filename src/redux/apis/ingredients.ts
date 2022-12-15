@@ -12,8 +12,9 @@ export const startTest = createApi({
   endpoints: builder => ({
     takeIngredients: builder.query<IIngredient[], number>({
       query: () => ({
-        url: '/inc',
+        url: '/ing',
         method: 'GET',
+        mode: 'no-cors',
         headers: {
           email: 'happy2@gmail.com',
         },
