@@ -1,12 +1,12 @@
 import { mainNavItems } from 'constants/navItems';
 import React from 'react';
-import { Link, NavigationStyled, NavItem } from './Navigation.styled';
+import { Link, NavigationStyled, NavItem } from './MainNavigation.styled';
 
 interface IProps {
   closeMenu: () => void;
 }
 
-export const Navigation: React.FC<IProps> = ({ closeMenu }) => {
+export const MainNavigation: React.FC<IProps> = ({ closeMenu }) => {
   return (
     <>
       <NavigationStyled>

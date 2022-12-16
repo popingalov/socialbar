@@ -1,5 +1,5 @@
-import { Navigation } from 'components/navigation/Navigation';
 import React from 'react';
+import { MainNavigation } from 'components/mainNavigation/MainNavigation';
 import { createPortal } from 'react-dom';
 import { Menu, MenuHeader, Overlay } from './MobileMenu.styled';
 
@@ -31,7 +31,7 @@ export const MobileMenu: React.FC<IProps> = ({ closeMenu }) => {
     >
       <Menu>
         <MenuHeader />
-        <Navigation closeMenu={closeMenu} />
+        <MainNavigation closeMenu={closeMenu} />
       </Menu>
     </Overlay>,
     modalRoot,
