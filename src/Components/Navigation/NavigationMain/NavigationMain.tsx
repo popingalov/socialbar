@@ -23,6 +23,7 @@ const NavigationMain = () => {
   const handleAppMenu = () => console.log('Go App menu');
 
   const renderSideButton = () => {
+    console.log('go');
     if (isSearch)
       return (
         <ClearButton onClick={handleSideMenu}>
