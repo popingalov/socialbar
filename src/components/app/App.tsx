@@ -3,15 +3,15 @@ import { Route, Routes } from 'react-router-dom';
 
 import { Loader } from 'components/loader/Loader';
 
-import MainLayout from 'layouts/MainLayout';
-import ShortLayout from 'layouts/ShortLayout';
+import MainLayout from 'layouts/mainLayout';
+import ShortLayout from 'layouts/shortLayout';
 
 // import { Home } from 'pages/Home/Home';
-import { Cocktails } from 'pages/Cocktails/Cocktails';
-import { Ingredients } from 'pages/Ingredients/Ingredients';
-import { CocktailsDetails } from 'pages/CocktailsDetails/CocktailsDetails';
-import { IngredientDetails } from 'pages/IngredientDetails/IngredientDetails';
-import { Settings } from 'pages/Settings/Settings';
+import { Cocktails } from 'pages/cocktails/Cocktails';
+import { Ingredients } from 'pages/ingredients/Ingredients';
+import { CocktailsDetails } from 'pages/cocktailsDetails/CocktailsDetails';
+import { IngredientDetails } from 'pages/ingredientDetails/IngredientDetails';
+import { Settings } from 'pages/settings/Settings';
 
 import { GlobalStyle } from './App.styled';
 

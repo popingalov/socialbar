@@ -1,40 +1,40 @@
 import React from 'react';
 
 export const MainLayout: React.FC = React.lazy(
-  () => import('layouts/MainLayout'),
+  () => import('layouts/mainLayout'),
 );
 export const ShortLayout: React.FC = React.lazy(
-  () => import('layouts/ShortLayout'),
+  () => import('layouts/shortLayout'),
 );
 
 export const Cocktails: React.FC = React.lazy(() =>
-  import('pages/Cocktails/Cocktails').then(module => ({
+  import('pages/cocktails/Cocktails').then(module => ({
     default: module.Cocktails,
   })),
 );
 export const CocktailsDetails: React.FC = React.lazy(() =>
-  import('pages/CocktailsDetails/CocktailsDetails').then(module => ({
+  import('pages/cocktailsDetails/CocktailsDetails').then(module => ({
     default: module.CocktailsDetails,
   })),
 );
 export const Home: React.FC = React.lazy(() =>
-  import('pages/Home/Home').then(module => ({
+  import('pages/home/Home').then(module => ({
     default: module.Home,
   })),
 );
 export const IngredientDetails: React.FC = React.lazy(() =>
-  import('pages/IngredientDetails/IngredientDetails').then(module => ({
+  import('pages/ingredientDetails/IngredientDetails').then(module => ({
     default: module.IngredientDetails,
   })),
 );
 export const Ingredients: React.FC = React.lazy(() =>
-  import('pages/Ingredients/Ingredients').then(module => ({
+  import('pages/ingredients/Ingredients').then(module => ({
     default: module.Ingredients,
   })),
 );
 
 export const Settings: React.FC = React.lazy(() =>
-  import('pages/Settings/Settings').then(module => ({
+  import('pages/settings/Settings').then(module => ({
     default: module.Settings,
   })),
 );
