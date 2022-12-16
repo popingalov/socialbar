@@ -49,7 +49,6 @@
     "build": "react-scripts build",
     "box": "generate-react component",
     "test": "react-scripts test",
-    "host": "json-server --watch db.json --port 5000",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
     "deploy": "netlify deploy -p"

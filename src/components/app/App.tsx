@@ -15,34 +15,29 @@ import { Settings } from 'pages/Settings/Settings';
 
 import { GlobalStyle } from './App.styled';
 
-const App = () => {
-  return (
-    <>
-      <GlobalStyle />
-      <Suspense fallback={<Loader />}>
-        <Routes>
-          <Route path="/" element={<MainLayout />}>
-            <Route index element={<Home />} />
+const App = () => (
+  <>
+    <GlobalStyle />
+    <Suspense fallback={<Loader />}>
+      <Routes>
+        <Route path="/" element={<MainLayout />}>
+          <Route index element={<Home />} />
 
-            <Route path="cocktails" element={<Cocktails />} />
-            <Route path="ingredients" element={<Ingredients />} />
-          </Route>
+          <Route path="cocktails" element={<Cocktails />} />
+          <Route path="ingredients" element={<Ingredients />} />
+        </Route>
 
-          <Route path="/" element={<ShortLayout />}>
-            <Route
-              path="cocktails/:cocktailId"
-              element={<CocktailsDetails />}
-            />
-            <Route
-              path="ingredients/:ingredientId"
-              element={<IngredientDetails />}
-            />
-            <Route path="settings" element={<Settings />} />
-          </Route>
-        </Routes>
-      </Suspense>
-    </>
-  );
-};
+        <Route path="/" element={<ShortLayout />}>
+          <Route path="cocktails/:cocktailId" element={<CocktailsDetails />} />
+          <Route
+            path="ingredients/:ingredientId"
+            element={<IngredientDetails />}
+          />
+          <Route path="settings" element={<Settings />} />
+        </Route>
+      </Routes>
+    </Suspense>
+  </>
+);
 
 export default App;
