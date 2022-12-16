@@ -12,6 +12,7 @@ interface IProps {
   isInShoppingList: boolean;
   isInMyBar: boolean;
   id: string;
+  imageUrl: string;
 }
 
 export const IngredientCard: React.FC<IProps> = ({
@@ -20,6 +21,7 @@ export const IngredientCard: React.FC<IProps> = ({
   isInShoppingList,
   isInMyBar,
   id,
+  imageUrl,
 }) => {
   // realize updating ingredient availability status - PATCH
   // const [toggleAvailable, { isLoading: isUpdating }] =
@@ -27,7 +29,7 @@ export const IngredientCard: React.FC<IProps> = ({
 
   return (
     <Box position="relative" display="flex" alignItems="center">
-      <img src={fallback} alt="cocktail" width="32px" height="32px" />
+      <img src={imageUrl} alt="cocktail" width="32px" height="32px" />
       <Box marginRight="auto">
         <p>{name}</p>
         {(filter === ingredientFilterStatus.manageBarShelf ||

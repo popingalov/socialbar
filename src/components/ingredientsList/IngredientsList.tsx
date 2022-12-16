@@ -17,7 +17,7 @@ export const IngredientsList = () => {
   return (
     <BarList>
       {visibleIngredients &&
-        visibleIngredients.map(({ name, _id, shop, available }) => (
+        visibleIngredients.map(({ name, _id, shop, available, image }) => (
           <li key={_id}>
             <Link to={`${_id}`}>
               <IngredientCard
@@ -26,6 +26,7 @@ export const IngredientsList = () => {
                 filter={ingredientFilter}
                 isInShoppingList={shop}
                 isInMyBar={available}
+                imageUrl={image}
               />
             </Link>
           </li>

@@ -7,18 +7,20 @@ interface IProps {
   name: string;
   description: string;
   isFavorite: boolean;
-  allIngredientsAreAvailable: boolean;
+  allIngredientsAreAvailable?: boolean;
+  imageUrl: string;
 }
 
 export const CocktailCard: React.FC<IProps> = ({
   isFavorite,
   name,
   description,
-  allIngredientsAreAvailable,
+  allIngredientsAreAvailable = false,
+  imageUrl,
 }) => {
   return (
     <Box position="relative" display="flex" alignItems="center">
-      <img src={fallback} alt="cocktail" width="32px" height="32px" />
+      <img src={imageUrl} alt="cocktail" width="32px" height="32px" />
       <Box marginRight="auto">
         <p>{name}</p>
         <p>{description}</p>

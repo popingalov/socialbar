@@ -16,7 +16,7 @@ export const CocktailList = () => {
     <BarList>
       {visibleCocktails &&
         visibleCocktails.map(
-          ({ name, description, favorite, ingredients, _id }) => {
+          ({ name, description, favorite, ingredients, _id, image }) => {
             const isAvailable: boolean = ingredients.every(
               ({ available }) => available,
             );
@@ -28,6 +28,7 @@ export const CocktailList = () => {
                     allIngredientsAreAvailable={isAvailable}
                     name={name}
                     description={description}
+                    imageUrl={image}
                   />
                 </Link>
               </ListItem>
