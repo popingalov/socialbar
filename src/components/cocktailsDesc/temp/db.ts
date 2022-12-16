@@ -1,9 +1,9 @@
 import { ICocktail } from '../CocktailDesc';
 import cube from './cuba-png.png';
 import rum from './rum.jpeg';
-import cola from './cola.jpg';
 import ice from './ice.jpeg';
 import lemon from './lime.jpg';
+import cola from './cola.jpg';
 
 export const cocktail: ICocktail = {
   id: '123fgre5rte',

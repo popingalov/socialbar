@@ -31,7 +31,7 @@ export interface IIngredient {
 export interface ICocktail {
   id: string;
   name: string;
-  image: string;
+  image: any;
   glass: string;
   des: string;
   recipe: string[];
