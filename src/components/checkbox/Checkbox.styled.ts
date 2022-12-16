@@ -6,7 +6,7 @@ export const CheckboxLabel = styled.label`
   vertical-align: middle;
   font-size: 0;
   cursor: pointer;
-  padding: ${p => p.theme.space[1]}px;
+  padding: ${({ theme }) => theme.space[1]}px;
 `;
 
 export const Icon = styled.svg`
@@ -33,18 +33,18 @@ export const StyledCheckbox = styled(motion.div)<{ checked: boolean }>`
   display: inline-block;
   width: 18px;
   height: 18px;
-  background-color: ${p =>
-    p.checked ? p.theme.colors.accent : p.theme.colors.mainBackgroundColor};
-  border: 2px solid ${p => p.theme.colors.accent};
+  background-color: ${({ checked, theme }) =>
+    checked ? theme.colors.accent : theme.colors.mainBackgroundColor};
+  border: 2px solid ${({ theme }) => theme.colors.accent};
   border-radius: 3px;
   transition: all 150ms;
-  transition: background-color 250ms ${p => p.theme.transitionTiming};
+  transition: background-color 250ms ${({ theme }) => theme.transitionTiming};
 
   ${HiddenCheckbox}:focus + & {
-    box-shadow: 0 0 0 1px ${p => p.theme.colors.secondaryAccent};
+    box-shadow: 0 0 0 1px ${({ theme }) => theme.colors.secondaryAccent};
   }
 
   ${Icon} {
-    visibility: ${p => (p.checked ? 'visible' : 'hidden')};
+    visibility: ${({ checked }) => (checked ? 'visible' : 'hidden')};
   }
 `;

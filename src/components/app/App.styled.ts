@@ -2,9 +2,9 @@ import { createGlobalStyle } from 'styled-components';
 
 export const GlobalStyle = createGlobalStyle`
   body {
-    font-family: ${p => p.theme.fontFamily};
-    color: ${p => p.theme.colors.mainText}; 
-    background-color: ${p => p.theme.colors.mainBackgroundColor};
+    font-family: ${({ theme }) => theme.fontFamily};
+    color: ${({ theme }) => theme.colors.mainText}; 
+    background-color: ${({ theme }) => theme.colors.mainBackgroundColor};
   }
 
   * {
