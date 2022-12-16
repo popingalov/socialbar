@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router';
 
-import NavigationMain from 'Components/Navigation/NavigationMain';
+import NavigationMain from 'components/Navigation/NavigationMain';
 
 const MainLayout = () => (
   <>

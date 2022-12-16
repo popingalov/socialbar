@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import SearchBar from 'Components/SearchBar';
-import ClearButton from 'Components/UI-kit/buttons/ClearButton';
+import SearchBar from 'components/SearchBar';
+import ClearButton from 'components/UI-kit/buttons/ClearButton';
 import { Wrapper, MenuHolder } from './NavigationMain.styled';
 
 import { AiOutlineMenu, AiOutlineSearch } from 'react-icons/ai';

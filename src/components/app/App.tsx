@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react';
 import { Route } from 'react-router-dom';
-import { Loader } from 'components/loader/Loader';
+import { Loader } from 'components/Loader/Loader';
 // import {
 //   useTakeIngredientsQuery,
 //   useTakeCocktailsQuery,
@@ -9,45 +9,38 @@ import { GlobalStyle } from './App.styled';
 import { Routes } from 'react-router';
 
 const Cocktails: React.FC = React.lazy(() =>
-  import('pages/cocktails/Cocktails').then(module => ({
+  import('pages/Cocktails/Cocktails').then(module => ({
     default: module.Cocktails,
   })),
 );
 const CocktailsDetails: React.FC = React.lazy(() =>
-  import('pages/cocktailsDetails/CocktailsDetails').then(module => ({
+  import('pages/CocktailsDetails/CocktailsDetails').then(module => ({
     default: module.CocktailsDetails,
   })),
 );
 const Home: React.FC = React.lazy(() =>
-  import('pages/home/Home').then(module => ({
+  import('pages/Home/Home').then(module => ({
     default: module.Home,
   })),
 );
 const IngredientDetails: React.FC = React.lazy(() =>
-  import('pages/ingredientDetails/IngredientDetails').then(module => ({
+  import('pages/IngredientDetails/IngredientDetails').then(module => ({
     default: module.IngredientDetails,
   })),
 );
 const Ingredients: React.FC = React.lazy(() =>
-  import('pages/ingredients/Ingredients').then(module => ({
+  import('pages/Ingredients/Ingredients').then(module => ({
     default: module.Ingredients,
   })),
 );
-const MainLayout: React.FC = React.lazy(() =>
-  import('components/mainLayout/MainLayout').then(module => ({
-    default: module.MainLayout,
-  })),
-);
 const Settings: React.FC = React.lazy(() =>
-  import('pages/settings/Settings').then(module => ({
+  import('pages/Settings/Settings').then(module => ({
     default: module.Settings,
   })),
 );
-const ShortLayout: React.FC = React.lazy(() =>
-  import('components/shortLayout/ShortLayout').then(module => ({
-    default: module.ShortLayout,
-  })),
-);
+
+const MainLayout: React.FC = React.lazy(() => import('layouts/MainLayout'));
+const ShortLayout: React.FC = React.lazy(() => import('layouts/ShortLayout'));
 
 function App() {
   // const { data: ing } = useTakeIngredientsQuery('');

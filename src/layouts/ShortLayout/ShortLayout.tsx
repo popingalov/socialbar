@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router';
 
-import NavigationCard from 'Components/Navigation/NavigationCard';
+import NavigationCard from 'components/Navigation/NavigationCard';
 
 const ShortLayout = () => (
   <>

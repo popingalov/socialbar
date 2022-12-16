@@ -9,7 +9,7 @@ import { IngredientDetails } from 'pages/IngredientDetails/IngredientDetails';
 import { ShoppingList } from 'pages/ShoppingList/ShoppingList';
 import { Settings } from 'pages/Settings/Settings';
 
-import { Loader } from 'Components/Loader/Loader';
+import { Loader } from 'components/Loader/Loader';
 
 import MainLayout from 'layouts/MainLayout';
 import ShortLayout from 'layouts/ShortLayout';
