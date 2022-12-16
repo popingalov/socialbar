@@ -5,7 +5,6 @@ import { useSelector } from 'react-redux';
 import { IngredientCard } from 'components/ingredientCard/IngredientCard';
 import { useTakeIngredientsQuery } from 'redux/apis/ingredients';
 import { ingredientFilterStatus } from 'redux/filter/filterConstants';
-import { ListItem } from './IngredientList.styled';
 
 export const IngredientsList = () => {
   const { data: ingredients } = useTakeIngredientsQuery(5);
@@ -19,8 +18,8 @@ export const IngredientsList = () => {
     <BarList>
       {visibleIngredients &&
         visibleIngredients.map(({ name, _id, shop, available }) => (
-          <ListItem key={_id}>
-            <Link to={`/`}>
+          <li key={_id}>
+            <Link to={`${_id}`}>
               <IngredientCard
                 id={_id}
                 name={name}
@@ -29,7 +28,7 @@ export const IngredientsList = () => {
                 isInMyBar={available}
               />
             </Link>
-          </ListItem>
+          </li>
         ))}
     </BarList>
   );

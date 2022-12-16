@@ -16,7 +16,7 @@ export const ingApi = createApi({
   refetchOnFocus: true,
   tagTypes: ['ing'],
   baseQuery,
-  keepUnusedDataFor: Infinity,
+  // keepUnusedDataFor: Infinity,
   endpoints: builder => ({
     takeIngredients: builder.query({
       query: () => ({

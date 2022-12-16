@@ -25,7 +25,7 @@ export const cocApi = createApi({
   refetchOnFocus: true,
   tagTypes: ['coc'],
   baseQuery,
-  keepUnusedDataFor: Infinity,
+  // keepUnusedDataFor: Infinity,
   endpoints: builder => ({
     takeCocktails: builder.query({
       query: () => ({

@@ -15,24 +15,25 @@ export const CocktailList = () => {
   return (
     <BarList>
       {visibleCocktails &&
-        visibleCocktails.map(({ name, description, favorite, ingredients }) => {
-          const isAvailable: boolean = ingredients.every(
-            ({ available }) => available,
-          );
-
-          return (
-            <ListItem key={name} allIngredientsAreAvailable={isAvailable}>
-              <Link to={`/`}>
-                <CocktailCard
-                  isFavorite={favorite}
-                  allIngredientsAreAvailable={isAvailable}
-                  name={name}
-                  description={description}
-                />
-              </Link>
-            </ListItem>
-          );
-        })}
+        visibleCocktails.map(
+          ({ name, description, favorite, ingredients, _id }) => {
+            const isAvailable: boolean = ingredients.every(
+              ({ available }) => available,
+            );
+            return (
+              <ListItem key={name} allIngredientsAreAvailable={isAvailable}>
+                <Link to={`${_id}`}>
+                  <CocktailCard
+                    isFavorite={favorite}
+                    allIngredientsAreAvailable={isAvailable}
+                    name={name}
+                    description={description}
+                  />
+                </Link>
+              </ListItem>
+            );
+          },
+        )}
     </BarList>
   );
 };
@@ -47,17 +48,6 @@ function getVisibleCocktails(cocktails: ICocktail[], filterStatus: string) {
       );
       const isMine = cocktails.filter(({ isMine }) => isMine);
       return Array.from(new Set([...isAvailable, ...isMine]));
-
-    // return cocktails
-    //   .filter(
-    //     ({ ingredients, isMine }) =>
-    //       ingredients.every(({ available }) => available) || isMine,
-    //   )
-    //   .sort(
-    //     (a, b) =>
-    //       Number(b.ingredients.every(({ available }) => available)) -
-    //       Number(a.ingredients.every(({ available }) => available)),
-    //   );
     default:
       return cocktails;
   }

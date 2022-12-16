@@ -12,7 +12,7 @@ export const userApi = createApi({
   refetchOnFocus: true,
   tagTypes: ['user'],
   baseQuery,
-  keepUnusedDataFor: Infinity,
+  // keepUnusedDataFor: Infinity,
   endpoints: builder => ({
     createNewUser: builder.query({
       query: (obj: User) => ({
