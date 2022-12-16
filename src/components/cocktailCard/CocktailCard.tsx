@@ -1,6 +1,6 @@
-import { Icon } from './CocktailCard.styled';
 import { LowIcon } from 'components/lowIcon/LowIcon';
 import { Box } from 'components/box/Box';
+import { BiCheck } from 'react-icons/bi';
 
 interface IProps {
   name: string;
@@ -25,10 +25,8 @@ export const CocktailCard: React.FC<IProps> = ({
         <p>{description}</p>
       </Box>
       {allIngredientsAreAvailable && (
-        <Box padding="4px" fontSize="0">
-          <Icon viewBox="2 2 20 20" width="16px" height="16px">
-            <polyline points="20 6 9 17 4 12" />
-          </Icon>
+        <Box width="28px" height="28px" color="accent">
+          <BiCheck size={28} />
         </Box>
       )}
       {isFavorite && <LowIcon type="cocktails" />}

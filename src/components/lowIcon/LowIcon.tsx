@@ -16,8 +16,8 @@ export const LowIcon: React.FC<IProps> = ({ type }) => {
           position: 'absolute',
           bottom: '0',
           right: '-12px',
-          width: '10px',
-          height: '10px',
+          width: '12px',
+          height: '12px',
         },
       }}
     >
