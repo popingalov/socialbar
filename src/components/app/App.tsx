@@ -6,7 +6,7 @@ import { Loader } from 'components/loader/Loader';
 import MainLayout from 'layouts/MainLayout';
 import ShortLayout from 'layouts/ShortLayout';
 
-import { Home } from 'pages/Home/Home';
+// import { Home } from 'pages/Home/Home';
 import { Cocktails } from 'pages/Cocktails/Cocktails';
 import { Ingredients } from 'pages/Ingredients/Ingredients';
 import { CocktailsDetails } from 'pages/CocktailsDetails/CocktailsDetails';
@@ -21,9 +21,9 @@ const App = () => (
     <Suspense fallback={<Loader />}>
       <Routes>
         <Route path="/" element={<MainLayout />}>
-          <Route index element={<Home />} />
+          {/* <Route index element={<Home />} /> */}
 
-          <Route path="cocktails" element={<Cocktails />} />
+          <Route index element={<Cocktails />} />
           <Route path="ingredients" element={<Ingredients />} />
         </Route>
 

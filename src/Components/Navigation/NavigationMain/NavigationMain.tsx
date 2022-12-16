@@ -9,38 +9,29 @@ import { AiOutlineMenu, AiOutlineSearch } from 'react-icons/ai';
 import { BiArrowBack, BiDotsVerticalRounded } from 'react-icons/bi';
 
 const NavigationMain = () => {
-  const navigate = useNavigate();
-
   const [isSearch, setSearch] = useState(false);
 
   const handleSideMenu = () => {
-    if (isSearch) setSearch(false);
-    else navigate(-1);
+    console.log('open side menu');
   };
+
+  const handleBackButton = () => setSearch(false);
 
   const handleSearchButton = () => setSearch(true);
 
   const handleAppMenu = () => console.log('Go App menu');
 
-  const renderSideButton = () => {
-    console.log('go');
-    if (isSearch)
-      return (
-        <ClearButton onClick={handleSideMenu}>
+  return (
+    <Wrapper>
+      {isSearch ? (
+        <ClearButton onClick={handleBackButton}>
           <BiArrowBack />
         </ClearButton>
-      );
-    else
-      return (
+      ) : (
         <ClearButton onClick={handleSideMenu}>
           <AiOutlineMenu />
         </ClearButton>
-      );
-  };
-
-  return (
-    <Wrapper>
-      {renderSideButton()}
+      )}
 
       {isSearch && <SearchBar />}
 
