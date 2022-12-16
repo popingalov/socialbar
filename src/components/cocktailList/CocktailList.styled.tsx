@@ -1,9 +1,10 @@
 import styled from 'styled-components';
 
 export const ListItem = styled.li<{ allIngredientsAreAvailable: boolean }>`
-/* allIngredientsAreAvailable: ; */
-background-color: ${({theme,allIngredientsAreAvailable}) => allIngredientsAreAvailable ? theme.colors.};
-
+  background-color: ${({ theme, allIngredientsAreAvailable }) =>
+    allIngredientsAreAvailable
+      ? theme.colors.activeLinkBackgroundColor
+      : theme.colors.mainBackgroundColor};
 
   a {
     display: block;
