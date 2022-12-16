@@ -9,9 +9,9 @@ interface INavLink {
 }
 
 export const mainNavItems: INavLink[] = [
-  { href: '/ingredients', label: 'Ingredients' },
-  { href: '/cocktails', label: 'Cocktails' },
-  { href: '/settings', label: 'Settings' },
+  { href: 'ingredients', label: 'Ingredients' },
+  { href: 'cocktails', label: 'Cocktails' },
+  { href: 'settings', label: 'Settings' },
 ];
 
 interface INavPageLink {

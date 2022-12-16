@@ -13,9 +13,9 @@ export const IngredientsList = () => {
   return (
     <BarList>
       {ingredients &&
-        ingredients.map(({ name, _id }) => (
+        ingredients.map(({ name }) => (
           <li key={name}>
-            <Link to={`${_id}`}>
+            <Link to={`/`}>
               <IngredientCard filter={ingredientFilter} name={name} />
             </Link>
           </li>

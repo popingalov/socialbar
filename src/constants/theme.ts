@@ -12,8 +12,6 @@ export const theme = {
     inputError: ' rgba(142, 22, 0, 0.08)', // red input error color
     borderBottom: 'rgba(0, 0, 0, 0.13)',
     link: '#1155bb',
-    activeLinkBackgroundColor: 'rgba(58,175,169,0.2)',
-    hoverLinkBackgroundColor: 'rgba(43,122,120,0.5)',
   },
 
   space: [0, 4, 8, 16, 32, 64, 128, 256, 512],
