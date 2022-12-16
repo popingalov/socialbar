@@ -1,5 +1,5 @@
 import { Navigation } from 'components/navigation/Navigation';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { createPortal } from 'react-dom';
 import { Menu, MenuHeader, Overlay } from './MobileMenu.styled';
 
