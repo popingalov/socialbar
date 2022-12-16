@@ -13,9 +13,9 @@ export const CocktailList = () => {
   return (
     <BarList>
       {cocktails &&
-        cocktails.map(({ name, description }) => (
+        cocktails.map(({ name, description, _id }) => (
           <li key={name}>
-            <Link to={`/`}>
+            <Link to={`${_id}`}>
               <CocktailCard
                 filter={cocktailFilter}
                 name={name}
