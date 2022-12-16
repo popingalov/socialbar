@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { ingredientFilterStatus } from 'redux/filter/filterConstants';
 import { RxCross2 } from 'react-icons/rx';
 import { Checkbox } from 'components/checkbox/Checkbox';
@@ -10,10 +9,21 @@ import fallback from '../../assets/fallback.png';
 interface IProps {
   filter: string;
   name: string;
+  isInShoppingList: boolean;
+  isInMyBar: boolean;
+  id: string;
 }
 
-export const IngredientCard: React.FC<IProps> = ({ filter, name }) => {
-  const [checked, setChecked] = useState(false);
+export const IngredientCard: React.FC<IProps> = ({
+  filter,
+  name,
+  isInShoppingList,
+  isInMyBar,
+  id,
+}) => {
+  // realize updating ingredient availability status - PATCH
+  // const [toggleAvailable, { isLoading: isUpdating }] =
+  //   useToggleAvailableINgredientMutation();
 
   return (
     <Box position="relative" display="flex" alignItems="center">
@@ -26,15 +36,12 @@ export const IngredientCard: React.FC<IProps> = ({ filter, name }) => {
         )}
       </Box>
       {filter === ingredientFilterStatus.manageBarShelf && (
-        <Checkbox
-          checked={checked}
-          onChange={e => setChecked(e.target.checked)}
-        />
+        // onChange={() => toggleAvailable(id)}
+        <Checkbox checked={isInMyBar} onChange={() => id} />
       )}
       {(filter === ingredientFilterStatus.myBarShelf ||
-        filter === ingredientFilterStatus.manageBarShelf) && (
-        <LowIcon type="ingredients" />
-      )}
+        filter === ingredientFilterStatus.manageBarShelf) &&
+        isInShoppingList && <LowIcon type="ingredients" />}
       {filter === ingredientFilterStatus.shoppingList && (
         <IconButton>
           <RxCross2 aria-label="delete" />
