@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { selectCocktailFilter } from 'redux/filter/filterSelectors';
 import { CocktailCard } from 'components/cocktailCard/CocktailCard';
 import { cocktailFilterStatus } from 'redux/filter/filterConstants';
+import { ListItem } from './CocktailList.styled';
 
 export const CocktailList = () => {
   const { data: cocktails } = useTakeCocktailsQuery(5);
@@ -14,18 +15,24 @@ export const CocktailList = () => {
   return (
     <BarList>
       {visibleCocktails &&
-        visibleCocktails.map(({ name, description, favorite, ingredients }) => (
-          <li key={name}>
-            <Link to={`/`}>
-              <CocktailCard
-                isFavorite={favorite}
-                name={name}
-                description={description}
-                ingredients={ingredients}
-              />
-            </Link>
-          </li>
-        ))}
+        visibleCocktails.map(({ name, description, favorite, ingredients }) => {
+          const isAvailable: boolean = ingredients.every(
+            ({ available }) => available,
+          );
+
+          return (
+            <ListItem key={name} allIngredientsAreAvailable={isAvailable}>
+              <Link to={`/`}>
+                <CocktailCard
+                  isFavorite={favorite}
+                  allIngredientsAreAvailable={isAvailable}
+                  name={name}
+                  description={description}
+                />
+              </Link>
+            </ListItem>
+          );
+        })}
     </BarList>
   );
 };
