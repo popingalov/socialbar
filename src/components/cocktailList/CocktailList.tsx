@@ -47,6 +47,17 @@ function getVisibleCocktails(cocktails: ICocktail[], filterStatus: string) {
       );
       const isMine = cocktails.filter(({ isMine }) => isMine);
       return Array.from(new Set([...isAvailable, ...isMine]));
+
+    // return cocktails
+    //   .filter(
+    //     ({ ingredients, isMine }) =>
+    //       ingredients.every(({ available }) => available) || isMine,
+    //   )
+    //   .sort(
+    //     (a, b) =>
+    //       Number(b.ingredients.every(({ available }) => available)) -
+    //       Number(a.ingredients.every(({ available }) => available)),
+    //   );
     default:
       return cocktails;
   }
