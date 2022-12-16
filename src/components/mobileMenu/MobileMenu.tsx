@@ -9,10 +9,10 @@ interface IProps {
   closeMenu: () => void;
 }
 
-const menu = {
-  hidden: { opacity: 0, translateX: '-100px' },
-  show: { opacity: 1, translateX: 0 },
-};
+// const menu = {
+//   hidden: { opacity: 0, translateX: '-100px' },
+//   show: { opacity: 1, translateX: 0 },
+// };
 
 export const MobileMenu: React.FC<IProps> = ({ closeMenu }) => {
   const handleBackdrop = (event: React.MouseEvent<HTMLDivElement>) => {
@@ -21,12 +21,12 @@ export const MobileMenu: React.FC<IProps> = ({ closeMenu }) => {
 
   return createPortal(
     <Overlay
-      key="menu"
-      variants={menu}
-      initial="hidden"
-      animate="show"
-      exit="hidden"
-      transition={{ duration: 0.2 }}
+      // key="menu"
+      // variants={menu}
+      // initial="hidden"
+      // animate="show"
+      // exit="hidden"
+      // transition={{ duration: 0.2 }}
       onClick={handleBackdrop}
     >
       <Menu>

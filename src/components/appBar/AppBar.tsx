@@ -15,9 +15,10 @@ export const AppBar = () => {
       {/* temp */}
       <button onClick={toggleMenu}>open mobile menu</button>
       {/* to check when element will be unmounted for animation */}
-      <AnimatePresence>
+      {/* <AnimatePresence>
         {isMenuOpen && <MobileMenu key="menu" closeMenu={toggleMenu} />}
-      </AnimatePresence>
+      </AnimatePresence> */}
+      {isMenuOpen && <MobileMenu closeMenu={toggleMenu} />}
     </Box>
   );
 };
