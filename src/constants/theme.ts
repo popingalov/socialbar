@@ -7,13 +7,13 @@ export const theme = {
     secondaryAccent: '#17252A', // the most dark -- additional color / just in case
     accentBackgroundColor: '#3AAFA9', // header-navigation color
     mainBackgroundColor: '#f5f4fa', // very light white color
-    secondaryBackgroundColor: '#cdf7f5', // very light blue color
+    secondaryBackgroundColor: 'rgba(205,247,245,0.5)', // very light blue color
     backdropColor: ' rgba(0, 0, 0, 0.5)', // backdrop grey shadow color
     inputError: ' rgba(142, 22, 0, 0.08)', // red input error color
     borderBottom: 'rgba(0, 0, 0, 0.13)',
     link: '#1155bb',
-    activeLinkBackgroundColor: 'rgba(58,175,169,0.2)',
     hoverLinkBackgroundColor: 'rgba(43,122,120,0.5)',
+    white: '#ffffff',
   },
 
   space: [0, 4, 8, 16, 32, 64, 128, 256, 512],

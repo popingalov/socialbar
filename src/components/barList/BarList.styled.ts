@@ -14,8 +14,23 @@ export const BarListStyled = styled.ul`
   }
 
   img {
-    width: 32px;
-    height: 32px;
     margin-right: ${p => p.theme.space[3]}px;
+    display: block;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    border: 1px solid rgba(0, 0, 0, 0.13);
+    object-fit: contain;
+    background-color: ${({ theme }) => theme.colors.white};
   }
+`;
+
+export const IngredientImage = styled.img`
+  display: block;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  border: ${({ theme }) => `1px solid ${theme.colors.borderBottom}`};
+  object-fit: contain;
+  background-color: #fff;
 `;
