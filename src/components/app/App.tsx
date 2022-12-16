@@ -1,50 +1,57 @@
-import React, { Suspense } from 'react';
+import { Suspense } from 'react';
 import { Route } from 'react-router-dom';
+//
 import { Loader } from 'components/Loader/Loader';
-// import {
-//   useTakeIngredientsQuery,
-//   useTakeCocktailsQuery,
-// } from '../../redux/apis/operation';
-import { GlobalStyle } from './App.styled';
 import { Routes } from 'react-router';
-
-const Cocktails: React.FC = React.lazy(() =>
-  import('pages/Cocktails/Cocktails').then(module => ({
-    default: module.Cocktails,
-  })),
-);
-const CocktailsDetails: React.FC = React.lazy(() =>
-  import('pages/CocktailsDetails/CocktailsDetails').then(module => ({
-    default: module.CocktailsDetails,
-  })),
-);
-const Home: React.FC = React.lazy(() =>
-  import('pages/Home/Home').then(module => ({
-    default: module.Home,
-  })),
-);
-const IngredientDetails: React.FC = React.lazy(() =>
-  import('pages/IngredientDetails/IngredientDetails').then(module => ({
-    default: module.IngredientDetails,
-  })),
-);
-const Ingredients: React.FC = React.lazy(() =>
-  import('pages/Ingredients/Ingredients').then(module => ({
-    default: module.Ingredients,
-  })),
-);
-const Settings: React.FC = React.lazy(() =>
-  import('pages/Settings/Settings').then(module => ({
-    default: module.Settings,
-  })),
-);
-
-const MainLayout: React.FC = React.lazy(() => import('layouts/MainLayout'));
-const ShortLayout: React.FC = React.lazy(() => import('layouts/ShortLayout'));
+import {
+  Cocktails,
+  CocktailsDetails,
+  Home,
+  IngredientDetails,
+  Ingredients,
+  MainLayout,
+  Settings,
+  ShortLayout,
+} from './lazyexports';
+//
+// import {
+//   useTakeCocktailsQuery,
+//   useAddNewCoctailQuery,
+// } from 'redux/apis/cocteils';
+// import { useAddIngredientQuery } from 'redux/apis/ingredients';
+// import { useCreateNewUserQuery } from 'redux/apis/user';
+//
+import { GlobalStyle } from './App.styled';
 
 function App() {
-  // const { data: ing } = useTakeIngredientsQuery('');
-  // const { data: coc, isLoading, isFetching } = useTakeCocktailsQuery('');
+  // const { data } = useTakeCocktailsQuery(1);
+  // const { data } = useAddIngredientQuery({
+  //   date: {
+  //     name: 'Rom',
+  //     category: 'Water',
+  //     description: 'Very nice water',
+  //   },
+  // });
+  // const { data: mail } = useCreateNewUserQuery({
+  //   email: 'newuser@gmail.com',
+  //   name: 'poping',
+  // });
+  // console.log(data);
+  // const { data } = useAddNewCoctailQuery({
+  //   date: {
+  //     name: 'Rom Cola',
+  //     id: 'Rom Cola',
+  //     cocType: ['Strong', 'Shot'],
+  //     ingredients: ['639b4b40272d0ca02bb28bc6', '639b4b6b272d0ca02bb28bc9'],
+  //     size: {
+  //       rom: '300',
+  //       cola: '50',
+  //     },
+  //     cocMetod: 'Take 300 ml cola then add 50 ml cola',
+  //     description: 'Very nice water',
+  //   },
+  // });
+  // console.log(data);
 
   return (
     <>
