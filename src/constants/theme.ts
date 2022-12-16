@@ -13,6 +13,7 @@ export const theme = {
     borderBottom: 'rgba(0, 0, 0, 0.13)',
     link: '#1155bb',
     hoverLinkBackgroundColor: 'rgba(43,122,120,0.5)',
+    activeLinkBackgroundColor: 'rgba(58,175,169,0.2)',
     white: '#ffffff',
   },
 
