@@ -1,39 +1,42 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { createApi } from '@reduxjs/toolkit/query/react';
+import baseQuery from '../baseQuery';
 
-export const startTest = createApi({
-  reducerPath: 'api',
+interface IResponseIng {
+  ingList: IIngredient[];
+  status: string;
+}
+interface Date {
+  name: string;
+  category: string;
+  description: string;
+}
+
+export const ingApi = createApi({
+  reducerPath: 'ing',
   refetchOnFocus: true,
-  tagTypes: ['api'],
-  baseQuery: fetchBaseQuery({
-    baseUrl: 'https://back-end-socialbar.vercel.app/api',
-  }),
-
+  tagTypes: ['ing'],
+  baseQuery,
   keepUnusedDataFor: Infinity,
   endpoints: builder => ({
-    takeIngredients: builder.query<IIngredient[], number>({
+    takeIngredients: builder.query({
       query: () => ({
         url: '/ing',
         method: 'GET',
-        mode: 'no-cors',
-        headers: {
-          email: 'happy2@gmail.com',
-        },
       }),
-      providesTags: ['api'],
-      transformResponse: (response: IIngredient[]) => response,
+      providesTags: ['ing'],
+      transformResponse: (response: IResponseIng) => response.ingList,
     }),
 
-    takeCocktails: builder.query<ICocktail[], number>({
-      query: limit => ({
-        url: '/cocktail',
-        params: {
-          _limit: limit,
-        },
+    addIngredient: builder.query<IIngredient[], { date: Date }>({
+      query: ing => ({
+        url: '/ing',
+        method: 'POST',
+        body: ing,
       }),
-      providesTags: ['api'],
-      transformResponse: (response: ICocktail[]) => response,
+      providesTags: ['ing'],
+      transformResponse: (response: IIngredient[]) => response,
     }),
   }),
 });
 
-export const { useTakeIngredientsQuery, useTakeCocktailsQuery } = startTest;
+export const { useTakeIngredientsQuery, useAddIngredientQuery } = ingApi;

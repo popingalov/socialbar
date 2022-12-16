@@ -1,30 +1,19 @@
 interface ICocktail {
+  favorite: boolean;
+  isMine: boolean;
+  _id: string;
   name: string;
-  des: string;
-  recipe: string[];
-  type: string[];
-  ingredients: string[];
+  description: string;
+  image: string;
+  available: boolean;
+  cocType: string[];
+  size: Size;
+  cocMetod: string;
+  ingredients: Ingredient[];
+  glass: string;
 }
 
-// export interface IIngredient {
-//   id: string;
-//   ing_id: string;
-//   ing_name: string;
-//   ing_image: string;
-//   quantity: number;
-//   measure: string;
-//   garnish: boolean;
-//   optional: boolean;
-//   substitute: string | null; // id ингредиента-замены
-// }
-
-// export interface ICocktail {
-//   id: string;
-//   name: string;
-//   image: string;
-//   glass: string;
-//   des: string;
-//   recipe: string[];
-//   type: string; // в базовом приложении у коктейля может быть только один тип
-//   ingredients: IIngredient[];
-// }
+interface Size {
+  rom: string;
+  cola: string;
+}

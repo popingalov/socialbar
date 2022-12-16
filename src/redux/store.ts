@@ -1,15 +1,24 @@
 import { setupListeners } from '@reduxjs/toolkit/dist/query/react';
 import { configureStore } from '@reduxjs/toolkit';
-import { startTest } from './apis/ingredients';
+import { ingApi } from './apis/ingredients';
+import { cocApi } from './apis/cocteils';
+import { userApi } from './apis/user';
+
 import { filterReducer } from './filter/filterSlice';
 
 const store = configureStore({
   reducer: {
-    [startTest.reducerPath]: startTest.reducer,
+    [userApi.reducerPath]: userApi.reducer,
+    [ingApi.reducerPath]: ingApi.reducer,
+    [cocApi.reducerPath]: cocApi.reducer,
     filters: filterReducer,
   },
   middleware: getDefaultMiddleware =>
-    getDefaultMiddleware().concat(startTest.middleware),
+    getDefaultMiddleware().concat(
+      ingApi.middleware,
+      cocApi.middleware,
+      userApi.middleware,
+    ),
 });
 
 // enable listener behavior for the store
