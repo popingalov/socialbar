@@ -1,3 +1,12 @@
+import { useParams } from 'react-router';
+import { IngredientInfo } from 'components/ingredientInfo/IngredientInfo';
+
 export const IngredientDetails = () => {
-  return <div>IngredientDetails</div>;
+  const { ingredientId } = useParams();
+
+  return (
+    <div>
+      <IngredientInfo id={ingredientId} />
+    </div>
+  );
 };
