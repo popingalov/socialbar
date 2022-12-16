@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { useTakeIngredientsQuery } from 'redux/apis/operation';
+import { useTakeIngredientsQuery } from 'redux/apis/ingredients';
 import { BarList } from 'components/barList/BarList';
 import { selectIngredientFilter } from 'redux/filter/filterSelectors';
 import { useSelector } from 'react-redux';
