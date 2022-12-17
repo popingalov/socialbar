@@ -4,7 +4,7 @@ export const Wrapper = styled.nav`
   display: flex;
   justify-content: space-between;
   padding: 15px;
-  background-color: #03a9f4;
+  background-color: ${({ theme }) => theme.colors.accentBackgroundColor};
 `;
 
 export const MenuHolder = styled.div`

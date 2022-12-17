@@ -1,23 +1,35 @@
-import { useState } from 'react';
 import { ingredientFilterStatus } from 'redux/filter/filterConstants';
 import { RxCross2 } from 'react-icons/rx';
-import { Checkbox } from 'components/checkbox/Checkbox';
-import { Box } from 'components/box/Box';
-import { LowIcon } from 'components/lowIcon/LowIcon';
-import { IconButton } from 'components/iconButton/IconButton';
+import Checkbox from 'components/UI-kit/checkbox';
+import Box from 'components/box';
+import LowIcon from 'components/UI-kit/lowIcon';
+import IconButton from 'components/UI-kit/buttons/iconButton';
 // import fallback from 'assets/fallback.png';
 
 interface IProps {
   filter: string;
   name: string;
+  isInShoppingList: boolean;
+  isInMyBar: boolean;
+  id: string;
+  imageUrl: string;
 }
 
-export const IngredientCard: React.FC<IProps> = ({ filter, name }) => {
-  const [checked, setChecked] = useState(false);
+const IngredientCard: React.FC<IProps> = ({
+  filter,
+  name,
+  isInShoppingList,
+  isInMyBar,
+  id,
+  imageUrl,
+}) => {
+  // realize updating ingredient availability status - PATCH
+  // const [toggleAvailable, { isLoading: isUpdating }] =
+  //   useToggleAvailableINgredientMutation();
 
   return (
     <Box position="relative" display="flex" alignItems="center">
-      {/* <img src={fallback} alt="cocktail" width="32px" height="32px" /> */}
+      <img src={imageUrl} alt="cocktail" width="32px" height="32px" />
       <Box marginRight="auto">
         <p>{name}</p>
         {(filter === ingredientFilterStatus.manageBarShelf ||
@@ -26,15 +38,12 @@ export const IngredientCard: React.FC<IProps> = ({ filter, name }) => {
         )}
       </Box>
       {filter === ingredientFilterStatus.manageBarShelf && (
-        <Checkbox
-          checked={checked}
-          onChange={e => setChecked(e.target.checked)}
-        />
+        // onChange={() => toggleAvailable(id)}
+        <Checkbox checked={isInMyBar} onChange={() => id} />
       )}
       {(filter === ingredientFilterStatus.myBarShelf ||
-        filter === ingredientFilterStatus.manageBarShelf) && (
-        <LowIcon type="ingredients" />
-      )}
+        filter === ingredientFilterStatus.manageBarShelf) &&
+        isInShoppingList && <LowIcon type="ingredients" />}
       {filter === ingredientFilterStatus.shoppingList && (
         <IconButton>
           <RxCross2 aria-label="delete" />
@@ -43,3 +52,5 @@ export const IngredientCard: React.FC<IProps> = ({ filter, name }) => {
     </Box>
   );
 };
+
+export default IngredientCard;

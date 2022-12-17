@@ -7,7 +7,7 @@ interface IProps {
   type: 'ingredients' | 'cocktails';
 }
 
-export const LowIcon: React.FC<IProps> = ({ type }) => {
+const LowIcon: React.FC<IProps> = ({ type }) => {
   return (
     <IconContext.Provider
       value={{
@@ -25,3 +25,5 @@ export const LowIcon: React.FC<IProps> = ({ type }) => {
     </IconContext.Provider>
   );
 };
+
+export default LowIcon;

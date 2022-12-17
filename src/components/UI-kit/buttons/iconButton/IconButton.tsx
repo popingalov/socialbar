@@ -4,7 +4,8 @@ interface IProps {
   type?: 'button' | 'submit' | 'reset';
   children?: React.ReactNode;
 }
-export const IconButton: React.FC<IProps> = ({
+
+const IconButton: React.FC<IProps> = ({
   children,
   type = 'submit',
   ...allyProps
@@ -19,3 +20,5 @@ export const IconButton: React.FC<IProps> = ({
     </IconButtonStyled>
   );
 };
+
+export default IconButton;

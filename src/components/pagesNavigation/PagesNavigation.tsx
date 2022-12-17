@@ -1,4 +1,4 @@
-import { Button } from 'components/button/Button';
+import Button from 'components/UI-kit/buttons/button';
 import { cocktailsNavItems, ingredientsNavItems } from 'constants/navItems';
 import { useSelector } from 'react-redux';
 import {
@@ -16,7 +16,7 @@ interface IProps {
   type: 'ingredients' | 'cocktails';
 }
 
-export const PagesNavigation: React.FC<IProps> = ({ type }) => {
+const PagesNavigation: React.FC<IProps> = ({ type }) => {
   const navigation =
     type === 'ingredients' ? ingredientsNavItems : cocktailsNavItems;
   const filter = useSelector(
@@ -46,3 +46,5 @@ export const PagesNavigation: React.FC<IProps> = ({ type }) => {
     </NavigationListStyled>
   );
 };
+
+export default PagesNavigation;

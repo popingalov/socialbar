@@ -8,7 +8,7 @@ interface IProps {
   selected?: boolean;
 }
 
-export const Button: React.FC<IProps> = ({
+const Button: React.FC<IProps> = ({
   type = 'button',
   onClick,
   children,
@@ -25,3 +25,5 @@ export const Button: React.FC<IProps> = ({
     </ButtonStyled>
   );
 };
+
+export default Button;

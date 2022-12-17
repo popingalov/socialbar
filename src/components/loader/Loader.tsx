@@ -12,7 +12,7 @@ interface IProps {
   isLoading?: boolean;
 }
 
-export const Loader: React.FC<IProps> = ({ isLoading }) => (
+const Loader: React.FC<IProps> = ({ isLoading }) => (
   <BarLoader
     color={color}
     loading={isLoading}
@@ -21,3 +21,5 @@ export const Loader: React.FC<IProps> = ({ isLoading }) => (
     aria-label="Loading Spinner"
   />
 );
+
+export default Loader;

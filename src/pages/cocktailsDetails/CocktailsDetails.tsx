@@ -1,5 +1,7 @@
-import { CocktailDescription } from 'components/cocktailsDesc/CocktailDesc';
+import CocktailDescription from 'components/cocktailsDesc';
 
-export const CocktailsDetails = () => {
+const CocktailsDetails = () => {
   return <CocktailDescription />;
 };
+
+export default CocktailsDetails;

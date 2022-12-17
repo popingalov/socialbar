@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box } from 'components/box/Box';
+import Box from 'components/box';
 import { HiPencil, HiStar } from 'react-icons/hi';
 import { BiCheck } from 'react-icons/bi';
 import { cocktail, myBar, myFavorite } from './temp/db';
@@ -39,7 +39,7 @@ export interface ICocktail {
   ingredients: IIngredient[];
 }
 
-export const CocktailDescription = () => {
+const CocktailDescription = () => {
   const [favorite, setFavorite] = useState(
     () => !!myFavorite.find(item => item.cocktail === cocktail.name),
   );
@@ -111,3 +111,5 @@ export const CocktailDescription = () => {
     </Box>
   );
 };
+
+export default CocktailDescription;

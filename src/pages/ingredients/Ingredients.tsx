@@ -1,10 +1,7 @@
-// import { Suspense } from 'react';
-// import { Outlet } from 'react-router-dom';
-import { IngredientsList } from 'components/ingredientsList/IngredientsList';
-import { PagesNavigation } from 'components/pagesNavigation/PagesNavigation';
-// import { Loader } from 'components/loader/Loader';
+import IngredientsList from 'components/ingredientsList';
+import PagesNavigation from 'components/pagesNavigation';
 
-export const Ingredients = () => {
+const Ingredients = () => {
   return (
     <>
       <PagesNavigation type="ingredients" />
@@ -12,3 +9,5 @@ export const Ingredients = () => {
     </>
   );
 };
+
+export default Ingredients;

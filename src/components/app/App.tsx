@@ -1,18 +1,16 @@
 import { Suspense } from 'react';
 import { Route, Routes } from 'react-router-dom';
-
-import { Loader } from 'components/loader/Loader';
-
-import MainLayout from 'layouts/mainLayout';
-import ShortLayout from 'layouts/shortLayout';
-
-// import { Home } from 'pages/Home/Home';
-import { Cocktails } from 'pages/cocktails/Cocktails';
-import { Ingredients } from 'pages/ingredients/Ingredients';
-import { CocktailsDetails } from 'pages/cocktailsDetails/CocktailsDetails';
-import { IngredientDetails } from 'pages/ingredientDetails/IngredientDetails';
-import { Settings } from 'pages/settings/Settings';
-
+import {
+  Cocktails,
+  CocktailsDetails,
+  Home,
+  IngredientDetails,
+  Ingredients,
+  MainLayout,
+  Settings,
+  ShortLayout,
+} from './lazyexports';
+import Loader from 'components/loader';
 import { GlobalStyle } from './App.styled';
 
 const App = () => (
@@ -21,9 +19,9 @@ const App = () => (
     <Suspense fallback={<Loader />}>
       <Routes>
         <Route path="/" element={<MainLayout />}>
-          {/* <Route index element={<Home />} /> */}
+          <Route index element={<Home />} />
 
-          <Route index element={<Cocktails />} />
+          <Route path="cocktails" element={<Cocktails />} />
           <Route path="ingredients" element={<Ingredients />} />
         </Route>
 

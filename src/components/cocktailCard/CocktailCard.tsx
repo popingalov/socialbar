@@ -1,32 +1,37 @@
-import { Icon } from './CocktailCard.styled';
-import { LowIcon } from 'components/lowIcon/LowIcon';
-import { Box } from 'components/box/Box';
-// import fallback from '../../assets/fallback.png';
+import LowIcon from 'components/UI-kit/lowIcon';
+import Box from 'components/box';
+import { BiCheck } from 'react-icons/bi';
 
 interface IProps {
-  filter: string;
   name: string;
   description: string;
+  isFavorite: boolean;
+  allIngredientsAreAvailable?: boolean;
+  imageUrl: string;
 }
 
-export const CocktailCard: React.FC<IProps> = ({
-  filter,
+const CocktailCard: React.FC<IProps> = ({
+  isFavorite,
   name,
   description,
+  allIngredientsAreAvailable = false,
+  imageUrl,
 }) => {
   return (
     <Box position="relative" display="flex" alignItems="center">
-      {/* <img src={fallback} alt="cocktail" width="32px" height="32px" /> */}
+      <img src={imageUrl} alt="cocktail" width="50px" height="50px" />
       <Box marginRight="auto">
         <p>{name}</p>
         <p>{description}</p>
       </Box>
-      <Box padding="4px" fontSize="0">
-        <Icon viewBox="2 2 20 20" width="16px" height="16px">
-          <polyline points="20 6 9 17 4 12" />
-        </Icon>
-      </Box>
-      <LowIcon type="cocktails" />
+      {allIngredientsAreAvailable && (
+        <Box width="28px" height="28px" color="accent">
+          <BiCheck size={28} />
+        </Box>
+      )}
+      {isFavorite && <LowIcon type="cocktails" />}
     </Box>
   );
 };
+
+export default CocktailCard;
