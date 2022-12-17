@@ -15,8 +15,13 @@ export const BarListStyled = styled.ul`
   }
 
   img {
-    width: 32px;
-    height: 32px;
+    display: block;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    border: ${({ theme }) => `1px solid ${theme.colors.borderBottom}`};
+    object-fit: contain;
+    background-color: ${({ theme }) => theme.colors.white};
     margin-right: ${p => p.theme.space[3]}px;
   }
 `;
