@@ -11,7 +11,7 @@ interface IProps {
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-export const Checkbox: React.FC<IProps> = ({ checked, ...props }) => (
+const Checkbox: React.FC<IProps> = ({ checked, ...props }) => (
   <CheckboxLabel onClick={e => e.stopPropagation()}>
     <HiddenCheckbox checked={checked} {...props} />
     <StyledCheckbox whileTap={{ scale: 0.9 }} checked={checked}>

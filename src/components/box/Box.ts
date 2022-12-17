@@ -20,17 +20,6 @@ import {
   PositionProps,
 } from 'styled-system';
 
-// type BoxProps = ColorProps &
-//   SpaceProps &
-//   DisplayProps &
-//   FlexProps &
-//   JustifyContentProps &
-//   LayoutProps &
-//   GridProps &
-//   TypographyProps &
-//   PositionProps &
-//   AlignItemsProps;
-
 interface BoxProps
   extends SpaceProps,
     TypographyProps,
@@ -42,7 +31,7 @@ interface BoxProps
     GridProps,
     PositionProps {}
 
-export const Box = styled.div<BoxProps>(
+const Box = styled.div<BoxProps>(
   typography,
   color,
   space,
@@ -53,3 +42,5 @@ export const Box = styled.div<BoxProps>(
   border,
   shadow,
 );
+
+export default Box;

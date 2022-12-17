@@ -1,7 +1,7 @@
-import { PagesNavigation } from 'components/pagesNavigation/PagesNavigation';
-import { CocktailList } from 'components/cocktailList/CocktailList';
+import PagesNavigation from 'components/pagesNavigation';
+import CocktailList from 'components/cocktailList';
 
-export const Cocktails = () => {
+const Cocktails = () => {
   return (
     <div>
       <PagesNavigation type="cocktails" />
@@ -9,3 +9,5 @@ export const Cocktails = () => {
     </div>
   );
 };
+
+export default Cocktails;
