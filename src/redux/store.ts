@@ -5,6 +5,7 @@ import { cocApi } from './apis/cocteils';
 import { userApi } from './apis/user';
 
 import { filterReducer } from './filter/filterSlice';
+import { ingredientReducer } from './ingredient/ingredientSlice';
 
 const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ const store = configureStore({
     [ingApi.reducerPath]: ingApi.reducer,
     [cocApi.reducerPath]: cocApi.reducer,
     filters: filterReducer,
+    selectedIngredient: ingredientReducer,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware().concat(
