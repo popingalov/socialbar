@@ -17,20 +17,24 @@ const IngredientsList = () => {
   return (
     <BarList>
       {visibleIngredients &&
-        visibleIngredients.map(({ name, _id, shop, available, image }) => (
-          <li key={_id}>
-            <Link to={`${_id}`}>
-              <IngredientCard
-                id={_id}
-                name={name}
-                filter={ingredientFilter}
-                isInShoppingList={shop}
-                isInMyBar={available}
-                imageUrl={image}
-              />
-            </Link>
-          </li>
-        ))}
+        visibleIngredients.map(ingredient => {
+          const { name, _id, shop, available, image } = ingredient;
+
+          return (
+            <li key={_id}>
+              <Link to={`${_id}`} state={{ from: ingredient }}>
+                <IngredientCard
+                  id={_id}
+                  name={name}
+                  filter={ingredientFilter}
+                  isInShoppingList={shop}
+                  isInMyBar={available}
+                  imageUrl={image}
+                />
+              </Link>
+            </li>
+          );
+        })}
     </BarList>
   );
 };
