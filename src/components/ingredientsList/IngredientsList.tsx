@@ -16,12 +16,6 @@ const IngredientsList = () => {
     ingredientFilter,
   );
   const dispatch = useAppDispatch();
-  const handleClick = (selectedId: string) => {
-    const selectedIngredient = ingredients?.find(
-      ({ _id }) => selectedId === _id,
-    );
-    if (selectedIngredient) dispatch(setSelectedIngredient(selectedIngredient));
-  };
 
   return (
     <BarList>
@@ -31,7 +25,12 @@ const IngredientsList = () => {
 
           return (
             <li key={_id}>
-              <Link to={`${_id}`} onClick={() => handleClick(_id)}>
+              <Link
+                to={`${_id}`}
+                onClick={() => {
+                  dispatch(setSelectedIngredient(ingredient));
+                }}
+              >
                 <IngredientCard
                   id={_id}
                   name={name}
