@@ -19,7 +19,8 @@ interface DescProp {
 }
 
 export const Decsription = styled.p<DescProp>`
-  height: ${p => (p.showMore ? 'auto' : '48px')};
+  max-height: ${p => !p.showMore && '45px'};
+  height: ${p => p.showMore && 'auto'};
   overflow: hidden;
   font-size: ${({ theme }) => theme.fontSizes.xs};
   color: ${({ theme }) => theme.colors.secondaryText};
