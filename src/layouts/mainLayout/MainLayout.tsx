@@ -8,7 +8,7 @@ import Loader from 'components/loader';
 const MainLayout = () => (
   <>
     <NavigationMain />
-    <Box as="main" bg="mainBackgroundColor">
+    <Box as="main">
       <Suspense fallback={<Loader />}>
         <Outlet />
       </Suspense>
