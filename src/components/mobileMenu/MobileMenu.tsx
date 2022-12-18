@@ -2,28 +2,27 @@ import React from 'react';
 import MainNavigation from 'components/mainNavigation';
 import { createPortal } from 'react-dom';
 import { Menu, MenuHeader, Overlay } from './MobileMenu.styled';
+import { useDispatch } from 'react-redux';
+import { setMobileIsOpen } from 'redux/modal/modalSlice';
 
 const modalRoot: HTMLDivElement = document.querySelector('#modal')!;
-
-interface IProps {
-  closeMenu: () => void;
-}
 
 // const menu = {
 //   hidden: { opacity: 0, translateX: '-100px' },
 //   show: { opacity: 1, translateX: 0 },
 // };
 
-const MobileMenu: React.FC<IProps> = ({ closeMenu }) => {
+const MobileMenu = () => {
+  const dispatch = useDispatch();
   const handleBackdrop = (event: React.MouseEvent<HTMLDivElement>) => {
-    if (event.target === event.currentTarget) closeMenu();
+    if (event.target === event.currentTarget) dispatch(setMobileIsOpen(false));
   };
 
   return createPortal(
     <Overlay onClick={handleBackdrop}>
       <Menu>
         <MenuHeader />
-        <MainNavigation closeMenu={closeMenu} />
+        <MainNavigation />
       </Menu>
     </Overlay>,
     modalRoot,
