@@ -28,32 +28,34 @@ const NavigationMain = () => {
   const handleAppMenu = () => console.log('Go App menu');
 
   return (
-    <header>
-      <Wrapper>
-        {isSearch ? (
-          <ClearButton onClick={handleBackButton}>
-            <BiArrowBack />
-          </ClearButton>
-        ) : (
-          <ClearButton onClick={handleSideMenu}>
-            <AiOutlineMenu />
-          </ClearButton>
-        )}
+    <>
+      <header>
+        <Wrapper>
+          {isSearch ? (
+            <ClearButton onClick={handleBackButton}>
+              <BiArrowBack />
+            </ClearButton>
+          ) : (
+            <ClearButton onClick={handleSideMenu}>
+              <AiOutlineMenu />
+            </ClearButton>
+          )}
 
-        {isSearch && <SearchBar />}
+          {isSearch && <SearchBar />}
 
-        <MenuHolder>
-          <ClearButton onClick={handleSearchButton}>
-            <AiOutlineSearch />
-          </ClearButton>
+          <MenuHolder>
+            <ClearButton onClick={handleSearchButton}>
+              <AiOutlineSearch />
+            </ClearButton>
 
-          <ClearButton onClick={handleAppMenu}>
-            <BiDotsVerticalRounded />
-          </ClearButton>
-        </MenuHolder>
-      </Wrapper>
+            <ClearButton onClick={handleAppMenu}>
+              <BiDotsVerticalRounded />
+            </ClearButton>
+          </MenuHolder>
+        </Wrapper>
+      </header>
       {menuIsOpen && <MobileMenu />}
-    </header>
+    </>
   );
 };
 
