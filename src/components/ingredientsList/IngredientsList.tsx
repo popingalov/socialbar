@@ -1,10 +1,12 @@
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import BarList from 'components/barList';
 import { selectIngredientFilter } from 'redux/filter/filterSelectors';
 import { useSelector } from 'react-redux';
 import IngredientCard from 'components/ingredientCard';
 import { useTakeIngredientsQuery } from 'redux/apis/ingredients';
 import { ingredientFilterStatus } from 'redux/filter/filterConstants';
+import { useAppDispatch } from 'redux/hooks';
+import { setSelectedIngredient } from 'redux/ingredient/ingredientSlice';
 
 const IngredientsList = () => {
   const { data: ingredients } = useTakeIngredientsQuery(5);
@@ -13,6 +15,13 @@ const IngredientsList = () => {
     ingredients || [],
     ingredientFilter,
   );
+  const dispatch = useAppDispatch();
+  const handleClick = (selectedId: string) => {
+    const selectedIngredient = ingredients?.find(
+      ({ _id }) => selectedId === _id,
+    );
+    if (selectedIngredient) dispatch(setSelectedIngredient(selectedIngredient));
+  };
 
   return (
     <BarList>
@@ -22,7 +31,7 @@ const IngredientsList = () => {
 
           return (
             <li key={_id}>
-              <Link to={`${_id}`} state={{ from: ingredient }}>
+              <Link to={`${_id}`} onClick={() => handleClick(_id)}>
                 <IngredientCard
                   id={_id}
                   name={name}
