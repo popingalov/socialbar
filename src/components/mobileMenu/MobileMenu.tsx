@@ -1,9 +1,9 @@
 import React from 'react';
-import MainNavigation from 'components/mainNavigation';
 import { createPortal } from 'react-dom';
 import { Menu, MenuHeader, Overlay } from './MobileMenu.styled';
 import { useDispatch } from 'react-redux';
 import { setMobileIsOpen } from 'redux/modal/modalSlice';
+import MobileNavigation from 'components/mobileNavigation';
 
 const modalRoot: HTMLDivElement = document.querySelector('#modal')!;
 
@@ -22,7 +22,7 @@ const MobileMenu = () => {
     <Overlay onClick={handleBackdrop}>
       <Menu>
         <MenuHeader />
-        <MainNavigation />
+        <MobileNavigation />
       </Menu>
     </Overlay>,
     modalRoot,

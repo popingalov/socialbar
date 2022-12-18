@@ -14,10 +14,8 @@ import { setMobileIsOpen } from 'redux/modal/modalSlice';
 
 const NavigationMain = () => {
   const [isSearch, setSearch] = useState(false);
-
   const dispatch = useDispatch();
   const menuIsOpen = useSelector(selectMobileMenuStatus);
-  console.log('menuIsOpen', menuIsOpen);
 
   const handleSideMenu = () => {
     dispatch(setMobileIsOpen(true));
@@ -30,7 +28,7 @@ const NavigationMain = () => {
   const handleAppMenu = () => console.log('Go App menu');
 
   return (
-    <>
+    <header>
       <Wrapper>
         {isSearch ? (
           <ClearButton onClick={handleBackButton}>
@@ -55,7 +53,7 @@ const NavigationMain = () => {
         </MenuHolder>
       </Wrapper>
       {menuIsOpen && <MobileMenu />}
-    </>
+    </header>
   );
 };
 

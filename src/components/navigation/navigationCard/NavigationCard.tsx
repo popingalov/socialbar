@@ -23,23 +23,25 @@ const NavigationCard = () => {
   const handleAppMenu = () => console.log('Go App menu');
 
   return (
-    <Wrapper>
-      <ClearButton onClick={handleSideMenu}>
-        <BiArrowBack />
-      </ClearButton>
-
-      {isSearch && <SearchBar />}
-
-      <MenuHolder>
-        <ClearButton onClick={handleSearchButton}>
-          <AiOutlineSearch />
+    <header>
+      <Wrapper>
+        <ClearButton onClick={handleSideMenu}>
+          <BiArrowBack />
         </ClearButton>
 
-        <ClearButton onClick={handleAppMenu}>
-          <BiDotsVerticalRounded />
-        </ClearButton>
-      </MenuHolder>
-    </Wrapper>
+        {isSearch && <SearchBar />}
+
+        <MenuHolder>
+          <ClearButton onClick={handleSearchButton}>
+            <AiOutlineSearch />
+          </ClearButton>
+
+          <ClearButton onClick={handleAppMenu}>
+            <BiDotsVerticalRounded />
+          </ClearButton>
+        </MenuHolder>
+      </Wrapper>
+    </header>
   );
 };
 

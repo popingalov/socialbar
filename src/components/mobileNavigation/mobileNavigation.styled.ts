@@ -1,7 +1,7 @@
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 
-export const NavigationStyled = styled.nav`
+export const NavigationStyled = styled.ul`
   padding: ${({ theme }) => theme.space[2]}px;
 `;
 
