@@ -1,41 +1,44 @@
 import { Suspense } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useLocation } from 'react-router-dom';
 import {
   Cocktails,
   CocktailsDetails,
   Home,
   IngredientDetails,
   Ingredients,
-  MainLayout,
+  Layout,
   Settings,
-  ShortLayout,
 } from './lazyexports';
 import Loader from 'components/loader';
 import { GlobalStyle } from './App.styled';
 
-const App = () => (
-  <>
-    <GlobalStyle />
-    <Suspense fallback={<Loader />}>
-      <Routes>
-        <Route path="/" element={<MainLayout />}>
-          <Route index element={<Home />} />
+const App = () => {
+  const location = useLocation();
 
-          <Route path="cocktails" element={<Cocktails />} />
-          <Route path="ingredients" element={<Ingredients />} />
-        </Route>
+  return (
+    <>
+      <GlobalStyle />
+      <Suspense fallback={<Loader />}>
+        <Routes location={location} key={location.pathname}>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<Home />} />
 
-        <Route path="/" element={<ShortLayout />}>
-          <Route path="cocktails/:cocktailId" element={<CocktailsDetails />} />
-          <Route
-            path="ingredients/:ingredientId"
-            element={<IngredientDetails />}
-          />
-          <Route path="settings" element={<Settings />} />
-        </Route>
-      </Routes>
-    </Suspense>
-  </>
-);
+            <Route path="cocktails" element={<Cocktails />} />
+            <Route path="ingredients" element={<Ingredients />} />
+            <Route
+              path="cocktails/:cocktailId"
+              element={<CocktailsDetails />}
+            />
+            <Route
+              path="ingredients/:ingredientId"
+              element={<IngredientDetails />}
+            />
+            <Route path="settings" element={<Settings />} />
+          </Route>
+        </Routes>
+      </Suspense>
+    </>
+  );
+};
 
 export default App;

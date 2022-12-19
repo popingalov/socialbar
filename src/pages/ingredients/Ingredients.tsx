@@ -1,13 +1,16 @@
 import IngredientsList from 'components/ingredientsList';
-import PagesNavigation from 'components/pagesNavigation';
+import { motion } from 'framer-motion';
 
-const Ingredients = () => {
-  return (
-    <>
-      <PagesNavigation type="ingredients" />
-      <IngredientsList />
-    </>
-  );
-};
+const Ingredients = () => <IngredientsList />;
 
 export default Ingredients;
+
+// <motion.div
+//   initial={{ opacity: 0 }}
+//   animate={{ opacity: 1 }}
+//   exit={{ opacity: 0 }}
+//   transition={{ duration: 0.4 }}
+// >
+//   <PagesNavigation type="ingredients" />
+//   <IngredientsList />
+// </motion.div>;

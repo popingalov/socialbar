@@ -1,11 +1,7 @@
 import React from 'react';
 
-export const MainLayout: React.FC = React.lazy(
-  () => import('layouts/mainLayout'),
-);
-export const ShortLayout: React.FC = React.lazy(
-  () => import('layouts/shortLayout'),
-);
+export const Layout: React.FC = React.lazy(() => import('layout'));
+
 export const Cocktails: React.FC = React.lazy(() => import('pages/cocktails'));
 export const CocktailsDetails: React.FC = React.lazy(
   () => import('pages/cocktailsDetails'),

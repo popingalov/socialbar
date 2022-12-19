@@ -1,13 +1,16 @@
 import { Outlet } from 'react-router';
 import { Suspense } from 'react';
 
-import NavigationCard from 'components/navigation/navigationCard';
+// import NavigationMain from 'components/navigation/navigationMain';
 import Box from 'components/box';
 import Loader from 'components/loader';
+import Navigation from 'components/navigation';
 
-const ShortLayout = () => (
+const Layout = () => (
   <>
-    <NavigationCard />
+    <Box as="header">
+      <Navigation />
+    </Box>
     <Box as="main">
       <Suspense fallback={<Loader />}>
         <Outlet />
@@ -15,5 +18,4 @@ const ShortLayout = () => (
     </Box>
   </>
 );
-
-export default ShortLayout;
+export default Layout;

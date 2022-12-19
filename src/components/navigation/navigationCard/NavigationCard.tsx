@@ -10,7 +10,6 @@ import { BiArrowBack, BiDotsVerticalRounded } from 'react-icons/bi';
 
 const NavigationCard = () => {
   const navigate = useNavigate();
-
   const [isSearch, setSearch] = useState(false);
 
   const handleSideMenu = () => {
@@ -23,25 +22,23 @@ const NavigationCard = () => {
   const handleAppMenu = () => console.log('Go App menu');
 
   return (
-    <header>
-      <Wrapper>
-        <ClearButton onClick={handleSideMenu}>
-          <BiArrowBack />
+    <Wrapper>
+      <ClearButton onClick={handleSideMenu}>
+        <BiArrowBack />
+      </ClearButton>
+
+      {isSearch && <SearchBar />}
+
+      <MenuHolder>
+        <ClearButton onClick={handleSearchButton}>
+          <AiOutlineSearch />
         </ClearButton>
 
-        {isSearch && <SearchBar />}
-
-        <MenuHolder>
-          <ClearButton onClick={handleSearchButton}>
-            <AiOutlineSearch />
-          </ClearButton>
-
-          <ClearButton onClick={handleAppMenu}>
-            <BiDotsVerticalRounded />
-          </ClearButton>
-        </MenuHolder>
-      </Wrapper>
-    </header>
+        <ClearButton onClick={handleAppMenu}>
+          <BiDotsVerticalRounded />
+        </ClearButton>
+      </MenuHolder>
+    </Wrapper>
   );
 };
 

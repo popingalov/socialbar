@@ -7,10 +7,10 @@ import MobileNavigation from 'components/mobileNavigation';
 
 const modalRoot: HTMLDivElement = document.querySelector('#modal')!;
 
-// const menu = {
-//   hidden: { opacity: 0, translateX: '-100px' },
-//   show: { opacity: 1, translateX: 0 },
-// };
+const menu = {
+  hidden: { opacity: 0, translateX: '-100px' },
+  show: { opacity: 1, translateX: 0 },
+};
 
 const MobileMenu = () => {
   const dispatch = useDispatch();
@@ -19,7 +19,15 @@ const MobileMenu = () => {
   };
 
   return createPortal(
-    <Overlay onClick={handleBackdrop}>
+    <Overlay
+      // key="mobileMenu"
+      // variants={menu}
+      // initial="hidden"
+      // animate="show"
+      // exit="hidden"
+      // transition={{ duration: 0.3 }}
+      onClick={handleBackdrop}
+    >
       <Menu>
         <MenuHeader />
         <MobileNavigation />
@@ -30,13 +38,3 @@ const MobileMenu = () => {
 };
 
 export default MobileMenu;
-
-// <Overlay
-// key="menu"
-// variants={menu}
-// initial="hidden"
-// animate="show"
-// exit="hidden"
-// transition={{ duration: 0.2 }}
-// onClick={handleBackdrop}
-// ></Overlay>
