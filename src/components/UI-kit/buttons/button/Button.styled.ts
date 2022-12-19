@@ -24,6 +24,7 @@ export const ButtonStyled = styled(motion.button)<props>`
       p.selected
         ? p.theme.colors.accent
         : p.theme.colors.accentBackgroundColor};
+  border-radius: 4px;
 
   transition: color 250ms ${p => p.theme.transitionTiming},
     background-color 250ms ${p => p.theme.transitionTiming},

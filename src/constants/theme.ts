@@ -15,6 +15,7 @@ export const theme = {
     hoverLinkBackgroundColor: 'rgba(43,122,120,0.5)',
     activeLinkBackgroundColor: 'rgba(58,175,169,0.2)',
     white: '#ffffff',
+    extraMessageBgColor: 'rgba(0, 0, 0, 0.04)',
   },
 
   space: [0, 4, 8, 16, 32, 64, 128, 256, 512],

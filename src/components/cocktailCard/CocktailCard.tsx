@@ -21,7 +21,7 @@ const CocktailCard: React.FC<IProps> = ({
 }) => {
   return (
     <Box position="relative" display="flex" alignItems="center">
-      <img src={imageUrl} alt="cocktail" width="50px" height="50px" />
+      <img src={imageUrl} alt={name} width="50px" height="50px" />
       <Box marginRight="auto">
         <CocktailsName>{name}</CocktailsName>
         <Ingredients>{ingredients.join(', ')}</Ingredients>

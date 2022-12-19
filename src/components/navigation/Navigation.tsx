@@ -7,20 +7,18 @@ import { NavigationListStyled, Wrapper } from './Navigation.styled';
 
 const Navigation = () => {
   const location = useLocation();
+  const isMainRoute =
+    location.pathname === paths.home ||
+    location.pathname === paths.ingredients ||
+    location.pathname === paths.cocktails;
+  const isGeneralRoute =
+    location.pathname === paths.ingredients ||
+    location.pathname === paths.cocktails;
 
   return (
     <>
-      <Wrapper>
-        {location.pathname === paths.home ||
-        location.pathname === paths.ingredients ||
-        location.pathname === paths.cocktails ? (
-          <NavigationMain />
-        ) : (
-          <NavigationCard />
-        )}
-      </Wrapper>
-      {(location.pathname === paths.ingredients ||
-        location.pathname === paths.cocktails) && (
+      <Wrapper>{isMainRoute ? <NavigationMain /> : <NavigationCard />}</Wrapper>
+      {isGeneralRoute && (
         <NavigationListStyled>
           <PagesNavigation />
         </NavigationListStyled>
