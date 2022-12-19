@@ -12,9 +12,13 @@ import {
 import Loader from 'components/loader';
 import { GlobalStyle } from './App.styled';
 import { AnimatePresence } from 'framer-motion';
+import MobileMenu from 'components/mobileMenu';
+import { useSelector } from 'react-redux';
+import { selectMobileMenuStatus } from 'redux/modal/modalSelectors';
 
 const App = () => {
   const location = useLocation();
+  const menuIsOpen = useSelector(selectMobileMenuStatus);
 
   return (
     <>
@@ -39,6 +43,9 @@ const App = () => {
             </Route>
           </Routes>
         </Suspense>
+      </AnimatePresence>
+      <AnimatePresence>
+        {menuIsOpen && <MobileMenu key="mobileMenu" />}
       </AnimatePresence>
     </>
   );
