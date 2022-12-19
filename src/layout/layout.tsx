@@ -10,9 +10,7 @@ const Layout = () => {
   return (
     <>
       <Box as="header">
-        <AnimatePresence>
-          <Navigation key="navigation" />
-        </AnimatePresence>
+        <Navigation />
       </Box>
       <Box as="main">
         <AnimatePresence>
