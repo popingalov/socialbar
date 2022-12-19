@@ -1,11 +1,19 @@
 import React from 'react';
 import { createPortal } from 'react-dom';
-import { Menu, MenuHeader, Overlay } from './MobileMenu.styled';
+import {
+  Menu,
+  MenuHeader,
+  Overlay,
+  UserIconWrapper,
+} from './MobileMenu.styled';
 import { useDispatch } from 'react-redux';
 import { setMobileIsOpen } from 'redux/modal/modalSlice';
-import MobileNavigation from 'components/mobileNavigation';
+import MobileNavigation from 'components/mobileMenu/mobileNavigation';
 import { pageAnimation } from 'constants/animations';
 import { mobileMenuAnimation } from 'constants/animations';
+import { IoMdPerson } from 'react-icons/io';
+import MobileMenuButton from 'components/UI-kit/buttons/mobileMenuButton';
+import { AiFillCaretDown } from 'react-icons/ai';
 
 const modalRoot: HTMLDivElement = document.querySelector('#modal')!;
 
@@ -26,7 +34,15 @@ const MobileMenu = () => {
         {...mobileMenuAnimation}
         transition={{ duration: 0.2 }}
       >
-        <MenuHeader />
+        <MenuHeader>
+          <UserIconWrapper>
+            <IoMdPerson />
+          </UserIconWrapper>
+          <MobileMenuButton>
+            Default account
+            <AiFillCaretDown />
+          </MobileMenuButton>
+        </MenuHeader>
         <MobileNavigation />
       </Menu>
     </Overlay>,

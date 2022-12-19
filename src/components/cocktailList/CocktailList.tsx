@@ -17,6 +17,9 @@ const CocktailList = () => {
       {visibleCocktails &&
         visibleCocktails.map(
           ({ name, description, favorite, ingredients, _id, image }) => {
+            const ingredientNames = ingredients.map(
+              ingredient => ingredient.ing.name,
+            );
             const isAvailable: boolean = ingredients.every(
               ({ available }) => available,
             );
@@ -29,6 +32,7 @@ const CocktailList = () => {
                     name={name}
                     description={description}
                     imageUrl={image}
+                    ingredients={ingredientNames}
                   />
                 </Link>
               </ListItem>

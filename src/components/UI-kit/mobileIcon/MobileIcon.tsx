@@ -4,6 +4,7 @@ import { ImGlass2 } from 'react-icons/im';
 import { AiFillSetting } from 'react-icons/ai';
 import { GiWineBottle } from 'react-icons/gi';
 import { paths } from 'constants/paths';
+import { theme } from 'constants/theme';
 
 interface IProps {
   type: string;
@@ -15,7 +16,7 @@ const MobileIcon: React.FC<IProps> = ({ type }) => {
       value={{
         style: {
           color: 'inherit',
-          marginRight: '20px',
+          marginRight: `${theme.space[3]}px`,
           width: '20px',
           height: '20px',
         },
