@@ -1,21 +1,28 @@
 import { Outlet } from 'react-router';
 import { Suspense } from 'react';
 
-// import NavigationMain from 'components/navigation/navigationMain';
 import Box from 'components/box';
 import Loader from 'components/loader';
 import Navigation from 'components/navigation';
+import { AnimatePresence } from 'framer-motion';
 
-const Layout = () => (
-  <>
-    <Box as="header">
-      <Navigation />
-    </Box>
-    <Box as="main">
-      <Suspense fallback={<Loader />}>
-        <Outlet />
-      </Suspense>
-    </Box>
-  </>
-);
+const Layout = () => {
+  return (
+    <>
+      <Box as="header">
+        <AnimatePresence>
+          <Navigation key="navigation" />
+        </AnimatePresence>
+      </Box>
+      <Box as="main">
+        <AnimatePresence>
+          <Suspense fallback={<Loader />}>
+            <Outlet />
+          </Suspense>
+        </AnimatePresence>
+      </Box>
+    </>
+  );
+};
+
 export default Layout;

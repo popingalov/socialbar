@@ -20,12 +20,12 @@ const MobileMenu = () => {
 
   return createPortal(
     <Overlay
-      // key="mobileMenu"
-      // variants={menu}
-      // initial="hidden"
-      // animate="show"
-      // exit="hidden"
-      // transition={{ duration: 0.3 }}
+      key="mobileMenu"
+      variants={menu}
+      initial="hidden"
+      animate="show"
+      exit="hidden"
+      transition={{ duration: 0.3 }}
       onClick={handleBackdrop}
     >
       <Menu>

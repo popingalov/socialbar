@@ -1,15 +1,20 @@
 import CocktailList from 'components/cocktailList';
 import { motion } from 'framer-motion';
 
-const Cocktails = () => <CocktailList />;
-export default Cocktails;
+const page = {
+  hidden: { opacity: 0 },
+  show: { opacity: 1 },
+};
 
-// <motion.div
-//   initial={{ opacity: 0 }}
-//   animate={{ opacity: 1 }}
-//   exit={{ opacity: 0 }}
-//   transition={{ duration: 0.4 }}
-// >
-//   <PagesNavigation type="cocktails" />
-//   <CocktailList />
-// </motion.div>;
+const Cocktails = () => (
+  <motion.section
+    variants={page}
+    initial="hidden"
+    animate="show"
+    exit="hidden"
+    transition={{ duration: 0.5 }}
+  >
+    <CocktailList />
+  </motion.section>
+);
+export default Cocktails;

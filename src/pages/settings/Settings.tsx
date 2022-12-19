@@ -1,16 +1,22 @@
 import { motion } from 'framer-motion';
 
+const page = {
+  hidden: { opacity: 0 },
+  show: { opacity: 1 },
+};
+
 const Settings = () => {
-  return <>Settings</>;
+  return (
+    <motion.section
+      variants={page}
+      initial="hidden"
+      animate="show"
+      exit="hidden"
+      transition={{ duration: 0.5 }}
+    >
+      Settings
+    </motion.section>
+  );
 };
 
 export default Settings;
-
-// <motion.div
-//   initial={{ opacity: 0 }}
-//   animate={{ opacity: 1 }}
-//   exit={{ opacity: 0 }}
-//   transition={{ duration: 0.4 }}
-// >
-//   Settings
-// </motion.div>

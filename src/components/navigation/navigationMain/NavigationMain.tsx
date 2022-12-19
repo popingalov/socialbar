@@ -1,17 +1,18 @@
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import { AnimatePresence } from 'framer-motion';
 
 import SearchBar from 'components/searchBar';
 import ClearButton from 'components/UI-kit/buttons/clearButton';
-import MobileMenu from 'components/mobileMenu';
+
 import { Wrapper, MenuHolder } from './NavigationMain.styled';
-import { selectMobileMenuStatus } from 'redux/modal/modalSelectors';
 import { setMobileIsOpen } from 'redux/modal/modalSlice';
 
 import { AiOutlineMenu, AiOutlineSearch } from 'react-icons/ai';
 import { BiArrowBack, BiDotsVerticalRounded } from 'react-icons/bi';
+import { AnimatePresence } from 'framer-motion';
+import MobileMenu from 'components/mobileMenu';
+import { useSelector } from 'react-redux';
+import { selectMobileMenuStatus } from 'redux/modal/modalSelectors';
 
 const NavigationMain = () => {
   const [isSearch, setSearch] = useState(false);

@@ -11,6 +11,7 @@ import {
 } from './lazyexports';
 import Loader from 'components/loader';
 import { GlobalStyle } from './App.styled';
+import { AnimatePresence } from 'framer-motion';
 
 const App = () => {
   const location = useLocation();
@@ -18,25 +19,27 @@ const App = () => {
   return (
     <>
       <GlobalStyle />
-      <Suspense fallback={<Loader />}>
-        <Routes location={location} key={location.pathname}>
-          <Route path="/" element={<Layout />}>
-            <Route index element={<Home />} />
+      <AnimatePresence>
+        <Suspense fallback={<Loader />}>
+          <Routes location={location} key={location.key}>
+            <Route path="/" element={<Layout />}>
+              <Route index element={<Home />} />
 
-            <Route path="cocktails" element={<Cocktails />} />
-            <Route path="ingredients" element={<Ingredients />} />
-            <Route
-              path="cocktails/:cocktailId"
-              element={<CocktailsDetails />}
-            />
-            <Route
-              path="ingredients/:ingredientId"
-              element={<IngredientDetails />}
-            />
-            <Route path="settings" element={<Settings />} />
-          </Route>
-        </Routes>
-      </Suspense>
+              <Route path="cocktails" element={<Cocktails />} />
+              <Route path="ingredients" element={<Ingredients />} />
+              <Route
+                path="cocktails/:cocktailId"
+                element={<CocktailsDetails />}
+              />
+              <Route
+                path="ingredients/:ingredientId"
+                element={<IngredientDetails />}
+              />
+              <Route path="settings" element={<Settings />} />
+            </Route>
+          </Routes>
+        </Suspense>
+      </AnimatePresence>
     </>
   );
 };
