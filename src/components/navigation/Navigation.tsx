@@ -1,7 +1,7 @@
 import { useLocation } from 'react-router';
 import NavigationCard from './navigationCard';
 import NavigationMain from './navigationMain';
-import PagesNavigation from 'components/pagesNavigation';
+import PagesNavigation from './pagesNavigation';
 import { paths } from 'constants/paths';
 import { NavigationListStyled } from './Navigation.styled';
 import { motion } from 'framer-motion';
