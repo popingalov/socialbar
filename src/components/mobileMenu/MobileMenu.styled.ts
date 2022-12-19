@@ -11,7 +11,7 @@ export const Overlay = styled(motion.div)`
   background-color: ${({ theme }) => theme.colors.backdropColor};
 `;
 
-export const Menu = styled.div`
+export const Menu = styled(motion.div)`
   background-color: ${({ theme }) => theme.colors.mainBackgroundColor};
   width: 70%;
   height: 100%;

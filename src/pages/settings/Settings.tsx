@@ -1,15 +1,9 @@
-import { pageAnimation } from 'constants/pagesAnimation';
+import { pageAnimation } from 'constants/animations';
 import { motion } from 'framer-motion';
 
 const Settings = () => {
   return (
-    <motion.section
-      variants={pageAnimation}
-      initial="hidden"
-      animate="show"
-      exit="hidden"
-      transition={{ duration: 0.5 }}
-    >
+    <motion.section {...pageAnimation} transition={{ duration: 0.3 }}>
       Settings
     </motion.section>
   );

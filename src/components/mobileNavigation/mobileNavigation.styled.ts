@@ -14,7 +14,8 @@ export const NavItem = styled.li<{ settings: boolean }>`
 `;
 
 export const Link = styled(NavLink)`
-  display: block;
+  display: flex;
+  align-items: center;
   padding: ${({ theme }) => theme.space[2]}px;
   text-decoration: none;
   color: ${({ theme }) => theme.colors.mainText};
