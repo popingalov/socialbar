@@ -1,14 +1,10 @@
+import { pageAnimation } from 'constants/pagesAnimation';
 import { motion } from 'framer-motion';
-
-const page = {
-  hidden: { opacity: 0 },
-  show: { opacity: 1 },
-};
 
 const Home = () => {
   return (
     <motion.section
-      variants={page}
+      variants={pageAnimation}
       initial="hidden"
       animate="show"
       exit="hidden"

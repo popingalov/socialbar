@@ -1,14 +1,10 @@
 import IngredientsList from 'components/ingredientsList';
+import { pageAnimation } from 'constants/pagesAnimation';
 import { motion } from 'framer-motion';
-
-const page = {
-  hidden: { opacity: 0 },
-  show: { opacity: 1 },
-};
 
 const Ingredients = () => (
   <motion.section
-    variants={page}
+    variants={pageAnimation}
     initial="hidden"
     animate="show"
     exit="hidden"

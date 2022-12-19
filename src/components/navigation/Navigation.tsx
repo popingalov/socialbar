@@ -5,18 +5,14 @@ import PagesNavigation from 'components/pagesNavigation';
 import { paths } from 'constants/paths';
 import { NavigationListStyled } from './Navigation.styled';
 import { motion } from 'framer-motion';
-
-const page = {
-  hidden: { opacity: 0 },
-  show: { opacity: 1 },
-};
+import { pageAnimation } from 'constants/pagesAnimation';
 
 const Navigation = () => {
   const location = useLocation();
 
   return (
     <motion.div
-      variants={page}
+      variants={pageAnimation}
       initial="hidden"
       animate="show"
       exit="hidden"
