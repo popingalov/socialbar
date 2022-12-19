@@ -6,6 +6,7 @@ import { userApi } from './apis/user';
 
 import { filterReducer } from './filter/filterSlice';
 import { ingredientReducer } from './ingredient/ingredientSlice';
+import { modalReducer } from './modal/modalSlice';
 
 const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ const store = configureStore({
     [cocApi.reducerPath]: cocApi.reducer,
     filters: filterReducer,
     selectedIngredient: ingredientReducer,
+    modalStatus: modalReducer,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware().concat(

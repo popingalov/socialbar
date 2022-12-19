@@ -1,6 +1,8 @@
 import Button from 'components/UI-kit/buttons/button';
 import { cocktailsNavItems, ingredientsNavItems } from 'constants/navItems';
+import { paths } from 'constants/paths';
 import { useSelector } from 'react-redux';
+import { useLocation } from 'react-router';
 import {
   selectCocktailFilter,
   selectIngredientFilter,
@@ -10,29 +12,30 @@ import {
   setIngredientStatusFilter,
 } from 'redux/filter/filterSlice';
 import { useAppDispatch } from 'redux/hooks';
-import { NavigationListStyled } from './PagesNavigation.styled';
 
-interface IProps {
-  type: 'ingredients' | 'cocktails';
-}
+const PagesNavigation = () => {
+  const location = useLocation();
 
-const PagesNavigation: React.FC<IProps> = ({ type }) => {
   const navigation =
-    type === 'ingredients' ? ingredientsNavItems : cocktailsNavItems;
+    location.pathname === paths.ingredients
+      ? ingredientsNavItems
+      : cocktailsNavItems;
   const filter = useSelector(
-    type === 'ingredients' ? selectIngredientFilter : selectCocktailFilter,
+    location.pathname === paths.ingredients
+      ? selectIngredientFilter
+      : selectCocktailFilter,
   );
   const dispatch = useAppDispatch();
   const handleStatusFilterChange = (value: string) => {
     const setStatusFilter =
-      type === 'ingredients'
+      location.pathname === paths.ingredients
         ? setIngredientStatusFilter
         : setCocktailStatusFilter;
     dispatch(setStatusFilter(value));
   };
 
   return (
-    <NavigationListStyled>
+    <>
       {navigation.map(({ label, statusFilter }) => (
         <li key={label}>
           <Button
@@ -43,7 +46,7 @@ const PagesNavigation: React.FC<IProps> = ({ type }) => {
           </Button>
         </li>
       ))}
-    </NavigationListStyled>
+    </>
   );
 };
 

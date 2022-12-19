@@ -1,18 +1,19 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
 import SearchBar from 'components/searchBar';
 import ClearButton from 'components/UI-kit/buttons/clearButton';
-import { Wrapper, MenuHolder } from './NavigationMain.styled';
-
+import { MenuHolder } from './NavigationMain.styled';
+import { setMobileIsOpen } from 'redux/modal/modalSlice';
 import { AiOutlineMenu, AiOutlineSearch } from 'react-icons/ai';
 import { BiArrowBack, BiDotsVerticalRounded } from 'react-icons/bi';
 
 const NavigationMain = () => {
   const [isSearch, setSearch] = useState(false);
+  const dispatch = useDispatch();
 
   const handleSideMenu = () => {
-    console.log('open side menu');
+    dispatch(setMobileIsOpen(true));
   };
 
   const handleBackButton = () => setSearch(false);
@@ -22,7 +23,7 @@ const NavigationMain = () => {
   const handleAppMenu = () => console.log('Go App menu');
 
   return (
-    <Wrapper>
+    <>
       {isSearch ? (
         <ClearButton onClick={handleBackButton}>
           <BiArrowBack />
@@ -44,7 +45,7 @@ const NavigationMain = () => {
           <BiDotsVerticalRounded />
         </ClearButton>
       </MenuHolder>
-    </Wrapper>
+    </>
   );
 };
 

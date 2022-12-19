@@ -1,13 +1,16 @@
-import PagesNavigation from 'components/pagesNavigation';
 import CocktailList from 'components/cocktailList';
+import { pageAnimation } from 'constants/pagesAnimation';
+import { motion } from 'framer-motion';
 
-const Cocktails = () => {
-  return (
-    <div>
-      <PagesNavigation type="cocktails" />
-      <CocktailList />
-    </div>
-  );
-};
-
+const Cocktails = () => (
+  <motion.section
+    variants={pageAnimation}
+    initial="hidden"
+    animate="show"
+    exit="hidden"
+    transition={{ duration: 0.5 }}
+  >
+    <CocktailList />
+  </motion.section>
+);
 export default Cocktails;

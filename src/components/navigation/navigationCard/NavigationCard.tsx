@@ -3,14 +3,13 @@ import { useNavigate } from 'react-router-dom';
 
 import SearchBar from 'components/searchBar';
 import ClearButton from 'components/UI-kit/buttons/clearButton';
-import { Wrapper, MenuHolder } from './NavigationCard.styled';
+import { MenuHolder } from './NavigationCard.styled';
 
 import { AiOutlineSearch } from 'react-icons/ai';
 import { BiArrowBack, BiDotsVerticalRounded } from 'react-icons/bi';
 
 const NavigationCard = () => {
   const navigate = useNavigate();
-
   const [isSearch, setSearch] = useState(false);
 
   const handleSideMenu = () => {
@@ -23,7 +22,7 @@ const NavigationCard = () => {
   const handleAppMenu = () => console.log('Go App menu');
 
   return (
-    <Wrapper>
+    <>
       <ClearButton onClick={handleSideMenu}>
         <BiArrowBack />
       </ClearButton>
@@ -39,7 +38,7 @@ const NavigationCard = () => {
           <BiDotsVerticalRounded />
         </ClearButton>
       </MenuHolder>
-    </Wrapper>
+    </>
   );
 };
 

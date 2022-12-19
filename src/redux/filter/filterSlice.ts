@@ -4,7 +4,11 @@ import {
   ingredientFilterStatus,
 } from './filterConstants';
 
-const filterInitialState = {
+interface IFilterStatus {
+  cocktailsStatus: string;
+  ingredientsStatus: string;
+}
+const filterInitialState: IFilterStatus = {
   cocktailsStatus: cocktailFilterStatus.myCocktails,
   ingredientsStatus: ingredientFilterStatus.myBarShelf,
 };
