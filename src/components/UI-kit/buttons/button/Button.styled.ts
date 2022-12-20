@@ -18,7 +18,7 @@ export const ButtonStyled = styled(motion.button)<props>`
   font-size: ${p => p.theme.fontSizes.s};
   font-weight: ${p => p.theme.fontWeight.semiBold};
   font-family: inherit;
-  transition: color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
   border-bottom: 3px solid
     ${p =>
       p.selected

@@ -9,6 +9,7 @@ import { useAppDispatch } from 'redux/hooks';
 import { setSelectedIngredient } from 'redux/ingredient/ingredientSlice';
 import FollowUpMessage from 'components/followUpMessage';
 import IngredientBottomMessage from './ingredientBottomMessage';
+import Loader from 'components/loader';
 
 const IngredientsList = () => {
   const { data: ingredients, isLoading } = useTakeIngredientsQuery(5);
@@ -24,6 +25,7 @@ const IngredientsList = () => {
 
   return (
     <>
+      <Loader isLoading={isLoading} />
       <BarList>
         {visibleIngredients &&
           visibleIngredients.map(ingredient => {

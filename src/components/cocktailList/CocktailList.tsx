@@ -9,6 +9,7 @@ import FollowUpMessage from 'components/followUpMessage';
 import { getVisibleCocktails } from 'helpers/getVisibleCocktails';
 import { cocktailFilterStatus } from 'redux/filter/filterConstants';
 import CocktailBottomMessage from './cocktailBottomMessage';
+import Loader from 'components/loader';
 
 const CocktailList = () => {
   const { data: cocktails, isLoading } = useTakeCocktailsQuery(5);
@@ -19,6 +20,7 @@ const CocktailList = () => {
 
   return (
     <>
+      <Loader isLoading={isLoading} />
       <BarList>
         {visibleCocktails &&
           visibleCocktails.map(

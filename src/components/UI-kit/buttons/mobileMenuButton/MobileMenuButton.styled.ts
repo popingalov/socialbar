@@ -15,6 +15,7 @@ export const MobileButtonStyled = styled(motion.button)`
   color: ${p => p.theme.colors.lightText};
   font-size: ${p => p.theme.fontSizes.s};
   font-family: inherit;
+  cursor: pointer;
   transition: color 250ms cubic-bezier(0.4, 0, 0.2, 1);
 
   transition: color 250ms ${p => p.theme.transitionTiming},

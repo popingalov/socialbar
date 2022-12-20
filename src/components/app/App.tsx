@@ -1,5 +1,7 @@
 import { Suspense } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
+import { AnimatePresence } from 'framer-motion';
+import { useSelector } from 'react-redux';
 import {
   Cocktails,
   CocktailsDetails,
@@ -7,13 +9,13 @@ import {
   IngredientDetails,
   Ingredients,
   Layout,
+  NewCocktail,
+  NewIngredient,
   Settings,
 } from './lazyexports';
-import Loader from 'components/loader';
 import { GlobalStyle } from './App.styled';
-import { AnimatePresence } from 'framer-motion';
+import Loader from 'components/loader';
 import MobileMenu from 'components/mobileMenu';
-import { useSelector } from 'react-redux';
 import { selectMobileMenuStatus } from 'redux/modal/modalSelectors';
 
 const App = () => {
@@ -28,17 +30,18 @@ const App = () => {
           <Routes location={location} key={location.key}>
             <Route path="/" element={<Layout />}>
               <Route index element={<Home />} />
-
               <Route path="cocktails" element={<Cocktails />} />
               <Route path="ingredients" element={<Ingredients />} />
               <Route
                 path="cocktails/:cocktailId"
                 element={<CocktailsDetails />}
               />
+              <Route path="cocktails/new" element={<NewCocktail />} />
               <Route
                 path="ingredients/:ingredientId"
                 element={<IngredientDetails />}
               />
+              <Route path="ingredients/new" element={<NewIngredient />} />
               <Route path="settings" element={<Settings />} />
             </Route>
           </Routes>
