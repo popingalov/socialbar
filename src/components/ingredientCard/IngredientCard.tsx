@@ -4,6 +4,7 @@ import Checkbox from 'components/UI-kit/checkbox';
 import Box from 'components/box';
 import LowIcon from 'components/UI-kit/lowIcon';
 import IconButton from 'components/UI-kit/buttons/iconButton';
+import { ExtraInfo, IngredientName } from './IngredientCard.styled';
 // import fallback from 'assets/fallback.png';
 
 interface IProps {
@@ -23,28 +24,30 @@ const IngredientCard: React.FC<IProps> = ({
   id,
   imageUrl,
 }) => {
-  // realize updating ingredient availability status - PATCH
+  // realize updating ingredient availability status - PUT
   // const [toggleAvailable, { isLoading: isUpdating }] =
   //   useToggleAvailableINgredientMutation();
+  const isMyBar = filter === ingredientFilterStatus.myBarShelf;
+  const isBarShelf = filter === ingredientFilterStatus.manageBarShelf;
+  const isShoppingList = filter === ingredientFilterStatus.shoppingList;
 
   return (
     <Box position="relative" display="flex" alignItems="center">
-      <img src={imageUrl} alt="cocktail" width="32px" height="32px" />
+      <img src={imageUrl} alt={name} width="32px" height="32px" />
       <Box marginRight="auto">
-        <p>{name}</p>
-        {(filter === ingredientFilterStatus.manageBarShelf ||
-          filter === ingredientFilterStatus.shoppingList) && (
-          <p>is used in 6 cocktails</p>
+        <IngredientName>{name}</IngredientName>
+        {(isBarShelf || isShoppingList) && (
+          <ExtraInfo>is used in 6 cocktails</ExtraInfo>
         )}
       </Box>
-      {filter === ingredientFilterStatus.manageBarShelf && (
+      {isBarShelf && (
         // onChange={() => toggleAvailable(id)}
         <Checkbox checked={isInMyBar} onChange={() => id} />
       )}
-      {(filter === ingredientFilterStatus.myBarShelf ||
-        filter === ingredientFilterStatus.manageBarShelf) &&
-        isInShoppingList && <LowIcon type="ingredients" />}
-      {filter === ingredientFilterStatus.shoppingList && (
+      {(isMyBar || isBarShelf) && isInShoppingList && (
+        <LowIcon type="ingredients" />
+      )}
+      {isShoppingList && (
         <IconButton>
           <RxCross2 aria-label="delete" />
         </IconButton>

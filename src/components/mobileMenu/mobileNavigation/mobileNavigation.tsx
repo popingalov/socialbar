@@ -1,3 +1,4 @@
+import MobileIcon from 'components/UI-kit/mobileIcon';
 import { mainNavItems } from 'constants/navItems';
 import { paths } from 'constants/paths';
 import { useDispatch } from 'react-redux';
@@ -18,6 +19,7 @@ const MobileNavigation = () => {
                 dispatch(setMobileIsOpen(false));
               }}
             >
+              <MobileIcon type={`/${href}`} />
               {label}
             </Link>
           </NavItem>

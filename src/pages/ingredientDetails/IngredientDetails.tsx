@@ -2,19 +2,13 @@ import { useSelector } from 'react-redux';
 import { selectIngredient } from 'redux/ingredient/ingredientSelector';
 import IngredientInfo from 'components/ingredientInfo/IngredientInfo';
 import { motion } from 'framer-motion';
-import { pageAnimation } from 'constants/pagesAnimation';
+import { pageAnimation } from 'constants/animations';
 
 const IngredientDetails: React.FC = () => {
   const ingredient = useSelector(selectIngredient);
 
   return (
-    <motion.section
-      variants={pageAnimation}
-      initial="hidden"
-      animate="show"
-      exit="hidden"
-      transition={{ duration: 0.5 }}
-    >
+    <motion.section {...pageAnimation} transition={{ duration: 0.3 }}>
       <IngredientInfo ingredient={ingredient} />{' '}
     </motion.section>
   );

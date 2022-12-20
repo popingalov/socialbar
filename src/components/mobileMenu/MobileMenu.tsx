@@ -1,16 +1,21 @@
 import React from 'react';
 import { createPortal } from 'react-dom';
-import { Menu, MenuHeader, Overlay } from './MobileMenu.styled';
+import {
+  Menu,
+  MenuHeader,
+  Overlay,
+  UserIconWrapper,
+} from './MobileMenu.styled';
 import { useDispatch } from 'react-redux';
 import { setMobileIsOpen } from 'redux/modal/modalSlice';
-import MobileNavigation from 'components/mobileNavigation';
+import MobileNavigation from 'components/mobileMenu/mobileNavigation';
+import { pageAnimation } from 'constants/animations';
+import { mobileMenuAnimation } from 'constants/animations';
+import { IoMdPerson } from 'react-icons/io';
+import MobileMenuButton from 'components/UI-kit/buttons/mobileMenuButton';
+import { FiLogIn } from 'react-icons/fi';
 
 const modalRoot: HTMLDivElement = document.querySelector('#modal')!;
-
-const menu = {
-  hidden: { opacity: 0, translateX: '-100px' },
-  show: { opacity: 1, translateX: 0 },
-};
 
 const MobileMenu = () => {
   const dispatch = useDispatch();
@@ -20,16 +25,24 @@ const MobileMenu = () => {
 
   return createPortal(
     <Overlay
-      key="mobileMenu"
-      variants={menu}
-      initial="hidden"
-      animate="show"
-      exit="hidden"
-      transition={{ duration: 0.3 }}
+      {...pageAnimation}
+      transition={{ duration: 0.2 }}
       onClick={handleBackdrop}
     >
-      <Menu>
-        <MenuHeader />
+      <Menu
+        key="mobileMenu"
+        {...mobileMenuAnimation}
+        transition={{ duration: 0.2 }}
+      >
+        <MenuHeader>
+          <UserIconWrapper>
+            <IoMdPerson />
+          </UserIconWrapper>
+          <MobileMenuButton>
+            Default account
+            <FiLogIn />
+          </MobileMenuButton>
+        </MenuHeader>
         <MobileNavigation />
       </Menu>
     </Overlay>,

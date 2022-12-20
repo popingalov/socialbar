@@ -1,12 +1,12 @@
 import { pageAnimation } from 'constants/animations';
 import { motion } from 'framer-motion';
 
-const Settings = () => {
+const NewCocktail = () => {
   return (
     <motion.section {...pageAnimation} transition={{ duration: 0.3 }}>
-      Settings
+      <div>CreateCocktail</div>
     </motion.section>
   );
 };
 
-export default Settings;
+export default NewCocktail;

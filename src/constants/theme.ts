@@ -4,7 +4,7 @@ export const theme = {
     mainText: '#333333', // main dark black color
     secondaryText: '#757575', // lighter grey text color
     accent: '#2B7A78', // dark green-blue color -- for hover
-    secondaryAccent: '#17252A', // the most dark -- additional color / just in case
+    secondaryAccent: '#074342', // the most dark -- additional color / just in case
     accentBackgroundColor: '#3AAFA9', // header-navigation color
     mainBackgroundColor: '#f5f4fa', // very light white color
     secondaryBackgroundColor: 'rgba(205,247,245,0.5)', // very light blue color
@@ -15,6 +15,7 @@ export const theme = {
     hoverLinkBackgroundColor: 'rgba(43,122,120,0.5)',
     activeLinkBackgroundColor: 'rgba(58,175,169,0.2)',
     white: '#ffffff',
+    extraMessageBgColor: 'rgba(0, 0, 0, 0.04)',
   },
 
   space: [0, 4, 8, 16, 32, 64, 128, 256, 512],
