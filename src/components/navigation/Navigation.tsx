@@ -14,10 +14,16 @@ const Navigation = () => {
   const isGeneralRoute =
     location.pathname === paths.ingredients ||
     location.pathname === paths.cocktails;
+  const isExtraRoute =
+    location.pathname === paths.settings ||
+    location.pathname === paths.newCocktail ||
+    location.pathname === paths.newIngredient;
 
   return (
     <>
-      <Wrapper>{isMainRoute ? <NavigationMain /> : <NavigationCard />}</Wrapper>
+      <Wrapper isExtraRoute={isExtraRoute}>
+        {isMainRoute ? <NavigationMain /> : <NavigationCard />}
+      </Wrapper>
       {isGeneralRoute && (
         <NavigationListStyled>
           <PagesNavigation />

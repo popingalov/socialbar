@@ -8,9 +8,10 @@ export const NavigationListStyled = styled.ul`
   text-align: center;
 `;
 
-export const Wrapper = styled.nav`
+export const Wrapper = styled.nav<{ isExtraRoute: boolean }>`
   display: flex;
-  justify-content: space-between;
+  justify-content: ${({ isExtraRoute }) =>
+    !isExtraRoute ? `space-between` : `none`};
   padding: 15px;
   background-color: ${({ theme }) => theme.colors.accentBackgroundColor};
 `;
