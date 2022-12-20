@@ -1,8 +1,8 @@
-import { Link } from 'react-router-dom';
 import { cocktailFilterStatus } from 'redux/filter/filterConstants';
 import { setCocktailStatusFilter } from 'redux/filter/filterSlice';
 import { useAppDispatch } from 'redux/hooks';
 import BottomMessageButton from 'components/UI-kit/buttons/bottomMessageButton';
+import BottomMessageLink from 'components/UI-kit/bottomMessageLink';
 
 interface IProps {
   isMyCocktails: boolean;
@@ -28,10 +28,12 @@ const CocktailBottomMessage: React.FC<IProps> = ({
             All Cocktails
           </BottomMessageButton>
           {` `}
-          or create a <Link to="new">New one</Link>!
+          or create a <BottomMessageLink to="new">New one</BottomMessageLink>!
         </>
       )}
-      {isAllCocktails && <Link to="new">You can create one!</Link>}
+      {isAllCocktails && (
+        <BottomMessageLink to="new">You can create one!</BottomMessageLink>
+      )}
     </>
   );
 };

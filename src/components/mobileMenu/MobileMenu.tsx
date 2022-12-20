@@ -13,7 +13,7 @@ import { pageAnimation } from 'constants/animations';
 import { mobileMenuAnimation } from 'constants/animations';
 import { IoMdPerson } from 'react-icons/io';
 import MobileMenuButton from 'components/UI-kit/buttons/mobileMenuButton';
-import { AiFillCaretDown } from 'react-icons/ai';
+import { FiLogIn } from 'react-icons/fi';
 
 const modalRoot: HTMLDivElement = document.querySelector('#modal')!;
 
@@ -40,7 +40,7 @@ const MobileMenu = () => {
           </UserIconWrapper>
           <MobileMenuButton>
             Default account
-            <AiFillCaretDown />
+            <FiLogIn />
           </MobileMenuButton>
         </MenuHeader>
         <MobileNavigation />

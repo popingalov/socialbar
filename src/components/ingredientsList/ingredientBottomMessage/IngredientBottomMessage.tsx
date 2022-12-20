@@ -1,9 +1,10 @@
-import { Link } from 'react-router-dom';
+import BottomMessageLink from 'components/UI-kit/bottomMessageLink';
 
 const IngredientBottomMessage = () => {
   return (
     <>
-      Can't find an ingredient? <Link to="new">You can create one!</Link>
+      Can't find an ingredient?{' '}
+      <BottomMessageLink to="new">You can create one!</BottomMessageLink>
     </>
   );
 };
