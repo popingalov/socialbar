@@ -5,6 +5,8 @@ export const MenuHolder = styled.div`
 `;
 
 export const PageName = styled.p`
+  display: flex;
+  align-items: center;
   margin-left: ${({ theme }) => theme.space[3]}px;
   color: ${({ theme }) => theme.colors.lightText};
 `;

@@ -9,11 +9,7 @@ interface IProps {
 
 const Button: React.FC<IProps> = ({ type = 'button', onClick, children }) => {
   return (
-    <MobileButtonStyled
-      whileTap={{ scale: 0.95 }}
-      type={type}
-      onClick={onClick}
-    >
+    <MobileButtonStyled type={type} onClick={onClick}>
       {children}
     </MobileButtonStyled>
   );

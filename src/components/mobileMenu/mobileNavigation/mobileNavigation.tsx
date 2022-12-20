@@ -1,4 +1,4 @@
-import MobileIcon from 'components/UI-kit/mobileIcon';
+import MobileIcon from 'components/UI-kit/icons/mobileIcon';
 import { mainNavItems } from 'constants/navItems';
 import { paths } from 'constants/paths';
 import { useDispatch } from 'react-redux';

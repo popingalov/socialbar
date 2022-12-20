@@ -5,8 +5,8 @@ import SearchBar from 'components/searchBar';
 import ClearButton from 'components/UI-kit/buttons/clearButton';
 import { MenuHolder } from './NavigationMain.styled';
 import { setMobileIsOpen } from 'redux/modal/modalSlice';
-import { AiOutlineMenu, AiOutlineSearch } from 'react-icons/ai';
-import { BiArrowBack, BiDotsVerticalRounded } from 'react-icons/bi';
+import HeaderIcon from 'components/UI-kit/icons/headerIcon';
+import { headerIconTypes } from 'constants/headerIconTypes';
 
 const NavigationMain = () => {
   const [isSearch, setSearch] = useState(false);
@@ -25,24 +25,24 @@ const NavigationMain = () => {
   return (
     <>
       {isSearch ? (
-        <ClearButton onClick={handleBackButton}>
-          <BiArrowBack />
+        <ClearButton aria-label="back-button" onClick={handleBackButton}>
+          <HeaderIcon type={headerIconTypes.backArrow} />
         </ClearButton>
       ) : (
-        <ClearButton onClick={handleSideMenu}>
-          <AiOutlineMenu />
+        <ClearButton aria-label="mobile-menu" onClick={handleSideMenu}>
+          <HeaderIcon type={headerIconTypes.burgerMenu} />
         </ClearButton>
       )}
 
       {isSearch && <SearchBar />}
 
       <MenuHolder>
-        <ClearButton onClick={handleSearchButton}>
-          <AiOutlineSearch />
+        <ClearButton aria-label="searching" onClick={handleSearchButton}>
+          <HeaderIcon type={headerIconTypes.searching} />
         </ClearButton>
 
-        <ClearButton onClick={handleAppMenu}>
-          <BiDotsVerticalRounded />
+        <ClearButton aria-label="extra menu" onClick={handleAppMenu}>
+          <HeaderIcon type={headerIconTypes.extraMenu} />
         </ClearButton>
       </MenuHolder>
     </>

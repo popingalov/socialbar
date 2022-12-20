@@ -2,7 +2,7 @@ import { ingredientFilterStatus } from 'redux/filter/filterConstants';
 import { RxCross2 } from 'react-icons/rx';
 import Checkbox from 'components/UI-kit/checkbox';
 import Box from 'components/box';
-import LowIcon from 'components/UI-kit/lowIcon';
+import LowIcon from 'components/UI-kit/icons/lowIcon';
 import IconButton from 'components/UI-kit/buttons/iconButton';
 import { ExtraInfo, IngredientName } from './IngredientCard.styled';
 // import fallback from 'assets/fallback.png';

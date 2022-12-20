@@ -12,6 +12,6 @@ export const Wrapper = styled.nav<{ isExtraRoute: boolean }>`
   display: flex;
   justify-content: ${({ isExtraRoute }) =>
     !isExtraRoute ? `space-between` : `none`};
-  padding: 15px;
+  padding: ${({ theme }) => theme.space[1]}px;
   background-color: ${({ theme }) => theme.colors.accentBackgroundColor};
 `;

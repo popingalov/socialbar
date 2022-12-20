@@ -4,11 +4,10 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import SearchBar from 'components/searchBar';
 import ClearButton from 'components/UI-kit/buttons/clearButton';
 import { MenuHolder, PageName } from './NavigationCard.styled';
-
-import { AiOutlineSearch } from 'react-icons/ai';
-import { BiArrowBack, BiDotsVerticalRounded } from 'react-icons/bi';
 import { paths } from 'constants/paths';
 import { getHeaderName } from 'helpers/getHeaderName';
+import HeaderIcon from 'components/UI-kit/icons/headerIcon';
+import { headerIconTypes } from 'constants/headerIconTypes';
 
 const NavigationCard = () => {
   const navigate = useNavigate();
@@ -31,7 +30,7 @@ const NavigationCard = () => {
   return (
     <>
       <ClearButton onClick={handleSideMenu}>
-        <BiArrowBack />
+        <HeaderIcon type={headerIconTypes.backArrow} />
       </ClearButton>
 
       {isShortHeader && <PageName>{getHeaderName(location.pathname)}</PageName>}
@@ -41,11 +40,11 @@ const NavigationCard = () => {
       {!isShortHeader && (
         <MenuHolder>
           <ClearButton onClick={handleSearchButton}>
-            <AiOutlineSearch />
+            <HeaderIcon type={headerIconTypes.searching} />
           </ClearButton>
 
           <ClearButton onClick={handleAppMenu}>
-            <BiDotsVerticalRounded />
+            <HeaderIcon type={headerIconTypes.extraMenu} />
           </ClearButton>
         </MenuHolder>
       )}

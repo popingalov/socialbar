@@ -1,14 +1,27 @@
 import styled from 'styled-components';
 
 export const Wrapper = styled.button`
-  background-color: transparent;
+  margin: 0;
+  padding: ${p => p.theme.space[2]}px;
   border: none;
-  color: ${({ theme }) => theme.colors.lightText};
-  font-size: 18px;
+  font: inherit;
+  cursor: pointer;
+  font-size: 0;
+  background-color: transparent;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: ${p => p.theme.colors.lightText};
+  opacity: 0.6;
+  transition: opacity 250ms ${p => p.theme.transitionTiming};
+  outline: none;
+
+  /* :not(:last-of-type) {
+    margin-right: ${({ theme }) => theme.space[1]}px;
+  } */
 
   :hover,
   :focus {
-    cursor: pointer;
     color: ${({ theme }) => theme.colors.secondaryAccent};
   }
 `;
