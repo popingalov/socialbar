@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import Select from 'components/UI-kit/select';
 
 const ingredientTypes = [
+  'No Filter',
   'Strong alcohol',
   'Soft alcohol',
   'Beverages',
@@ -28,7 +29,7 @@ const Home = () => {
       Home
       <h1>Welcome</h1>
       <Select
-        label="Choose cocktail"
+        label="No Filter"
         values={ingredientTypes}
         onChange={(v: any) => console.log(v)}
       />
