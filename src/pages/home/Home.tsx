@@ -28,7 +28,7 @@ const Home = () => {
       Home
       <h1>Welcome</h1>
       <Select
-        label="Choose country"
+        label="Choose cocktail"
         values={ingredientTypes}
         onChange={(v: any) => console.log(v)}
       />
