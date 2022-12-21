@@ -22,4 +22,9 @@ export const IconButtonStyled = styled.button`
   :disabled {
     opacity: 0.2;
   }
+
+  svg {
+    width: 20px;
+    height: 20px;
+  }
 `;

@@ -7,10 +7,16 @@ import { MenuHolder } from './NavigationMain.styled';
 import { setMobileIsOpen } from 'redux/modal/modalSlice';
 import HeaderIcon from 'components/UI-kit/icons/headerIcon';
 import { headerIconTypes } from 'constants/headerIconTypes';
+import Filter from 'components/navigation/filter';
+import { useLocation } from 'react-router';
+import { paths } from 'constants/paths';
 
 const NavigationMain = () => {
   const [isSearch, setSearch] = useState(false);
   const dispatch = useDispatch();
+
+  const location = useLocation();
+  const isIngredients = location.pathname === paths.ingredients;
 
   const handleSideMenu = () => {
     dispatch(setMobileIsOpen(true));
@@ -34,7 +40,11 @@ const NavigationMain = () => {
         </ClearButton>
       )}
 
-      {isSearch && <SearchBar />}
+      {isSearch ? (
+        <SearchBar />
+      ) : (
+        <Filter type={isIngredients ? 'ingredients' : 'cocktails'} />
+      )}
 
       <MenuHolder>
         <ClearButton aria-label="searching" onClick={handleSearchButton}>
