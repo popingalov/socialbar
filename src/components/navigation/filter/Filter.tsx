@@ -41,32 +41,3 @@ const Filter: React.FC<IProps> = ({ type }) => {
 };
 
 export default Filter;
-
-/**
- * <form >
-      <label  for='genre'>Genres
-        <select id='genre' name='genre'>
-          <option value=0 aria-placeholder="please choose genre to find">...</option>
-        </select>
-      </label>
-    </form>
- */
-
-// export default [
-//   'Strong alcohol',
-//   'Soft alcohol',
-//   'Beverages',
-//   'Juices',
-//   'Fruits',
-//   'Other',
-// ];
-
-// export default [
-//   'IBA Official',
-//   'Strong',
-//   'Moderately strong',
-//   'Soft',
-//   'Long',
-//   'Shooters',
-//   'Non-alcoholic',
-// ];
