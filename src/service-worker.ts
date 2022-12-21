@@ -13,7 +13,6 @@ import { ExpirationPlugin } from 'workbox-expiration';
 import { precacheAndRoute, createHandlerBoundToURL } from 'workbox-precaching';
 import { registerRoute } from 'workbox-routing';
 import { StaleWhileRevalidate } from 'workbox-strategies';
-import { CacheableResponsePlugin } from 'workbox-cacheable-response';
 
 declare const self: ServiceWorkerGlobalScope;
 
@@ -24,31 +23,10 @@ clientsClaim();
 // This variable must be present somewhere in your service worker file,
 // even if you decide not to use precaching. See https://cra.link/PWA
 precacheAndRoute(self.__WB_MANIFEST);
-// const name = ['https://back-end-socialbar.vercel.app/api'];
+
 // Set up App Shell-style routing, so that all navigation requests
 // are fulfilled with your index.html shell. Learn more at
 // https://developers.google.com/web/fundamentals/architecture/app-shell
-self.addEventListener('install', event => {
-  event.waitUntil(caches.open('api-cache'));
-});
-
-self.addEventListener('fetch', event => {
-  console.log('fetch', event.request);
-
-  event.respondWith(
-    caches.match(event.request).then(response => {
-      console.log('res', response);
-
-      if (response) {
-        console.log('Кеш');
-        return response;
-      }
-      console.log('запрос');
-
-      return fetch(event.request);
-    }),
-  );
-});
 const fileExtensionRegexp = new RegExp('/[^/?]+\\.[^/]+$');
 registerRoute(
   // Return false to exempt requests from being fulfilled by index.html.
@@ -88,21 +66,6 @@ registerRoute(
       // Ensure that once this runtime cache reaches a maximum size the
       // least-recently used images are removed.
       new ExpirationPlugin({ maxEntries: 50 }),
-    ],
-  }),
-);
-registerRoute(
-  ({ url }) =>
-    url.pathname.startsWith('https://back-end-socialbar.vercel.app/api/coc'),
-  new StaleWhileRevalidate({
-    cacheName: 'api-cache',
-    plugins: [
-      new CacheableResponsePlugin({
-        statuses: [200, 201],
-        headers: {
-          'X-Is-Cacheable': 'true',
-        },
-      }),
     ],
   }),
 );
