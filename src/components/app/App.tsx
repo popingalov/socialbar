@@ -5,7 +5,6 @@ import { useSelector } from 'react-redux';
 import {
   Cocktails,
   CocktailsDetails,
-  Home,
   IngredientDetails,
   Ingredients,
   Layout,
@@ -16,16 +15,11 @@ import {
 import { GlobalStyle } from './App.styled';
 import Loader from 'components/loader';
 import MobileMenu from 'components/mobileMenu';
-import PopUp from 'components/popUp';
-import {
-  selectMobileMenuStatus,
-  selectPopUpStatus,
-} from 'redux/modal/modalSelectors';
+import { selectMobileMenuStatus } from 'redux/modal/modalSelectors';
 
 const App = () => {
   const location = useLocation();
   const menuIsOpen = useSelector(selectMobileMenuStatus);
-  const popUpIsOpen = useSelector(selectPopUpStatus);
 
   return (
     <>
@@ -34,7 +28,6 @@ const App = () => {
         <Suspense fallback={<Loader />}>
           <Routes location={location} key={location.key}>
             <Route path="/" element={<Layout />}>
-              {/* <Route index element={<Home />} /> */}
               <Route index element={<Navigate to="ingredients" />} />
               <Route path="cocktails" element={<Cocktails />} />
               <Route path="ingredients" element={<Ingredients />} />
@@ -56,13 +49,6 @@ const App = () => {
       <AnimatePresence>
         {menuIsOpen && <MobileMenu key="mobileMenu" />}
       </AnimatePresence>
-      {/* <AnimatePresence>
-        {popUpIsOpen && (
-          <PopUp>
-            <>здесь будет опшинс</>
-          </PopUp>
-        )}
-      </AnimatePresence> */}
     </>
   );
 };

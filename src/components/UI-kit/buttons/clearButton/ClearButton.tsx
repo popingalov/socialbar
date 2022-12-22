@@ -3,15 +3,15 @@ import { Wrapper } from './ClearButton.styled';
 interface IProps {
   children: JSX.Element;
   type?: 'button' | 'submit' | 'reset';
-  onClick: () => void;
+  onClick: any;
 }
 
-const ClearButton = ({
+const ClearButton: React.FC<IProps> = ({
   children,
   onClick,
   type = 'button',
   ...allyProps
-}: IProps) => (
+}) => (
   <Wrapper type={type} onClick={onClick} {...allyProps}>
     {children}
   </Wrapper>

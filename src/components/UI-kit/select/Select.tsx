@@ -19,7 +19,7 @@ const Select: React.FC<IProps> = ({ label, values, onChange }) => {
   const popUpIsOpen = useSelector(selectPopUpStatus);
 
   // find DOM element position via useRef and el.getBoundingClientRect()
-  const handleOpen = (event: any) => {
+  const handleOpen: React.MouseEventHandler<HTMLButtonElement> = event => {
     dispatch(setPopUpIsOpen(true));
     // console.log(
     //   'event.clientX, y: event.clientY ',
@@ -27,18 +27,14 @@ const Select: React.FC<IProps> = ({ label, values, onChange }) => {
     //   event.clientY,
     // );
   };
-  const handleClose = () => {
-    dispatch(setPopUpIsOpen(false));
-  };
-  const handleValueChange = (value: any) => {
+
+  const handleChange = (value: string) => {
     setCurrentValue(value);
-  };
-  const handleChange = (value: any) => {
-    handleValueChange(value);
+
     // call method, if it exists
     if (onChange) onChange(value);
-    // close, after all tasks are finished
-    handleClose();
+
+    dispatch(setPopUpIsOpen(false));
   };
 
   return (
