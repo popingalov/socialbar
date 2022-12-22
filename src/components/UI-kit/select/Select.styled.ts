@@ -12,45 +12,31 @@ export const SelectLabelButton = styled.button`
   padding-bottom: ${({ theme }) => theme.space[2]}px;
   max-width: 220px;
   width: 100%;
+  text-align: left;
   font-size: ${({ theme }) => theme.fontSizes.s};
   letter-spacing: 0.03em;
   font-weight: 500;
-  /* background-color: transparent; */
-  background-color: ${({ theme }) => theme.colors.activeLinkBackgroundColor};
+  background-color: transparent;
   border: none;
   border-radius: 5px;
-  color: ${({ theme }) => theme.colors.mainText};
+  color: ${({ theme }) => theme.colors.lightText};
   align-items: center;
   justify-content: space-between;
   cursor: pointer;
   transition: 0.3s ease;
 
   &:hover {
-    background-color: ${({ theme }) => theme.colors.accent};
+    background-color: ${({ theme }) => theme.colors.hoverLinkBackgroundColor};
   }
 `;
 
-export const DropdownStyle = styled.div<{ isVisible: boolean }>`
-  position: absolute;
-  top: 0;
-  left: 0;
-  max-height: ${p => (p.isVisible ? '270px' : '40px')};
-  min-width: 150px;
-  padding: ${({ theme }) => theme.space[2]}px;
-  display: flex;
-  flex-direction: column;
-  background-color: ${({ theme }) => theme.colors.mainBackgroundColor};
-  border: 1px solid ${({ theme }) => theme.colors.backdropColor};
-  border-radius: 4px;
-  overflow: scroll;
-  opacity: ${p => (p.isVisible ? '1' : '0')};
-  visibility: ${p => (p.isVisible ? 'all' : 'hidden')};
-  transition: max-height 0.2s ease;
+export const OptionsList = styled.ul`
+  width: 100%;
 `;
 
-export const DropdownItem = styled.div<{ isActive: boolean }>`
+export const Option = styled.li<{ isActive: boolean }>`
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   width: 90%;
   margin: 0;
   padding: ${({ theme }) => theme.space[1]}px;

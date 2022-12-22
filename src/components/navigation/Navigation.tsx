@@ -22,7 +22,11 @@ const Navigation = () => {
   return (
     <>
       <Wrapper isExtraRoute={isExtraRoute}>
-        {isMainRoute ? <NavigationMain /> : <NavigationCard />}
+        {isMainRoute ? (
+          <NavigationMain isGeneralRoute={isGeneralRoute} />
+        ) : (
+          <NavigationCard />
+        )}
       </Wrapper>
       {isGeneralRoute && (
         <NavigationListStyled>

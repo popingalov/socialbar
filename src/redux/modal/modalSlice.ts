@@ -4,9 +4,15 @@ interface IModalStatus {
   mobileMenuStatus: {
     isOpen: boolean;
   };
+  popUpStatus: {
+    isOpen: boolean;
+  };
 }
 const modalStatusInitialState: IModalStatus = {
   mobileMenuStatus: {
+    isOpen: false,
+  },
+  popUpStatus: {
     isOpen: false,
   },
 };
@@ -23,8 +29,16 @@ const modalSlice = createSlice({
         },
       };
     },
+    setPopUpIsOpen(state, { payload }: PayloadAction<boolean>) {
+      return {
+        ...state,
+        popUpStatus: {
+          isOpen: payload,
+        },
+      };
+    },
   },
 });
 
-export const { setMobileIsOpen } = modalSlice.actions;
+export const { setMobileIsOpen, setPopUpIsOpen } = modalSlice.actions;
 export const modalReducer = modalSlice.reducer;

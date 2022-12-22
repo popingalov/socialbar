@@ -21,3 +21,15 @@ export const mobileMenuAnimation = {
   animate: 'show',
   exit: 'hidden',
 };
+
+const popUpAnimationType = {
+  hidden: { opacity: 0, translateY: '-100px' },
+  show: { opacity: 1, translateY: 0 },
+};
+
+export const popUpMenuAnimation = {
+  variants: popUpAnimationType,
+  initial: 'hidden',
+  animate: 'show',
+  exit: 'hidden',
+};

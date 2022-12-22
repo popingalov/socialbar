@@ -1,4 +1,5 @@
 export const ingredientTypes = [
+  'No Filter',
   'Strong alcohol',
   'Soft alcohol',
   'Beverages',
@@ -8,6 +9,7 @@ export const ingredientTypes = [
 ];
 
 export const cocktailTypes = [
+  'No Filter',
   'IBA Official',
   'Strong',
   'Moderately strong',

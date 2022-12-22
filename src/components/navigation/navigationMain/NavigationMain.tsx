@@ -12,7 +12,11 @@ import { paths } from 'constants/paths';
 import { cocktailTypes, ingredientTypes } from 'constants/categories';
 import Select from 'components/UI-kit/select';
 
-const NavigationMain = () => {
+interface IProps {
+  isGeneralRoute: boolean;
+}
+
+const NavigationMain: React.FC<IProps> = ({ isGeneralRoute }) => {
   const [isSearch, setSearch] = useState(false);
   const dispatch = useDispatch();
 
@@ -42,9 +46,8 @@ const NavigationMain = () => {
         </ClearButton>
       )}
 
-      {isSearch ? (
-        <SearchBar />
-      ) : (
+      {isSearch && <SearchBar />}
+      {isGeneralRoute && !isSearch && (
         <Select
           label="No Filter"
           values={filter}
