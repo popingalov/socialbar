@@ -6,22 +6,27 @@ export const SelectContainer = styled.div`
 `;
 
 export const SelectLabelButton = styled.button`
-  padding: 0.3rem 0.5rem;
-  min-width: 7rem;
-  font-size: 0.9rem;
+  padding-left: ${({ theme }) => theme.space[3]}px;
+  padding-right: ${({ theme }) => theme.space[3]}px;
+  padding-top: ${({ theme }) => theme.space[2]}px;
+  padding-bottom: ${({ theme }) => theme.space[2]}px;
+  max-width: 220px;
+  width: 100%;
+  font-size: ${({ theme }) => theme.fontSizes.s};
+  letter-spacing: 0.03em;
   font-weight: 500;
-  background-color: #fff;
+  /* background-color: transparent; */
+  background-color: ${({ theme }) => theme.colors.activeLinkBackgroundColor};
   border: none;
   border-radius: 5px;
-  color: #111;
+  color: ${({ theme }) => theme.colors.mainText};
   align-items: center;
   justify-content: space-between;
-  border: 1px solid slategrey;
   cursor: pointer;
-  box-shadow: 0 1px 4px 0 #ccc;
   transition: 0.3s ease;
+
   &:hover {
-    background-color: #eee;
+    background-color: ${({ theme }) => theme.colors.accent};
   }
 `;
 
@@ -29,36 +34,38 @@ export const DropdownStyle = styled.div<{ isVisible: boolean }>`
   position: absolute;
   top: 0;
   left: 0;
-  max-height: ${p => (p.isVisible ? '40vmax' : '40px')};
-  min-width: 10rem;
-  padding: 0.4rem;
+  max-height: ${p => (p.isVisible ? '270px' : '40px')};
+  min-width: 150px;
+  padding: ${({ theme }) => theme.space[2]}px;
   display: flex;
   flex-direction: column;
-  border-radius: 5px;
-  background: #fafafa;
-  border: 1.5px solid slategrey;
-  transition: max-height 0.2s ease;
+  background-color: ${({ theme }) => theme.colors.mainBackgroundColor};
+  border: 1px solid ${({ theme }) => theme.colors.backdropColor};
+  border-radius: 4px;
   overflow: scroll;
-  visibility: ${p => (p.isVisible ? 'all' : 'hidden')}; ;
+  opacity: ${p => (p.isVisible ? '1' : '0')};
+  visibility: ${p => (p.isVisible ? 'all' : 'hidden')};
+  transition: max-height 0.2s ease;
 `;
 
 export const DropdownItem = styled.div<{ isActive: boolean }>`
   display: flex;
   align-items: center;
   width: 90%;
-  margin: 0.15rem 0;
-  padding: 0.3rem 0.5rem;
+  margin: 0;
+  padding: ${({ theme }) => theme.space[1]}px;
   font-size: 0.9rem;
   font-weight: ${p => (p.isActive ? '500' : '400')};
-  color: ${p => (p.isActive ? '#166edc' : '#333')};
-  border-radius: 0.3rem;
+  color: ${({ theme, isActive }) =>
+    isActive ? theme.colors.accent : theme.colors.mainText};
+  border-radius: 4px;
   cursor: pointer;
 
   &:hover,
   :focus,
   :focus:hover {
-    background-color: #166edc;
-    color: #fafafa;
+    background-color: ${({ theme }) => theme.colors.hoverLinkBackgroundColor};
+    color: ${({ theme }) => theme.colors.lightText};
     outline: none;
   }
 `;

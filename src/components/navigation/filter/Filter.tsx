@@ -1,27 +1,9 @@
+import { cocktailTypes, ingredientTypes } from 'constants/categories';
 import { FilterStyled } from './Filter.styled';
 
 interface IProps {
   type: 'ingredients' | 'cocktails';
 }
-
-const ingredientTypes = [
-  'Strong alcohol',
-  'Soft alcohol',
-  'Beverages',
-  'Juices',
-  'Fruits',
-  'Other',
-];
-
-const cocktailTypes = [
-  'IBA Official',
-  'Strong',
-  'Moderately strong',
-  'Soft',
-  'Long',
-  'Shooters',
-  'Non-alcoholic',
-];
 
 const Filter: React.FC<IProps> = ({ type }) => {
   const filter = type === 'ingredients' ? ingredientTypes : cocktailTypes;

@@ -7,9 +7,10 @@ import { MenuHolder } from './NavigationMain.styled';
 import { setMobileIsOpen } from 'redux/modal/modalSlice';
 import HeaderIcon from 'components/UI-kit/icons/headerIcon';
 import { headerIconTypes } from 'constants/headerIconTypes';
-import Filter from 'components/navigation/filter';
 import { useLocation } from 'react-router';
 import { paths } from 'constants/paths';
+import { cocktailTypes, ingredientTypes } from 'constants/categories';
+import Select from 'components/UI-kit/select';
 
 const NavigationMain = () => {
   const [isSearch, setSearch] = useState(false);
@@ -17,6 +18,7 @@ const NavigationMain = () => {
 
   const location = useLocation();
   const isIngredients = location.pathname === paths.ingredients;
+  const filter = isIngredients ? ingredientTypes : cocktailTypes;
 
   const handleSideMenu = () => {
     dispatch(setMobileIsOpen(true));
@@ -43,7 +45,11 @@ const NavigationMain = () => {
       {isSearch ? (
         <SearchBar />
       ) : (
-        <Filter type={isIngredients ? 'ingredients' : 'cocktails'} />
+        <Select
+          label="No Filter"
+          values={filter}
+          onChange={(v: any) => console.log(v)}
+        />
       )}
 
       <MenuHolder>
