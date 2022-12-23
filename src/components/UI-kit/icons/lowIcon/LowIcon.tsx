@@ -15,9 +15,9 @@ const LowIcon: React.FC<IProps> = ({ type }) => {
           color: theme.colors.accentBackgroundColor,
           position: 'absolute',
           bottom: '0',
-          right: '-12px',
-          width: '10px',
-          height: '10px',
+          right: '-14px',
+          width: '12px',
+          height: '12px',
         },
       }}
     >

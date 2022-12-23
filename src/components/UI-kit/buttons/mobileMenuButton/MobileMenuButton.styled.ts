@@ -27,4 +27,9 @@ export const MobileButtonStyled = styled(motion.button)`
     background-color: ${p => p.theme.colors.accent};
     border-color: ${p => p.theme.colors.accent};
   }
+
+  svg {
+    width: 20px;
+    height: 20px;
+  }
 `;

@@ -7,7 +7,7 @@ interface IProps {
 
 const IconButton: React.FC<IProps> = ({
   children,
-  type = 'submit',
+  type = 'button',
   ...allyProps
 }) => {
   return (

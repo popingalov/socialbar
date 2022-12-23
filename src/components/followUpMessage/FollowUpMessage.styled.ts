@@ -10,5 +10,5 @@ export const Message = styled.div`
   font-size: ${({ theme }) => theme.fontSizes.xs};
   background-color: ${({ theme }) => theme.colors.extraMessageBgColor};
   line-height: 1.5;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.028em;
 `;

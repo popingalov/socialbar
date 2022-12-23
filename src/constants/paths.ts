@@ -3,4 +3,6 @@ export const paths: IPaths = {
   ingredients: '/ingredients',
   cocktails: '/cocktails',
   settings: '/settings',
+  newCocktail: '/cocktails/new',
+  newIngredient: '/ingredients/new',
 };

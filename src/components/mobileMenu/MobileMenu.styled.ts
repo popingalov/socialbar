@@ -1,16 +1,6 @@
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
 
-export const Overlay = styled(motion.div)`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: 1000;
-  background-color: ${({ theme }) => theme.colors.backdropColor};
-`;
-
 export const Menu = styled(motion.div)`
   background-color: ${({ theme }) => theme.colors.mainBackgroundColor};
   width: 70%;

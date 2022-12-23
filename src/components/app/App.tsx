@@ -1,11 +1,10 @@
 import { Suspense } from 'react';
-import { Route, Routes, useLocation } from 'react-router-dom';
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 import { useSelector } from 'react-redux';
 import {
   Cocktails,
   CocktailsDetails,
-  Home,
   IngredientDetails,
   Ingredients,
   Layout,
@@ -29,7 +28,7 @@ const App = () => {
         <Suspense fallback={<Loader />}>
           <Routes location={location} key={location.key}>
             <Route path="/" element={<Layout />}>
-              <Route index element={<Home />} />
+              <Route index element={<Navigate to="ingredients" replace />} />
               <Route path="cocktails" element={<Cocktails />} />
               <Route path="ingredients" element={<Ingredients />} />
               <Route

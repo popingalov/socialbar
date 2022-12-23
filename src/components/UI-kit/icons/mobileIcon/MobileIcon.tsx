@@ -1,7 +1,6 @@
 import { IconContext } from 'react-icons';
-import { FaPencilAlt } from 'react-icons/fa';
 import { ImGlass2 } from 'react-icons/im';
-import { AiFillSetting } from 'react-icons/ai';
+import { AiFillSetting, AiOutlineBlock } from 'react-icons/ai';
 import { GiWineBottle } from 'react-icons/gi';
 import { paths } from 'constants/paths';
 import { theme } from 'constants/theme';
@@ -36,7 +35,7 @@ function getIcon(path: string) {
     case paths.settings:
       return <AiFillSetting />;
     default:
-      return <FaPencilAlt />;
+      return <AiOutlineBlock />;
   }
 }
 

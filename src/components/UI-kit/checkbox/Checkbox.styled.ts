@@ -31,8 +31,8 @@ export const HiddenCheckbox = styled.input.attrs({ type: 'checkbox' })`
 
 export const StyledCheckbox = styled(motion.div)<{ checked: boolean }>`
   display: inline-block;
-  width: 18px;
-  height: 18px;
+  width: 20px;
+  height: 20px;
   background-color: ${p =>
     p.checked ? p.theme.colors.accent : p.theme.colors.mainBackgroundColor};
   border: 2px solid ${p => p.theme.colors.accent};

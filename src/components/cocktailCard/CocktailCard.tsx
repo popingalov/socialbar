@@ -1,4 +1,4 @@
-import LowIcon from 'components/UI-kit/lowIcon';
+import LowIcon from 'components/UI-kit/icons/lowIcon';
 import Box from 'components/box';
 import { BiCheck } from 'react-icons/bi';
 import { CocktailsName, Ingredients } from './CocktailCard.styled';
