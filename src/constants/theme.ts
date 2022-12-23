@@ -8,7 +8,7 @@ export const theme = {
     accentBackgroundColor: '#3AAFA9', // header-navigation color
     mainBackgroundColor: '#f5f4fa', // very light white color
     secondaryBackgroundColor: 'rgba(205,247,245,0.5)', // very light blue color
-    backdropColor: ' rgba(0, 0, 0, 0.5)', // backdrop grey shadow color
+    backdropColor: ' rgba(0, 0, 0, 0.2)', // backdrop grey shadow color
     inputError: ' rgba(142, 22, 0, 0.08)', // red input error color
     borderBottom: 'rgba(0, 0, 0, 0.13)',
     link: '#1155bb',

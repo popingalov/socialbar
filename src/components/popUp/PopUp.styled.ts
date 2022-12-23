@@ -1,16 +1,6 @@
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
 
-export const Overlay = styled(motion.div)`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: 1000;
-  background-color: ${({ theme }) => theme.colors.backdropColor};
-`;
-
 interface IProps extends ICoordinates {
   type: 'select' | 'extraMenu';
 }
@@ -22,9 +12,9 @@ export const Modal = styled(motion.div)<IProps>`
     if (type === 'select') return left ? left : '0';
     return 'none';
   }}px;
-  right: ${({ type, theme }) => {
-    if (type === 'select') return 'none';
-    return theme.space[1];
+  right: ${({ right, type, theme }) => {
+    if (type !== 'select') return theme.space[1];
+    return right;
   }}px;
   padding: ${p => p.theme.space[2]}px;
 
@@ -33,4 +23,7 @@ export const Modal = styled(motion.div)<IProps>`
   max-width: 220px;
   overflow-y: scroll;
   border-radius: 3px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+  background-clip: padding-box;
 `;

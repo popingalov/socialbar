@@ -9,8 +9,8 @@ interface IFilterStatus {
   ingredientsStatus: string;
 }
 const filterInitialState: IFilterStatus = {
-  cocktailsStatus: cocktailFilterStatus.myCocktails,
-  ingredientsStatus: ingredientFilterStatus.myBarShelf,
+  cocktailsStatus: cocktailFilterStatus.allCocktails,
+  ingredientsStatus: ingredientFilterStatus.manageBarShelf,
 };
 
 const filterSlice = createSlice({
