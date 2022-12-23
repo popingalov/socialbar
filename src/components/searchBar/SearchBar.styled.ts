@@ -7,9 +7,11 @@ export const MainInput = styled.input`
   background-color: transparent;
   border: none;
   outline: none;
-  color: #fff;
+  font-size: ${({ theme }) => theme.fontSizes.s};
+  letter-spacing: 0.03em;
+  color: ${({ theme }) => theme.colors.lightText};
 
   &::placeholder {
-    color: #e4e4e4;
+    color: ${({ theme }) => theme.colors.placeholder};
   }
 `;

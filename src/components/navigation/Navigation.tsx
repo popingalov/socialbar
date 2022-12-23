@@ -41,11 +41,10 @@ const Navigation = () => {
     else navigate(-1);
   };
 
-  const handleSearchButton = () => setSearch(true);
+  const handleSearchButton = () => setSearch(prevState => !prevState);
 
   const handleAppMenu = () => {
     dispatch(setExtraMenuIsOpen(true));
-    console.log('Go App menu');
   };
 
   return (

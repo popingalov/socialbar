@@ -16,6 +16,7 @@ export const theme = {
     activeLinkBackgroundColor: 'rgba(58,175,169,0.2)',
     white: '#ffffff',
     extraMessageBgColor: 'rgba(0, 0, 0, 0.04)',
+    placeholder: 'rgba(235, 235, 235, 0.8)',
   },
 
   space: [0, 4, 8, 16, 32, 64, 128, 256, 512],
