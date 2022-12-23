@@ -4,4 +4,7 @@ export const selectMobileMenuStatus = (state: RootState) =>
   state.modalStatus.mobileMenuStatus.isOpen;
 
 export const selectPopUpStatus = (state: RootState) =>
-  state.modalStatus.popUpStatus.isOpen;
+  state.modalStatus.popUpSelect.isOpen;
+
+export const selectExtraMenuStatus = (state: RootState) =>
+  state.modalStatus.popUpExtraMenu.isOpen;

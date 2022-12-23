@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Option, OptionsList, SelectLabelButton } from './Select.styled';
 import PopUp from 'components/popUp';
 import { useDispatch } from 'react-redux';
@@ -13,19 +13,31 @@ interface IProps {
   onChange?: any;
 }
 
+interface ISelectCoordinates {
+  top: null | number;
+  left: null | number;
+}
+
 const Select: React.FC<IProps> = ({ label, values, onChange }) => {
   const [currentValue, setCurrentValue] = useState('');
+  const [selectCoordinates, setSelectCoordinates] =
+    useState<ISelectCoordinates>({
+      top: null,
+      left: null,
+    });
   const dispatch = useDispatch();
   const popUpIsOpen = useSelector(selectPopUpStatus);
+  const btnRef = useRef<HTMLButtonElement>();
 
-  // find DOM element position via useRef and el.getBoundingClientRect()
+  useEffect(() => {
+    if (btnRef.current) {
+      const { top, left } = btnRef.current.getBoundingClientRect();
+      setSelectCoordinates({ top, left });
+    }
+  }, []);
+
   const handleOpen: React.MouseEventHandler<HTMLButtonElement> = event => {
     dispatch(setPopUpIsOpen(true));
-    // console.log(
-    //   'event.clientX, y: event.clientY ',
-    //   event.clientX,
-    //   event.clientY,
-    // );
   };
 
   const handleChange = (value: string) => {
@@ -39,13 +51,13 @@ const Select: React.FC<IProps> = ({ label, values, onChange }) => {
 
   return (
     <>
-      <SelectLabelButton onClick={handleOpen}>
+      <SelectLabelButton ref={btnRef} onClick={handleOpen}>
         {currentValue !== '' ? currentValue : label}
       </SelectLabelButton>
 
       <AnimatePresence>
         {popUpIsOpen && (
-          <PopUp key="popUp">
+          <PopUp key="popUp" coordinates={selectCoordinates} type="select">
             <OptionsList>
               {values &&
                 values.map((value: string) => (

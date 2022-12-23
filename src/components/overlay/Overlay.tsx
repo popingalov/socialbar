@@ -9,9 +9,9 @@ const modalRoot: HTMLDivElement = document.querySelector('#modal')!;
 
 interface IProps {
   children: ReactNode;
-  modalType: 'mobileMenu' | 'popUp';
+  modalType: 'mobileMenu' | 'popUp' | 'extraMenu';
 }
-
+// добавить бэкдроп на доп. меню
 const Overlay: React.FC<IProps> = ({ children, modalType }) => {
   const dispatch = useDispatch();
   const action =

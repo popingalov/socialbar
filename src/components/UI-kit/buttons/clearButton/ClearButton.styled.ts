@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const Wrapper = styled.button`
+export const Wrapper = styled.button<{ ref: any }>`
   margin: 0;
   padding: ${p => p.theme.space[2]}px;
   border: none;

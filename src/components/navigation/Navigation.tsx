@@ -11,8 +11,9 @@ import PagesNavigation from './pagesNavigation';
 import { paths } from 'constants/paths';
 import SearchBar from 'components/searchBar';
 import Select from 'components/UI-kit/select';
-import { setMobileIsOpen } from 'redux/modal/modalSlice';
+import { setExtraMenuIsOpen, setMobileIsOpen } from 'redux/modal/modalSlice';
 import { cocktailTypes, ingredientTypes } from 'constants/categories';
+import { selectExtraMenuStatus } from 'redux/modal/modalSelectors';
 
 const Navigation = () => {
   const navigate = useNavigate();
@@ -43,7 +44,10 @@ const Navigation = () => {
 
   const handleSearchButton = () => setSearch(true);
 
-  const handleAppMenu = () => console.log('Go App menu');
+  const handleAppMenu = () => {
+    dispatch(setExtraMenuIsOpen(true));
+    console.log('Go App menu');
+  };
 
   return (
     <>
@@ -56,7 +60,7 @@ const Navigation = () => {
             <Select
               label="No Filter"
               values={filter}
-              onChange={(v: any) => console.log(v)}
+              onChange={(value: string) => console.log(value)}
             />
           </>
         )}

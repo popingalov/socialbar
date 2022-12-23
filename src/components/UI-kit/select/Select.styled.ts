@@ -5,7 +5,7 @@ export const SelectContainer = styled.div`
   margin: 0;
 `;
 
-export const SelectLabelButton = styled.button`
+export const SelectLabelButton = styled.button<{ ref: any }>`
   padding-left: ${({ theme }) => theme.space[3]}px;
   padding-right: ${({ theme }) => theme.space[3]}px;
   padding-top: ${({ theme }) => theme.space[2]}px;
