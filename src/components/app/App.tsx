@@ -28,7 +28,7 @@ const App = () => {
         <Suspense fallback={<Loader />}>
           <Routes location={location} key={location.key}>
             <Route path="/" element={<Layout />}>
-              <Route index element={<Navigate to="ingredients" />} />
+              <Route index element={<Navigate to="ingredients" replace />} />
               <Route path="cocktails" element={<Cocktails />} />
               <Route path="ingredients" element={<Ingredients />} />
               <Route

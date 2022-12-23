@@ -13,26 +13,21 @@ interface IProps {
   onChange?: any;
 }
 
-interface ISelectCoordinates {
-  top: null | number;
-  left: null | number;
-}
-
 const Select: React.FC<IProps> = ({ label, values, onChange }) => {
   const [currentValue, setCurrentValue] = useState('');
-  const [selectCoordinates, setSelectCoordinates] =
-    useState<ISelectCoordinates>({
-      top: null,
-      left: null,
-    });
+  const [selectCoordinates, setSelectCoordinates] = useState<ICoordinates>({
+    top: null,
+    left: null,
+    right: null,
+  });
   const dispatch = useDispatch();
   const popUpIsOpen = useSelector(selectPopUpStatus);
   const btnRef = useRef<HTMLButtonElement>();
 
   useEffect(() => {
     if (btnRef.current) {
-      const { top, left } = btnRef.current.getBoundingClientRect();
-      setSelectCoordinates({ top, left });
+      const { top, left, right } = btnRef.current.getBoundingClientRect();
+      setSelectCoordinates({ top, left, right });
     }
   }, []);
 

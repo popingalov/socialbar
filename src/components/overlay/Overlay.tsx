@@ -2,23 +2,26 @@ import { pageAnimation } from 'constants/animations';
 import { ReactNode } from 'react';
 import { useDispatch } from 'react-redux';
 import { OverlayStyled } from './Overlay.styled';
-import { setMobileIsOpen, setPopUpIsOpen } from 'redux/modal/modalSlice';
+import {
+  setExtraMenuIsOpen,
+  setMobileIsOpen,
+  setPopUpIsOpen,
+} from 'redux/modal/modalSlice';
 import { createPortal } from 'react-dom';
 
 const modalRoot: HTMLDivElement = document.querySelector('#modal')!;
 
 interface IProps {
   children: ReactNode;
-  modalType: 'mobileMenu' | 'popUp' | 'extraMenu';
+  modalType: 'mobileMenu' | 'select' | 'extraMenu';
 }
-// добавить бэкдроп на доп. меню
-const Overlay: React.FC<IProps> = ({ children, modalType }) => {
-  const dispatch = useDispatch();
-  const action =
-    modalType === 'mobileMenu' ? setMobileIsOpen(false) : setPopUpIsOpen(false);
 
+const Overlay: React.FC<IProps> = ({ children, modalType }) => {
+  console.log('modalType', modalType);
+  const dispatch = useDispatch();
+  const action = getAction(modalType);
   const handleBackdrop = (event: React.MouseEvent<HTMLDivElement>) => {
-    if (event.target === event.currentTarget) dispatch(action);
+    if (event.target === event.currentTarget && action) dispatch(action);
   };
 
   return createPortal(
@@ -32,5 +35,18 @@ const Overlay: React.FC<IProps> = ({ children, modalType }) => {
     modalRoot,
   );
 };
+
+function getAction(type: string) {
+  switch (type) {
+    case 'mobileMenu':
+      return setMobileIsOpen(false);
+    case 'select':
+      return setPopUpIsOpen(false);
+    case 'extraMenu':
+      return setExtraMenuIsOpen(false);
+    default:
+      return;
+  }
+}
 
 export default Overlay;

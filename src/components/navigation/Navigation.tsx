@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router';
 import { useDispatch } from 'react-redux';
 import ClearButton from 'components/UI-kit/buttons/clearButton';
-import ExtraMenu from 'components/navigation/extraMenu';
+import ExtraIcons from 'components/navigation/extraIcons';
 import { getHeaderName } from 'helpers/getHeaderName';
 import HeaderIcon from 'components/UI-kit/icons/headerIcon';
 import { headerIconTypes } from 'constants/headerIconTypes';
@@ -13,7 +13,6 @@ import SearchBar from 'components/searchBar';
 import Select from 'components/UI-kit/select';
 import { setExtraMenuIsOpen, setMobileIsOpen } from 'redux/modal/modalSlice';
 import { cocktailTypes, ingredientTypes } from 'constants/categories';
-import { selectExtraMenuStatus } from 'redux/modal/modalSelectors';
 
 const Navigation = () => {
   const navigate = useNavigate();
@@ -74,7 +73,7 @@ const Navigation = () => {
         {isExtraRoute ? (
           <PageName>{getHeaderName(location.pathname)}</PageName>
         ) : (
-          <ExtraMenu
+          <ExtraIcons
             handleSearch={handleSearchButton}
             handleAppMenu={handleAppMenu}
           />

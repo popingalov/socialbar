@@ -36,3 +36,14 @@ export const cocktailsNavItems: INavPageLink[] = [
     statusFilter: cocktailFilterStatus.favoriteCocktails,
   },
 ];
+
+interface IExtraMenuNavLink {
+  readonly href: string;
+  readonly label: string;
+}
+
+export const extraMenuNavLinks: IExtraMenuNavLink[] = [
+  { href: 'settings', label: 'Settings' },
+  { href: 'ingredients/new', label: 'Create an ingredient' },
+  { href: 'cocktails/new', label: 'Create a cocktail' },
+];

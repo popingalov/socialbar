@@ -6,20 +6,17 @@ import { popUpMenuAnimation } from 'constants/animations';
 // добавить right координаты
 interface IProps {
   children?: ReactNode;
-  coordinates: {
-    top: null | number;
-    left: null | number;
-  };
+  coordinates: ICoordinates;
   type: 'select' | 'extraMenu';
 }
 
 const PopUp: React.FC<IProps> = ({
   children,
   type,
-  coordinates: { top, left },
+  coordinates: { top, left, right },
 }) => {
   return (
-    <Overlay modalType="popUp">
+    <Overlay modalType={type}>
       <Modal
         key="popUp"
         {...popUpMenuAnimation}
@@ -27,6 +24,7 @@ const PopUp: React.FC<IProps> = ({
         type={type}
         top={top}
         left={left}
+        right={right}
       >
         {children}
       </Modal>
