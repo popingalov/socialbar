@@ -1,6 +1,7 @@
 import Button from 'components/UI-kit/buttons/button';
 import { cocktailsNavItems, ingredientsNavItems } from 'constants/navItems';
 import { paths } from 'constants/paths';
+import { useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router';
 import {
@@ -40,7 +41,9 @@ const PagesNavigation = () => {
         <li key={label}>
           <Button
             selected={filter === statusFilter}
-            onClick={() => handleStatusFilterChange(statusFilter)}
+            onClick={() => {
+              handleStatusFilterChange(statusFilter);
+            }}
           >
             {label}
           </Button>

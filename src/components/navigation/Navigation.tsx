@@ -80,7 +80,7 @@ const Navigation = () => {
       </Wrapper>
 
       {isMainRoute && (
-        <NavigationListStyled>
+        <NavigationListStyled role="tablist">
           <PagesNavigation />
         </NavigationListStyled>
       )}

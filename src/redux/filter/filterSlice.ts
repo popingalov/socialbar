@@ -18,16 +18,10 @@ const filterSlice = createSlice({
   initialState: filterInitialState,
   reducers: {
     setCocktailStatusFilter(state, { payload }: PayloadAction<string>) {
-      return {
-        ...state,
-        cocktailsStatus: payload,
-      };
+      state.cocktailsStatus = payload;
     },
     setIngredientStatusFilter(state, { payload }: PayloadAction<string>) {
-      return {
-        ...state,
-        ingredientsStatus: payload,
-      };
+      state.ingredientsStatus = payload;
     },
   },
 });
