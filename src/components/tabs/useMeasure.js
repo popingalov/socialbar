@@ -1,5 +1,4 @@
-// import ResizeObserver from 'resize-observer-polyfill';
-import { useState, useEffect, useLayoutEffect } from 'react';
+import { useState, useLayoutEffect } from 'react';
 import { useCallbackRef } from './useCallbackRef';
 
 export function useMeasure() {

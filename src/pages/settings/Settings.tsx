@@ -6,7 +6,7 @@ const Settings = () => {
   return (
     <motion.section {...pageAnimation} transition={{ duration: 0.3 }}>
       Settings
-      {/* <Tabs /> */}
+      <Tabs />
     </motion.section>
   );
 };

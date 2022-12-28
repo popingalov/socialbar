@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Pager } from './Pager';
 import { useMeasure } from './useMeasure';
 import { Slider, TabContainer, TabItem, TabList } from './Tabs.styled';
@@ -13,7 +13,7 @@ export function Tabs() {
   const { bounds, ref } = useMeasure();
 
   // measure our elements
-  React.useEffect(() => {
+  useEffect(() => {
     const target = childRefs.current.get(value);
     const container = tabListRef.current;
     if (target) {

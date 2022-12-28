@@ -30,10 +30,6 @@ export const TabItem = styled(motion.button)`
   border-color: initial;
   border-image: initial;
   padding: 10px 1rem;
-  box-sizing: border-box;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-    'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji',
-    'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   text-size-adjust: none;
   text-overflow: ellipsis;
