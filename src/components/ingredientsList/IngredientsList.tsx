@@ -1,19 +1,24 @@
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import BarList from 'components/barList';
 import { selectIngredientFilter } from 'redux/filter/filterSelectors';
 import { useSelector } from 'react-redux';
 import IngredientCard from 'components/ingredientCard';
-import { useTakeIngredientsQuery } from 'redux/apis/ingredients';
 import { ingredientFilterStatus } from 'redux/filter/filterConstants';
-import { useAppDispatch } from 'redux/hooks';
-import { setSelectedIngredient } from 'redux/ingredient/ingredientSlice';
 import FollowUpMessage from 'components/followUpMessage';
 import IngredientBottomMessage from './ingredientBottomMessage';
-import Loader from 'components/loader';
+import { getVisibleIngredients } from 'helpers/getVisibleIngredients';
+import { IIngredient } from 'types/ingredient';
 
-const IngredientsList = () => {
-  const { data: ingredients, isLoading } = useTakeIngredientsQuery(5);
+interface IngredientsListProps {
+  ingredients: IIngredient[];
+}
+
+const IngredientsList = ({ ingredients }: IngredientsListProps) => {
   const ingredientFilter = useSelector(selectIngredientFilter);
+  const navigate = useNavigate();
+
+  console.log(ingredients);
+
   const visibleIngredients = getVisibleIngredients(
     ingredients || [],
     ingredientFilter,
@@ -21,38 +26,33 @@ const IngredientsList = () => {
   const isNotShoppingList = !(
     ingredientFilterStatus.shoppingList === ingredientFilter
   );
-  const dispatch = useAppDispatch();
+
+  const onClickCard = (id: string) => {
+    navigate(`${id}`);
+  };
 
   return (
     <>
-      <Loader isLoading={isLoading} />
       <BarList>
         {visibleIngredients &&
           visibleIngredients.map(ingredient => {
-            const { name, _id, shop, available, image } = ingredient;
+            const { title, id, picture } = ingredient;
 
             return (
-              <li key={_id}>
-                <Link
-                  to={`${_id}`}
-                  onClick={() => {
-                    dispatch(setSelectedIngredient(ingredient));
-                  }}
-                >
-                  <IngredientCard
-                    id={_id}
-                    name={name}
-                    filter={ingredientFilter}
-                    isInShoppingList={shop}
-                    isInMyBar={available}
-                    imageUrl={image}
-                  />
-                </Link>
+              <li key={id} onClick={() => onClickCard(id)}>
+                <IngredientCard
+                  id={id}
+                  name={title}
+                  filter={ingredientFilter}
+                  // isInShoppingList={shop}
+                  // isInMyBar={available}
+                  imageUrl={picture}
+                />
               </li>
             );
           })}
       </BarList>
-      {!isLoading && isNotShoppingList && (
+      {isNotShoppingList && (
         <FollowUpMessage>
           <IngredientBottomMessage />
         </FollowUpMessage>
@@ -60,19 +60,5 @@ const IngredientsList = () => {
     </>
   );
 };
-
-function getVisibleIngredients(
-  ingredients: IIngredient[],
-  filterStatus: string,
-) {
-  switch (filterStatus) {
-    case ingredientFilterStatus.myBarShelf:
-      return ingredients.filter(({ available }) => available);
-    case ingredientFilterStatus.shoppingList:
-      return ingredients.filter(({ shop }) => shop);
-    default:
-      return ingredients;
-  }
-}
 
 export default IngredientsList;

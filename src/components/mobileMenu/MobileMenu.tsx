@@ -6,8 +6,17 @@ import { IoMdPerson } from 'react-icons/io';
 import MobileMenuButton from 'components/UI-kit/buttons/mobileMenuButton';
 import { FiLogIn } from 'react-icons/fi';
 import Overlay from 'components/overlay';
+import { BASE_URL, GOOGLE_AUTH_URL } from 'constants/api';
 
 const MobileMenu = () => {
+  const redirectToGoogleAuth = () => {
+    window.open(
+      `${BASE_URL}${GOOGLE_AUTH_URL}`,
+      '_self',
+      'width=500,height=600,top=50%,left=50%',
+    );
+  };
+
   return (
     <Overlay modalType="mobileMenu">
       <Menu
@@ -19,7 +28,7 @@ const MobileMenu = () => {
           <UserIconWrapper>
             <IoMdPerson />
           </UserIconWrapper>
-          <MobileMenuButton>
+          <MobileMenuButton onClick={redirectToGoogleAuth}>
             Default account
             <FiLogIn />
           </MobileMenuButton>
