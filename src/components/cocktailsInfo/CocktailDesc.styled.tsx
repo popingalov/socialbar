@@ -30,8 +30,7 @@ export const FavoriteBtn = styled(ButtonBase)<BtnProps>`
 
 export const Image = styled.img`
   display: block;
-  width: 100%;
-  max-width: 100px;
+  max-width: 150px;
   margin: 0 auto;
   margin-bottom: ${({ theme }) => theme.space[4]}px;
 `;
@@ -42,7 +41,7 @@ export const Decs = styled.p`
   margin-bottom: ${({ theme }) => theme.space[4]}px;
 `;
 
-export const List = styled.ol`
+export const RecipeList = styled.ol`
   list-style: decimal;
   list-style-position: inside;
 `;
@@ -58,7 +57,7 @@ export const RecipePart = styled.span`
   color: ${({ theme }) => theme.colors.mainText};
 `;
 
-export const IngredientLink = styled(NavLink)`
+export const IngredientPart = styled(NavLink)`
   color: ${({ theme }) => theme.colors.link};
 `;
 
@@ -92,7 +91,6 @@ export const IngredientName = styled.p`
 `;
 
 export const ExtraInfo = styled.p`
-  text-transform: lowercase;
   color: ${({ theme }) => theme.colors.secondaryText};
   font-size: ${({ theme }) => theme.fontSizes.xs};
 `;

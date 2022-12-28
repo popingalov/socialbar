@@ -1,27 +1,26 @@
 import { setupListeners } from '@reduxjs/toolkit/dist/query/react';
 import { configureStore } from '@reduxjs/toolkit';
-import { ingApi } from './apis/ingredients';
-import { cocApi } from './apis/cocteils';
-import { userApi } from './apis/user';
-
+import { ingredientApi } from './api/ingredientApi';
+import { cocktailApi } from './api/cocktailApi';
+import { userApi } from './api/userApi';
+import authReducer from './auth/authSlice';
 import { filterReducer } from './filter/filterSlice';
-import { ingredientReducer } from './ingredient/ingredientSlice';
 import { modalReducer } from './modal/modalSlice';
 
 const store = configureStore({
   reducer: {
     [userApi.reducerPath]: userApi.reducer,
-    [ingApi.reducerPath]: ingApi.reducer,
-    [cocApi.reducerPath]: cocApi.reducer,
+    [ingredientApi.reducerPath]: ingredientApi.reducer,
+    [cocktailApi.reducerPath]: cocktailApi.reducer,
+    auth: authReducer,
     filters: filterReducer,
-    selectedIngredient: ingredientReducer,
     modalStatus: modalReducer,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware().concat(
-      ingApi.middleware,
-      cocApi.middleware,
       userApi.middleware,
+      ingredientApi.middleware,
+      cocktailApi.middleware,
     ),
 });
 
