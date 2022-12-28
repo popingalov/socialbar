@@ -10,6 +10,7 @@ import { cocktailFilterStatus } from 'redux/filter/filterConstants';
 import CocktailBottomMessage from './cocktailBottomMessage';
 import { useFetchCocktailsQuery } from 'redux/api/cocktailApi';
 import Loader from 'components/loader';
+import { Link } from 'react-router-dom';
 
 const CocktailList = () => {
   const { data: cocktails, isFetching } = useFetchCocktailsQuery();
@@ -18,10 +19,6 @@ const CocktailList = () => {
   // const visibleCocktails = getVisibleCocktails(cocktails || [], cocktailFilter);
   const isMyCocktails = cocktailFilterStatus.myCocktails === cocktailFilter;
   const isAllCocktails = cocktailFilterStatus.allCocktails === cocktailFilter;
-
-  const onCLickCard = (id: string) => {
-    navigate(`${id}`);
-  };
 
   return (
     <>
@@ -38,20 +35,18 @@ const CocktailList = () => {
             // );
             const isAvailable: boolean = true;
             return (
-              <ListItem
-                key={id}
-                allIngredientsAreAvailable={isAvailable}
-                onClick={() => onCLickCard(id)}
-              >
-                <CocktailCard
-                  // isFavorite={favorite}
-                  isFavorite={true}
-                  allIngredientsAreAvailable={isAvailable}
-                  name={title}
-                  description={description}
-                  imageUrl={picture}
-                  ingredients={ingredientNames}
-                />
+              <ListItem key={id} allIngredientsAreAvailable={isAvailable}>
+                <Link to={`${id}`}>
+                  <CocktailCard
+                    // isFavorite={favorite}
+                    isFavorite={true}
+                    allIngredientsAreAvailable={isAvailable}
+                    name={title}
+                    description={description}
+                    imageUrl={picture}
+                    ingredients={ingredientNames}
+                  />
+                </Link>
               </ListItem>
             );
           })}

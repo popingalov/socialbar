@@ -9,6 +9,7 @@ import IngredientBottomMessage from './ingredientBottomMessage';
 import { getVisibleIngredients } from 'helpers/getVisibleIngredients';
 import Loader from 'components/loader';
 import { useFetchIngredientsQuery } from 'redux/api/ingredientApi';
+import { Link } from 'react-router-dom';
 
 const IngredientsList = () => {
   const { data: ingredients, isFetching } = useFetchIngredientsQuery();
@@ -23,10 +24,6 @@ const IngredientsList = () => {
     ingredientFilterStatus.shoppingList === ingredientFilter
   );
 
-  const onClickCard = (id: string) => {
-    navigate(`${id}`);
-  };
-
   return (
     <>
       {isFetching && <Loader isLoading={isFetching} />}
@@ -37,15 +34,17 @@ const IngredientsList = () => {
             const { title, id, picture } = ingredient;
 
             return (
-              <li key={id} onClick={() => onClickCard(id)}>
-                <IngredientCard
-                  id={id}
-                  name={title}
-                  filter={ingredientFilter}
-                  // isInShoppingList={shop}
-                  // isInMyBar={available}
-                  imageUrl={picture}
-                />
+              <li key={id}>
+                <Link to={`${id}`}>
+                  <IngredientCard
+                    id={id}
+                    name={title}
+                    filter={ingredientFilter}
+                    // isInShoppingList={shop}
+                    // isInMyBar={available}
+                    imageUrl={picture}
+                  />
+                </Link>
               </li>
             );
           })}
