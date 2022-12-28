@@ -15,7 +15,7 @@ const SearchBar: React.FC = () => {
     <MainInput
       value={query}
       onChange={handleInput}
-      placeholder="Search for cocktails and ingedients"
+      placeholder="Search for cocktails and ingredients"
     />
   );
 };

@@ -7,7 +7,7 @@ interface IProps {
   onClick: any;
 }
 
-export type Ref = HTMLButtonElement;
+type Ref = HTMLButtonElement;
 
 const ClearButton = forwardRef<Ref, IProps>(
   ({ children, onClick, type = 'button', ...allyProps }, ref) => {
@@ -20,17 +20,6 @@ const ClearButton = forwardRef<Ref, IProps>(
 );
 
 export default ClearButton;
-
-// export const PopUp = forwardRef<Ref, IProps>(({ children }, ref) => {
-//   console.log('ref', ref);
-//   return (
-//     <Overlay modalType="popUp">
-//       <Modal key="popUp" {...popUpMenuAnimation} transition={{ duration: 0.2 }}>
-//         {children}
-//       </Modal>
-//     </Overlay>
-//   );
-// });
 
 // const ClearButton: React.FC<IProps> = ({
 //   children,

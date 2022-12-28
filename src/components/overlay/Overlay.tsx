@@ -17,7 +17,6 @@ interface IProps {
 }
 
 const Overlay: React.FC<IProps> = ({ children, modalType }) => {
-  console.log('modalType', modalType);
   const dispatch = useDispatch();
   const action = getAction(modalType);
   const handleBackdrop = (event: React.MouseEvent<HTMLDivElement>) => {
@@ -29,6 +28,8 @@ const Overlay: React.FC<IProps> = ({ children, modalType }) => {
       {...pageAnimation}
       transition={{ duration: 0.2 }}
       onClick={handleBackdrop}
+      type={modalType}
+      // modalType={modalType}
     >
       {children}
     </OverlayStyled>,

@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 
-export const Wrapper = styled.button<{ ref: any }>`
+export const Wrapper = styled.button<{
+  ref: React.ForwardedRef<HTMLButtonElement>;
+}>`
   margin: 0;
   padding: ${p => p.theme.space[2]}px;
   border: none;

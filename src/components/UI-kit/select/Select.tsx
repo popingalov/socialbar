@@ -6,6 +6,9 @@ import { setPopUpIsOpen } from 'redux/modal/modalSlice';
 import { AnimatePresence } from 'framer-motion';
 import { useSelector } from 'react-redux';
 import { selectPopUpStatus } from 'redux/modal/modalSelectors';
+import { AiOutlineCaretDown } from 'react-icons/ai';
+import { theme } from 'constants/theme';
+import { useAppSize } from 'hooks/useAppSize';
 
 interface IProps {
   label: string;
@@ -24,11 +27,27 @@ const Select: React.FC<IProps> = ({ label, values, onChange }) => {
   const popUpIsOpen = useSelector(selectPopUpStatus);
   const btnRef = useRef<HTMLButtonElement>();
 
+  // const size = useAppSize();
+
+  // useEffect(() => {
+  //   if (btnRef.current) {
+  //     const { top, left, right } = btnRef.current.getBoundingClientRect();
+  //     setSelectCoordinates({ top, left, right });
+  //   }
+  // }, [size]);
+
   useEffect(() => {
-    if (btnRef.current) {
-      const { top, left, right } = btnRef.current.getBoundingClientRect();
-      setSelectCoordinates({ top, left, right });
+    window.addEventListener('resize', getCoordinates);
+
+    function getCoordinates() {
+      if (btnRef.current) {
+        const { top, left, right } = btnRef.current.getBoundingClientRect();
+        setSelectCoordinates({ top, left, right });
+      }
     }
+    getCoordinates();
+
+    return () => window.removeEventListener('resize', getCoordinates);
   }, []);
 
   const handleOpen: React.MouseEventHandler<HTMLButtonElement> = event => {
@@ -46,8 +65,16 @@ const Select: React.FC<IProps> = ({ label, values, onChange }) => {
 
   return (
     <>
-      <SelectLabelButton ref={btnRef} onClick={handleOpen}>
+      <SelectLabelButton
+        whileTap={{
+          backgroundColor: theme.colors.accent,
+          transition: { duration: 1 },
+        }}
+        ref={btnRef}
+        onClick={handleOpen}
+      >
         {currentValue !== '' ? currentValue : label}
+        <AiOutlineCaretDown />
       </SelectLabelButton>
 
       <AnimatePresence>

@@ -28,28 +28,13 @@ const modalSlice = createSlice({
   initialState: modalStatusInitialState,
   reducers: {
     setMobileIsOpen(state, { payload }: PayloadAction<boolean>) {
-      return {
-        ...state,
-        mobileMenuStatus: {
-          isOpen: payload,
-        },
-      };
+      state.mobileMenuStatus.isOpen = payload;
     },
     setPopUpIsOpen(state, { payload }: PayloadAction<boolean>) {
-      return {
-        ...state,
-        popUpSelect: {
-          isOpen: payload,
-        },
-      };
+      state.popUpSelect.isOpen = payload;
     },
     setExtraMenuIsOpen(state, { payload }: PayloadAction<boolean>) {
-      return {
-        ...state,
-        popUpExtraMenu: {
-          isOpen: payload,
-        },
-      };
+      state.popUpExtraMenu.isOpen = payload;
     },
   },
 });

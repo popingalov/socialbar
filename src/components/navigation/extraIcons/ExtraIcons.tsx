@@ -7,7 +7,7 @@ import { AnimatePresence } from 'framer-motion';
 import PopUp from 'components/popUp';
 import { useSelector } from 'react-redux';
 import { selectExtraMenuStatus } from 'redux/modal/modalSelectors';
-import ExtraMenu from 'components/navigation/extraMenu';
+import ExtraMenu from 'components/extraMenu';
 
 interface IProps {
   handleSearch: () => void;
@@ -26,7 +26,6 @@ const ExtraIcons: React.FC<IProps> = ({ handleSearch, handleAppMenu }) => {
 
   useEffect(() => {
     if (menuIconRef.current) {
-      console.log('first', menuIconRef.current);
       const { top, left, right } = menuIconRef.current.getBoundingClientRect();
       setMenuCoordinates({ top, left, right });
     }
@@ -50,7 +49,9 @@ const ExtraIcons: React.FC<IProps> = ({ handleSearch, handleAppMenu }) => {
       <AnimatePresence>
         {popUpIsOpen && (
           <PopUp key="popUp" coordinates={menuCoordinates} type="extraMenu">
-            <ExtraMenu />
+            <ul>
+              <ExtraMenu />
+            </ul>
           </PopUp>
         )}
       </AnimatePresence>

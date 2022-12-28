@@ -8,42 +8,35 @@ import FollowUpMessage from 'components/followUpMessage';
 import { getVisibleCocktails } from 'helpers/getVisibleCocktails';
 import { cocktailFilterStatus } from 'redux/filter/filterConstants';
 import CocktailBottomMessage from './cocktailBottomMessage';
-import { ICocktail } from 'types/cocktail';
+import { useFetchCocktailsQuery } from 'redux/api/cocktailApi';
+import Loader from 'components/loader';
+import { Link } from 'react-router-dom';
 
-interface CocktailListProps {
-  cocktails: ICocktail[];
-}
-
-const CocktailList = ({ cocktails }: CocktailListProps) => {
+const CocktailList = () => {
+  const { data: cocktails, isFetching } = useFetchCocktailsQuery();
   const cocktailFilter = useSelector(selectCocktailFilter);
   const navigate = useNavigate();
-  const visibleCocktails = getVisibleCocktails(cocktails || [], cocktailFilter);
+  // const visibleCocktails = getVisibleCocktails(cocktails || [], cocktailFilter);
   const isMyCocktails = cocktailFilterStatus.myCocktails === cocktailFilter;
   const isAllCocktails = cocktailFilterStatus.allCocktails === cocktailFilter;
 
-  const onCLickCard = (id: string) => {
-    navigate(`${id}`);
-  };
-
   return (
     <>
-      <BarList>
-        {visibleCocktails &&
-          visibleCocktails.map(
-            ({ title, description, ingredients, id, picture }) => {
-              const ingredientNames = ingredients.map(
-                ingredient => ingredient.data.title,
-              );
-              // const isAvailable: boolean = ingredients.every(
-              //   ({ available }) => available,
-              // );
-              const isAvailable: boolean = true;
-              return (
-                <ListItem
-                  key={id}
-                  allIngredientsAreAvailable={isAvailable}
-                  onClick={() => onCLickCard(id)}
-                >
+      {isFetching && <Loader isLoading={isFetching} />}
+
+      {cocktails && (
+        <BarList>
+          {cocktails.map(({ title, description, ingredients, id, picture }) => {
+            const ingredientNames = ingredients.map(
+              ingredient => ingredient.data.title,
+            );
+            // const isAvailable: boolean = ingredients.every(
+            //   ({ available }) => available,
+            // );
+            const isAvailable: boolean = true;
+            return (
+              <ListItem key={id} allIngredientsAreAvailable={isAvailable}>
+                <Link to={`${id}`}>
                   <CocktailCard
                     // isFavorite={favorite}
                     isFavorite={true}
@@ -53,12 +46,13 @@ const CocktailList = ({ cocktails }: CocktailListProps) => {
                     imageUrl={picture}
                     ingredients={ingredientNames}
                   />
-                </ListItem>
-              );
-            },
-          )}
-      </BarList>
-      {(isMyCocktails || isAllCocktails) && (
+                </Link>
+              </ListItem>
+            );
+          })}
+        </BarList>
+      )}
+      {(isMyCocktails || isAllCocktails) && cocktails && (
         <FollowUpMessage>
           <CocktailBottomMessage
             isMyCocktails={isMyCocktails}

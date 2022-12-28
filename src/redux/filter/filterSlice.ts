@@ -9,8 +9,8 @@ interface IFilterStatus {
   ingredientsStatus: string;
 }
 const filterInitialState: IFilterStatus = {
-  cocktailsStatus: cocktailFilterStatus.myCocktails,
-  ingredientsStatus: ingredientFilterStatus.myBarShelf,
+  cocktailsStatus: cocktailFilterStatus.allCocktails,
+  ingredientsStatus: ingredientFilterStatus.manageBarShelf,
 };
 
 const filterSlice = createSlice({
@@ -18,16 +18,10 @@ const filterSlice = createSlice({
   initialState: filterInitialState,
   reducers: {
     setCocktailStatusFilter(state, { payload }: PayloadAction<string>) {
-      return {
-        ...state,
-        cocktailsStatus: payload,
-      };
+      state.cocktailsStatus = payload;
     },
     setIngredientStatusFilter(state, { payload }: PayloadAction<string>) {
-      return {
-        ...state,
-        ingredientsStatus: payload,
-      };
+      state.ingredientsStatus = payload;
     },
   },
 });

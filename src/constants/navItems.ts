@@ -20,17 +20,17 @@ interface INavPageLink {
 }
 
 export const ingredientsNavItems: INavPageLink[] = [
-  { label: 'My Bar Shelf', statusFilter: ingredientFilterStatus.myBarShelf },
   {
     label: 'Manage Bar Shelf',
     statusFilter: ingredientFilterStatus.manageBarShelf,
   },
+  { label: 'My Bar Shelf', statusFilter: ingredientFilterStatus.myBarShelf },
   { label: 'Shopping List', statusFilter: ingredientFilterStatus.shoppingList },
 ];
 
 export const cocktailsNavItems: INavPageLink[] = [
-  { label: 'My Cocktails', statusFilter: cocktailFilterStatus.myCocktails },
   { label: 'All Cocktails', statusFilter: cocktailFilterStatus.allCocktails },
+  { label: 'My Cocktails', statusFilter: cocktailFilterStatus.myCocktails },
   {
     label: 'Favorite Cocktails',
     statusFilter: cocktailFilterStatus.favoriteCocktails,

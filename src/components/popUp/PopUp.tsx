@@ -3,7 +3,6 @@ import { Modal } from './PopUp.styled';
 import Overlay from 'components/overlay';
 import { popUpMenuAnimation } from 'constants/animations';
 
-// добавить right координаты
 interface IProps {
   children?: ReactNode;
   coordinates: ICoordinates;
