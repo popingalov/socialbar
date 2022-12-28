@@ -1,4 +1,5 @@
 import { ingredientFilterStatus } from 'redux/filter/filterConstants';
+
 import { RxCross2 } from 'react-icons/rx';
 import Checkbox from 'components/UI-kit/checkbox';
 import Box from 'components/box';
@@ -10,8 +11,8 @@ import { ExtraInfo, IngredientName } from './IngredientCard.styled';
 interface IProps {
   filter: string;
   name: string;
-  isInShoppingList: boolean;
-  isInMyBar: boolean;
+  // isInShoppingList: boolean;
+  // isInMyBar: boolean;
   id: string;
   imageUrl: string;
 }
@@ -19,8 +20,8 @@ interface IProps {
 const IngredientCard: React.FC<IProps> = ({
   filter,
   name,
-  isInShoppingList,
-  isInMyBar,
+  // isInShoppingList,
+  // isInMyBar,
   id,
   imageUrl,
 }) => {
@@ -42,11 +43,13 @@ const IngredientCard: React.FC<IProps> = ({
       </Box>
       {isBarShelf && (
         // onChange={() => toggleAvailable(id)}
-        <Checkbox checked={isInMyBar} onChange={() => id} />
+        // <Checkbox checked={isInMyBar} onChange={() => id} />
+        <Checkbox checked={true} onChange={() => id} />
       )}
-      {(isMyBar || isBarShelf) && isInShoppingList && (
+      {/* {(isMyBar || isBarShelf) && isInShoppingList && (
         <LowIcon type="ingredients" />
-      )}
+      )} */}
+      {(isMyBar || isBarShelf) && true && <LowIcon type="ingredients" />}
       {isShoppingList && (
         <IconButton>
           <RxCross2 aria-label="delete" />

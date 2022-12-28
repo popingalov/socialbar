@@ -3,6 +3,7 @@ import { HiPencil } from 'react-icons/hi';
 import { HiShoppingCart } from 'react-icons/hi';
 import { BiChevronUp, BiChevronDown } from 'react-icons/bi';
 import Box from 'components/box/Box';
+import { IIngredient } from 'types/ingredient';
 
 import {
   CartBtn,
@@ -21,7 +22,8 @@ interface IProps {
 const IngredientInfo: React.FC<IProps> = ({ ingredient }) => {
   const [heightEl, setHeightEl] = useState<number>(0);
   const [showMore, setShowMore] = useState<boolean>(false);
-  const [isShop, setIsShop] = useState<boolean | undefined>(ingredient?.shop);
+  // const [isShop, setIsShop] = useState<boolean | undefined>(ingredient?.shop);
+  const [isShop, setIsShop] = useState(false);
 
   const refComponent = useRef<HTMLParagraphElement>(null);
 
@@ -55,7 +57,7 @@ const IngredientInfo: React.FC<IProps> = ({ ingredient }) => {
         alignItems="center"
         mb={3}
       >
-        <Title>{ingredient.name}</Title>
+        <Title>{ingredient.title}</Title>
         <Box display="flex" justifyContent="space-between" alignItems="center">
           <EditBtn onClick={onClickEdit}>
             <HiPencil size={28} />
@@ -67,7 +69,7 @@ const IngredientInfo: React.FC<IProps> = ({ ingredient }) => {
         </Box>
       </Box>
 
-      <Image src={ingredient.image} />
+      <Image src={ingredient.picture} />
 
       {/* <Decsription>{ingredient.description}</Decsription> */}
       <Decsription ref={refComponent} showMore={showMore}>

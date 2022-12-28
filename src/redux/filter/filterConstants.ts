@@ -15,6 +15,7 @@ interface IIngredientsFilter {
   readonly manageBarShelf: string;
   readonly shoppingList: string;
 }
+
 export const ingredientFilterStatus: IIngredientsFilter = {
   myBarShelf: 'myBarShelf',
   manageBarShelf: 'manageBarShelf',

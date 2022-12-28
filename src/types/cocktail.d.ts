@@ -1,19 +1,25 @@
-interface ICocktail {
-  favorite: boolean;
-  isMine: boolean;
-  _id: string;
-  name: string;
+import { IIngredient } from 'types/ingredient';
+import { IGlass } from 'types/manual';
+
+export interface ICocktail {
+  id: string;
+  glass: IGlass;
+  owner: string; // | null?????
+  title: string;
   description: string;
-  image: string;
-  available: boolean;
-  cocType: string[];
-  size: Size;
-  cocMetod: string;
-  ingredients: Ingredient[];
-  glass: string;
+  picture: string;
+  category: string[];
+  recipe: string;
+  ingredients: IIngredientIn[];
+  isDefault: boolean;
 }
 
-interface Size {
-  rom: string;
-  cola: string;
+export interface IIngredientIn {
+  _id: string;
+  data: IIngredient;
+  measure: string;
+  measureType: string;
+  isDressing: boolean;
+  isOptional: boolean;
+  alternatives: IIngredient[] | null;
 }
