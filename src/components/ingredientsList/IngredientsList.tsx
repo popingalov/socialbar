@@ -7,22 +7,18 @@ import { ingredientFilterStatus } from 'redux/filter/filterConstants';
 import FollowUpMessage from 'components/followUpMessage';
 import IngredientBottomMessage from './ingredientBottomMessage';
 import { getVisibleIngredients } from 'helpers/getVisibleIngredients';
-import { IIngredient } from 'types/ingredient';
+import Loader from 'components/loader';
+import { useFetchIngredientsQuery } from 'redux/api/ingredientApi';
 
-interface IngredientsListProps {
-  ingredients: IIngredient[];
-}
-
-const IngredientsList = ({ ingredients }: IngredientsListProps) => {
+const IngredientsList = () => {
+  const { data: ingredients, isFetching } = useFetchIngredientsQuery();
   const ingredientFilter = useSelector(selectIngredientFilter);
   const navigate = useNavigate();
 
-  console.log(ingredients);
-
-  const visibleIngredients = getVisibleIngredients(
-    ingredients || [],
-    ingredientFilter,
-  );
+  // const visibleIngredients = getVisibleIngredients(
+  //   ingredients || [],
+  //   ingredientFilter,
+  // );
   const isNotShoppingList = !(
     ingredientFilterStatus.shoppingList === ingredientFilter
   );
@@ -33,9 +29,11 @@ const IngredientsList = ({ ingredients }: IngredientsListProps) => {
 
   return (
     <>
-      <BarList>
-        {visibleIngredients &&
-          visibleIngredients.map(ingredient => {
+      {isFetching && <Loader isLoading={isFetching} />}
+
+      {ingredients && (
+        <BarList>
+          {ingredients.map(ingredient => {
             const { title, id, picture } = ingredient;
 
             return (
@@ -51,8 +49,9 @@ const IngredientsList = ({ ingredients }: IngredientsListProps) => {
               </li>
             );
           })}
-      </BarList>
-      {isNotShoppingList && (
+        </BarList>
+      )}
+      {ingredients && isNotShoppingList && (
         <FollowUpMessage>
           <IngredientBottomMessage />
         </FollowUpMessage>
