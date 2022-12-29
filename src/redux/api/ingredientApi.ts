@@ -1,5 +1,6 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import baseQuery from 'redux/baseQuery';
+import type { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import { IIngredient } from 'types/ingredient';
 import { INGREDIENT_URL, TAGS_TYPES } from 'constants/api';
 
@@ -9,10 +10,24 @@ export const ingredientApi = createApi({
   tagTypes: [TAGS_TYPES.ingredients],
   endpoints: builder => ({
     fetchIngredients: builder.query<IIngredient[], void>({
-      query() {
-        return {
-          url: `${INGREDIENT_URL}`,
-        };
+      async queryFn(_arg, _api, _extraOptions, fetchWithBQ) {
+        const { data: defaultIngredients, error } = await fetchWithBQ(
+          `${INGREDIENT_URL}`,
+        );
+        if (error)
+          return {
+            error: error as FetchBaseQueryError,
+          };
+        const { data: myIngredients, error: secondRequestError } =
+          await fetchWithBQ(`${INGREDIENT_URL}/my`);
+
+        return myIngredients
+          ? {
+              data: (defaultIngredients as IIngredient[]).concat(
+                myIngredients as IIngredient[],
+              ) as IIngredient[],
+            }
+          : { error: secondRequestError as FetchBaseQueryError };
       },
       providesTags: result =>
         result

@@ -21,5 +21,5 @@ export interface IIngredientIn {
   measureType: string;
   isDressing: boolean;
   isOptional: boolean;
-  alternatives: IIngredient[] | null;
+  alternatives: IIngredient[];
 }

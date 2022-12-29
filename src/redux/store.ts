@@ -2,6 +2,7 @@ import { setupListeners } from '@reduxjs/toolkit/dist/query/react';
 import { configureStore } from '@reduxjs/toolkit';
 import { ingredientApi } from './api/ingredientApi';
 import { cocktailApi } from './api/cocktailApi';
+import { manualApi } from './api/manualApi';
 import { userApi } from './api/userApi';
 import authReducer from './auth/authSlice';
 import { filterReducer } from './filter/filterSlice';
@@ -12,6 +13,7 @@ const store = configureStore({
     [userApi.reducerPath]: userApi.reducer,
     [ingredientApi.reducerPath]: ingredientApi.reducer,
     [cocktailApi.reducerPath]: cocktailApi.reducer,
+    [manualApi.reducerPath]: manualApi.reducer,
     auth: authReducer,
     filters: filterReducer,
     modalStatus: modalReducer,
@@ -21,6 +23,7 @@ const store = configureStore({
       userApi.middleware,
       ingredientApi.middleware,
       cocktailApi.middleware,
+      manualApi.middleware,
     ),
 });
 

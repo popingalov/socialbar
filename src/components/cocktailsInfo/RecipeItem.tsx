@@ -36,7 +36,7 @@ const RecipeItem = ({ item, ingredients }: IRecipeItem) => {
             const normalizedName = el.toLowerCase();
             const id = ingredients.find(
               element => element.data.title.toLowerCase() === normalizedName,
-            )?.data;
+            )?.data.id;
 
             return (
               <IngredientPart key={index} to={`/ingredients/${id}`}>

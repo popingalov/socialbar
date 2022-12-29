@@ -1,11 +1,13 @@
 import React, { useState, useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useGetCocktailByIdQuery } from 'redux/api/cocktailApi';
 import Box from 'components/box/Box';
 import { HiPencil, HiStar } from 'react-icons/hi';
 import { BiCheck } from 'react-icons/bi';
 import RecipeItem from './RecipeItem';
 import AdditionalInfo from './AdditionalInfo';
-import { ICocktail } from 'types/cocktail';
+import Loader from 'components/loader/Loader';
+
 import {
   EditBtn,
   FavoriteBtn,
@@ -19,11 +21,16 @@ import {
   IngredientQuantity,
 } from './CocktailDesc.styled';
 
-interface CocktailDescriptionProps {
-  cocktail: ICocktail;
-}
+const CocktailDescription = () => {
+  const { cocktailId } = useParams();
 
-const CocktailDescription = ({ cocktail }: CocktailDescriptionProps) => {
+  const { data: cocktail, isFetching } = useGetCocktailByIdQuery(
+    cocktailId as string,
+    {
+      skip: cocktailId === undefined,
+    },
+  );
+
   const navigate = useNavigate();
   const [favorite, setFavorite] = useState(false);
 
@@ -48,6 +55,10 @@ const CocktailDescription = ({ cocktail }: CocktailDescriptionProps) => {
   const onClickIngredient = (id: string) => {
     navigate(`/ingredients/${id}`);
   };
+
+  if (isFetching) {
+    return <Loader isLoading={isFetching} />;
+  }
 
   return (
     <Box>
@@ -102,7 +113,7 @@ const CocktailDescription = ({ cocktail }: CocktailDescriptionProps) => {
                     <IngredientName>{ingredient.data.title}</IngredientName>
                     {(ingredient.isDressing ||
                       ingredient.isOptional ||
-                      ingredient.alternatives) && (
+                      ingredient.alternatives.length > 0) && (
                       <AdditionalInfo ingredient={ingredient} />
                     )}
                   </Box>
