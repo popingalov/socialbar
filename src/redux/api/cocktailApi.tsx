@@ -1,7 +1,8 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import baseQuery from '../baseQuery';
-import { ICocktail } from 'types/cocktail';
+import type { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import { COCKTAIL_URL, TAGS_TYPES } from 'constants/api';
+import { ICocktail } from 'types/cocktail';
 
 export const cocktailApi = createApi({
   reducerPath: 'cocktailApi',
@@ -9,10 +10,27 @@ export const cocktailApi = createApi({
   tagTypes: [TAGS_TYPES.cocktails],
   endpoints: builder => ({
     fetchCocktails: builder.query<ICocktail[], void>({
-      query() {
-        return {
-          url: `${COCKTAIL_URL}`,
-        };
+      async queryFn(_arg, _api, _extraOptions, fetchWithBQ) {
+        const { data: defaultCocktails, error } = await fetchWithBQ(
+          `${COCKTAIL_URL}`,
+        );
+        if (error)
+          return {
+            error: error as FetchBaseQueryError,
+          };
+        const { data: myCocktails, error: secondRequestError } =
+          await fetchWithBQ({
+            url: `${COCKTAIL_URL}/my`,
+            method: 'POST',
+          });
+
+        return myCocktails
+          ? {
+              data: (defaultCocktails as ICocktail[]).concat(
+                myCocktails as ICocktail[],
+              ) as ICocktail[],
+            }
+          : { error: secondRequestError as FetchBaseQueryError };
       },
       providesTags: result =>
         result

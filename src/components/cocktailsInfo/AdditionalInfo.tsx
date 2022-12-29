@@ -9,14 +9,15 @@ interface AdditionalInfoProps {
 const AdditionalInfo = ({ ingredient }: AdditionalInfoProps) => {
   const content = useMemo(() => {
     const { isOptional, isDressing, alternatives } = ingredient;
-    const substituteText = alternatives
-      ? `or ${alternatives
-          .map(
-            item =>
-              item.title[0].toUpperCase() + item.title.slice(1).toLowerCase(),
-          )
-          .join(',')}${isDressing || isOptional ? ',' : ''}`
-      : '';
+    const substituteText =
+      alternatives.length > 0
+        ? `or ${alternatives
+            .map(
+              item =>
+                item.title[0].toUpperCase() + item.title.slice(1).toLowerCase(),
+            )
+            .join(',')}${isDressing || isOptional ? ',' : ''}`
+        : '';
 
     const optionalText = isOptional ? `optional${isDressing ? ',' : ''}` : '';
     const garnishText = isDressing ? 'garnish' : '';

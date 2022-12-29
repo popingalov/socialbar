@@ -1,5 +1,5 @@
 export interface IGlass {
-  id: string;
+  _id: string;
   title: string;
   picture: string;
 }
