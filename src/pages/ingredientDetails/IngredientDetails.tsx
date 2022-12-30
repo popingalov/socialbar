@@ -15,7 +15,7 @@ const IngredientDetails: React.FC = () => {
 
   return (
     <motion.section {...pageAnimation} transition={{ duration: 0.3 }}>
-      {ingredient && <IngredientInfo ingredient={ingredient} />}
+      {/* {ingredient && <IngredientInfo ingredient={ingredient} />} */}
     </motion.section>
   );
 };

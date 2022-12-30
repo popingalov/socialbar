@@ -80,7 +80,19 @@ const Navigation = () => {
       </Wrapper>
 
       {isMainRoute && (
-        <NavigationListStyled role="tablist">
+        <NavigationListStyled
+          // onClick={e => {
+          //   const el = document.getElementById(`#page-2`);
+          //   console.log(el);
+
+          //   el?.scrollIntoView({
+          //     behavior: 'smooth',
+          //     block: 'end',
+          //     // inline: 'end',
+          //   });
+          // }}
+          role="tablist"
+        >
           <PagesNavigation />
         </NavigationListStyled>
       )}

@@ -16,7 +16,7 @@ import { useAppDispatch } from 'redux/hooks';
 
 const PagesNavigation = () => {
   const location = useLocation();
-
+  const newRef: any = useRef([]);
   const navigation =
     location.pathname === paths.ingredients
       ? ingredientsNavItems
@@ -37,8 +37,19 @@ const PagesNavigation = () => {
 
   return (
     <>
-      {navigation.map(({ label, statusFilter }) => (
-        <li key={label}>
+      {navigation.map(({ label, statusFilter }, idx) => (
+        <li
+          ref={ref => {
+            if (newRef.current.length !== 3) newRef.current.push(ref);
+          }}
+          onClick={() => {
+            newRef.current[idx].scrollIntoView({
+              behavior: 'smooth',
+              block: 'end',
+            });
+          }}
+          key={label}
+        >
           <Button
             selected={filter === statusFilter}
             onClick={() => {

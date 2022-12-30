@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 const Cocktails = () => {
   return (
     <motion.section {...pageAnimation} transition={{ duration: 0.3 }}>
-      <CocktailList />
+      {/* <CocktailList /> */}
     </motion.section>
   );
 };
