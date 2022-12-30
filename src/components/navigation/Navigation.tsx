@@ -37,8 +37,6 @@ const Navigation = () => {
   };
 
   const handleBackButton = () => {
-    console.log('isSearch', isSearch);
-
     if (isSearch) setSearch(false);
     else navigate(-1);
   };
