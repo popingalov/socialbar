@@ -6,6 +6,7 @@ import {
   setExtraMenuIsOpen,
   setMobileIsOpen,
   setPopUpIsOpen,
+  setSettingsMenuIsOpen,
 } from 'redux/modal/modalSlice';
 import { createPortal } from 'react-dom';
 
@@ -13,7 +14,7 @@ const modalRoot: HTMLDivElement = document.querySelector('#modal')!;
 
 interface IProps {
   children: ReactNode;
-  modalType: 'mobileMenu' | 'select' | 'extraMenu';
+  modalType: 'mobileMenu' | 'select' | 'extraMenu' | 'settingsModal';
 }
 
 const Overlay: React.FC<IProps> = ({ children, modalType }) => {
@@ -45,6 +46,8 @@ function getAction(type: string) {
       return setPopUpIsOpen(false);
     case 'extraMenu':
       return setExtraMenuIsOpen(false);
+    case 'settingsModal':
+      return setSettingsMenuIsOpen(false);
     default:
       return;
   }

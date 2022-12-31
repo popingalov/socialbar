@@ -8,3 +8,6 @@ export const selectPopUpStatus = (state: RootState) =>
 
 export const selectExtraMenuStatus = (state: RootState) =>
   state.modalStatus.popUpExtraMenu.isOpen;
+
+export const selectSettingsMenuStatus = (state: RootState) =>
+  state.modalStatus.settingsMenu.isOpen;

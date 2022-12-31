@@ -45,3 +45,15 @@ export const listAnimation = {
   animate: 'show',
   exit: 'hidden',
 };
+
+const settingModalType = {
+  hidden: { opacity: 0, scale: 0.5, translateX: '-50%', translateY: '-50%' },
+  show: { opacity: 1, scale: 1, translateX: '-50%', translateY: '-50%' },
+};
+
+export const settingModalAnimation = {
+  variants: settingModalType,
+  initial: 'hidden',
+  animate: 'show',
+  exit: 'hidden',
+};

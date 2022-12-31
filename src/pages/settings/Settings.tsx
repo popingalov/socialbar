@@ -1,5 +1,5 @@
 // import { Tabs } from 'components/tabs/Tabs';
-import { SettingsList } from 'components/settingsList/SettingsList';
+import SettingsList from 'components/settingsList';
 import { pageAnimation } from 'constants/animations';
 import { motion } from 'framer-motion';
 
