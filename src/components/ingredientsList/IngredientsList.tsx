@@ -9,7 +9,11 @@ import IngredientBottomMessage from './ingredientBottomMessage';
 import Loader from 'components/loader';
 // import { useFetchIngredientsQuery } from 'redux/api/ingredientApi';
 import { Link } from 'react-router-dom';
+
+import { IIngredient } from 'types/ingredient';
+
 import { useGetVisibleIngredients } from 'hooks/useGetVisibleIngredients';
+
 
 const IngredientsList = () => {
   // const { data: allIngredients, isFetching } = useFetchIngredientsQuery();
@@ -30,7 +34,9 @@ const IngredientsList = () => {
 
       {visibleIngredients && (
         <BarList>
-          {visibleIngredients.map(ingredient => {
+
+          {visibleIngredients.map((ingredient: IIngredient) => {
+
             const { title, id, picture } = ingredient;
 
             return (

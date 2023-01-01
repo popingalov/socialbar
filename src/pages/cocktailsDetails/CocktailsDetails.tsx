@@ -13,7 +13,7 @@ const CocktailsDetails = () => {
   });
   return (
     <motion.section {...pageAnimation} transition={{ duration: 0.3 }}>
-      {cocktail && <CocktailDescription cocktail={cocktail} />}
+      {cocktail && <CocktailDescription />}
     </motion.section>
   );
 };
