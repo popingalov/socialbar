@@ -1,4 +1,4 @@
-import { Suspense, useEffect } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import {
   Navigate,
   Route,
@@ -46,7 +46,7 @@ const App = () => {
     if (persistToken) {
       dispatch(setToken(persistToken));
     }
-  }, []);
+  }, [dispatch, searchParams]);
 
   return (
     <>

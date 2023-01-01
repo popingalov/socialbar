@@ -4,10 +4,10 @@ import HeaderIcon from 'components/UI-kit/icons/headerIcon';
 import { headerIconTypes } from 'constants/headerIconTypes';
 import { useEffect, useRef, useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
-import PopUp from 'components/popUp';
+import PopUp from 'components/modal/popUp';
 import { useSelector } from 'react-redux';
 import { selectExtraMenuStatus } from 'redux/modal/modalSelectors';
-import ExtraMenu from 'components/extraMenu';
+import ExtraMenu from 'components/navigation/extraMenu';
 
 interface IProps {
   handleSearch: () => void;
