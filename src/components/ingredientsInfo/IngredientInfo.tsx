@@ -29,7 +29,6 @@ const IngredientInfo: React.FC = () => {
   const [showMore, setShowMore] = useState<boolean>(false);
 
   const {data: ingredient} = useGetIngredientByIdQuery(ingredientId as string)
-  console.log("ing", ingredient);
 
   const refComponent = useRef<HTMLParagraphElement>(null);
 
@@ -81,21 +80,6 @@ const IngredientInfo: React.FC = () => {
         {ingredient.description}
       </Decsription>
 
-      {/* <Decsription ref={refComponent} showMore={showMore}>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam odio
-        quas corrupti reprehenderit fugiat laudantium enim, deserunt ratione a
-        fugit, iste laborum? Deleniti, amet exercitationem temporibus, neque
-        fuga quidem doloribus nihil voluptatibus dolor labore placeat optio unde
-        doloremque magni. Magni quos eum facilis incidunt adipisci reiciendis in
-        quae accusantium nemo totam non, ut beatae, numquam rem fugiat cum sunt
-        iusto ab necessitatibus autem. Eveniet quos consequuntur praesentium
-        odit eum. At exercitationem iure sunt nihil nemo dolorem beatae unde
-        sint nesciunt amet nobis labore accusamus assumenda molestiae corporis
-        doloribus veritatis fugiat architecto, corrupti deserunt optio velit
-        praesentium rerum est? Eveniet, corrupti? Temporibus, harum! Eos ea
-        ipsum aliquid perferendis minima? Facilis voluptatem velit vitae impedit
-        temporibus voluptate inventore nisi illum explicabo molestiae.
-      </Decsription> */}
       <ShowMoreBtn type="button" onClick={showDescription}>
         {showMore && <BiChevronUp size={24} />}
         {!showMore && heightEl > 44 && <BiChevronDown size={24} />}
