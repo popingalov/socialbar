@@ -8,23 +8,25 @@ import {
   Title,
 } from 'pages/settings/Settings.styled';
 import { useSelector } from 'react-redux';
-import { userState } from 'redux/auth/authSelectors';
 import { selectSettingsMenuStatus } from 'redux/modal/modalSelectors';
 import SettingsModal from 'components/modal/settingsModal';
 import { useDispatch } from 'react-redux';
 import { setSettingsMenuIsOpen } from 'redux/modal/modalSlice';
 import SettingMenu from './settingsMenu';
 import { useState } from 'react';
+import { selectSettings } from 'redux/settings/settingsSelectors';
+import { languageList } from 'constants/languages';
 
 const SettingsList = () => {
-  const user = useSelector(userState);
+  const settings = useSelector(selectSettings);
   const settingsMenuIsOpen = useSelector(selectSettingsMenuStatus);
   const dispatch = useDispatch();
+  // console.log('settings', settings);
 
   const [type, setType] = useState('');
 
-  if (user) {
-    const { locale, startPage } = user;
+  if (settings) {
+    const { language, startupScreen } = settings;
 
     const languageIdx = settingList.findIndex(
       ({ name }) => name === settingTypes.language,
@@ -35,11 +37,11 @@ const SettingsList = () => {
 
     settingList[languageIdx] = {
       ...settingList[languageIdx],
-      description: locale,
+      description: languageList[language],
     };
     settingList[startPageIdx] = {
       ...settingList[startPageIdx],
-      description: startPage,
+      description: startupScreen,
     };
   }
 
@@ -63,12 +65,10 @@ const SettingsList = () => {
       >
         {settingList.map(({ title, description, name }) => {
           return (
-            <>
-              <SettingsItem key={title} onClick={handleClick} name={name}>
-                <Title>{title}</Title>
-                <Description>{description}</Description>
-              </SettingsItem>
-            </>
+            <SettingsItem key={name} onClick={handleClick} name={name}>
+              <Title>{title}</Title>
+              <Description>{description}</Description>
+            </SettingsItem>
           );
         })}
       </SettingsListStyled>

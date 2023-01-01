@@ -31,13 +31,3 @@ export const settingList: ISetting[] = [
     description: '',
   },
 ];
-
-interface ILanguage {
-  [x: string]: string;
-}
-
-export const languageList: ILanguage = {
-  ru: 'Russian',
-  en: 'English',
-  ua: 'Ukrainian',
-};

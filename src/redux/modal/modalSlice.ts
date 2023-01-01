@@ -14,6 +14,7 @@ interface IModalStatus {
     isOpen: boolean;
   };
 }
+
 const modalStatusInitialState: IModalStatus = {
   mobileMenuStatus: {
     isOpen: false,
