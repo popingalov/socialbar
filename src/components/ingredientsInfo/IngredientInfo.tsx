@@ -3,27 +3,33 @@ import { HiPencil } from 'react-icons/hi';
 import { HiShoppingCart } from 'react-icons/hi';
 import { BiChevronUp, BiChevronDown } from 'react-icons/bi';
 import Box from 'components/box/Box';
-import { IIngredient } from 'types/ingredient';
 
 import {
   CartBtn,
-  Checkbox,
+  // Checkbox,
   Decsription,
   EditBtn,
   Image,
   ShowMoreBtn,
   Title,
 } from './IngredientInfo.styled';
+import { useParams } from 'react-router';
+import { useGetIngredientByIdQuery } from 'redux/api/ingredientApi';
+import Checkbox from 'components/UI-kit/checkbox/Checkbox';
+// import { Checkbox } from 'components/UI-kit/checkbox/Checkbox';
 
-interface IProps {
-  ingredient: IIngredient | null;
-}
 
-const IngredientInfo: React.FC<IProps> = ({ ingredient }) => {
+
+const IngredientInfo: React.FC = () => {
+  const { ingredientId } = useParams();
+  const [isShop, setIsShop] = useState<boolean>(false);
+  const [isMyBar, setIsMyBar] = useState<boolean>(false);
+
   const [heightEl, setHeightEl] = useState<number>(0);
   const [showMore, setShowMore] = useState<boolean>(false);
-  // const [isShop, setIsShop] = useState<boolean | undefined>(ingredient?.shop);
-  const [isShop, setIsShop] = useState(false);
+
+  const {data: ingredient} = useGetIngredientByIdQuery(ingredientId as string)
+  console.log("ing", ingredient);
 
   const refComponent = useRef<HTMLParagraphElement>(null);
 
@@ -65,14 +71,17 @@ const IngredientInfo: React.FC<IProps> = ({ ingredient }) => {
           <CartBtn onClick={toggleCart} isShop={isShop}>
             <HiShoppingCart size={28} />
           </CartBtn>
-          <Checkbox type="checkbox" />
+          <Checkbox checked={isMyBar} onChange={() => setIsMyBar(prev => !prev)} />
         </Box>
       </Box>
 
       <Image src={ingredient.picture} />
 
-      {/* <Decsription>{ingredient.description}</Decsription> */}
       <Decsription ref={refComponent} showMore={showMore}>
+        {ingredient.description}
+      </Decsription>
+
+      {/* <Decsription ref={refComponent} showMore={showMore}>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam odio
         quas corrupti reprehenderit fugiat laudantium enim, deserunt ratione a
         fugit, iste laborum? Deleniti, amet exercitationem temporibus, neque
@@ -86,7 +95,7 @@ const IngredientInfo: React.FC<IProps> = ({ ingredient }) => {
         praesentium rerum est? Eveniet, corrupti? Temporibus, harum! Eos ea
         ipsum aliquid perferendis minima? Facilis voluptatem velit vitae impedit
         temporibus voluptate inventore nisi illum explicabo molestiae.
-      </Decsription>
+      </Decsription> */}
       <ShowMoreBtn type="button" onClick={showDescription}>
         {showMore && <BiChevronUp size={24} />}
         {!showMore && heightEl > 44 && <BiChevronDown size={24} />}
