@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import { Modal } from './PopUp.styled';
-import Overlay from 'components/overlay';
+import Overlay from 'components/modal/overlay';
 import { popUpMenuAnimation } from 'constants/animations';
 
 interface IProps {

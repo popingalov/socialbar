@@ -1,3 +1,4 @@
+import { listAnimation } from 'constants/animations';
 import { BarListStyled } from './BarList.styled';
 
 interface IProps {
@@ -5,7 +6,11 @@ interface IProps {
 }
 
 const BarList: React.FC<IProps> = ({ children }) => {
-  return <BarListStyled>{children}</BarListStyled>;
+  return (
+    <BarListStyled key="list" {...listAnimation} transition={{ duration: 0.2 }}>
+      {children}
+    </BarListStyled>
+  );
 };
 
 export default BarList;

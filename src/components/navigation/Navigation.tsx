@@ -9,7 +9,7 @@ import { headerIconTypes } from 'constants/headerIconTypes';
 import { NavigationListStyled, PageName, Wrapper } from './Navigation.styled';
 import PagesNavigation from './pagesNavigation';
 import { paths } from 'constants/paths';
-import SearchBar from 'components/searchBar';
+import SearchBar from 'components/navigation/searchBar';
 import Select from 'components/UI-kit/select';
 import { setExtraMenuIsOpen, setMobileIsOpen } from 'redux/modal/modalSlice';
 import { cocktailTypes, ingredientTypes } from 'constants/categories';

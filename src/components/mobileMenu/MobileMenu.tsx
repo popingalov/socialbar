@@ -5,7 +5,7 @@ import { mobileMenuAnimation } from 'constants/animations';
 import { IoMdPerson } from 'react-icons/io';
 import MobileMenuButton from 'components/UI-kit/buttons/mobileMenuButton';
 import { FiLogIn } from 'react-icons/fi';
-import Overlay from 'components/overlay';
+import Overlay from 'components/modal/overlay';
 import { BASE_URL, GOOGLE_AUTH_URL } from 'constants/api';
 
 const MobileMenu = () => {

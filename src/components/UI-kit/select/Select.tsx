@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Option, OptionsList, SelectLabelButton } from './Select.styled';
-import PopUp from 'components/popUp';
+import PopUp from 'components/modal/popUp';
 import { useDispatch } from 'react-redux';
 import { setPopUpIsOpen } from 'redux/modal/modalSlice';
 import { AnimatePresence } from 'framer-motion';
