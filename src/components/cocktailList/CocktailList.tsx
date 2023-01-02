@@ -7,7 +7,7 @@ import FollowUpMessage from 'components/UI-kit/followUpMessage';
 // import { getVisibleCocktails } from 'helpers/getVisibleCocktails';
 import { cocktailFilterStatus } from 'redux/filter/filterConstants';
 import CocktailBottomMessage from './cocktailBottomMessage';
-import { useFetchCocktailsQuery } from 'redux/api/cocktailApi';
+// import { useFetchCocktailsQuery } from 'redux/api/cocktailApi';
 import Loader from 'components/loader';
 import { Link } from 'react-router-dom';
 import { useGetVisibleCocktails } from 'hooks/useGetVisibleCocktails';

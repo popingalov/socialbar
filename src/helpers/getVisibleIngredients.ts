@@ -1,4 +1,4 @@
-import { ingredientFilterStatus } from 'redux/filter/filterConstants';
+// import { ingredientFilterStatus } from 'redux/filter/filterConstants';
 import { IIngredient } from 'types/ingredient';
 
 export function getVisibleIngredients(

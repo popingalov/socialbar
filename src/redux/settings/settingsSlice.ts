@@ -2,8 +2,8 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { persistReducer } from 'redux-persist'; // to connect Redux State with LocalStorage
 import storage from 'redux-persist/lib/storage'; // defaults to localStorage for web
 import { LOCAL_STORAGE_KEY } from 'constants/localStorage';
-import { startupScreen } from 'constants/startupScreen';
 import { languageTypes } from 'constants/languages';
+import { startupScreenTypes } from 'constants/startupScreen';
 
 interface ISettings {
   language: string;
@@ -11,7 +11,7 @@ interface ISettings {
 }
 const settingsInitialState: ISettings = {
   language: languageTypes.en,
-  startupScreen: startupScreen.manageBarShelf,
+  startupScreen: startupScreenTypes.manageBarShelf,
 };
 
 const settingsSlice = createSlice({

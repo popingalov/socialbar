@@ -8,7 +8,6 @@ import { useSelector } from 'react-redux';
 import { selectPopUpStatus } from 'redux/modal/modalSelectors';
 import { AiOutlineCaretDown } from 'react-icons/ai';
 import { theme } from 'constants/theme';
-import { useAppSize } from 'hooks/useAppSize';
 
 interface IProps {
   label: string;
@@ -17,7 +16,7 @@ interface IProps {
 }
 
 const Select: React.FC<IProps> = ({ label, values, onChange }) => {
-  const [currentValue, setCurrentValue] = useState('');
+  const [currentValue, setCurrentValue] = useState(label);
   const [selectCoordinates, setSelectCoordinates] = useState<ICoordinates>({
     top: null,
     left: null,
@@ -26,15 +25,6 @@ const Select: React.FC<IProps> = ({ label, values, onChange }) => {
   const dispatch = useDispatch();
   const popUpIsOpen = useSelector(selectPopUpStatus);
   const btnRef = useRef<HTMLButtonElement>();
-
-  // const size = useAppSize();
-
-  // useEffect(() => {
-  //   if (btnRef.current) {
-  //     const { top, left, right } = btnRef.current.getBoundingClientRect();
-  //     setSelectCoordinates({ top, left, right });
-  //   }
-  // }, [size]);
 
   useEffect(() => {
     window.addEventListener('resize', getCoordinates);

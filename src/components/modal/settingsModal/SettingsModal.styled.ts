@@ -8,8 +8,8 @@ export const Modal = styled(motion.div)`
   left: 50%;
   transform: translate(-50% -50%);
   padding: ${p => p.theme.space[3]}px;
-  min-width: 160px;
-  width: 90%;
+  min-width: 260px;
+  max-width: 90%;
   max-height: 95%;
 
   background-color: ${p => p.theme.colors.white};
