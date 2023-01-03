@@ -26,30 +26,32 @@ const CocktailList = () => {
 
       {cocktails && (
         <BarList>
-          {cocktails.map(({ title, description, ingredients, id, picture }) => {
-            const ingredientNames = ingredients.map(
-              ingredient => ingredient.data.title,
-            );
-            // const isAvailable: boolean = ingredients.every(
-            //   ({ available }) => available,
-            // );
-            const isAvailable: boolean = true;
-            return (
-              <ListItem key={id} allIngredientsAreAvailable={isAvailable}>
-                <Link to={`${id}`}>
-                  <CocktailCard
-                    // isFavorite={favorite}
-                    isFavorite={true}
-                    allIngredientsAreAvailable={isAvailable}
-                    name={title}
-                    description={description}
-                    imageUrl={picture}
-                    ingredients={ingredientNames}
-                  />
-                </Link>
-              </ListItem>
-            );
-          })}
+          {cocktails.all.map(
+            ({ title, description, ingredients, id, picture }) => {
+              const ingredientNames = ingredients.map(
+                ingredient => ingredient.data.title,
+              );
+              // const isAvailable: boolean = ingredients.every(
+              //   ({ available }) => available,
+              // );
+              const isAvailable: boolean = true;
+              return (
+                <ListItem key={id} allIngredientsAreAvailable={isAvailable}>
+                  <Link to={`${id}`}>
+                    <CocktailCard
+                      // isFavorite={favorite}
+                      isFavorite={true}
+                      allIngredientsAreAvailable={isAvailable}
+                      name={title}
+                      description={description}
+                      imageUrl={picture}
+                      ingredients={ingredientNames}
+                    />
+                  </Link>
+                </ListItem>
+              );
+            },
+          )}
         </BarList>
       )}
       {(isMyCocktails || isAllCocktails) && cocktails && (

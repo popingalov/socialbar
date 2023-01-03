@@ -3,6 +3,7 @@ import baseQuery from 'redux/baseQuery';
 import type { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import { IIngredient } from 'types/ingredient';
 import { INGREDIENT_URL, TAGS_TYPES } from 'constants/api';
+import { RootState } from 'redux/store';
 
 export const ingredientApi = createApi({
   reducerPath: 'ingredientApi',
@@ -10,24 +11,30 @@ export const ingredientApi = createApi({
   tagTypes: [TAGS_TYPES.ingredients],
   endpoints: builder => ({
     fetchIngredients: builder.query<IIngredient[], void>({
-      async queryFn(_arg, _api, _extraOptions, fetchWithBQ) {
-        const { data: defaultIngredients, error } = await fetchWithBQ(
-          `${INGREDIENT_URL}`,
-        );
-        if (error)
+      async queryFn(_arg, { getState }, _extraOptions, fetchWithBQ) {
+        const { data: defaultIngredients, error: defaultRequestError } =
+          await fetchWithBQ(`${INGREDIENT_URL}`);
+        if (defaultRequestError)
           return {
-            error: error as FetchBaseQueryError,
+            error: defaultRequestError as FetchBaseQueryError,
           };
-        const { data: myIngredients, error: secondRequestError } =
-          await fetchWithBQ(`${INGREDIENT_URL}/my`);
 
-        return myIngredients
-          ? {
-              data: (defaultIngredients as IIngredient[]).concat(
-                myIngredients as IIngredient[],
-              ) as IIngredient[],
-            }
-          : { error: secondRequestError as FetchBaseQueryError };
+        const isAuth = (getState() as RootState).auth.isAuth;
+
+        if (isAuth) {
+          const { data: myIngredients, error: privateRequestError } =
+            await fetchWithBQ(`${INGREDIENT_URL}/my`);
+          if (privateRequestError) {
+            return { error: privateRequestError as FetchBaseQueryError };
+          }
+
+          (defaultIngredients as IIngredient[]).push(
+            ...(myIngredients as IIngredient[]),
+          );
+        }
+        return {
+          data: defaultIngredients as IIngredient[],
+        };
       },
       providesTags: result =>
         result
