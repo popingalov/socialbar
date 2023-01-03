@@ -6,6 +6,8 @@ export const INGREDIENT_URL = '/ingredients';
 export const CATEGORY_URL = '/categories';
 export const GLASSES_URL = '/glasses';
 export const MEASURE_URL = '/measure';
+export const FAVORITE_URL = '/favorite';
+export const SHOPPING_LIST_URL = '/shoping-list';
 
 export const TAGS_TYPES = {
   cocktails: 'Cocktail',
@@ -14,4 +16,6 @@ export const TAGS_TYPES = {
   categories: 'Category',
   glasses: 'Glass',
   measure: 'Measure',
+  favorites: 'Favorite',
+  shopping: 'Shopping',
 };

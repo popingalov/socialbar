@@ -1,12 +1,18 @@
 import React, { useState, useMemo } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useGetCocktailByIdQuery } from 'redux/api/cocktailApi';
+import {
+  useGetFavoritesQuery,
+  useAddFavoriteMutation,
+  useDeleteFavoriteMutation,
+} from 'redux/api/favoriteApi';
 import Box from 'components/box/Box';
 import { HiPencil, HiStar } from 'react-icons/hi';
 import { BiCheck } from 'react-icons/bi';
 import RecipeItem from './RecipeItem';
 import AdditionalInfo from './AdditionalInfo';
 import Loader from 'components/loader/Loader';
+import defaultIngredientPicture from 'assets/images/default-ingredient.jpg';
 
 import {
   EditBtn,
@@ -31,8 +37,20 @@ const CocktailDescription = () => {
     },
   );
 
+  const { data: favorites } = useGetFavoritesQuery();
+  const [addFavorite] = useAddFavoriteMutation();
+  const [deleteFavorite] = useDeleteFavoriteMutation();
+
   const navigate = useNavigate();
-  const [favorite, setFavorite] = useState(false);
+  const favorite: boolean = useMemo(() => {
+    if (!favorites) {
+      return false;
+    }
+
+    const matches = favorites.find(item => item.id === cocktailId);
+
+    return !!matches;
+  }, [favorites, cocktailId]);
 
   const stepsForRecipe = useMemo(() => {
     if (cocktail) {
@@ -48,8 +66,12 @@ const CocktailDescription = () => {
     console.log('edit cocktail');
   };
 
-  const onClickFavorite = () => {
-    setFavorite(prev => !prev);
+  const onClickFavorite = (id: string) => {
+    if (favorite) {
+      deleteFavorite(id);
+    } else {
+      addFavorite(id);
+    }
   };
 
   const onClickIngredient = (id: string) => {
@@ -76,13 +98,16 @@ const CocktailDescription = () => {
                 <EditBtn onClick={onClickEdit}>
                   <HiPencil size={28} />
                 </EditBtn>
-                <FavoriteBtn onClick={onClickFavorite} favorite={favorite}>
+                <FavoriteBtn
+                  onClick={() => onClickFavorite(cocktail.id)}
+                  favorite={favorite}
+                >
                   <HiStar size={28} />
                 </FavoriteBtn>
               </Box>
             </Box>
             <Image src={cocktail.picture} />
-            <Decs>{cocktail.recipe}</Decs>
+            <Decs>{cocktail.description}</Decs>
 
             <RecipeList>
               {stepsForRecipe &&
@@ -97,27 +122,31 @@ const CocktailDescription = () => {
           </Box>
           <Box as="ul" borderTop="1px solid" borderColor="borderBottom">
             {cocktail.ingredients.map(ingredient => {
-              // const normalizedName = ingredient.ing.name.toLowerCase();
+              const {
+                measure,
+                data,
+                alternatives,
+                isDressing,
+                isOptional,
+                measureType,
+              } = ingredient;
+              const { id, title, picture } = data;
               const isInMyBar = false;
+              const image = picture ? picture : defaultIngredientPicture;
               return (
                 <IngredientItem
-                  key={ingredient.data.title + ingredient.measure}
+                  key={title + measure}
                   isInMyBar={isInMyBar}
-                  onClick={() => onClickIngredient(ingredient.data.id)}
+                  onClick={() => onClickIngredient(id)}
                 >
-                  <IngredientImage
-                    src={ingredient.data.picture}
-                    alt={ingredient.data.title}
-                  />
+                  <IngredientImage src={image} alt={title} />
                   <Box flexGrow={1} alignSelf="start" pt={2}>
-                    <IngredientName>{ingredient.data.title}</IngredientName>
-                    {(ingredient.isDressing ||
-                      ingredient.isOptional ||
-                      ingredient.alternatives.length > 0) && (
+                    <IngredientName>{title}</IngredientName>
+                    {(isDressing || isOptional || alternatives.length > 0) && (
                       <AdditionalInfo ingredient={ingredient} />
                     )}
                   </Box>
-                  <IngredientQuantity>{`${ingredient.measure} ${ingredient.measureType}`}</IngredientQuantity>
+                  <IngredientQuantity>{`${measure} ${measureType}`}</IngredientQuantity>
                   <Box width="30px" height="30px" color="accent">
                     {isInMyBar && <BiCheck size={30} />}
                   </Box>

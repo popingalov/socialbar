@@ -27,10 +27,11 @@ const CocktailList = () => {
 
       {visibleCocktails && (
         <BarList>
-          {visibleCocktails.map(
+          {cocktails.all.map(
             ({ title, description, ingredients, id, picture }) => {
               const ingredientNames = ingredients.map(
-                ingredient => ingredient?.data?.title || '',
+                ingredient => ingredient.data.title,
+
               );
               // const isAvailable: boolean = ingredients.every(
               //   ({ available }) => available,
