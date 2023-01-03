@@ -1,11 +1,12 @@
 // import { Tabs } from 'components/tabs/Tabs';
+import SettingsList from 'components/settingsList';
 import { pageAnimation } from 'constants/animations';
 import { motion } from 'framer-motion';
 
 const Settings = () => {
   return (
     <motion.section {...pageAnimation} transition={{ duration: 0.3 }}>
-      Settings
+      <SettingsList />
       {/* <Tabs /> */}
     </motion.section>
   );

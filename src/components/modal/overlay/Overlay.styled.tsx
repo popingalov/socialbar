@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
 
-type props = { type: 'mobileMenu' | 'select' | 'extraMenu' };
+type props = { type: 'mobileMenu' | 'select' | 'extraMenu' | 'settingsModal' };
 
 export const OverlayStyled = styled(motion.div)<props>`
   position: fixed;
@@ -11,5 +11,7 @@ export const OverlayStyled = styled(motion.div)<props>`
   height: 100vh;
   z-index: 1000;
   background-color: ${({ theme, type }) =>
-    type === 'mobileMenu' ? theme.colors.backdropColor : 'transparent'};
+    type === 'mobileMenu' || type === 'settingsModal'
+      ? theme.colors.backdropColor
+      : 'transparent'};
 `;

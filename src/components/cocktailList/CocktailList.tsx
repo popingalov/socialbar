@@ -1,22 +1,23 @@
 import BarList from 'components/barList';
-import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { selectCocktailFilter } from 'redux/filter/filterSelectors';
-import CocktailCard from 'components/cocktailCard';
+import CocktailCard from 'components/cocktailList/cocktailCard';
 import { ListItem } from './CocktailList.styled';
-import FollowUpMessage from 'components/followUpMessage';
-import { getVisibleCocktails } from 'helpers/getVisibleCocktails';
+import FollowUpMessage from 'components/UI-kit/followUpMessage';
+// import { getVisibleCocktails } from 'helpers/getVisibleCocktails';
 import { cocktailFilterStatus } from 'redux/filter/filterConstants';
 import CocktailBottomMessage from './cocktailBottomMessage';
 import { useFetchCocktailsQuery } from 'redux/api/cocktailApi';
 import Loader from 'components/loader';
 import { Link } from 'react-router-dom';
+import { useGetVisibleCocktails } from 'hooks/useGetVisibleCocktails';
 
 const CocktailList = () => {
-  const { data: cocktails, isFetching } = useFetchCocktailsQuery();
+  // const { data: cocktails, isFetching } = useFetchCocktailsQuery();
   const cocktailFilter = useSelector(selectCocktailFilter);
-  const navigate = useNavigate();
   // const visibleCocktails = getVisibleCocktails(cocktails || [], cocktailFilter);
+  const { visibleCocktails, isFetching } =
+    useGetVisibleCocktails(cocktailFilter);
   const isMyCocktails = cocktailFilterStatus.myCocktails === cocktailFilter;
   const isAllCocktails = cocktailFilterStatus.allCocktails === cocktailFilter;
 
@@ -24,12 +25,13 @@ const CocktailList = () => {
     <>
       {isFetching && <Loader isLoading={isFetching} />}
 
-      {cocktails && (
+      {visibleCocktails && (
         <BarList>
           {cocktails.all.map(
             ({ title, description, ingredients, id, picture }) => {
               const ingredientNames = ingredients.map(
                 ingredient => ingredient.data.title,
+
               );
               // const isAvailable: boolean = ingredients.every(
               //   ({ available }) => available,
@@ -54,7 +56,7 @@ const CocktailList = () => {
           )}
         </BarList>
       )}
-      {(isMyCocktails || isAllCocktails) && cocktails && (
+      {(isMyCocktails || isAllCocktails) && visibleCocktails && (
         <FollowUpMessage>
           <CocktailBottomMessage
             isMyCocktails={isMyCocktails}

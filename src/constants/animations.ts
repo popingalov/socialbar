@@ -33,3 +33,27 @@ export const popUpMenuAnimation = {
   animate: 'show',
   exit: 'hidden',
 };
+
+const listAnimationType = {
+  hidden: { opacity: 0, translateX: '100px' },
+  show: { opacity: 1, translateX: 0 },
+};
+
+export const listAnimation = {
+  variants: listAnimationType,
+  initial: 'hidden',
+  animate: 'show',
+  exit: 'hidden',
+};
+
+const settingModalType = {
+  hidden: { opacity: 0, scale: 0.5, translateX: '-50%', translateY: '-50%' },
+  show: { opacity: 1, scale: 1, translateX: '-50%', translateY: '-50%' },
+};
+
+export const settingModalAnimation = {
+  variants: settingModalType,
+  initial: 'hidden',
+  animate: 'show',
+  exit: 'hidden',
+};

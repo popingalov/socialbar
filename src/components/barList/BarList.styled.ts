@@ -1,9 +1,14 @@
+import { motion } from 'framer-motion';
 import styled from 'styled-components';
 
-export const BarListStyled = styled.ul`
+export const BarListStyled = styled(motion.ul)`
   /* background-color: ${p => p.theme.colors.secondaryBackgroundColor}; */
   display: flex;
   flex-direction: column;
+
+  li {
+    border-bottom: 1px solid ${p => p.theme.colors.borderBottom};
+  }
 
   a {
     display: block;
@@ -11,7 +16,6 @@ export const BarListStyled = styled.ul`
     padding-bottom: ${p => p.theme.space[2]}px;
     padding-left: ${p => p.theme.space[3]}px;
     padding-right: calc(${p => p.theme.space[4]}px - 8px);
-    border-bottom: 1px solid ${p => p.theme.colors.borderBottom};
   }
 
   img {
@@ -20,7 +24,8 @@ export const BarListStyled = styled.ul`
     width: 50px;
     height: 50px;
     border: ${({ theme }) => `1px solid ${theme.colors.borderBottom}`};
-    object-fit: contain;
+    /* object-fit: contain; */
+    object-fit: cover;
     background-color: ${({ theme }) => theme.colors.white};
     margin-right: ${p => p.theme.space[3]}px;
   }

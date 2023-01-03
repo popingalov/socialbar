@@ -23,8 +23,14 @@ export const authSlice = createSlice({
     }),
     setUser: (
       state,
-      { payload: { id, name, email, picture } }: PayloadAction<IUser>,
-    ) => ({ ...state, user: { id, name, email, picture }, isAuth: true }),
+      {
+        payload: { id, name, email, picture, locale, startPage },
+      }: PayloadAction<IUser>,
+    ) => ({
+      ...state,
+      user: { id, name, email, picture, locale, startPage },
+      isAuth: true,
+    }),
     logout: () => initialState,
   },
 });
