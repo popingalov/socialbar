@@ -1,4 +1,4 @@
-import { cocktailFilterStatus } from 'redux/filter/filterConstants';
+// import { cocktailFilterStatus } from 'redux/filter/filterConstants';
 import { ICocktail } from 'types/cocktail';
 
 export function getVisibleCocktails(

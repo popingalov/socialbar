@@ -3,7 +3,7 @@ import { cocktailFilterStatus } from 'redux/filter/filterConstants';
 import { ICocktail } from 'types/cocktail';
 
 export const useGetVisibleCocktails = (filterStatus: string) => {
-  const { data: allCocktails, isFetching } = useFetchCocktailsQuery();
+  const { data: cocktails, isFetching } = useFetchCocktailsQuery();
   // const { data: myCocktails, isFetching: myCocktailsFetching } = useFetchMyCocktails();
   // const { data: favoriteCocktails, isFetching: favoriteCocktailsFetching } = useFetchFavoriteCocktails();
 
@@ -16,12 +16,25 @@ export const useGetVisibleCocktails = (filterStatus: string) => {
         isFetching,
       };
     case cocktailFilterStatus.myCocktails:
-      const myCocktails: ICocktail[] = [];
+      //TODO: add ...cocktails?.mine
+      if (!cocktails)
+        return {
+          visibleCocktails: [],
+          isFetching,
+        };
       return {
-        visibleCocktails: myCocktails,
+        visibleCocktails: [...cocktails.haveAll, ...cocktails.needMore],
         isFetching,
       };
     default:
-      return { visibleCocktails: allCocktails, isFetching };
+      if (!cocktails)
+        return {
+          visibleCocktails: [],
+          isFetching,
+        };
+      return {
+        visibleCocktails: [...cocktails.all],
+        isFetching,
+      };
   }
 };
