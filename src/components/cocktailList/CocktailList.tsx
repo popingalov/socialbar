@@ -13,7 +13,7 @@ import { Link } from 'react-router-dom';
 import { useGetVisibleCocktails } from 'hooks/useGetVisibleCocktails';
 
 const CocktailList = () => {
-  // const { data: cocktails, isFetching } = useFetchCocktailsQuery();
+  const { data: cocktails } = useFetchCocktailsQuery();
   const cocktailFilter = useSelector(selectCocktailFilter);
   // const visibleCocktails = getVisibleCocktails(cocktails || [], cocktailFilter);
   const { visibleCocktails, isFetching } =
@@ -27,33 +27,33 @@ const CocktailList = () => {
 
       {visibleCocktails && (
         <BarList>
-          {cocktails.all.map(
-            ({ title, description, ingredients, id, picture }) => {
-              const ingredientNames = ingredients.map(
-                ingredient => ingredient.data.title,
-
-              );
-              // const isAvailable: boolean = ingredients.every(
-              //   ({ available }) => available,
-              // );
-              const isAvailable: boolean = true;
-              return (
-                <ListItem key={id} allIngredientsAreAvailable={isAvailable}>
-                  <Link to={`${id}`}>
-                    <CocktailCard
-                      // isFavorite={favorite}
-                      isFavorite={true}
-                      allIngredientsAreAvailable={isAvailable}
-                      name={title}
-                      description={description}
-                      imageUrl={picture}
-                      ingredients={ingredientNames}
-                    />
-                  </Link>
-                </ListItem>
-              );
-            },
-          )}
+          {cocktails &&
+            cocktails.all.map(
+              ({ title, description, ingredients, id, picture }) => {
+                const ingredientNames = ingredients.map(
+                  ingredient => ingredient.data.title,
+                );
+                // const isAvailable: boolean = ingredients.every(
+                //   ({ available }) => available,
+                // );
+                const isAvailable: boolean = true;
+                return (
+                  <ListItem key={id} allIngredientsAreAvailable={isAvailable}>
+                    <Link to={`${id}`}>
+                      <CocktailCard
+                        // isFavorite={favorite}
+                        isFavorite={true}
+                        allIngredientsAreAvailable={isAvailable}
+                        name={title}
+                        description={description}
+                        imageUrl={picture}
+                        ingredients={ingredientNames}
+                      />
+                    </Link>
+                  </ListItem>
+                );
+              },
+            )}
         </BarList>
       )}
       {(isMyCocktails || isAllCocktails) && visibleCocktails && (
