@@ -3,53 +3,66 @@ import baseQuery from '../baseQuery';
 import type { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import { COCKTAIL_URL, TAGS_TYPES } from 'constants/api';
 import { ICocktail } from 'types/cocktail';
+import { IIngredient } from 'types/ingredient';
+
+interface AllCocktailsResponse {
+  all: ICocktail[];
+  haveAll: ICocktail[];
+  needMore: ICocktail[];
+  other: ICocktail[];
+  mine: { haveAll: ICocktail[]; other: ICocktail[] } | null;
+}
 
 export const cocktailApi = createApi({
   reducerPath: 'cocktailApi',
   baseQuery,
   tagTypes: [TAGS_TYPES.cocktails],
   endpoints: builder => ({
-    fetchCocktails: builder.query<ICocktail[], void>({
-      async queryFn(_arg, _api, _extraOptions, fetchWithBQ) {
-        const { data: defaultCocktails, error } = await fetchWithBQ(
-          `${COCKTAIL_URL}`,
-        );
+    fetchCocktails: builder.query<AllCocktailsResponse, void>({
+      //TODO: Uncomment query and delete queryFn, when bug with ingredient.data===null will be fixing
+      async queryFn(_arg, { getState }, _extraOptions, fetchWithBQ) {
+        const { data, error } = await fetchWithBQ(`${COCKTAIL_URL}`);
         if (error)
           return {
             error: error as FetchBaseQueryError,
           };
-        const { data: myCocktails, error: secondRequestError } =
-          await fetchWithBQ({
-            url: `${COCKTAIL_URL}/my`,
-            method: 'POST',
-          });
 
-        return myCocktails
-          ? {
-              data: (defaultCocktails as ICocktail[]).concat(
-                myCocktails as ICocktail[],
-              ) as ICocktail[],
-            }
-          : { error: secondRequestError as FetchBaseQueryError };
+        const newData = transformCocktailResponse(data as AllCocktailsResponse);
+
+        return {
+          data: newData,
+        };
       },
-      providesTags: result =>
-        result
-          ? [
-              ...result.map(({ id }) => ({
-                type: TAGS_TYPES.cocktails,
-                id,
-              })),
-              { type: TAGS_TYPES.cocktails, id: 'LIST' },
-            ]
-          : [{ type: TAGS_TYPES.cocktails, id: 'LIST' }],
+
+      // query() {
+      //   return {
+      //     url: `${COCKTAIL_URL}/`,
+      //   };
+      // },
+
+      providesTags: [TAGS_TYPES.cocktails],
     }),
 
     getCocktailById: builder.query<ICocktail, string>({
-      query(id) {
+      //TODO: Uncomment query and delete queryFn, when bug with ingredient.data===null will be fixing
+      async queryFn(id, { getState }, _extraOptions, fetchWithBQ) {
+        const { data, error } = await fetchWithBQ(`${COCKTAIL_URL}/${id}`);
+        if (error)
+          return {
+            error: error as FetchBaseQueryError,
+          };
+
+        const newData = changeDataNull(data as ICocktail);
+
         return {
-          url: `${COCKTAIL_URL}/${id}`,
+          data: newData,
         };
       },
+      // query(id) {
+      //   return {
+      //     url: `${COCKTAIL_URL}/${id}`,
+      //   };
+      // },
       providesTags: (result, error, id) => [{ type: TAGS_TYPES.cocktails, id }],
     }),
 
@@ -93,3 +106,40 @@ export const {
   useUpdateCocktailMutation,
   useDeleteCocktailMutation,
 } = cocktailApi;
+
+//TODO: delete these functions when bug with ingredient.data will be fixing
+function transformCocktailResponse<T extends AllCocktailsResponse>(
+  response: T,
+) {
+  let newData = {} as T;
+  for (let k in response) {
+    if (response[k] === null) {
+      newData = { ...newData, [k]: null };
+    } else if (!Array.isArray(response[k])) {
+      newData = { ...newData, [k]: response[k] };
+    } else {
+      const newArray = (response[k] as ICocktail[]).map(changeDataNull);
+      newData = { ...newData, [k]: newArray };
+    }
+  }
+  return newData;
+}
+
+function changeDataNull(cocktail: ICocktail): ICocktail {
+  const deletedIngredient = {
+    description: 'Deleted ingredient',
+    id: '63ab35508fef0a81b71fa8f0',
+    title: 'Deleted ingredient',
+    picture: 'https://cdn-icons-png.flaticon.com/512/985/985515.png',
+  } as IIngredient;
+
+  const { ingredients } = cocktail;
+  const newIngredients = ingredients.map(ingredient => {
+    if (!ingredient.data) {
+      return { ...ingredient, data: deletedIngredient };
+    }
+    return ingredient;
+  });
+
+  return { ...cocktail, ingredients: [...newIngredients] };
+}

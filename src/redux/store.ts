@@ -3,6 +3,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import { ingredientApi } from './api/ingredientApi';
 import { cocktailApi } from './api/cocktailApi';
 import { manualApi } from './api/manualApi';
+import { favoriteApi } from './api/favoriteApi';
 import { userApi } from './api/userApi';
 import authReducer from './auth/authSlice';
 import { filterReducer } from './filter/filterSlice';
@@ -25,6 +26,7 @@ export const store = configureStore({
     [ingredientApi.reducerPath]: ingredientApi.reducer,
     [cocktailApi.reducerPath]: cocktailApi.reducer,
     [manualApi.reducerPath]: manualApi.reducer,
+    [favoriteApi.reducerPath]: favoriteApi.reducer,
     auth: authReducer,
     filters: filterReducer,
     modalStatus: modalReducer,
@@ -40,6 +42,7 @@ export const store = configureStore({
       ingredientApi.middleware,
       cocktailApi.middleware,
       manualApi.middleware,
+      favoriteApi.middleware,
     ),
 });
 
