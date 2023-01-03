@@ -4,10 +4,8 @@ import { selectCocktailFilter } from 'redux/filter/filterSelectors';
 import CocktailCard from 'components/cocktailList/cocktailCard';
 import { ListItem } from './CocktailList.styled';
 import FollowUpMessage from 'components/UI-kit/followUpMessage';
-// import { getVisibleCocktails } from 'helpers/getVisibleCocktails';
 import { cocktailFilterStatus } from 'redux/filter/filterConstants';
 import CocktailBottomMessage from './cocktailBottomMessage';
-// import { useFetchCocktailsQuery } from 'redux/api/cocktailApi';
 import Loader from 'components/loader';
 import { Link } from 'react-router-dom';
 import { useGetVisibleCocktails } from 'hooks/useGetVisibleCocktails';
@@ -27,11 +25,10 @@ const CocktailList = () => {
 
       {visibleCocktails && (
         <BarList>
-          {cocktails.all.map(
+          {visibleCocktails.map(
             ({ title, description, ingredients, id, picture }) => {
               const ingredientNames = ingredients.map(
                 ingredient => ingredient.data.title,
-
               );
               // const isAvailable: boolean = ingredients.every(
               //   ({ available }) => available,
@@ -56,7 +53,7 @@ const CocktailList = () => {
           )}
         </BarList>
       )}
-      {(isMyCocktails || isAllCocktails) && visibleCocktails && (
+      {(isMyCocktails || isAllCocktails) && visibleCocktails.length && (
         <FollowUpMessage>
           <CocktailBottomMessage
             isMyCocktails={isMyCocktails}
