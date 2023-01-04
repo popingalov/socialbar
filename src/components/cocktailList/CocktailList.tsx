@@ -9,18 +9,17 @@ import CocktailBottomMessage from './cocktailBottomMessage';
 import Loader from 'components/loader';
 import { Link } from 'react-router-dom';
 import { useGetVisibleCocktails } from 'hooks/useGetVisibleCocktails';
-
 import { useLongPress } from 'use-long-press';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import { setContextMenuIsOpen } from 'redux/modal/modalSlice';
 import { AnimatePresence } from 'framer-motion';
 import { selectContextMenuStatus } from 'redux/modal/modalSelectors';
 import { useDispatch } from 'react-redux';
 import PopUp from 'components/modal/popUp';
+// import { useGetCocktailByIdQuery } from 'redux/api/cocktailApi';
 
 const CocktailList = () => {
-  // const { data: cocktails, isFetching } = useFetchCocktailsQuery();
   const cocktailFilter = useSelector(selectCocktailFilter);
   const { visibleCocktails, isFetching } =
     useGetVisibleCocktails(cocktailFilter);
@@ -28,34 +27,31 @@ const CocktailList = () => {
   const isAllCocktails = cocktailFilterStatus.allCocktails === cocktailFilter;
   // console.log('visibleCocktails', visibleCocktails);
 
-  const [mousePos, setMousePos] = useState<ICoordinates>({
+  const [selectCoordinates, setSelectCoordinates] = useState<ICoordinates>({
     top: null,
     left: null,
     right: null,
   });
+  const [selectedCocktail, setSelectedCocktail] = useState<{
+    name: string | null;
+    id: string | null;
+  }>({ name: null, id: null });
+
   const dispatch = useDispatch();
   const contextMenuIsOpen = useSelector(selectContextMenuStatus);
 
-  //  const [selectCoordinates, setSelectCoordinates] = useState<ICoordinates>({
-  //    top: null,
-  //    left: null,
-  //    right: null,
-  //  });
+  const longPressHandle = useLongPress((event: any) => {
+    console.log('event', event);
+    const name = event.target.closest('li').getAttribute('name');
+    const id = event.target.closest('li').getAttribute('id');
 
-  useEffect(() => {
-    const handleMouseMove = (event: any) => {
-      console.log('event', event);
-      setMousePos({ left: event.clientX, top: event.clientY, right: null });
-    };
+    setSelectCoordinates({
+      top: event.changedTouches[0].clientY,
+      left: event.changedTouches[0].clientX,
+      right: null,
+    });
+    setSelectedCocktail({ name, id });
 
-    window.addEventListener('mousemove', handleMouseMove);
-
-    return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-    };
-  }, []);
-
-  const longPressHandle = useLongPress(event => {
     dispatch(setContextMenuIsOpen(true));
     console.log('Long pressed!');
   });
@@ -81,22 +77,26 @@ const CocktailList = () => {
               );
 
               return (
-                <ListItem
-                  key={id}
-                  allIngredientsAreAvailable={iCan}
-                  {...longPressHandle()}
-                >
-                  <Link to={`${id}`}>
-                    <CocktailCard
-                      isFavorite={favorite}
-                      allIngredientsAreAvailable={iCan}
-                      name={title}
-                      description={description}
-                      imageUrl={picture}
-                      ingredients={ingredientNames}
-                    />
-                  </Link>
-                </ListItem>
+                <>
+                  <ListItem
+                    key={id}
+                    id={id}
+                    name={title}
+                    allIngredientsAreAvailable={iCan}
+                    {...longPressHandle()}
+                  >
+                    <Link to={`${id}`}>
+                      <CocktailCard
+                        isFavorite={favorite}
+                        allAvailable={iCan}
+                        name={title}
+                        description={description}
+                        imageUrl={picture}
+                        ingredients={ingredientNames}
+                      />
+                    </Link>
+                  </ListItem>
+                </>
               );
             },
           )}
@@ -112,8 +112,12 @@ const CocktailList = () => {
       )}
       <AnimatePresence>
         {contextMenuIsOpen && (
-          <PopUp key="popUp" coordinates={mousePos} type="context">
-            <p>pop up</p>
+          <PopUp key="popUp" coordinates={selectCoordinates} type="context">
+            <p>{selectedCocktail.name}</p>
+            <p>remove from bar</p>
+            <p>add to shopping list</p>
+            <p>Delete from application</p>
+            <p>Edit</p>
           </PopUp>
         )}
       </AnimatePresence>

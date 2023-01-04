@@ -7,7 +7,7 @@ interface IProps {
   name: string;
   description: string;
   isFavorite?: boolean;
-  allIngredientsAreAvailable?: boolean;
+  allAvailable?: boolean;
   imageUrl: string;
   ingredients: string[];
 }
@@ -15,7 +15,7 @@ interface IProps {
 const CocktailCard: React.FC<IProps> = ({
   isFavorite,
   name,
-  allIngredientsAreAvailable = false,
+  allAvailable = false,
   imageUrl,
   ingredients,
 }) => {
@@ -26,7 +26,7 @@ const CocktailCard: React.FC<IProps> = ({
         <CocktailsName>{name}</CocktailsName>
         <Ingredients>{ingredients.join(', ')}</Ingredients>
       </Box>
-      {allIngredientsAreAvailable && (
+      {allAvailable && (
         <Box width="28px" height="28px" color="accent">
           <BiCheck size={28} />
         </Box>

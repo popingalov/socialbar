@@ -5,18 +5,12 @@ import IngredientCard from 'components/ingredientsList/ingredientCard';
 import { ingredientFilterStatus } from 'redux/filter/filterConstants';
 import FollowUpMessage from 'components/UI-kit/followUpMessage';
 import IngredientBottomMessage from './ingredientBottomMessage';
-// import { getVisibleIngredients } from 'helpers/getVisibleIngredients';
 import Loader from 'components/loader';
-// import { useFetchIngredientsQuery } from 'redux/api/ingredientApi';
 import { Link } from 'react-router-dom';
 import { IIngredient } from 'types/ingredient';
 import { useGetVisibleIngredients } from 'hooks/useGetVisibleIngredients';
 
 const IngredientsList = () => {
-  // const { data: allIngredients, isFetching } = useFetchIngredientsQuery();
-  // const { data: myBar, isFetching } = useFetchMyBar();
-  // const { data: shoppingList, isFetching } = useFetchShoppingList();
-
   const ingredientFilter = useSelector(selectIngredientFilter);
   const { visibleIngredients, isFetching } =
     useGetVisibleIngredients(ingredientFilter);
@@ -24,6 +18,7 @@ const IngredientsList = () => {
   const isNotShoppingList = !(
     ingredientFilterStatus.shoppingList === ingredientFilter
   );
+  // console.log('visibleIngredients', visibleIngredients);
 
   return (
     <>
@@ -32,7 +27,7 @@ const IngredientsList = () => {
       {visibleIngredients && (
         <BarList>
           {visibleIngredients.map((ingredient: IIngredient) => {
-            const { title, id, picture } = ingredient;
+            const { title, id, picture, availability } = ingredient;
 
             return (
               <li key={id}>
@@ -42,7 +37,7 @@ const IngredientsList = () => {
                     name={title}
                     filter={ingredientFilter}
                     // isInShoppingList={shop}
-                    // isInMyBar={available}
+                    isInMyBar={availability}
                     imageUrl={picture}
                   />
                 </Link>

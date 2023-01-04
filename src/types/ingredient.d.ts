@@ -8,4 +8,5 @@ export interface IIngredient {
   category: string;
   cocktails: ICocktail[];
   isDefault: boolean;
+  availability: boolean;
 }

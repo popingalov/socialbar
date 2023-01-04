@@ -9,6 +9,10 @@ export const Modal = styled(motion.div)<IProps>`
   position: absolute;
   top: ${({ top }) => (top ? top : '0')}px;
   left: ${({ left, type }) => {
+    if (type === 'select') return left ? left : '0';
+    return 'none';
+  }}px;
+  left: ${({ left, type }) => {
     if (type === 'select' || type === 'context') return left ? left : '0';
     return 'none';
   }}px;

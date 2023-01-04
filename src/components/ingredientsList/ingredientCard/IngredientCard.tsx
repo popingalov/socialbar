@@ -6,13 +6,17 @@ import Box from 'components/box';
 import LowIcon from 'components/UI-kit/icons/lowIcon';
 import IconButton from 'components/UI-kit/buttons/iconButton';
 import { ExtraInfo, IngredientName } from './IngredientCard.styled';
+import {
+  useAddToBarMutation,
+  useDeleteFromBarMutation,
+} from 'redux/api/myBarApi';
 // import fallback from 'assets/fallback.png';
 
 interface IProps {
   filter: string;
   name: string;
   // isInShoppingList: boolean;
-  // isInMyBar: boolean;
+  isInMyBar: boolean;
   id: string;
   imageUrl: string;
 }
@@ -21,16 +25,33 @@ const IngredientCard: React.FC<IProps> = ({
   filter,
   name,
   // isInShoppingList,
-  // isInMyBar,
+  isInMyBar,
   id,
   imageUrl,
 }) => {
-  // realize updating ingredient availability status - PUT
-  // const [toggleAvailable, { isLoading: isUpdating }] =
-  //   useToggleAvailableINgredientMutation();
+  const [addToMyBar, { isLoading: adding }] = useAddToBarMutation();
+  const [deleteFromMyBar, { isLoading: deleting }] = useDeleteFromBarMutation();
+
   const isMyBar = filter === ingredientFilterStatus.myBarShelf;
   const isBarShelf = filter === ingredientFilterStatus.manageBarShelf;
   const isShoppingList = filter === ingredientFilterStatus.shoppingList;
+
+  const toggleCheckBox = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    id: string,
+  ) => {
+    console.log('id', id);
+    console.log('event', event.target.checked);
+
+    const isChecked = event.target.checked;
+
+    if (isChecked) {
+      deleteFromMyBar(id);
+      return;
+    }
+
+    addToMyBar(id);
+  };
 
   return (
     <Box position="relative" display="flex" alignItems="center">
@@ -42,9 +63,10 @@ const IngredientCard: React.FC<IProps> = ({
         )}
       </Box>
       {isBarShelf && (
-        // onChange={() => toggleAvailable(id)}
-        // <Checkbox checked={isInMyBar} onChange={() => id} />
-        <Checkbox checked={true} onChange={() => id} />
+        <Checkbox
+          checked={isInMyBar}
+          onChange={event => toggleCheckBox(event, id)}
+        />
       )}
       {/* {(isMyBar || isBarShelf) && isInShoppingList && (
         <LowIcon type="ingredients" />
