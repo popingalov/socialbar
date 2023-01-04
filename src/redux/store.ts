@@ -1,10 +1,15 @@
 import { setupListeners } from '@reduxjs/toolkit/dist/query/react';
 import { configureStore } from '@reduxjs/toolkit';
-import { ingredientApi } from './api/ingredientApi';
-import { cocktailApi } from './api/cocktailApi';
-import { manualApi } from './api/manualApi';
-import { favoriteApi } from './api/favoriteApi';
-import { userApi } from './api/userApi';
+import {
+  ingredientApi,
+  cocktailApi,
+  favoriteApi,
+  manualApi,
+  myBarApi,
+  shoppingApi,
+  userApi,
+} from './api';
+
 import authReducer from './auth/authSlice';
 import { filterReducer } from './filter/filterSlice';
 import { modalReducer } from './modal/modalSlice';
@@ -27,6 +32,8 @@ export const store = configureStore({
     [cocktailApi.reducerPath]: cocktailApi.reducer,
     [manualApi.reducerPath]: manualApi.reducer,
     [favoriteApi.reducerPath]: favoriteApi.reducer,
+    [myBarApi.reducerPath]: myBarApi.reducer,
+    [shoppingApi.reducerPath]: shoppingApi.reducer,
     auth: authReducer,
     filters: filterReducer,
     modalStatus: modalReducer,
@@ -43,6 +50,8 @@ export const store = configureStore({
       cocktailApi.middleware,
       manualApi.middleware,
       favoriteApi.middleware,
+      shoppingApi.middleware,
+      myBarApi.middleware,
     ),
 });
 
@@ -55,7 +64,6 @@ export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 
 export const persistor = persistStore(store);
-
 
 //! without persist
 // import { setupListeners } from '@reduxjs/toolkit/dist/query/react';

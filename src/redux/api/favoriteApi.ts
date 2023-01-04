@@ -1,5 +1,5 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
-import { IFavoriteResponse } from 'types/favorite';
+import { IFavoriteResponse } from 'types/response.d.';
 import { ICocktail } from 'types/cocktail';
 import baseQuery from 'redux/baseQuery';
 import { FAVORITE_URL, TAGS_TYPES } from 'constants/api';
@@ -15,7 +15,7 @@ export const favoriteApi = createApi({
           url: `${FAVORITE_URL}`,
         };
       },
-      transformResponse: (result: IFavoriteResponse[]) => result[0].cocktails,
+      transformResponse: (result: IFavoriteResponse) => result.cocktails,
       providesTags: [TAGS_TYPES.favorites],
     }),
 

@@ -3,6 +3,7 @@ import baseQuery from '../baseQuery';
 import type { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import { COCKTAIL_URL, TAGS_TYPES } from 'constants/api';
 import { ICocktail } from 'types/cocktail';
+import { ICocktailResponse } from 'types/response.d.';
 import { IIngredient } from 'types/ingredient';
 
 interface AllCocktailsResponse {
@@ -43,27 +44,15 @@ export const cocktailApi = createApi({
       providesTags: [TAGS_TYPES.cocktails],
     }),
 
-    getCocktailById: builder.query<ICocktail, string>({
-      //TODO: Uncomment query and delete queryFn, when bug with ingredient.data===null will be fixing
-      async queryFn(id, { getState }, _extraOptions, fetchWithBQ) {
-        const { data, error } = await fetchWithBQ(`${COCKTAIL_URL}/${id}`);
-        if (error)
-          return {
-            error: error as FetchBaseQueryError,
-          };
-
-        const newData = changeDataNull(data as ICocktail);
-
+    getCocktailById: builder.query<ICocktailResponse, string>({
+      query(id) {
         return {
-          data: newData,
+          url: `${COCKTAIL_URL}/${id}`,
         };
       },
-      // query(id) {
-      //   return {
-      //     url: `${COCKTAIL_URL}/${id}`,
-      //   };
-      // },
-      providesTags: (result, error, id) => [{ type: TAGS_TYPES.cocktails, id }],
+      providesTags: (result, error, id) => [
+        { type: TAGS_TYPES.cocktailById, id },
+      ],
     }),
 
     addCocktail: builder.mutation<ICocktail, Partial<ICocktail>>({
