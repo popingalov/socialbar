@@ -13,7 +13,7 @@ import { useGetVisibleCocktails } from 'hooks/useGetVisibleCocktails';
 import { useLongPress } from 'use-long-press';
 import { useEffect, useState } from 'react';
 
-import { setContextMenuIsOpen, setPopUpIsOpen } from 'redux/modal/modalSlice';
+import { setContextMenuIsOpen } from 'redux/modal/modalSlice';
 import { AnimatePresence } from 'framer-motion';
 import { selectContextMenuStatus } from 'redux/modal/modalSelectors';
 import { useDispatch } from 'react-redux';
@@ -44,6 +44,7 @@ const CocktailList = () => {
 
   useEffect(() => {
     const handleMouseMove = (event: any) => {
+      console.log('event', event);
       setMousePos({ left: event.clientX, top: event.clientY, right: null });
     };
 
@@ -82,7 +83,6 @@ const CocktailList = () => {
               return (
                 <ListItem
                   key={id}
-                  // name={id}
                   allIngredientsAreAvailable={iCan}
                   {...longPressHandle()}
                 >

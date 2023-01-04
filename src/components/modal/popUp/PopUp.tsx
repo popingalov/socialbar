@@ -14,6 +14,7 @@ const PopUp: React.FC<IProps> = ({
   type,
   coordinates: { top, left, right },
 }) => {
+  console.log('coordinates', top, left, right);
   return (
     <Overlay modalType={type}>
       <Modal
