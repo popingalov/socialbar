@@ -3,6 +3,7 @@ import { ReactNode } from 'react';
 import { useDispatch } from 'react-redux';
 import { OverlayStyled } from './Overlay.styled';
 import {
+  setContextMenuIsOpen,
   setExtraMenuIsOpen,
   setMobileIsOpen,
   setPopUpIsOpen,
@@ -14,7 +15,12 @@ const modalRoot: HTMLDivElement = document.querySelector('#modal')!;
 
 interface IProps {
   children: ReactNode;
-  modalType: 'mobileMenu' | 'select' | 'extraMenu' | 'settingsModal';
+  modalType:
+    | 'mobileMenu'
+    | 'select'
+    | 'extraMenu'
+    | 'settingsModal'
+    | 'context';
 }
 
 const Overlay: React.FC<IProps> = ({ children, modalType }) => {
@@ -48,6 +54,8 @@ function getAction(type: string) {
       return setExtraMenuIsOpen(false);
     case 'settingsModal':
       return setSettingsMenuIsOpen(false);
+    case 'context':
+      return setContextMenuIsOpen(false);
     default:
       return;
   }

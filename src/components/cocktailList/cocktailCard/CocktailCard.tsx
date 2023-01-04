@@ -6,7 +6,7 @@ import { CocktailsName, Ingredients } from './CocktailCard.styled';
 interface IProps {
   name: string;
   description: string;
-  isFavorite: boolean;
+  isFavorite?: boolean;
   allIngredientsAreAvailable?: boolean;
   imageUrl: string;
   ingredients: string[];

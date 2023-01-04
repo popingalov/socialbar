@@ -11,3 +11,6 @@ export const selectExtraMenuStatus = (state: RootState) =>
 
 export const selectSettingsMenuStatus = (state: RootState) =>
   state.modalStatus.settingsMenu.isOpen;
+
+export const selectContextMenuStatus = (state: RootState) =>
+  state.modalStatus.contextMenu.isOpen;

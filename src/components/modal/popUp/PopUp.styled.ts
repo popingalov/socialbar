@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import styled from 'styled-components';
 
 interface IProps extends ICoordinates {
-  type: 'select' | 'extraMenu';
+  type: 'select' | 'extraMenu' | 'context';
 }
 
 export const Modal = styled(motion.div)<IProps>`

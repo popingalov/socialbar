@@ -10,37 +10,86 @@ import Loader from 'components/loader';
 import { Link } from 'react-router-dom';
 import { useGetVisibleCocktails } from 'hooks/useGetVisibleCocktails';
 
+import { useLongPress } from 'use-long-press';
+import { useEffect, useState } from 'react';
+
+import { setContextMenuIsOpen, setPopUpIsOpen } from 'redux/modal/modalSlice';
+import { AnimatePresence } from 'framer-motion';
+import { selectContextMenuStatus } from 'redux/modal/modalSelectors';
+import { useDispatch } from 'react-redux';
+import PopUp from 'components/modal/popUp';
+
 const CocktailList = () => {
   // const { data: cocktails, isFetching } = useFetchCocktailsQuery();
   const cocktailFilter = useSelector(selectCocktailFilter);
-  // const visibleCocktails = getVisibleCocktails(cocktails || [], cocktailFilter);
   const { visibleCocktails, isFetching } =
     useGetVisibleCocktails(cocktailFilter);
   const isMyCocktails = cocktailFilterStatus.myCocktails === cocktailFilter;
   const isAllCocktails = cocktailFilterStatus.allCocktails === cocktailFilter;
+  // console.log('visibleCocktails', visibleCocktails);
+
+  const [mousePos, setMousePos] = useState<ICoordinates>({
+    top: null,
+    left: null,
+    right: null,
+  });
+  const dispatch = useDispatch();
+  const contextMenuIsOpen = useSelector(selectContextMenuStatus);
+
+  //  const [selectCoordinates, setSelectCoordinates] = useState<ICoordinates>({
+  //    top: null,
+  //    left: null,
+  //    right: null,
+  //  });
+
+  useEffect(() => {
+    const handleMouseMove = (event: any) => {
+      setMousePos({ left: event.clientX, top: event.clientY, right: null });
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+    };
+  }, []);
+
+  const longPressHandle = useLongPress(event => {
+    dispatch(setContextMenuIsOpen(true));
+    console.log('Long pressed!');
+  });
 
   return (
     <>
       {isFetching && <Loader isLoading={isFetching} />}
 
-      {visibleCocktails && (
+      {visibleCocktails.length !== 0 && (
         <BarList>
           {visibleCocktails.map(
-            ({ title, description, ingredients, id, picture }) => {
+            ({
+              title,
+              description,
+              ingredients,
+              id,
+              picture,
+              iCan,
+              favorite,
+            }) => {
               const ingredientNames = ingredients.map(
                 ingredient => ingredient.data.title,
               );
-              // const isAvailable: boolean = ingredients.every(
-              //   ({ available }) => available,
-              // );
-              const isAvailable: boolean = true;
+
               return (
-                <ListItem key={id} allIngredientsAreAvailable={isAvailable}>
+                <ListItem
+                  key={id}
+                  // name={id}
+                  allIngredientsAreAvailable={iCan}
+                  {...longPressHandle()}
+                >
                   <Link to={`${id}`}>
                     <CocktailCard
-                      // isFavorite={favorite}
-                      isFavorite={true}
-                      allIngredientsAreAvailable={isAvailable}
+                      isFavorite={favorite}
+                      allIngredientsAreAvailable={iCan}
                       name={title}
                       description={description}
                       imageUrl={picture}
@@ -53,7 +102,7 @@ const CocktailList = () => {
           )}
         </BarList>
       )}
-      {(isMyCocktails || isAllCocktails) && visibleCocktails.length && (
+      {(isMyCocktails || isAllCocktails) && visibleCocktails.length !== 0 && (
         <FollowUpMessage>
           <CocktailBottomMessage
             isMyCocktails={isMyCocktails}
@@ -61,6 +110,13 @@ const CocktailList = () => {
           />
         </FollowUpMessage>
       )}
+      <AnimatePresence>
+        {contextMenuIsOpen && (
+          <PopUp key="popUp" coordinates={mousePos} type="context">
+            <p>pop up</p>
+          </PopUp>
+        )}
+      </AnimatePresence>
     </>
   );
 };

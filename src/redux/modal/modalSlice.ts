@@ -13,6 +13,9 @@ interface IModalStatus {
   settingsMenu: {
     isOpen: boolean;
   };
+  contextMenu: {
+    isOpen: boolean;
+  };
 }
 
 const modalStatusInitialState: IModalStatus = {
@@ -26,6 +29,9 @@ const modalStatusInitialState: IModalStatus = {
     isOpen: false,
   },
   settingsMenu: {
+    isOpen: false,
+  },
+  contextMenu: {
     isOpen: false,
   },
 };
@@ -46,6 +52,9 @@ const modalSlice = createSlice({
     setSettingsMenuIsOpen(state, { payload }: PayloadAction<boolean>) {
       state.settingsMenu.isOpen = payload;
     },
+    setContextMenuIsOpen(state, { payload }: PayloadAction<boolean>) {
+      state.contextMenu.isOpen = payload;
+    },
   },
 });
 
@@ -54,5 +63,6 @@ export const {
   setPopUpIsOpen,
   setExtraMenuIsOpen,
   setSettingsMenuIsOpen,
+  setContextMenuIsOpen,
 } = modalSlice.actions;
 export const modalReducer = modalSlice.reducer;
