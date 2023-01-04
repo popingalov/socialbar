@@ -8,9 +8,11 @@ export const GLASSES_URL = '/glasses';
 export const MEASURE_URL = '/measure';
 export const FAVORITE_URL = '/favorite';
 export const SHOPPING_LIST_URL = '/shoping-list';
+export const MY_BAR_LIST_URL = '/my-ingredient-list';
 
 export const TAGS_TYPES = {
   cocktails: 'Cocktail',
+  cocktailById: 'CocktailById',
   user: 'User',
   ingredients: 'Ingredient',
   categories: 'Category',
@@ -18,4 +20,5 @@ export const TAGS_TYPES = {
   measure: 'Measure',
   favorites: 'Favorite',
   shopping: 'Shopping',
+  myBar: 'MyBar',
 };
