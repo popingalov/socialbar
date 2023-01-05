@@ -50,10 +50,12 @@ const IngredientCard: React.FC<IProps> = ({
     const isChecked = event.target.checked;
 
     if (isChecked) {
+      console.log('deleteFromMyBar');
       deleteFromMyBar(id);
       return;
     }
 
+    console.log('addtoMyBAr');
     addToMyBar(id);
   };
 
@@ -81,7 +83,7 @@ const IngredientCard: React.FC<IProps> = ({
         <IconButton
           removeItem={() => {
             console.log('deleting');
-            // deleteFromShoppingList(id);
+            deleteFromShoppingList(id);
           }}
         >
           <RxCross2 aria-label="delete" />
