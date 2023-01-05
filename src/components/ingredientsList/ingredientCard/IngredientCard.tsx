@@ -10,12 +10,13 @@ import {
   useAddToBarMutation,
   useDeleteFromBarMutation,
 } from 'redux/api/myBarApi';
+import { useDeleteFromShoppingMutation } from 'redux/api/shoppingApi';
 // import fallback from 'assets/fallback.png';
 
 interface IProps {
   filter: string;
   name: string;
-  // isInShoppingList: boolean;
+  isInShoppingList: boolean;
   isInMyBar: boolean;
   id: string;
   imageUrl: string;
@@ -24,13 +25,16 @@ interface IProps {
 const IngredientCard: React.FC<IProps> = ({
   filter,
   name,
-  // isInShoppingList,
+  isInShoppingList,
   isInMyBar,
   id,
   imageUrl,
 }) => {
   const [addToMyBar, { isLoading: adding }] = useAddToBarMutation();
-  const [deleteFromMyBar, { isLoading: deleting }] = useDeleteFromBarMutation();
+  const [deleteFromMyBar, { isLoading: deletingFromMyBar }] =
+    useDeleteFromBarMutation();
+  const [deleteFromShoppingList, { isLoading: deletingFromShopping }] =
+    useDeleteFromShoppingMutation();
 
   const isMyBar = filter === ingredientFilterStatus.myBarShelf;
   const isBarShelf = filter === ingredientFilterStatus.manageBarShelf;
@@ -59,21 +63,27 @@ const IngredientCard: React.FC<IProps> = ({
       <Box marginRight="auto">
         <IngredientName>{name}</IngredientName>
         {(isBarShelf || isShoppingList) && (
-          <ExtraInfo>is used in 6 cocktails</ExtraInfo>
+          <ExtraInfo>is used in ... cocktails</ExtraInfo>
         )}
       </Box>
       {isBarShelf && (
         <Checkbox
           checked={isInMyBar}
-          onChange={event => toggleCheckBox(event, id)}
+          onChange={event => {
+            toggleCheckBox(event, id);
+          }}
         />
       )}
-      {/* {(isMyBar || isBarShelf) && isInShoppingList && (
+      {(isMyBar || isBarShelf) && isInShoppingList && (
         <LowIcon type="ingredients" />
-      )} */}
-      {(isMyBar || isBarShelf) && true && <LowIcon type="ingredients" />}
+      )}
       {isShoppingList && (
-        <IconButton>
+        <IconButton
+          removeItem={() => {
+            console.log('deleting');
+            // deleteFromShoppingList(id);
+          }}
+        >
           <RxCross2 aria-label="delete" />
         </IconButton>
       )}

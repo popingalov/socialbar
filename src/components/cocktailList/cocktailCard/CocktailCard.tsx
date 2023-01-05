@@ -10,6 +10,7 @@ interface IProps {
   allAvailable?: boolean;
   imageUrl: string;
   ingredients: string[];
+  lacks: string[];
 }
 
 const CocktailCard: React.FC<IProps> = ({
@@ -18,6 +19,7 @@ const CocktailCard: React.FC<IProps> = ({
   allAvailable = false,
   imageUrl,
   ingredients,
+  lacks,
 }) => {
   return (
     <Box position="relative" display="flex" alignItems="center">
@@ -25,6 +27,7 @@ const CocktailCard: React.FC<IProps> = ({
       <Box marginRight="auto">
         <CocktailsName>{name}</CocktailsName>
         <Ingredients>{ingredients.join(', ')}</Ingredients>
+        {/* lacks */}
       </Box>
       {allAvailable && (
         <Box width="28px" height="28px" color="accent">

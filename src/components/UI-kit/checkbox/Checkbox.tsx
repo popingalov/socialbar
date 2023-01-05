@@ -11,15 +11,17 @@ interface IProps {
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const Checkbox: React.FC<IProps> = ({ checked, ...props }) => (
-  <CheckboxLabel onClick={e => e.stopPropagation()}>
-    <HiddenCheckbox checked={checked} {...props} />
-    <StyledCheckbox whileTap={{ scale: 0.9 }} checked={checked}>
-      <Icon viewBox="2 2 20 20">
-        <polyline points="20 6 9 17 4 12" />
-      </Icon>
-    </StyledCheckbox>
-  </CheckboxLabel>
-);
-
+const Checkbox: React.FC<IProps> = ({ checked, ...props }) => {
+  // console.log('checked', checked);
+  return (
+    <CheckboxLabel onClick={e => e.stopPropagation()}>
+      <HiddenCheckbox checked={checked} {...props} />
+      <StyledCheckbox whileTap={{ scale: 0.9 }} checked={checked}>
+        <Icon viewBox="2 2 20 20">
+          <polyline points="20 6 9 17 4 12" />
+        </Icon>
+      </StyledCheckbox>
+    </CheckboxLabel>
+  );
+};
 export default Checkbox;

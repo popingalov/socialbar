@@ -9,4 +9,5 @@ export interface IIngredient {
   cocktails: ICocktail[];
   isDefault: boolean;
   availability: boolean;
+  shopping: boolean;
 }

@@ -17,7 +17,7 @@ import { AnimatePresence } from 'framer-motion';
 import { selectContextMenuStatus } from 'redux/modal/modalSelectors';
 import { useDispatch } from 'react-redux';
 import PopUp from 'components/modal/popUp';
-// import { useGetCocktailByIdQuery } from 'redux/api/cocktailApi';
+import ContextMenuCocktails from './contextMenu/ContextMenuCocktails';
 
 const CocktailList = () => {
   const cocktailFilter = useSelector(selectCocktailFilter);
@@ -25,6 +25,8 @@ const CocktailList = () => {
     useGetVisibleCocktails(cocktailFilter);
   const isMyCocktails = cocktailFilterStatus.myCocktails === cocktailFilter;
   const isAllCocktails = cocktailFilterStatus.allCocktails === cocktailFilter;
+  const isFavoriteCocktails =
+    cocktailFilterStatus.favoriteCocktails === cocktailFilter;
   // console.log('visibleCocktails', visibleCocktails);
 
   const [selectCoordinates, setSelectCoordinates] = useState<ICoordinates>({
@@ -33,24 +35,26 @@ const CocktailList = () => {
     right: null,
   });
   const [selectedCocktail, setSelectedCocktail] = useState<{
-    name: string | null;
-    id: string | null;
-  }>({ name: null, id: null });
+    name: string;
+    id: string;
+    isFavorite: boolean;
+  }>({ name: '', id: '', isFavorite: false });
 
   const dispatch = useDispatch();
   const contextMenuIsOpen = useSelector(selectContextMenuStatus);
 
   const longPressHandle = useLongPress((event: any) => {
-    console.log('event', event);
-    const name = event.target.closest('li').getAttribute('name');
+    // console.log('event', event);
+    const data = event.target.closest('li').getAttribute('name');
     const id = event.target.closest('li').getAttribute('id');
+    const { title, favorite } = JSON.parse(data);
 
     setSelectCoordinates({
       top: event.changedTouches[0].clientY,
       left: event.changedTouches[0].clientX,
       right: null,
     });
-    setSelectedCocktail({ name, id });
+    setSelectedCocktail({ name: title, id, isFavorite: favorite });
 
     dispatch(setContextMenuIsOpen(true));
     console.log('Long pressed!');
@@ -71,6 +75,7 @@ const CocktailList = () => {
               picture,
               iCan,
               favorite,
+              lacks,
             }) => {
               const ingredientNames = ingredients.map(
                 ingredient => ingredient.data.title,
@@ -81,7 +86,7 @@ const CocktailList = () => {
                   <ListItem
                     key={id}
                     id={id}
-                    name={title}
+                    name={JSON.stringify({ title, favorite })}
                     allIngredientsAreAvailable={iCan}
                     {...longPressHandle()}
                   >
@@ -93,6 +98,7 @@ const CocktailList = () => {
                         description={description}
                         imageUrl={picture}
                         ingredients={ingredientNames}
+                        lacks={lacks}
                       />
                     </Link>
                   </ListItem>
@@ -113,11 +119,13 @@ const CocktailList = () => {
       <AnimatePresence>
         {contextMenuIsOpen && (
           <PopUp key="popUp" coordinates={selectCoordinates} type="context">
-            <p>{selectedCocktail.name}</p>
-            <p>remove from bar</p>
-            <p>add to shopping list</p>
-            <p>Delete from application</p>
-            <p>Edit</p>
+            {}
+            <ContextMenuCocktails
+              name={selectedCocktail.name}
+              id={selectedCocktail.id}
+              isFavoritePage={isFavoriteCocktails}
+              isFavorite={selectedCocktail.isFavorite}
+            />
           </PopUp>
         )}
       </AnimatePresence>
