@@ -1,40 +1,61 @@
 import { useFetchCocktailsQuery } from 'redux/api/cocktailApi';
+import { useGetFavoritesQuery } from 'redux/api/favoriteApi';
 import { cocktailFilterStatus } from 'redux/filter/filterConstants';
-import { ICocktail } from 'types/cocktail';
 
 export const useGetVisibleCocktails = (filterStatus: string) => {
-  const { data: cocktails, isFetching } = useFetchCocktailsQuery();
-  // const { data: myCocktails, isFetching: myCocktailsFetching } = useFetchMyCocktails();
-  // const { data: favoriteCocktails, isFetching: favoriteCocktailsFetching } = useFetchFavoriteCocktails();
+  const { data: cocktails, isFetching: cocktailsFetching } =
+    useFetchCocktailsQuery();
+  const { data: favoriteCocktails, isFetching: favoriteCocktailsFetching } =
+    useGetFavoritesQuery();
+
+  // console.log('cocktails', cocktails);
+  // console.log('favoriteCocktails', favoriteCocktails);
 
   switch (filterStatus) {
     case cocktailFilterStatus.favoriteCocktails:
-      // return cocktails.filter(({ favorite }) => favorite);
-      const favoriteCocktails: ICocktail[] = [];
+      if (favoriteCocktails) {
+        return {
+          visibleCocktails: favoriteCocktails,
+          isFetching: favoriteCocktailsFetching,
+        };
+      }
       return {
-        visibleCocktails: favoriteCocktails,
-        isFetching,
+        visibleCocktails: [],
+        isFetching: favoriteCocktailsFetching,
       };
+
     case cocktailFilterStatus.myCocktails:
-      //TODO: add ...cocktails?.mine
-      if (!cocktails)
+      if (cocktails && cocktails.mine?.haveAll.length) {
         return {
-          visibleCocktails: [],
-          isFetching,
+          visibleCocktails: [
+            ...cocktails.haveAll,
+            ...cocktails.needMore,
+            ...cocktails.mine.haveAll,
+          ],
+          isFetching: cocktailsFetching,
         };
+      }
+      if (cocktails) {
+        return {
+          visibleCocktails: [...cocktails.haveAll, ...cocktails.needMore],
+          isFetching: cocktailsFetching,
+        };
+      }
       return {
-        visibleCocktails: [...cocktails.haveAll, ...cocktails.needMore],
-        isFetching,
+        visibleCocktails: [],
+        isFetching: cocktailsFetching,
       };
+
     default:
-      if (!cocktails)
+      if (cocktails) {
         return {
-          visibleCocktails: [],
-          isFetching,
+          visibleCocktails: [...cocktails.all],
+          isFetching: cocktailsFetching,
         };
+      }
       return {
-        visibleCocktails: [...cocktails.all],
-        isFetching,
+        visibleCocktails: [],
+        isFetching: cocktailsFetching,
       };
   }
 };

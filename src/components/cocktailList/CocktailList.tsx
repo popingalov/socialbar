@@ -9,51 +9,106 @@ import CocktailBottomMessage from './cocktailBottomMessage';
 import Loader from 'components/loader';
 import { Link } from 'react-router-dom';
 import { useGetVisibleCocktails } from 'hooks/useGetVisibleCocktails';
+import { useLongPress } from 'use-long-press';
+import { useState } from 'react';
+
+import { setContextMenuIsOpen } from 'redux/modal/modalSlice';
+import { AnimatePresence } from 'framer-motion';
+import { selectContextMenuStatus } from 'redux/modal/modalSelectors';
+import { useDispatch } from 'react-redux';
+import PopUp from 'components/modal/popUp';
+import ContextMenuCocktails from './contextMenu/ContextMenuCocktails';
 
 const CocktailList = () => {
-  // const { data: cocktails, isFetching } = useFetchCocktailsQuery();
   const cocktailFilter = useSelector(selectCocktailFilter);
-  // const visibleCocktails = getVisibleCocktails(cocktails || [], cocktailFilter);
   const { visibleCocktails, isFetching } =
     useGetVisibleCocktails(cocktailFilter);
   const isMyCocktails = cocktailFilterStatus.myCocktails === cocktailFilter;
   const isAllCocktails = cocktailFilterStatus.allCocktails === cocktailFilter;
+  const isFavoriteCocktails =
+    cocktailFilterStatus.favoriteCocktails === cocktailFilter;
+  // console.log('visibleCocktails', visibleCocktails);
+
+  const [selectCoordinates, setSelectCoordinates] = useState<ICoordinates>({
+    top: null,
+    left: null,
+    right: null,
+  });
+  const [selectedCocktail, setSelectedCocktail] = useState<{
+    name: string;
+    id: string;
+    isFavorite: boolean;
+  }>({ name: '', id: '', isFavorite: false });
+
+  const dispatch = useDispatch();
+  const contextMenuIsOpen = useSelector(selectContextMenuStatus);
+
+  const longPressHandle = useLongPress((event: any) => {
+    // console.log('event', event);
+    const data = event.target.closest('li').getAttribute('name');
+    const id = event.target.closest('li').getAttribute('id');
+    const { title, favorite } = JSON.parse(data);
+
+    setSelectCoordinates({
+      top: event.changedTouches[0].clientY,
+      left: event.changedTouches[0].clientX,
+      right: null,
+    });
+    setSelectedCocktail({ name: title, id, isFavorite: favorite });
+
+    dispatch(setContextMenuIsOpen(true));
+    console.log('Long pressed!');
+  });
 
   return (
     <>
       {isFetching && <Loader isLoading={isFetching} />}
 
-      {visibleCocktails && (
+      {visibleCocktails.length !== 0 && (
         <BarList>
           {visibleCocktails.map(
-            ({ title, description, ingredients, id, picture }) => {
+            ({
+              title,
+              description,
+              ingredients,
+              id,
+              picture,
+              iCan,
+              favorite,
+              lacks,
+            }) => {
               const ingredientNames = ingredients.map(
                 ingredient => ingredient.data.title,
               );
-              // const isAvailable: boolean = ingredients.every(
-              //   ({ available }) => available,
-              // );
-              const isAvailable: boolean = true;
+
               return (
-                <ListItem key={id} allIngredientsAreAvailable={isAvailable}>
-                  <Link to={`${id}`}>
-                    <CocktailCard
-                      // isFavorite={favorite}
-                      isFavorite={true}
-                      allIngredientsAreAvailable={isAvailable}
-                      name={title}
-                      description={description}
-                      imageUrl={picture}
-                      ingredients={ingredientNames}
-                    />
-                  </Link>
-                </ListItem>
+                <>
+                  <ListItem
+                    key={id}
+                    id={id}
+                    name={JSON.stringify({ title, favorite })}
+                    allIngredientsAreAvailable={iCan}
+                    {...longPressHandle()}
+                  >
+                    <Link to={`${id}`}>
+                      <CocktailCard
+                        isFavorite={favorite}
+                        allAvailable={iCan}
+                        name={title}
+                        description={description}
+                        imageUrl={picture}
+                        ingredients={ingredientNames}
+                        lacks={lacks}
+                      />
+                    </Link>
+                  </ListItem>
+                </>
               );
             },
           )}
         </BarList>
       )}
-      {(isMyCocktails || isAllCocktails) && visibleCocktails.length && (
+      {(isMyCocktails || isAllCocktails) && visibleCocktails.length !== 0 && (
         <FollowUpMessage>
           <CocktailBottomMessage
             isMyCocktails={isMyCocktails}
@@ -61,6 +116,19 @@ const CocktailList = () => {
           />
         </FollowUpMessage>
       )}
+      <AnimatePresence>
+        {contextMenuIsOpen && (
+          <PopUp key="popUp" coordinates={selectCoordinates} type="context">
+            {}
+            <ContextMenuCocktails
+              name={selectedCocktail.name}
+              id={selectedCocktail.id}
+              isFavoritePage={isFavoriteCocktails}
+              isFavorite={selectedCocktail.isFavorite}
+            />
+          </PopUp>
+        )}
+      </AnimatePresence>
     </>
   );
 };

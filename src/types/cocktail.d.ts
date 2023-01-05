@@ -12,6 +12,9 @@ export interface ICocktail {
   recipe: string;
   ingredients: IIngredientIn[];
   isDefault: boolean;
+  iCan: boolean;
+  favorite: boolean;
+  lacks: string[];
 }
 
 export interface IIngredientIn {

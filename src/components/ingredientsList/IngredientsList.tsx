@@ -5,25 +5,70 @@ import IngredientCard from 'components/ingredientsList/ingredientCard';
 import { ingredientFilterStatus } from 'redux/filter/filterConstants';
 import FollowUpMessage from 'components/UI-kit/followUpMessage';
 import IngredientBottomMessage from './ingredientBottomMessage';
-// import { getVisibleIngredients } from 'helpers/getVisibleIngredients';
 import Loader from 'components/loader';
-// import { useFetchIngredientsQuery } from 'redux/api/ingredientApi';
 import { Link } from 'react-router-dom';
 import { IIngredient } from 'types/ingredient';
 import { useGetVisibleIngredients } from 'hooks/useGetVisibleIngredients';
 
-const IngredientsList = () => {
-  // const { data: allIngredients, isFetching } = useFetchIngredientsQuery();
-  // const { data: myBar, isFetching } = useFetchMyBar();
-  // const { data: shoppingList, isFetching } = useFetchShoppingList();
+import { useLongPress } from 'use-long-press';
+import { useState } from 'react';
 
+import { setContextMenuIsOpen } from 'redux/modal/modalSlice';
+import { AnimatePresence } from 'framer-motion';
+import { selectContextMenuStatus } from 'redux/modal/modalSelectors';
+import { useDispatch } from 'react-redux';
+import PopUp from 'components/modal/popUp';
+import ContextMenuIngredients from './contextMenu/ContextMenuIngredients';
+import { ListItem } from './IngredientsList.styled';
+
+const IngredientsList = () => {
   const ingredientFilter = useSelector(selectIngredientFilter);
   const { visibleIngredients, isFetching } =
     useGetVisibleIngredients(ingredientFilter);
 
-  const isNotShoppingList = !(
-    ingredientFilterStatus.shoppingList === ingredientFilter
-  );
+  const isMyBar = ingredientFilterStatus.myBarShelf === ingredientFilter;
+  const isShoppingList =
+    ingredientFilterStatus.shoppingList === ingredientFilter;
+  // console.log('visibleIngredients', visibleIngredients);
+
+  const [selectCoordinates, setSelectCoordinates] = useState<ICoordinates>({
+    top: null,
+    left: null,
+    right: null,
+  });
+
+  const [selectedIngredient, setSelectedIngredient] = useState<{
+    name: string;
+    availability: boolean;
+    shopping: boolean;
+    id: string;
+  }>({ name: '', id: '', availability: false, shopping: false });
+
+  const dispatch = useDispatch();
+  const contextMenuIsOpen = useSelector(selectContextMenuStatus);
+
+  const longPressHandle = useLongPress((event: any) => {
+    // console.log('event', event);s
+    const data = event.target.closest('li').getAttribute('name');
+    const id = event.target.closest('li').getAttribute('id');
+
+    const { title, availability, shopping } = JSON.parse(data);
+
+    setSelectCoordinates({
+      top: event.changedTouches[0].clientY,
+      left: event.changedTouches[0].clientX,
+      right: null,
+    });
+    setSelectedIngredient({
+      name: title,
+      id,
+      availability,
+      shopping,
+    });
+
+    dispatch(setContextMenuIsOpen(true));
+    console.log('Long pressed!');
+  });
 
   return (
     <>
@@ -32,30 +77,51 @@ const IngredientsList = () => {
       {visibleIngredients && (
         <BarList>
           {visibleIngredients.map((ingredient: IIngredient) => {
-            const { title, id, picture } = ingredient;
+            const { title, id, picture, availability, shopping } = ingredient;
+            // console.log('availability', availability);
 
             return (
-              <li key={id}>
+              <ListItem
+                key={id}
+                id={id}
+                name={JSON.stringify({ title, availability, shopping })}
+                {...longPressHandle()}
+              >
                 <Link to={`${id}`}>
                   <IngredientCard
                     id={id}
                     name={title}
                     filter={ingredientFilter}
-                    // isInShoppingList={shop}
-                    // isInMyBar={available}
+                    isInShoppingList={shopping}
+                    isInMyBar={availability}
                     imageUrl={picture}
                   />
                 </Link>
-              </li>
+              </ListItem>
             );
           })}
         </BarList>
       )}
-      {visibleIngredients && isNotShoppingList && (
+      {visibleIngredients && !isShoppingList && (
         <FollowUpMessage>
           <IngredientBottomMessage />
         </FollowUpMessage>
       )}
+      <AnimatePresence>
+        {contextMenuIsOpen && (
+          <PopUp key="popUp" coordinates={selectCoordinates} type="context">
+            {}
+            <ContextMenuIngredients
+              isMyBar={isMyBar}
+              isShoppingList={isShoppingList}
+              isAvailable={selectedIngredient.availability}
+              isInShoppingList={selectedIngredient.shopping}
+              name={selectedIngredient.name}
+              id={selectedIngredient.id}
+            />
+          </PopUp>
+        )}
+      </AnimatePresence>
     </>
   );
 };

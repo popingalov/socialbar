@@ -6,18 +6,20 @@ import { CocktailsName, Ingredients } from './CocktailCard.styled';
 interface IProps {
   name: string;
   description: string;
-  isFavorite: boolean;
-  allIngredientsAreAvailable?: boolean;
+  isFavorite?: boolean;
+  allAvailable?: boolean;
   imageUrl: string;
   ingredients: string[];
+  lacks: string[];
 }
 
 const CocktailCard: React.FC<IProps> = ({
   isFavorite,
   name,
-  allIngredientsAreAvailable = false,
+  allAvailable = false,
   imageUrl,
   ingredients,
+  lacks,
 }) => {
   return (
     <Box position="relative" display="flex" alignItems="center">
@@ -25,8 +27,9 @@ const CocktailCard: React.FC<IProps> = ({
       <Box marginRight="auto">
         <CocktailsName>{name}</CocktailsName>
         <Ingredients>{ingredients.join(', ')}</Ingredients>
+        {/* lacks */}
       </Box>
-      {allIngredientsAreAvailable && (
+      {allAvailable && (
         <Box width="28px" height="28px" color="accent">
           <BiCheck size={28} />
         </Box>

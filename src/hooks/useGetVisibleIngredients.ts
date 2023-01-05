@@ -1,69 +1,54 @@
 import { useFetchIngredientsQuery } from 'redux/api/ingredientApi';
+import { useGetMyBarQuery } from 'redux/api/myBarApi';
+import { useGetShoppingListQuery } from 'redux/api/shoppingApi';
 import { ingredientFilterStatus } from 'redux/filter/filterConstants';
-import { IIngredient } from 'types/ingredient';
 
 export const useGetVisibleIngredients = (filterStatus: string) => {
-  const { data: allIngredients, isFetching } = useFetchIngredientsQuery();
-  // const { data: myBar, isFetching } = useFetchMyBar();
-  // const { data: shoppingList, isFetching } = useFetchShoppingList();
-
-  //   const [skip, setSkip] = React.useState(true);
-  //   const { data, error, isLoading, isUninitialized } = useGetPokemonByNameQuery(
-  //     name,
-  //     {skip,},
-  //   );
+  const { data: allIngredients, isFetching: allIngredientsFetching } =
+    useFetchIngredientsQuery();
+  const { data: myBar, isFetching: myBarFetching } = useGetMyBarQuery();
+  const { data: shoppingList, isFetching: shoppingListFetching } =
+    useGetShoppingListQuery();
+  // console.log('allIngredients', allIngredients);
+  // console.log('myBar', myBar);
+  // console.log('shoppingList', shoppingList);
 
   switch (filterStatus) {
     case ingredientFilterStatus.myBarShelf:
-      const myIngredients: IIngredient[] = [];
       // setSkip(prev => !prev);
-      return { visibleIngredients: myIngredients, isFetching };
+      if (myBar) {
+        return { visibleIngredients: myBar, isFetching: myBarFetching };
+      }
+      return {
+        visibleIngredients: [],
+        isFetching: myBarFetching,
+      };
+
     case ingredientFilterStatus.shoppingList:
-      const shoppingList: IIngredient[] = [];
-      return { visibleIngredients: shoppingList, isFetching };
+      if (shoppingList) {
+        return {
+          visibleIngredients: shoppingList,
+          isFetching: shoppingListFetching,
+        };
+      }
+      return {
+        visibleIngredients: [],
+        isFetching: shoppingListFetching,
+      };
+
     default:
-      return { visibleIngredients: allIngredients, isFetching };
+      if (allIngredients) {
+        return { visibleIngredients: allIngredients, allIngredientsFetching };
+      }
+      return {
+        visibleIngredients: [],
+        allIngredientsFetching,
+      };
   }
 };
 
-// import * as React from 'react';
-// import { useGetPokemonByNameQuery } from './services/pokemon';
-// import type { PokemonName } from './pokemon.data';
-
-// export const Pokemon = ({ name }: { name: PokemonName }) => {
 //   const [skip, setSkip] = React.useState(true);
 //   const { data, error, isLoading, isUninitialized } = useGetPokemonByNameQuery(
 //     name,
-//     {
-//       skip,
-//     },
+//     {skip,},
 //   );
-
-//   const SkipToggle = () => (
-//     <button onClick={() => setSkip(prev => !prev)}>
-//       Toggle Skip ({String(skip)})
-//     </button>
-//   );
-
-//   return (
-//     <>
-//       {error ? (
-//         <>Oh no, there was an error</>
-//       ) : isUninitialized ? (
-//         <div>
-//           {name} - Currently skipped - <SkipToggle />
-//         </div>
-//       ) : isLoading ? (
-//         <>loading...</>
-//       ) : data ? (
-//         <>
-//           <div>
-//             <h3>{data.species.name}</h3>
-//             <img src={data.sprites.front_shiny} alt={data.species.name} />
-//           </div>
-//           <SkipToggle />
-//         </>
-//       ) : null}
-//     </>
-//   );
-// };

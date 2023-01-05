@@ -39,4 +39,8 @@ export const myBarApi = createApi({
   }),
 });
 
-export const { useGetMyBarQuery } = myBarApi;
+export const {
+  useGetMyBarQuery,
+  useAddToBarMutation,
+  useDeleteFromBarMutation,
+} = myBarApi;
