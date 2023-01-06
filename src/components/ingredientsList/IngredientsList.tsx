@@ -77,14 +77,14 @@ const IngredientsList = () => {
       {visibleIngredients && (
         <BarList>
           {visibleIngredients.map((ingredient: IIngredient) => {
-            const { title, id, picture, availability, shopping } = ingredient;
+            const { title, id, picture, iHave, shopping } = ingredient;
             // console.log('availability', availability);
 
             return (
               <ListItem
                 key={id}
                 id={id}
-                name={JSON.stringify({ title, availability, shopping })}
+                name={JSON.stringify({ title, iHave, shopping })}
                 {...longPressHandle()}
               >
                 <Link to={`${id}`}>
@@ -93,7 +93,7 @@ const IngredientsList = () => {
                     name={title}
                     filter={ingredientFilter}
                     isInShoppingList={shopping}
-                    isInMyBar={availability}
+                    isInMyBar={iHave}
                     imageUrl={picture}
                   />
                 </Link>

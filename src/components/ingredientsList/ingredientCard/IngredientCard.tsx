@@ -40,16 +40,10 @@ const IngredientCard: React.FC<IProps> = ({
   const isBarShelf = filter === ingredientFilterStatus.manageBarShelf;
   const isShoppingList = filter === ingredientFilterStatus.shoppingList;
 
-  const toggleCheckBox = (
-    event: React.ChangeEvent<HTMLInputElement>,
-    id: string,
-  ) => {
-    console.log('id', id);
-    console.log('event', event.target.checked);
+  const toggleCheckBox = (isInMyBar: boolean, id: string) => {
+    console.log('isInMyBar', isInMyBar);
 
-    const isChecked = event.target.checked;
-
-    if (isChecked) {
+    if (isInMyBar) {
       console.log('deleteFromMyBar');
       deleteFromMyBar(id);
       return;
@@ -71,8 +65,8 @@ const IngredientCard: React.FC<IProps> = ({
       {isBarShelf && (
         <Checkbox
           checked={isInMyBar}
-          onChange={event => {
-            toggleCheckBox(event, id);
+          onChange={() => {
+            toggleCheckBox(isInMyBar, id);
           }}
         />
       )}

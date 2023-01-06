@@ -80,6 +80,7 @@ const CocktailList = () => {
               const ingredientNames = ingredients.map(
                 ingredient => ingredient.data.title,
               );
+              console.log('favorite', favorite);
 
               return (
                 <>
