@@ -41,8 +41,6 @@ const IngredientCard: React.FC<IProps> = ({
   const isShoppingList = filter === ingredientFilterStatus.shoppingList;
 
   const toggleCheckBox = (isInMyBar: boolean, id: string) => {
-    console.log('isInMyBar', isInMyBar);
-
     if (isInMyBar) {
       console.log('deleteFromMyBar');
       deleteFromMyBar(id);
@@ -54,7 +52,12 @@ const IngredientCard: React.FC<IProps> = ({
   };
 
   return (
-    <Box position="relative" display="flex" alignItems="center">
+    <Box
+      position="relative"
+      display="flex"
+      alignItems="center"
+      onClick={e => e.stopPropagation()}
+    >
       <img src={imageUrl} alt={name} width="32px" height="32px" />
       <Box marginRight="auto">
         <IngredientName>{name}</IngredientName>
@@ -75,8 +78,8 @@ const IngredientCard: React.FC<IProps> = ({
       )}
       {isShoppingList && (
         <IconButton
-          removeItem={() => {
-            console.log('deleting');
+          onClick={event => {
+            event.stopPropagation();
             deleteFromShoppingList(id);
           }}
         >

@@ -7,7 +7,7 @@ import FollowUpMessage from 'components/UI-kit/followUpMessage';
 import { cocktailFilterStatus } from 'redux/filter/filterConstants';
 import CocktailBottomMessage from './cocktailBottomMessage';
 import Loader from 'components/loader';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useGetVisibleCocktails } from 'hooks/useGetVisibleCocktails';
 import { useLongPress } from 'use-long-press';
 import { useState } from 'react';
@@ -42,9 +42,9 @@ const CocktailList = () => {
 
   const dispatch = useDispatch();
   const contextMenuIsOpen = useSelector(selectContextMenuStatus);
+  const navigate = useNavigate();
 
   const longPressHandle = useLongPress((event: any) => {
-    // console.log('event', event);
     const data = event.target.closest('li').getAttribute('name');
     const id = event.target.closest('li').getAttribute('id');
     const { title, favorite } = JSON.parse(data);
@@ -80,7 +80,6 @@ const CocktailList = () => {
               const ingredientNames = ingredients.map(
                 ingredient => ingredient.data.title,
               );
-              console.log('favorite', favorite);
 
               return (
                 <>
@@ -89,19 +88,20 @@ const CocktailList = () => {
                     id={id}
                     name={JSON.stringify({ title, favorite })}
                     allIngredientsAreAvailable={iCan}
+                    onClick={id => {
+                      navigate(`${id}`);
+                    }}
                     {...longPressHandle()}
                   >
-                    <Link to={`${id}`}>
-                      <CocktailCard
-                        isFavorite={favorite}
-                        allAvailable={iCan}
-                        name={title}
-                        description={description}
-                        imageUrl={picture}
-                        ingredients={ingredientNames}
-                        lacks={lacks}
-                      />
-                    </Link>
+                    <CocktailCard
+                      isFavorite={favorite}
+                      allAvailable={iCan}
+                      name={title}
+                      description={description}
+                      imageUrl={picture}
+                      ingredients={ingredientNames}
+                      lacks={lacks}
+                    />
                   </ListItem>
                 </>
               );
@@ -109,7 +109,7 @@ const CocktailList = () => {
           )}
         </BarList>
       )}
-      {(isMyCocktails || isAllCocktails) && visibleCocktails.length !== 0 && (
+      {!isFetching && (isMyCocktails || isAllCocktails) && (
         <FollowUpMessage>
           <CocktailBottomMessage
             isMyCocktails={isMyCocktails}

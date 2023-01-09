@@ -6,7 +6,8 @@ import { ingredientFilterStatus } from 'redux/filter/filterConstants';
 import FollowUpMessage from 'components/UI-kit/followUpMessage';
 import IngredientBottomMessage from './ingredientBottomMessage';
 import Loader from 'components/loader';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+
 import { IIngredient } from 'types/ingredient';
 import { useGetVisibleIngredients } from 'hooks/useGetVisibleIngredients';
 
@@ -39,20 +40,20 @@ const IngredientsList = () => {
 
   const [selectedIngredient, setSelectedIngredient] = useState<{
     name: string;
-    availability: boolean;
+    iHave: boolean;
     shopping: boolean;
     id: string;
-  }>({ name: '', id: '', availability: false, shopping: false });
+  }>({ name: '', id: '', iHave: false, shopping: false });
 
   const dispatch = useDispatch();
   const contextMenuIsOpen = useSelector(selectContextMenuStatus);
+  const navigate = useNavigate();
 
   const longPressHandle = useLongPress((event: any) => {
-    // console.log('event', event);s
     const data = event.target.closest('li').getAttribute('name');
     const id = event.target.closest('li').getAttribute('id');
 
-    const { title, availability, shopping } = JSON.parse(data);
+    const { title, iHave, shopping } = JSON.parse(data);
 
     setSelectCoordinates({
       top: event.changedTouches[0].clientY,
@@ -62,7 +63,7 @@ const IngredientsList = () => {
     setSelectedIngredient({
       name: title,
       id,
-      availability,
+      iHave,
       shopping,
     });
 
@@ -78,7 +79,7 @@ const IngredientsList = () => {
         <BarList>
           {visibleIngredients.map((ingredient: IIngredient) => {
             const { title, id, picture, iHave, shopping } = ingredient;
-            // console.log('availability', availability);
+            const isInMyBar = iHave || isMyBar;
 
             return (
               <ListItem
@@ -86,23 +87,25 @@ const IngredientsList = () => {
                 id={id}
                 name={JSON.stringify({ title, iHave, shopping })}
                 {...longPressHandle()}
+                isInMyBar={isInMyBar}
+                onClick={id => {
+                  navigate(`${id}`);
+                }}
               >
-                <Link to={`${id}`}>
-                  <IngredientCard
-                    id={id}
-                    name={title}
-                    filter={ingredientFilter}
-                    isInShoppingList={shopping}
-                    isInMyBar={iHave}
-                    imageUrl={picture}
-                  />
-                </Link>
+                <IngredientCard
+                  id={id}
+                  name={title}
+                  filter={ingredientFilter}
+                  isInShoppingList={shopping}
+                  isInMyBar={iHave}
+                  imageUrl={picture}
+                />
               </ListItem>
             );
           })}
         </BarList>
       )}
-      {visibleIngredients && !isShoppingList && (
+      {!isFetching && !isShoppingList && (
         <FollowUpMessage>
           <IngredientBottomMessage />
         </FollowUpMessage>
@@ -114,7 +117,7 @@ const IngredientsList = () => {
             <ContextMenuIngredients
               isMyBar={isMyBar}
               isShoppingList={isShoppingList}
-              isAvailable={selectedIngredient.availability}
+              isAvailable={selectedIngredient.iHave}
               isInShoppingList={selectedIngredient.shopping}
               name={selectedIngredient.name}
               id={selectedIngredient.id}

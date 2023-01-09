@@ -38,11 +38,14 @@ export const useGetVisibleIngredients = (filterStatus: string) => {
 
     default:
       if (allIngredients) {
-        return { visibleIngredients: allIngredients, allIngredientsFetching };
+        return {
+          visibleIngredients: allIngredients,
+          isFetching: allIngredientsFetching,
+        };
       }
       return {
         visibleIngredients: [],
-        allIngredientsFetching,
+        isFetching: allIngredientsFetching,
       };
   }
 };
