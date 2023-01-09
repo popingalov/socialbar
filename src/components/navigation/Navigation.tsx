@@ -12,7 +12,13 @@ import { paths } from 'constants/paths';
 import SearchBar from 'components/navigation/searchBar';
 import Select from 'components/UI-kit/select';
 import { setExtraMenuIsOpen, setMobileIsOpen } from 'redux/modal/modalSlice';
-import { cocktailTypes, ingredientTypes } from 'constants/categories';
+import {
+  cocktailCategoriesSelect,
+  cocktailTypes,
+  ingredientCategoriesSelect,
+  ingredientTypes,
+} from 'constants/categories';
+import { useGetCategoriesQuery } from 'redux/api/manualApi';
 
 const Navigation = () => {
   const navigate = useNavigate();
@@ -30,7 +36,17 @@ const Navigation = () => {
   const isMainRouteFilter = isMainRoute && !isSearch;
   const isCardRouteSearching = isSearch && !isMainRoute;
   const isIngredients = location.pathname === paths.ingredients;
-  const filter = isIngredients ? ingredientTypes : cocktailTypes;
+
+  // const filter = isIngredients ? ingredientTypes : cocktailTypes;
+  // const filter = isIngredients
+  //   ? ingredientCategoriesSelect
+  //   : cocktailCategoriesSelect;
+  const { data } = useGetCategoriesQuery();
+  console.log('data', data?.ingredients);
+
+  const ingCategories = data?.ingredients.map(({ title }) => title);
+  const cocktCategories = data?.cocktails.map(({ title }) => title);
+  const filter = isIngredients ? ingCategories : cocktCategories;
 
   const handleSideMenu = () => {
     dispatch(setMobileIsOpen(true));
@@ -47,6 +63,10 @@ const Navigation = () => {
     dispatch(setExtraMenuIsOpen(true));
   };
 
+  const handleFilter = (value: string) => {
+    console.log('filter value', value);
+  };
+
   return (
     <>
       <Wrapper isExtraRoute={isExtraRoute}>
@@ -55,11 +75,7 @@ const Navigation = () => {
             <ClearButton aria-label="mobile-menu" onClick={handleSideMenu}>
               <HeaderIcon type={headerIconTypes.burgerMenu} />
             </ClearButton>
-            <Select
-              label="No Filter"
-              values={filter}
-              onChange={(value: string) => console.log(value)}
-            />
+            <Select label="No Filter" values={filter} onChange={handleFilter} />
           </>
         )}
         {(isMainRouteSearching || !isMainRoute) && (
