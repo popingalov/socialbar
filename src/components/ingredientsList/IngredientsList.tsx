@@ -30,7 +30,7 @@ const IngredientsList = () => {
   const isMyBar = ingredientFilterStatus.myBarShelf === ingredientFilter;
   const isShoppingList =
     ingredientFilterStatus.shoppingList === ingredientFilter;
-  // console.log('visibleIngredients', visibleIngredients);
+  console.log('visibleIngredients', visibleIngredients);
 
   const [selectCoordinates, setSelectCoordinates] = useState<ICoordinates>({
     top: null,
