@@ -5,6 +5,8 @@ import {
   useAddFavoriteMutation,
   useDeleteFavoriteMutation,
 } from 'redux/api/favoriteApi';
+import { useDispatch } from 'react-redux';
+import { setContextMenuIsOpen } from 'redux/modal/modalSlice';
 
 interface IProps {
   name: string;
@@ -20,23 +22,28 @@ const ContextMenuCocktails: React.FC<IProps> = ({
 }) => {
   const [addFavorite] = useAddFavoriteMutation();
   const [deleteFavorite] = useDeleteFavoriteMutation();
+  const dispatch = useDispatch();
 
   const handleFavoriteClick = (id: string, toAdd: boolean) => {
     if (toAdd) {
       console.log('addFavorite', id);
       addFavorite(id);
+      dispatch(setContextMenuIsOpen(false));
       return;
     }
     console.log('deleteFavorite', id);
     deleteFavorite(id);
+    dispatch(setContextMenuIsOpen(false));
   };
 
   const handleCompleteDelete = (id: string) => {
     console.log('complete delete from app', id);
+    dispatch(setContextMenuIsOpen(false));
   };
 
   const handleCocktailEdit = (id: string) => {
     console.log('edit ingredient', id);
+    dispatch(setContextMenuIsOpen(false));
   };
 
   return (
