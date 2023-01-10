@@ -95,37 +95,38 @@ const Navigation = () => {
 
   return (
     <>
-      <Wrapper isExtraRoute={isExtraRoute}>
-        {isMainRouteFilter && filter && (
-          <>
-            <ClearButton aria-label="mobile-menu" onClick={handleSideMenu}>
-              <HeaderIcon type={headerIconTypes.burgerMenu} />
+      {filter && (
+        <Wrapper isExtraRoute={isExtraRoute}>
+          {isMainRouteFilter && filter && (
+            <>
+              <ClearButton aria-label="mobile-menu" onClick={handleSideMenu}>
+                <HeaderIcon type={headerIconTypes.burgerMenu} />
+              </ClearButton>
+              <Select
+                value={selectValue}
+                options={filter}
+                onChange={handleFilter}
+              />
+            </>
+          )}
+          {(isMainRouteSearching || !isMainRoute) && (
+            <ClearButton aria-label="back-button" onClick={handleBackButton}>
+              <HeaderIcon type={headerIconTypes.backArrow} />
             </ClearButton>
-            <Select
-              value={selectValue}
-              options={filter}
-              onChange={handleFilter}
+          )}
+          {(isMainRouteSearching || isCardRouteSearching) && <SearchBar />}
+
+          {isExtraRoute ? (
+            <PageName>{getHeaderName(location.pathname)}</PageName>
+          ) : (
+            <ExtraIcons
+              handleSearch={handleSearchButton}
+              handleAppMenu={handleAppMenu}
             />
-          </>
-        )}
-        {(isMainRouteSearching || !isMainRoute) && (
-          <ClearButton aria-label="back-button" onClick={handleBackButton}>
-            <HeaderIcon type={headerIconTypes.backArrow} />
-          </ClearButton>
-        )}
-        {(isMainRouteSearching || isCardRouteSearching) && <SearchBar />}
-
-        {isExtraRoute ? (
-          <PageName>{getHeaderName(location.pathname)}</PageName>
-        ) : (
-          <ExtraIcons
-            handleSearch={handleSearchButton}
-            handleAppMenu={handleAppMenu}
-          />
-        )}
-      </Wrapper>
-
-      {isMainRoute && (
+          )}
+        </Wrapper>
+      )}
+      {isMainRoute && filter && (
         <NavigationListStyled role="tablist">
           <PagesNavigation />
         </NavigationListStyled>
