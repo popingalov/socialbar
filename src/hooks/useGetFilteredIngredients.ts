@@ -14,8 +14,7 @@ export const useGetFilteredIngredients = (ingredients: IIngredient[]) => {
     return ingredients;
   }
 
-  const filteredIngredients = ingredients.filter(
+  return ingredients.filter(
     ({ category }) => category === ingredientFilterStatus,
   );
-  return filteredIngredients;
 };

@@ -23,6 +23,7 @@ import { useGetFilteredIngredients } from 'hooks/useGetFilteredIngredients';
 const IngredientsList = () => {
   const ingredientFilter = useSelector(selectIngredientFilter);
   const contextMenuIsOpen = useSelector(selectContextMenuStatus);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -34,7 +35,7 @@ const IngredientsList = () => {
   // console.log('visibleIngredients', visibleIngredients);
 
   const filteredIngredients = useGetFilteredIngredients(visibleIngredients);
-  console.log('filteredIngredients', filteredIngredients);
+  // console.log('filteredIngredients', filteredIngredients);
 
   const [selectCoordinates, setSelectCoordinates] = useState<ICoordinates>({
     top: null,

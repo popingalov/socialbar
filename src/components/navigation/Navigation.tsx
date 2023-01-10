@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router';
 import { useDispatch } from 'react-redux';
 import ClearButton from 'components/UI-kit/buttons/clearButton';
@@ -14,14 +14,28 @@ import Select from 'components/UI-kit/select';
 import { setExtraMenuIsOpen, setMobileIsOpen } from 'redux/modal/modalSlice';
 import { useGetCategoriesQuery } from 'redux/api/manualApi';
 import { initialFilterStatus } from 'redux/categoriesFilter/categoriesConstants';
-import { setIngredientCategory } from 'redux/categoriesFilter/categoriesFilterSlice';
+import {
+  setCocktailCategory,
+  setIngredientCategory,
+} from 'redux/categoriesFilter/categoriesFilterSlice';
+import { useSelector } from 'react-redux';
+import {
+  selectCocktailFilter,
+  selectIngredientFilter,
+} from 'redux/filter/filterSelectors';
 
 const Navigation = () => {
+  const ingredientFilter = useSelector(selectIngredientFilter);
+  const cocktailFilter = useSelector(selectCocktailFilter);
+
   const navigate = useNavigate();
   const location = useLocation();
-  const [isSearch, setSearch] = useState(false);
   const dispatch = useDispatch();
   const { data } = useGetCategoriesQuery();
+  const [isSearch, setSearch] = useState(false);
+  const [currentPath, setCurrentPath] = useState('');
+  const [selectValue, setSelectValue] = useState(initialFilterStatus);
+
   const isMainRoute =
     location.pathname === paths.ingredients ||
     location.pathname === paths.cocktails;
@@ -38,8 +52,23 @@ const Navigation = () => {
   ingredientCategories?.unshift(initialFilterStatus);
   const cocktailCategories = data?.cocktails.map(({ title }) => title);
   cocktailCategories?.unshift(initialFilterStatus);
-
   const filter = isIngredients ? ingredientCategories : cocktailCategories;
+
+  useEffect(() => {
+    if (isIngredients && currentPath !== ingredientFilter) {
+      dispatch(setIngredientCategory(initialFilterStatus));
+      setSelectValue(initialFilterStatus);
+    }
+
+    if (!isIngredients && currentPath !== cocktailFilter) {
+      dispatch(setCocktailCategory(initialFilterStatus));
+      setSelectValue(initialFilterStatus);
+    }
+
+    isIngredients
+      ? setCurrentPath(ingredientFilter)
+      : setCurrentPath(cocktailFilter);
+  }, [ingredientFilter, cocktailFilter, isIngredients, currentPath, dispatch]);
 
   const handleSideMenu = () => {
     dispatch(setMobileIsOpen(true));
@@ -57,8 +86,11 @@ const Navigation = () => {
   };
 
   const handleFilter = (value: string) => {
-    // console.log('filter value', value);
-    dispatch(setIngredientCategory(value));
+    isIngredients
+      ? dispatch(setIngredientCategory(value))
+      : dispatch(setCocktailCategory(value));
+
+    setSelectValue(value);
   };
 
   return (
@@ -70,8 +102,8 @@ const Navigation = () => {
               <HeaderIcon type={headerIconTypes.burgerMenu} />
             </ClearButton>
             <Select
-              label={initialFilterStatus}
-              values={filter}
+              value={selectValue}
+              options={filter}
               onChange={handleFilter}
             />
           </>
