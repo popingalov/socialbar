@@ -57,7 +57,7 @@ const Navigation = () => {
   };
 
   const handleFilter = (value: string) => {
-    console.log('filter value', value);
+    // console.log('filter value', value);
     dispatch(setIngredientCategory(value));
   };
 
