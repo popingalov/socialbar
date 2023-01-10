@@ -13,3 +13,12 @@ export interface ICategory {
   ingredients: IItem[];
   cocktails: IItem[];
 }
+
+interface ICategoryItem {
+  [x: string]: string;
+}
+
+export interface ICategoriesTypes {
+  ingredients: ICategoryItem[];
+  cocktails: ICategoryItem[];
+}

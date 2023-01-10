@@ -1,16 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import {
-  cocktailCategories,
-  ingredientCategories,
-} from './categoriesConstants';
+import { initialFilterStatus } from './categoriesConstants';
 
 interface ICategoriesFilterStatus {
   cocktailCategoriesStatus: string;
   ingredientCategoriesStatus: string;
 }
 const categoriesInitialState: ICategoriesFilterStatus = {
-  cocktailCategoriesStatus: cocktailCategories.noFilter,
-  ingredientCategoriesStatus: ingredientCategories.noFilter,
+  cocktailCategoriesStatus: initialFilterStatus,
+  ingredientCategoriesStatus: initialFilterStatus,
 };
 
 const categoriesSlice = createSlice({

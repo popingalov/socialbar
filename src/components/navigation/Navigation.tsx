@@ -12,19 +12,16 @@ import { paths } from 'constants/paths';
 import SearchBar from 'components/navigation/searchBar';
 import Select from 'components/UI-kit/select';
 import { setExtraMenuIsOpen, setMobileIsOpen } from 'redux/modal/modalSlice';
-import {
-  cocktailCategoriesSelect,
-  cocktailTypes,
-  ingredientCategoriesSelect,
-  ingredientTypes,
-} from 'constants/categories';
 import { useGetCategoriesQuery } from 'redux/api/manualApi';
+import { initialFilterStatus } from 'redux/categoriesFilter/categoriesConstants';
+import { setIngredientCategory } from 'redux/categoriesFilter/categoriesFilterSlice';
 
 const Navigation = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [isSearch, setSearch] = useState(false);
   const dispatch = useDispatch();
+  const { data } = useGetCategoriesQuery();
   const isMainRoute =
     location.pathname === paths.ingredients ||
     location.pathname === paths.cocktails;
@@ -37,16 +34,12 @@ const Navigation = () => {
   const isCardRouteSearching = isSearch && !isMainRoute;
   const isIngredients = location.pathname === paths.ingredients;
 
-  // const filter = isIngredients ? ingredientTypes : cocktailTypes;
-  // const filter = isIngredients
-  //   ? ingredientCategoriesSelect
-  //   : cocktailCategoriesSelect;
-  const { data } = useGetCategoriesQuery();
-  console.log('data', data?.ingredients);
+  const ingredientCategories = data?.ingredients.map(({ title }) => title);
+  ingredientCategories?.unshift(initialFilterStatus);
+  const cocktailCategories = data?.cocktails.map(({ title }) => title);
+  cocktailCategories?.unshift(initialFilterStatus);
 
-  const ingCategories = data?.ingredients.map(({ title }) => title);
-  const cocktCategories = data?.cocktails.map(({ title }) => title);
-  const filter = isIngredients ? ingCategories : cocktCategories;
+  const filter = isIngredients ? ingredientCategories : cocktailCategories;
 
   const handleSideMenu = () => {
     dispatch(setMobileIsOpen(true));
@@ -65,17 +58,22 @@ const Navigation = () => {
 
   const handleFilter = (value: string) => {
     console.log('filter value', value);
+    dispatch(setIngredientCategory(value));
   };
 
   return (
     <>
       <Wrapper isExtraRoute={isExtraRoute}>
-        {isMainRouteFilter && (
+        {isMainRouteFilter && filter && (
           <>
             <ClearButton aria-label="mobile-menu" onClick={handleSideMenu}>
               <HeaderIcon type={headerIconTypes.burgerMenu} />
             </ClearButton>
-            <Select label="No Filter" values={filter} onChange={handleFilter} />
+            <Select
+              label={initialFilterStatus}
+              values={filter}
+              onChange={handleFilter}
+            />
           </>
         )}
         {(isMainRouteSearching || !isMainRoute) && (

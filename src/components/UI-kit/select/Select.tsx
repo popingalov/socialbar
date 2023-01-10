@@ -15,7 +15,7 @@ interface IProps {
   onChange?: any;
 }
 
-const Select: React.FC<IProps> = ({ label, values, onChange }) => {
+const Select: React.FC<IProps> = ({ label, onChange, values }) => {
   const [currentValue, setCurrentValue] = useState(label);
   const [selectCoordinates, setSelectCoordinates] = useState<ICoordinates>({
     top: null,
@@ -47,7 +47,6 @@ const Select: React.FC<IProps> = ({ label, values, onChange }) => {
   const handleChange = (value: string) => {
     setCurrentValue(value);
 
-    // call method, if it exists
     if (onChange) onChange(value);
 
     dispatch(setPopUpIsOpen(false));
