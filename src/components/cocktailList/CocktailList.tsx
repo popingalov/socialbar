@@ -18,9 +18,14 @@ import { selectContextMenuStatus } from 'redux/modal/modalSelectors';
 import { useDispatch } from 'react-redux';
 import PopUp from 'components/modal/popUp';
 import ContextMenuCocktails from './contextMenu/ContextMenuCocktails';
+import { useGetFilteredCocktails } from 'hooks/useGetFilteredCocktails';
 
 const CocktailList = () => {
   const cocktailFilter = useSelector(selectCocktailFilter);
+  const contextMenuIsOpen = useSelector(selectContextMenuStatus);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const { visibleCocktails, isFetching } =
     useGetVisibleCocktails(cocktailFilter);
   const isMyCocktails = cocktailFilterStatus.myCocktails === cocktailFilter;
@@ -28,6 +33,9 @@ const CocktailList = () => {
   const isFavoriteCocktails =
     cocktailFilterStatus.favoriteCocktails === cocktailFilter;
   // console.log('visibleCocktails', visibleCocktails);
+
+  const filteredCocktails = useGetFilteredCocktails(visibleCocktails);
+  // console.log('filteredCocktails', filteredCocktails);
 
   const [selectCoordinates, setSelectCoordinates] = useState<ICoordinates>({
     top: null,
@@ -39,10 +47,6 @@ const CocktailList = () => {
     id: string;
     isFavorite: boolean;
   }>({ name: '', id: '', isFavorite: false });
-
-  const dispatch = useDispatch();
-  const contextMenuIsOpen = useSelector(selectContextMenuStatus);
-  const navigate = useNavigate();
 
   const longPressHandle = useLongPress((event: any) => {
     const data = event.target.closest('li').getAttribute('name');
@@ -64,9 +68,9 @@ const CocktailList = () => {
     <>
       {isFetching && <Loader isLoading={isFetching} />}
 
-      {visibleCocktails.length !== 0 && (
+      {filteredCocktails.length !== 0 && (
         <BarList>
-          {visibleCocktails.map(
+          {filteredCocktails.map(
             ({
               title,
               description,

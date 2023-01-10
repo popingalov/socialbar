@@ -24,6 +24,7 @@ import {
   REGISTER,
 } from 'redux-persist';
 import { persistedSettingsReducer } from './settings/settingsSlice';
+import { categoriesReducer } from './categoriesFilter/categoriesFilterSlice';
 
 export const store = configureStore({
   reducer: {
@@ -38,6 +39,7 @@ export const store = configureStore({
     filters: filterReducer,
     modalStatus: modalReducer,
     settings: persistedSettingsReducer,
+    categories: categoriesReducer,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({

@@ -7,13 +7,10 @@ import FollowUpMessage from 'components/UI-kit/followUpMessage';
 import IngredientBottomMessage from './ingredientBottomMessage';
 import Loader from 'components/loader';
 import { useNavigate } from 'react-router-dom';
-
 import { IIngredient } from 'types/ingredient';
 import { useGetVisibleIngredients } from 'hooks/useGetVisibleIngredients';
-
 import { useLongPress } from 'use-long-press';
 import { useState } from 'react';
-
 import { setContextMenuIsOpen } from 'redux/modal/modalSlice';
 import { AnimatePresence } from 'framer-motion';
 import { selectContextMenuStatus } from 'redux/modal/modalSelectors';
@@ -21,16 +18,24 @@ import { useDispatch } from 'react-redux';
 import PopUp from 'components/modal/popUp';
 import ContextMenuIngredients from './contextMenu/ContextMenuIngredients';
 import { ListItem } from './IngredientsList.styled';
+import { useGetFilteredIngredients } from 'hooks/useGetFilteredIngredients';
 
 const IngredientsList = () => {
   const ingredientFilter = useSelector(selectIngredientFilter);
+  const contextMenuIsOpen = useSelector(selectContextMenuStatus);
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const { visibleIngredients, isFetching } =
     useGetVisibleIngredients(ingredientFilter);
-
   const isMyBar = ingredientFilterStatus.myBarShelf === ingredientFilter;
   const isShoppingList =
     ingredientFilterStatus.shoppingList === ingredientFilter;
-  console.log('visibleIngredients', visibleIngredients);
+  // console.log('visibleIngredients', visibleIngredients);
+
+  const filteredIngredients = useGetFilteredIngredients(visibleIngredients);
+  // console.log('filteredIngredients', filteredIngredients);
 
   const [selectCoordinates, setSelectCoordinates] = useState<ICoordinates>({
     top: null,
@@ -44,10 +49,6 @@ const IngredientsList = () => {
     shopping: boolean;
     id: string;
   }>({ name: '', id: '', iHave: false, shopping: false });
-
-  const dispatch = useDispatch();
-  const contextMenuIsOpen = useSelector(selectContextMenuStatus);
-  const navigate = useNavigate();
 
   const longPressHandle = useLongPress((event: any) => {
     const data = event.target.closest('li').getAttribute('name');
@@ -86,11 +87,11 @@ const IngredientsList = () => {
                 key={id}
                 id={id}
                 name={JSON.stringify({ title, iHave, shopping })}
-                {...longPressHandle()}
                 isInMyBar={isInMyBar}
                 onClick={id => {
                   navigate(`${id}`);
                 }}
+                {...longPressHandle()}
               >
                 <IngredientCard
                   id={id}
