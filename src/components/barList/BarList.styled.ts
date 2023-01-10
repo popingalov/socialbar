@@ -8,9 +8,6 @@ export const BarListStyled = styled(motion.ul)`
 
   li {
     border-bottom: 1px solid ${p => p.theme.colors.borderBottom};
-  }
-
-  a {
     display: block;
     padding-top: ${p => p.theme.space[2]}px;
     padding-bottom: ${p => p.theme.space[2]}px;

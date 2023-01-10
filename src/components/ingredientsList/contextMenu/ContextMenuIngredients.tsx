@@ -9,6 +9,8 @@ import {
   useAddToShoppingMutation,
   useDeleteFromShoppingMutation,
 } from 'redux/api/shoppingApi';
+import { useDispatch } from 'react-redux';
+import { setContextMenuIsOpen } from 'redux/modal/modalSlice';
 
 interface IProps {
   name: string;
@@ -28,6 +30,7 @@ const ContextMenuIngredients: React.FC<IProps> = ({
 }) => {
   // console.log('first', name, id, isAvailable, isInShoppingList);
 
+  const dispatch = useDispatch();
   const [addMyBar] = useAddToBarMutation();
   const [deleteMyBar] = useDeleteFromBarMutation();
   const [addShopping] = useAddToShoppingMutation();
@@ -37,28 +40,34 @@ const ContextMenuIngredients: React.FC<IProps> = ({
     if (toAdd) {
       console.log('addToMyBar', id);
       addMyBar(id);
+      dispatch(setContextMenuIsOpen(false));
       return;
     }
     console.log('deleteFromMyBar', id);
     deleteMyBar(id);
+    dispatch(setContextMenuIsOpen(false));
   };
 
   const handleShoppingClick = (id: string, toAdd: boolean) => {
     if (toAdd) {
       console.log('addToShopping', id);
       addShopping(id);
+      dispatch(setContextMenuIsOpen(false));
       return;
     }
     console.log('deleteFromShopping', id);
     deleteShopping(id);
+    dispatch(setContextMenuIsOpen(false));
   };
 
   const handleCompleteDelete = (id: string) => {
     console.log('complete delete from app', id);
+    dispatch(setContextMenuIsOpen(false));
   };
 
   const handleIngredientEdit = (id: string) => {
     console.log('edit ingredient', id);
+    dispatch(setContextMenuIsOpen(false));
   };
 
   return (

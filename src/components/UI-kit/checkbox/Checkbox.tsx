@@ -12,7 +12,6 @@ interface IProps {
 }
 
 const Checkbox: React.FC<IProps> = ({ checked, ...props }) => {
-  // console.log('checked', checked);
   return (
     <CheckboxLabel onClick={e => e.stopPropagation()}>
       <HiddenCheckbox checked={checked} {...props} />
