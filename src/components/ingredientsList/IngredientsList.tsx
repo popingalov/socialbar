@@ -76,9 +76,9 @@ const IngredientsList = () => {
     <>
       {isFetching && <Loader isLoading={isFetching} />}
 
-      {visibleIngredients && (
+      {filteredIngredients && (
         <BarList>
-          {visibleIngredients.map((ingredient: IIngredient) => {
+          {filteredIngredients.map((ingredient: IIngredient) => {
             const { title, id, picture, iHave, shopping } = ingredient;
             const isInMyBar = iHave || isMyBar;
 
