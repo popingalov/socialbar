@@ -55,7 +55,7 @@ const Navigation = () => {
       setSearch(false);
     }
 
-    if (isCocktails && currentPath !== cocktailFilter) {
+    if (isCocktails && currentPath !== cocktailFilter && isSearch) {
       setSearch(false);
     }
 
