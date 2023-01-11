@@ -12,8 +12,6 @@ import { paths } from 'constants/paths';
 import SearchBar from 'components/navigation/searchBar';
 import Select from 'components/UI-kit/select';
 import { setExtraMenuIsOpen, setMobileIsOpen } from 'redux/modal/modalSlice';
-import { useGetCategoriesQuery } from 'redux/api/manualApi';
-import { initialFilterStatus } from 'redux/categoriesFilter/categoriesConstants';
 import {
   setCocktailCategory,
   setIngredientCategory,
@@ -23,6 +21,8 @@ import {
   selectCocktailFilter,
   selectIngredientFilter,
 } from 'redux/filter/filterSelectors';
+import { useGetPageCategories } from 'hooks/useGetPageCategories';
+import { useGetNavSelectLabel } from 'hooks/useGetNavSelectLabel';
 
 const Navigation = () => {
   const ingredientFilter = useSelector(selectIngredientFilter);
@@ -31,10 +31,8 @@ const Navigation = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
-  const { data } = useGetCategoriesQuery();
   const [isSearch, setSearch] = useState(false);
   const [currentPath, setCurrentPath] = useState('');
-  const [selectValue, setSelectValue] = useState(initialFilterStatus);
 
   const isMainRoute =
     location.pathname === paths.ingredients ||
@@ -47,28 +45,32 @@ const Navigation = () => {
   const isMainRouteFilter = isMainRoute && !isSearch;
   const isCardRouteSearching = isSearch && !isMainRoute;
   const isIngredients = location.pathname === paths.ingredients;
+  const isCocktails = location.pathname === paths.cocktails;
 
-  const ingredientCategories = data?.ingredients.map(({ title }) => title);
-  ingredientCategories?.unshift(initialFilterStatus);
-  const cocktailCategories = data?.cocktails.map(({ title }) => title);
-  cocktailCategories?.unshift(initialFilterStatus);
-  const filter = isIngredients ? ingredientCategories : cocktailCategories;
+  const filter = useGetPageCategories(isIngredients);
+  const selectLabel = useGetNavSelectLabel(isIngredients);
 
   useEffect(() => {
-    if (isIngredients && currentPath !== ingredientFilter) {
-      dispatch(setIngredientCategory(initialFilterStatus));
-      setSelectValue(initialFilterStatus);
+    if (isIngredients && currentPath !== ingredientFilter && isSearch) {
+      setSearch(false);
     }
 
-    if (!isIngredients && currentPath !== cocktailFilter) {
-      dispatch(setCocktailCategory(initialFilterStatus));
-      setSelectValue(initialFilterStatus);
+    if (isCocktails && currentPath !== cocktailFilter) {
+      setSearch(false);
     }
 
     isIngredients
       ? setCurrentPath(ingredientFilter)
       : setCurrentPath(cocktailFilter);
-  }, [ingredientFilter, cocktailFilter, isIngredients, currentPath, dispatch]);
+  }, [
+    ingredientFilter,
+    cocktailFilter,
+    isIngredients,
+    currentPath,
+    dispatch,
+    isSearch,
+    isCocktails,
+  ]);
 
   const handleSideMenu = () => {
     dispatch(setMobileIsOpen(true));
@@ -90,7 +92,7 @@ const Navigation = () => {
       ? dispatch(setIngredientCategory(value))
       : dispatch(setCocktailCategory(value));
 
-    setSelectValue(value);
+    // setSelectValue(value);
   };
 
   return (
@@ -103,7 +105,7 @@ const Navigation = () => {
                 <HeaderIcon type={headerIconTypes.burgerMenu} />
               </ClearButton>
               <Select
-                value={selectValue}
+                label={selectLabel}
                 options={filter}
                 onChange={handleFilter}
               />
@@ -136,3 +138,5 @@ const Navigation = () => {
 };
 
 export default Navigation;
+
+// const [selectValue, setSelectValue] = useState(initialFilterStatus);
