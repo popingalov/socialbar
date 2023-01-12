@@ -88,7 +88,7 @@ const IngredientsList = () => {
                 id={id}
                 name={JSON.stringify({ title, iHave, shopping })}
                 isInMyBar={isInMyBar}
-                onClick={id => {
+                onClick={() => {
                   navigate(`${id}`);
                 }}
                 {...longPressHandle()}

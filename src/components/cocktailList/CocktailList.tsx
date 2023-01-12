@@ -92,7 +92,7 @@ const CocktailList = () => {
                     id={id}
                     name={JSON.stringify({ title, favorite })}
                     allIngredientsAreAvailable={iCan}
-                    onClick={id => {
+                    onClick={() => {
                       navigate(`${id}`);
                     }}
                     {...longPressHandle()}
