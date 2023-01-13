@@ -88,9 +88,7 @@ const IngredientsList = () => {
                 id={id}
                 name={JSON.stringify({ title, iHave, shopping })}
                 isInMyBar={isInMyBar}
-                onClick={id => {
-                  navigate(`${id}`);
-                }}
+                onClick={() => navigate(`${id}`)}
                 {...longPressHandle()}
               >
                 <IngredientCard
@@ -114,7 +112,6 @@ const IngredientsList = () => {
       <AnimatePresence>
         {contextMenuIsOpen && (
           <PopUp key="popUp" coordinates={selectCoordinates} type="context">
-            {}
             <ContextMenuIngredients
               isMyBar={isMyBar}
               isShoppingList={isShoppingList}
