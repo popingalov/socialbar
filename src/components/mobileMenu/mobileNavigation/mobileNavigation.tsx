@@ -13,23 +13,22 @@ import { Link, NavigationStyled, NavItem } from './mobileNavigation.styled';
 const MobileNavigation = () => {
   const dispatch = useDispatch();
 
+  const handleLinkClick = (href: string) => {
+    dispatch(setMobileIsOpen(false));
+    if (href !== 'ingredients') {
+      dispatch(setIngredientCategory(initialFilterStatus));
+    }
+    if (href !== 'cocktails') {
+      dispatch(setCocktailCategory(initialFilterStatus));
+    }
+  };
+
   return (
     <>
       <NavigationStyled>
         {mainNavItems.map(({ href, label }) => (
           <NavItem key={href} settings={href === paths.settings}>
-            <Link
-              to={href}
-              onClick={() => {
-                dispatch(setMobileIsOpen(false));
-                if (href !== 'ingredients') {
-                  dispatch(setIngredientCategory(initialFilterStatus));
-                }
-                if (href !== 'cocktails') {
-                  dispatch(setCocktailCategory(initialFilterStatus));
-                }
-              }}
-            >
+            <Link to={href} onClick={() => handleLinkClick(href)}>
               <MobileIcon type={`/${href}`} />
               {label}
             </Link>

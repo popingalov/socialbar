@@ -1,3 +1,4 @@
+import { theme } from 'constants/theme';
 import styled from 'styled-components';
 
 export const Wrapper = styled.nav<{ isExtraRoute: boolean }>`
@@ -12,8 +13,11 @@ export const NavigationListStyled = styled.ul`
   background-color: ${p => p.theme.colors.accentBackgroundColor};
   display: flex;
   scroll-behavior: smooth;
-  overflow-x: scroll;
   text-align: center;
+
+  @media only screen and (max-width: 480px) {
+    overflow-x: scroll;
+  }
 `;
 
 export const PageName = styled.p`

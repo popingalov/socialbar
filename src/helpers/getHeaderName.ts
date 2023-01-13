@@ -1,6 +1,6 @@
 import { paths } from 'constants/paths';
 
-export function getHeaderName(path: string) {
+export const getHeaderName = (path: string) => {
   switch (path) {
     case paths.settings:
       return `Settings`;
@@ -11,4 +11,4 @@ export function getHeaderName(path: string) {
     default:
       return ``;
   }
-}
+};

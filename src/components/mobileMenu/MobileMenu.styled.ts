@@ -5,7 +5,10 @@ export const Menu = styled(motion.div)`
   background-color: ${({ theme }) => theme.colors.mainBackgroundColor};
   width: 70%;
   height: 100%;
-  overflow-y: scroll;
+
+  @media only screen and (max-width: 480px) {
+    overflow-y: scroll;
+  }
 `;
 
 export const MenuHeader = styled.div`

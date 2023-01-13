@@ -25,6 +25,7 @@ import {
 } from 'redux-persist';
 import { persistedSettingsReducer } from './settings/settingsSlice';
 import { categoriesReducer } from './categoriesFilter/categoriesFilterSlice';
+import { searchReducer } from './searchFilter/searchFilterSlice';
 
 export const store = configureStore({
   reducer: {
@@ -40,6 +41,7 @@ export const store = configureStore({
     modalStatus: modalReducer,
     settings: persistedSettingsReducer,
     categories: categoriesReducer,
+    search: searchReducer,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({

@@ -23,6 +23,8 @@ import {
 } from 'redux/filter/filterSelectors';
 import { useGetPageCategories } from 'hooks/useGetPageCategories';
 import { useGetNavSelectLabel } from 'hooks/useGetNavSelectLabel';
+import { changeFilter } from 'redux/searchFilter/searchFilterSlice';
+import { initialSearchStatus } from 'redux/searchFilter/searchConstants';
 
 const Navigation = () => {
   const ingredientFilter = useSelector(selectIngredientFilter);
@@ -53,10 +55,12 @@ const Navigation = () => {
   useEffect(() => {
     if (isIngredients && currentPath !== ingredientFilter && isSearch) {
       setSearch(false);
+      dispatch(changeFilter(initialSearchStatus));
     }
 
     if (isCocktails && currentPath !== cocktailFilter && isSearch) {
       setSearch(false);
+      dispatch(changeFilter(initialSearchStatus));
     }
 
     isIngredients
@@ -77,8 +81,10 @@ const Navigation = () => {
   };
 
   const handleBackButton = () => {
-    if (isSearch) setSearch(false);
-    else navigate(-1);
+    if (isSearch) {
+      setSearch(false);
+      dispatch(changeFilter(initialSearchStatus));
+    } else navigate(-1);
   };
 
   const handleSearchButton = () => setSearch(prevState => !prevState);
