@@ -11,7 +11,7 @@ import PopUp from 'components/modal/popUp';
 
 const SearchBar: React.FC = () => {
   const searchValue = useSelector(selectSearchFilter);
-  const popUpIsOpen = useSelector(selectPopUpStatus); // change popUp to searchPopUp
+  const popUpIsOpen = useSelector(selectPopUpStatus); // TODO: change popUp to searchPopUp
   const searchPopUp = useSelector(setSearchPopUpIsOpen);
 
   const dispatch = useDispatch();
