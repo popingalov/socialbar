@@ -79,3 +79,27 @@ self.addEventListener('message', event => {
 });
 
 // Any other custom service worker logic can go here.
+self.addEventListener('fetch', function (event) {
+  // Мы используем `respondWith()`, чтобы мгновенно ответить без ожидания ответа с сервера.
+  event.respondWith(fromCache(event.request));
+  // `waitUntil()` нужен, чтобы предотвратить прекращение работы worker'a до того как кэш обновиться.
+  event.waitUntil(update(event.request));
+});
+
+function fromCache(request: any) {
+  return caches
+    .open('CACHE')
+    .then(cache =>
+      cache
+        .match(request)
+        .then(matching => matching || Promise.reject('no-match')),
+    );
+}
+
+function update(request: any) {
+  return caches
+    .open('CACHE')
+    .then(cache =>
+      fetch(request).then(response => cache.put(request, response)),
+    );
+}

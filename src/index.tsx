@@ -9,8 +9,7 @@ import { theme } from 'constants/theme';
 import './index.css';
 
 import App from 'components/app';
-
-// import * as serviceWorkerRegistration from './serviceWorkerRegistration';
+import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
@@ -30,16 +29,6 @@ root.render(
   </React.StrictMode>,
 );
 
-// serviceWorkerRegistration.register();
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.ts').then(
-      registration => {
-        console.log('rdy');
-      },
-      err => {
-        console.log('err');
-      },
-    );
-  });
-}
+// console.log('asdasd');
+
+serviceWorkerRegistration.register();
