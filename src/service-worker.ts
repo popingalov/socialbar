@@ -8,11 +8,12 @@
 // You can also remove this file if you'd prefer not to use a
 // service worker, and the Workbox build step will be skipped.
 
+import { url } from 'inspector';
 import { clientsClaim } from 'workbox-core';
 import { ExpirationPlugin } from 'workbox-expiration';
 import { precacheAndRoute, createHandlerBoundToURL } from 'workbox-precaching';
 import { registerRoute } from 'workbox-routing';
-import { StaleWhileRevalidate } from 'workbox-strategies';
+import { StaleWhileRevalidate, CacheFirst } from 'workbox-strategies';
 
 declare const self: ServiceWorkerGlobalScope;
 
@@ -79,31 +80,68 @@ self.addEventListener('message', event => {
 });
 
 // Any other custom service worker logic can go here.
-self.addEventListener('fetch', function (event) {
-  const urlController = event.request.url.split(/\/api\//).at(-1);
-  console.log(urlController);
-  // Мы используем `respondWith()`, чтобы мгновенно ответить без ожидания ответа с сервера.
-  event.respondWith(fromCache(event.request));
-  // `waitUntil()` нужен, чтобы предотвратить прекращение работы worker'a до того как кэш обновиться.
-  event.waitUntil(update(event.request));
-});
+const staticUrl = [
+  'ingredients',
+  'my-ingredient-list',
+  'cocktails',
+  'glasses',
+  'users/me',
+  'shoping-list',
+  'categories',
+  // 'favorite',
+];
+registerRoute(
+  // Add in any other file extensions or routing criteria as needed.
+  ({ url }: any) => {
+    const test = staticUrl.includes(url.href.split(/\/api\//).at(-1) || '');
+    console.log(test, url.href);
 
-function fromCache(request: any) {
-  console.log('request', request);
+    return test;
+  },
+  // Customize this strategy as needed, e.g., by changing to CacheFirst.
+  new CacheFirst({
+    cacheName: 'myTest',
+    plugins: [
+      // Ensure that once this runtime cache reaches a maximum size the
+      // least-recently used images are removed.
+      new ExpirationPlugin({ maxEntries: 50 }),
+    ],
+  }),
+);
 
-  return caches
-    .open('CACHE')
-    .then(cache =>
-      cache
-        .match(request)
-        .then(matching => matching || Promise.reject('no-match')),
-    );
-}
+// self.addEventListener('fetch', function (event) {
+//   const urlController = event.request.url.split(/\/api\//).at(-1) || '';
+//   if (!staticUrl.includes(urlController)) {
+//     event.respondWith(fetch(event.request).then(res => res));
+//     return;
+//   }
+//   event.respondWith(fromCache(event.request, urlController, event));
+//   // `waitUntil()` нужен, чтобы предотвратить прекращение работы worker'a до того как кэш обновиться.
+//   event.waitUntil(update(event.request, urlController, event));
+// });
 
-function update(request: any) {
-  return caches
-    .open('CACHE')
-    .then(cache =>
-      fetch(request).then(response => cache.put(request, response)),
-    );
-}
+// function fromCache(request: any, url: any, event: any) {
+//   console.log('requestrrrrr', request);
+
+//   return caches.open('CACHE').then(cache =>
+//     cache.match(url).then((res: any) => {
+//       if (res) {
+//         return res;
+//       }
+//       return update(request, url, event);
+//     }),
+//   );
+// }
+
+// async function update(request: any, url: any, event: any) {
+//   return caches.open('CACHE').then(cache =>
+//     fetch(request).then(async response => {
+//       console.log(response);
+//       console.log(await response.formData());
+
+//       event.respondWith(await response);
+
+//       return await cache.put(url, response);
+//     }),
+//   );
+// }

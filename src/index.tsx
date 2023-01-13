@@ -28,6 +28,7 @@ root.render(
     </BrowserRouter>
   </React.StrictMode>,
 );
-console.log('build');
+console.log('555');
+console.log('444');
 
 serviceWorkerRegistration.register();
