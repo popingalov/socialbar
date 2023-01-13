@@ -78,13 +78,13 @@ const IngredientsList = () => {
 
       {filteredIngredients && (
         <BarList>
-          {filteredIngredients.map((ingredient: IIngredient) => {
+          {filteredIngredients.map((ingredient: IIngredient, idx) => {
             const { title, id, picture, iHave, shopping } = ingredient;
             const isInMyBar = iHave || isMyBar;
 
             return (
               <ListItem
-                key={id}
+                key={id + idx}
                 id={id}
                 name={JSON.stringify({ title, iHave, shopping })}
                 isInMyBar={isInMyBar}

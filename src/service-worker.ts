@@ -80,6 +80,8 @@ self.addEventListener('message', event => {
 
 // Any other custom service worker logic can go here.
 self.addEventListener('fetch', function (event) {
+  const urlController = event.request.url.split(/\/api\//).at(-1);
+  console.log(urlController);
   // Мы используем `respondWith()`, чтобы мгновенно ответить без ожидания ответа с сервера.
   event.respondWith(fromCache(event.request));
   // `waitUntil()` нужен, чтобы предотвратить прекращение работы worker'a до того как кэш обновиться.
@@ -87,6 +89,8 @@ self.addEventListener('fetch', function (event) {
 });
 
 function fromCache(request: any) {
+  console.log('request', request);
+
   return caches
     .open('CACHE')
     .then(cache =>

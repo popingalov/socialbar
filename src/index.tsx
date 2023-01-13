@@ -28,7 +28,6 @@ root.render(
     </BrowserRouter>
   </React.StrictMode>,
 );
-
-// console.log('asdasd');
+console.log('build');
 
 serviceWorkerRegistration.register();

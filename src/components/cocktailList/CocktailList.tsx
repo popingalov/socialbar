@@ -71,16 +71,19 @@ const CocktailList = () => {
       {filteredCocktails.length !== 0 && (
         <BarList>
           {filteredCocktails.map(
-            ({
-              title,
-              description,
-              ingredients,
-              id,
-              picture,
-              iCan,
-              favorite,
-              lacks,
-            }) => {
+            (
+              {
+                title,
+                description,
+                ingredients,
+                id,
+                picture,
+                iCan,
+                favorite,
+                lacks,
+              },
+              idx,
+            ) => {
               const ingredientNames = ingredients.map(
                 ingredient => ingredient.data.title,
               );
@@ -88,7 +91,7 @@ const CocktailList = () => {
               return (
                 <>
                   <ListItem
-                    key={id}
+                    key={id + idx}
                     id={id}
                     name={JSON.stringify({ title, favorite })}
                     allIngredientsAreAvailable={iCan}
