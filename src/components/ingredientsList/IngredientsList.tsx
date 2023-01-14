@@ -78,19 +78,17 @@ const IngredientsList = () => {
 
       {filteredIngredients && (
         <BarList>
-          {filteredIngredients.map((ingredient: IIngredient, idx) => {
+          {filteredIngredients.map((ingredient: IIngredient) => {
             const { title, id, picture, iHave, shopping } = ingredient;
             const isInMyBar = iHave || isMyBar;
 
             return (
               <ListItem
-                key={id + idx}
+                key={id}
                 id={id}
                 name={JSON.stringify({ title, iHave, shopping })}
                 isInMyBar={isInMyBar}
-
                 onClick={() => navigate(`${id}`)}
-
                 {...longPressHandle()}
               >
                 <IngredientCard
