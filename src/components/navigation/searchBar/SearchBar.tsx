@@ -11,7 +11,7 @@ import PopUp from 'components/modal/popUp';
 
 const SearchBar: React.FC = () => {
   const searchValue = useSelector(selectSearchFilter);
-  const popUpIsOpen = useSelector(selectPopUpStatus); // TODO: change popUp to searchPopUp
+  const popUpIsOpen = useSelector(selectPopUpStatus); // TODO: change popUp to searchPopUp withour overlay
   const searchPopUp = useSelector(setSearchPopUpIsOpen);
 
   const dispatch = useDispatch();
@@ -41,6 +41,7 @@ const SearchBar: React.FC = () => {
     const { value } = event.currentTarget;
     dispatch(changeFilter(value));
 
+    // TODO: change popUp to searchPopUp withour overlay
     // check if anything is in list search
     if (value) {
       dispatch(setPopUpIsOpen(true));

@@ -55,12 +55,12 @@ const Navigation = () => {
   useEffect(() => {
     if (isIngredients && currentPath !== ingredientFilter && isSearch) {
       setSearch(false);
-      dispatch(changeFilter(initialSearchStatus));
+      dispatch(changeFilter(initialSearchStatus)); //! check
     }
 
     if (isCocktails && currentPath !== cocktailFilter && isSearch) {
       setSearch(false);
-      dispatch(changeFilter(initialSearchStatus));
+      dispatch(changeFilter(initialSearchStatus)); //! check
     }
 
     isIngredients
@@ -83,7 +83,7 @@ const Navigation = () => {
   const handleBackButton = () => {
     if (isSearch) {
       setSearch(false);
-      dispatch(changeFilter(initialSearchStatus));
+      dispatch(changeFilter(initialSearchStatus)); //! check
     } else navigate(-1);
   };
 
