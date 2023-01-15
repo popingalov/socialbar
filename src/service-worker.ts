@@ -92,7 +92,8 @@ self.addEventListener('activate', () => {
 // registerRoute(
 //   // Add in any other file extensions or routing criteria as needed.
 //   ({ url }: any) => {
-//     return checkUrl(url);
+//     const { test } = checkUrl(url);
+//     return test;
 //   },
 //   // Customize this strategy as needed, e.g., by changing to CacheFirst.
 //   new CacheFirst({
@@ -107,22 +108,27 @@ self.addEventListener('activate', () => {
 
 self.addEventListener('fetch', async (event: FetchEvent): Promise<any> => {
   const req = event.request;
-  console.log(req);
-  console.log(req.url);
-
   const { test, url } = checkUrl(req.url);
+  const cacheOpen = await caches.open(cacheName);
   if (test) {
     console.log('пройшов тест');
 
-    const cacheOpen = await caches.open(cacheName);
     const result = await cacheOpen.match(url);
     if (result) {
-      console.log('знайшов');
-
       event.respondWith(result);
       return;
     }
   }
-  console.log('щось не моє');
-  return event.respondWith(await fetch(event.request));
+  console.log('щось не моє', event.request);
+  const fetchRes = await fetch(event.request);
+  cacheOpen.put(url, fetchRes);
+  console.log(fetchRes);
+  event.respondWith(fetchRes);
+  // event.waitUntil(testMy(fetchRes, cacheOpen, url));
 });
+async function testMy(res: any, cacheOpen: any, url: any): Promise<any> {
+  cacheOpen.put(url, res);
+  console.log(res);
+
+  return null;
+}
