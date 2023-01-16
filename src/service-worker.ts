@@ -13,7 +13,7 @@ import { clientsClaim } from 'workbox-core';
 import { ExpirationPlugin } from 'workbox-expiration';
 import { precacheAndRoute, createHandlerBoundToURL } from 'workbox-precaching';
 import { registerRoute } from 'workbox-routing';
-import { StaleWhileRevalidate, CacheFirst } from 'workbox-strategies';
+import { StaleWhileRevalidate } from 'workbox-strategies';
 //
 import { cacheName } from './serviceWorker/base';
 import checkUrl from './serviceWorker/helpers/checkUrl';
@@ -89,46 +89,27 @@ self.addEventListener('activate', () => {
   console.log('я працюю 1 раз під час оновлення білда');
 });
 
-// registerRoute(
-//   // Add in any other file extensions or routing criteria as needed.
-//   ({ url }: any) => {
-//     const { test } = checkUrl(url);
-//     return test;
-//   },
-//   // Customize this strategy as needed, e.g., by changing to CacheFirst.
-//   new CacheFirst({
-//     cacheName,
-//     plugins: [
-//       // Ensure that once this runtime cache reaches a maximum size the
-//       // least-recently used images are removed.
-//       new ExpirationPlugin({ maxEntries: 50 }),
-//     ],
-//   }),
-// );
-
 self.addEventListener('fetch', async (event: FetchEvent): Promise<any> => {
   const req = event.request;
   const { test, url } = checkUrl(req.url);
-  const cacheOpen = await caches.open(cacheName);
+
   if (test) {
-    console.log('пройшов тест');
-
-    const result = await cacheOpen.match(url);
-    if (result) {
-      event.respondWith(result);
-      return;
-    }
+    event.respondWith(takeCache(req, url));
+    event.waitUntil(testMy(req, url));
   }
-  console.log('щось не моє', event.request);
-  const fetchRes = await fetch(event.request);
-  cacheOpen.put(url, fetchRes);
-  console.log(fetchRes);
-  event.respondWith(fetchRes);
-  // event.waitUntil(testMy(fetchRes, cacheOpen, url));
 });
-async function testMy(res: any, cacheOpen: any, url: any): Promise<any> {
-  cacheOpen.put(url, res);
-  console.log(res);
 
-  return null;
+async function takeCache(req: any, url: string) {
+  const cached = await caches.match(url);
+  // const cached1 = await caches.match(url);
+  // const helper = await cached1?.json();
+  //   const result = new Response(JSON.stringify(helper));
+
+  return cached || (await fetch(req));
+}
+async function testMy(req: any, url: string): Promise<any> {
+  const res = await fetch(req);
+  // const helper = await res?.json();
+  // const result = new Response(JSON.stringify(helper));
+  (await caches.open(cacheName)).put(url, res);
 }
