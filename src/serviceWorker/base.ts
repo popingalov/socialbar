@@ -8,7 +8,7 @@ export interface IStaticURL {
   'api/users/me': boolean;
   'api/shoping-list': boolean;
   'api/categories': boolean;
-  // 'favorite',
+  'api/favorite': boolean;
   next: boolean;
 }
 export const staticUrl: IStaticURL = {
@@ -20,7 +20,7 @@ export const staticUrl: IStaticURL = {
   'api/users/me': true,
   'api/shoping-list': true,
   'api/categories': true,
-  // 'favorite',
+  'api/favorite': true,
   next: false,
 };
 // перед заміною не забути почистити попередній кеш
