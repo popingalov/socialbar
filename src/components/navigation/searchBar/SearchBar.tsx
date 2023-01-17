@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { selectPopUpStatus } from 'redux/modal/modalSelectors';
 import { setPopUpIsOpen } from 'redux/modal/modalSlice';
 import { selectSearchFilter } from 'redux/searchFilter/searchFilterSelector';
-import { changeSearchFilter } from 'redux/searchFilter/searchFilterSlice';
+import { changeSearchFilter } from 'redux/searchFilter/searchSlice';
 import { MainInput } from './SearchBar.styled';
 import PopUp from 'components/modal/popUp';
 

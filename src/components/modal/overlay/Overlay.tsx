@@ -10,7 +10,7 @@ import {
   setSettingsMenuIsOpen,
 } from 'redux/modal/modalSlice';
 import { createPortal } from 'react-dom';
-import { changeSearchFilter } from 'redux/searchFilter/searchFilterSlice';
+import { changeSearchFilter } from 'redux/searchFilter/searchSlice';
 import { initialSearchStatus } from 'redux/searchFilter/searchConstants';
 
 const modalRoot: HTMLDivElement = document.querySelector('#modal')!;

@@ -25,7 +25,7 @@ import {
 } from 'redux-persist';
 import { persistedSettingsReducer } from './settings/settingsSlice';
 import { categoriesReducer } from './categoriesFilter/categoriesFilterSlice';
-import { searchReducer } from './searchFilter/searchFilterSlice';
+import { searchReducer } from './searchFilter/searchSlice';
 
 export const store = configureStore({
   reducer: {
