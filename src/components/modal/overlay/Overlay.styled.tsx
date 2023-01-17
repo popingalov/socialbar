@@ -2,7 +2,13 @@ import { motion } from 'framer-motion';
 import styled from 'styled-components';
 
 type props = {
-  type: 'mobileMenu' | 'select' | 'extraMenu' | 'settingsModal' | 'context';
+  type:
+    | 'mobileMenu'
+    | 'select'
+    | 'extraMenu'
+    | 'settingsModal'
+    | 'context'
+    | 'search';
 };
 
 export const OverlayStyled = styled(motion.div)<props>`

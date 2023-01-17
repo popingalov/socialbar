@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const Wrapper = styled.div``;
 
-export const MainInput = styled.input`
+export const MainInput = styled.input<{ ref: any }>`
   width: 100%;
   background-color: transparent;
   border: none;

@@ -2,18 +2,19 @@ import { motion } from 'framer-motion';
 import styled from 'styled-components';
 
 interface IProps extends ICoordinates {
-  type: 'select' | 'extraMenu' | 'context';
+  type: 'select' | 'extraMenu' | 'context' | 'search';
 }
 
 export const Modal = styled(motion.div)<IProps>`
   position: absolute;
   top: ${({ top }) => (top ? top : '0')}px;
   left: ${({ left, type }) => {
-    if (type === 'select') return left ? left : '0';
+    if (type === 'select' || type === 'search') return left ? left : '0';
     return 'none';
   }}px;
   left: ${({ left, type }) => {
-    if (type === 'select' || type === 'context') return left ? left : '0';
+    if (type === 'select' || type === 'context' || type === 'search')
+      return left ? left : '0';
     return 'none';
   }}px;
   right: ${({ right, type, theme }) => {
