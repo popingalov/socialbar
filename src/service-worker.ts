@@ -96,8 +96,8 @@ self.addEventListener('fetch', async (event: FetchEvent): Promise<any> => {
   if (test) {
     event.respondWith(takeCache(req, url));
     event.waitUntil(testMy(req, url));
+    return;
   }
-  event.respondWith(await fetch(req));
 });
 
 async function takeCache(req: any, url: string) {
