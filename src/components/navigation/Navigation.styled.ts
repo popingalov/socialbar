@@ -1,4 +1,3 @@
-import { theme } from 'constants/theme';
 import styled from 'styled-components';
 
 export const Wrapper = styled.nav<{ isExtraRoute: boolean }>`

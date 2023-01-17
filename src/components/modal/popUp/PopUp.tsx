@@ -6,7 +6,7 @@ import { popUpMenuAnimation } from 'constants/animations';
 interface IProps {
   children?: ReactNode;
   coordinates: ICoordinates;
-  type: 'select' | 'extraMenu' | 'context';
+  type: 'select' | 'extraMenu' | 'context' | 'search';
 }
 
 const PopUp: React.FC<IProps> = ({
