@@ -91,9 +91,16 @@ self.addEventListener('activate', () => {
 
 self.addEventListener('fetch', async (event: FetchEvent): Promise<any> => {
   const req = event.request;
-  const { test, url } = checkUrl(req.url);
+  const { test, url, id } = checkUrl(req.url);
+  console.log(req.url);
+  console.log(url, id, test);
 
   if (test) {
+    if (id) {
+      event.respondWith(takeCache(req, url));
+      event.waitUntil(testMy(req, url));
+      return;
+    }
     event.respondWith(takeCache(req, url));
     event.waitUntil(testMy(req, url));
   }
