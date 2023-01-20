@@ -57,7 +57,7 @@ const IngredientCard: React.FC<IProps> = ({
   return (
     <Box position="relative" display="flex" alignItems="center">
       <img src={imageUrl} alt={name} width="32px" height="32px" />
-      <Box marginRight="auto">
+      <Box marginRight="auto" flex={1}>
         <IngredientName>{name}</IngredientName>
         {(isBarShelf || isShoppingList) && (
           <ExtraInfo>
