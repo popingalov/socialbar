@@ -10,6 +10,7 @@ import './index.css';
 
 import App from 'components/app';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
+serviceWorkerRegistration.register();
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
@@ -28,7 +29,3 @@ root.render(
     </BrowserRouter>
   </React.StrictMode>,
 );
-console.log('555');
-console.log('444');
-
-serviceWorkerRegistration.register();
