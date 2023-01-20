@@ -18,7 +18,7 @@ interface DescProp {
   showMore: boolean;
 }
 
-export const Decsription = styled.p<DescProp>`
+export const Description = styled.p<DescProp>`
   max-height: ${p => !p.showMore && '45px'};
   height: ${p => p.showMore && 'auto'};
   overflow: hidden;
@@ -26,16 +26,25 @@ export const Decsription = styled.p<DescProp>`
   color: ${({ theme }) => theme.colors.secondaryText};
 `;
 
+export const ItemButton = styled.li`
+  width: 36px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 interface BtnProps {
-  isShop: boolean | undefined;
+  isShopping: boolean | undefined;
 }
 
 export const ButtonBase = styled.button`
   border: none;
   outline: none;
   background-color: transparent;
-  margin-left: ${({ theme }) => theme.space[1]}px;
   cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const EditBtn = styled(ButtonBase)`
@@ -43,8 +52,8 @@ export const EditBtn = styled(ButtonBase)`
 `;
 
 export const CartBtn = styled(ButtonBase)<BtnProps>`
-  color: ${({ theme, isShop }) =>
-    isShop ? theme.colors.link : theme.colors.secondaryText};
+  color: ${({ theme, isShopping }) =>
+    isShopping ? theme.colors.link : theme.colors.secondaryText};
 `;
 
 export const Checkbox = styled.input`
