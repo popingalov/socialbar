@@ -48,10 +48,11 @@ export const useGetVisibleCocktails = (filterStatus: string) => {
 
     default:
       if (cocktails) {
-        const haveAll = cocktails.all.filter(({ lacks }) => lacks.length === 0);
-        const other = cocktails.all.filter(({ lacks }) => lacks.length !== 0);
+        const sorted = [...cocktails.all].sort(
+          (a, b) => a.lacks.length - b.lacks.length,
+        );
         return {
-          visibleCocktails: [...haveAll, ...other],
+          visibleCocktails: [...sorted],
           isFetching: cocktailsFetching,
         };
       }
