@@ -2,12 +2,12 @@ import BarList from 'components/barList';
 import { useSelector } from 'react-redux';
 import { selectCocktailFilter } from 'redux/filter/filterSelectors';
 import CocktailCard from 'components/cocktailList/cocktailCard';
-import { ListItem } from './CocktailList.styled';
+import { FilteredMessage, ListItem } from './CocktailList.styled';
 import FollowUpMessage from 'components/UI-kit/followUpMessage';
 import { cocktailFilterStatus } from 'redux/filter/filterConstants';
 import CocktailBottomMessage from './cocktailBottomMessage';
 import Loader from 'components/loader';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useGetVisibleCocktails } from 'hooks/useGetVisibleCocktails';
 import { useLongPress } from 'use-long-press';
 import { useState } from 'react';
@@ -19,6 +19,7 @@ import { useDispatch } from 'react-redux';
 import PopUp from 'components/modal/popUp';
 import ContextMenuCocktails from './contextMenu/ContextMenuCocktails';
 import { useGetFilteredCocktails } from 'hooks/useGetFilteredCocktails';
+import { ICocktail } from 'types/cocktail';
 
 const CocktailList = () => {
   const cocktailFilter = useSelector(selectCocktailFilter);
@@ -32,10 +33,16 @@ const CocktailList = () => {
   const isAllCocktails = cocktailFilterStatus.allCocktails === cocktailFilter;
   const isFavoriteCocktails =
     cocktailFilterStatus.favoriteCocktails === cocktailFilter;
-  // console.log('visibleCocktails', visibleCocktails);
 
-  const filteredCocktails = useGetFilteredCocktails(visibleCocktails);
-  // console.log('filteredCocktails', filteredCocktails);
+  const { filteredCocktails, filteredItems } =
+    useGetFilteredCocktails(visibleCocktails);
+  let haveAllIngredients: ICocktail[] = [];
+  let needMoreIngredients: ICocktail[] = [];
+
+  if (isMyCocktails) {
+    haveAllIngredients = filteredCocktails.filter(({ lacks }) => !lacks.length);
+    needMoreIngredients = filteredCocktails.filter(({ lacks }) => lacks.length);
+  }
 
   const [selectCoordinates, setSelectCoordinates] = useState<ICoordinates>({
     top: null,
@@ -69,48 +76,108 @@ const CocktailList = () => {
       {isFetching && <Loader isLoading={isFetching} />}
 
       {filteredCocktails.length !== 0 && (
-        <BarList>
-          {filteredCocktails.map(
-            ({
-              title,
-              description,
-              ingredients,
-              id,
-              picture,
-              iCan,
-              favorite,
-              lacks,
-            }) => {
-              const ingredientNames = ingredients.map(
-                ingredient => ingredient.data.title,
-              );
+        <>
+          <BarList>
+            {(!isMyCocktails ? filteredCocktails : haveAllIngredients).map(
+              ({
+                title,
+                description,
+                ingredients,
+                id,
+                picture,
+                iCan,
+                favorite,
+                lacks,
+              }) => {
+                const ingredientNames = ingredients.map(
+                  ingredient => ingredient.data.title,
+                );
 
-              return (
-                <>
-                  <ListItem
-                    key={id}
-                    id={id}
-                    name={JSON.stringify({ title, favorite })}
-                    allIngredientsAreAvailable={iCan}
-                    onClick={() => navigate(`${id}`)}
-                    {...longPressHandle()}
-                  >
-                    <CocktailCard
-                      isFavorite={favorite}
-                      allAvailable={iCan}
-                      name={title}
-                      description={description}
-                      imageUrl={picture}
-                      ingredients={ingredientNames}
-                      lacks={lacks}
-                    />
-                  </ListItem>
-                </>
-              );
-            },
+                return (
+                  <>
+                    <ListItem
+                      key={id}
+                      id={id}
+                      name={JSON.stringify({ title, favorite })}
+                      allIngredientsAreAvailable={iCan}
+                      onClick={() => navigate(`${id}`)}
+                      {...longPressHandle()}
+                    >
+                      <CocktailCard
+                        isFavorite={favorite}
+                        allAvailable={iCan}
+                        name={title}
+                        description={description}
+                        imageUrl={picture}
+                        ingredients={ingredientNames}
+                        lacks={lacks}
+                      />
+                    </ListItem>
+                  </>
+                );
+              },
+            )}
+          </BarList>
+
+          {!isFetching && filteredItems !== 0 && (
+            <FollowUpMessage>
+              <FilteredMessage>
+                ( +{filteredItems} cocktails filtered )
+              </FilteredMessage>
+            </FollowUpMessage>
           )}
-        </BarList>
+        </>
       )}
+
+      {isMyCocktails && needMoreIngredients.length !== 0 && (
+        <>
+          <FollowUpMessage>
+            <p>For the cocktails listed below you need more ingredients</p>
+          </FollowUpMessage>
+          <BarList>
+            {needMoreIngredients.map(
+              ({
+                title,
+                description,
+                ingredients,
+                id,
+                picture,
+                iCan,
+                favorite,
+                lacks,
+              }) => {
+                const ingredientNames = ingredients.map(
+                  ingredient => ingredient.data.title,
+                );
+
+                return (
+                  <>
+                    <ListItem
+                      key={id}
+                      id={id}
+                      name={JSON.stringify({ title, favorite })}
+                      allIngredientsAreAvailable={iCan}
+                      onClick={() => navigate(`${id}`)}
+                      {...longPressHandle()}
+                    >
+                      <CocktailCard
+                        isFavorite={favorite}
+                        allAvailable={iCan}
+                        name={title}
+                        description={description}
+                        imageUrl={picture}
+                        ingredients={ingredientNames}
+                        lacks={lacks}
+                      />
+                    </ListItem>
+                  </>
+                );
+              },
+            )}
+          </BarList>
+        </>
+      )}
+
       {!isFetching && (isMyCocktails || isAllCocktails) && (
         <FollowUpMessage>
           <CocktailBottomMessage
@@ -122,7 +189,6 @@ const CocktailList = () => {
       <AnimatePresence>
         {contextMenuIsOpen && (
           <PopUp key="popUp" coordinates={selectCoordinates} type="context">
-            {}
             <ContextMenuCocktails
               name={selectedCocktail.name}
               id={selectedCocktail.id}

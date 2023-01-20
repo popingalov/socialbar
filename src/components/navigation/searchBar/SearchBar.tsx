@@ -40,7 +40,7 @@ const SearchBar: React.FC = () => {
     const { value } = event.currentTarget;
     dispatch(changeSearchFilter(value));
 
-    // check if anything is in list search
+    //TODO: check if anything is in list search
     if (value) {
       dispatch(setPopUpIsOpen(true));
       return;

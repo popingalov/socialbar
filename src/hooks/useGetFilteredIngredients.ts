@@ -11,10 +11,14 @@ export const useGetFilteredIngredients = (ingredients: IIngredient[]) => {
   categories?.unshift(initialFilterStatus);
 
   if (ingredientFilterStatus === initialFilterStatus) {
-    return ingredients;
+    return { filteredIngredients: ingredients, filteredItems: 0 };
   }
 
-  return ingredients.filter(
+  const filteredIngredients = ingredients.filter(
     ({ category }) => category === ingredientFilterStatus,
   );
+
+  const filteredItems = ingredients.length - filteredIngredients.length;
+
+  return { filteredIngredients, filteredItems };
 };

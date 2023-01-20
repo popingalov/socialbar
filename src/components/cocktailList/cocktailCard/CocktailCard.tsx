@@ -26,8 +26,12 @@ const CocktailCard: React.FC<IProps> = ({
       <img src={imageUrl} alt={name} width="50px" height="50px" />
       <Box marginRight="auto">
         <CocktailsName>{name}</CocktailsName>
-        <Ingredients>{ingredients.join(', ')}</Ingredients>
-        {/* lacks */}
+
+        <Ingredients>
+          {allAvailable
+            ? ingredients.join(', ')
+            : `Missing ${lacks.join(', ')}`}
+        </Ingredients>
       </Box>
       {allAvailable && (
         <Box width="28px" height="28px" color="accent">

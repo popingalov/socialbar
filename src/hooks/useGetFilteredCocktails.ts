@@ -11,10 +11,14 @@ export const useGetFilteredCocktails = (cocktails: ICocktail[]) => {
   categories?.unshift(initialFilterStatus);
 
   if (cocktailFilterStatus === initialFilterStatus) {
-    return cocktails;
+    return { filteredCocktails: cocktails, filteredItems: 0 };
   }
 
-  return cocktails.filter(({ category }) =>
+  const filteredCocktails = cocktails.filter(({ category }) =>
     category.includes(cocktailFilterStatus),
   );
+
+  const filteredItems = cocktails.length - filteredCocktails.length;
+
+  return { filteredCocktails, filteredItems };
 };
