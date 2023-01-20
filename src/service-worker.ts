@@ -9,6 +9,9 @@
 // service worker, and the Workbox build step will be skipped.
 
 // import { url } from 'inspector';
+import takeCocktail from 'serviceWorker/controllers/takeCocktail';
+import takeIngredient from 'serviceWorker/controllers/takeIngredient';
+
 import { clientsClaim } from 'workbox-core';
 import { ExpirationPlugin } from 'workbox-expiration';
 import { precacheAndRoute, createHandlerBoundToURL } from 'workbox-precaching';
@@ -91,26 +94,37 @@ self.addEventListener('activate', () => {
 
 self.addEventListener('fetch', async (event: FetchEvent): Promise<any> => {
   const req = event.request;
-  const { test, url } = checkUrl(req.url);
+  const { test, url, id, baseUrl } = checkUrl(req.url);
 
   if (test) {
-    event.respondWith(takeCache(req, url));
-    event.waitUntil(testMy(req, url));
-    return;
+    event.respondWith(takeCache(req, url, id, baseUrl));
+    // event.waitUntil(addToCache(req, url));
   }
 });
 
-async function takeCache(req: any, url: string) {
+async function takeCache(req: any, url: string, id: any, baseUrl: any) {
   const cached = await caches.match(url);
-  // const cached1 = await caches.match(url);
-  // const helper = await cached1?.json();
-  //   const result = new Response(JSON.stringify(helper));
+  if (cached) {
+    return cached;
+  }
+  if (id) {
+    switch (baseUrl) {
+      case 'api/ingredients':
+        const result = await takeIngredient({ id, baseUrl, url });
+        addToCache(result.clone(), url);
+        return result;
+      case 'api/cocktails':
+        const result1 = await takeCocktail({ id, baseUrl, url });
+        addToCache(result1.clone(), url);
+        return result1;
+    }
+  }
 
-  return cached || (await fetch(req));
+  const response = await fetch(req);
+  addToCache(response.clone(), url);
+  return response;
 }
-async function testMy(req: any, url: string): Promise<any> {
-  const res = await fetch(req);
-  // const helper = await res?.json();
-  // const result = new Response(JSON.stringify(helper));
-  (await caches.open(cacheName)).put(url, res);
+
+async function addToCache(response: any, url: string): Promise<any> {
+  (await caches.open(cacheName)).put(url, response);
 }
