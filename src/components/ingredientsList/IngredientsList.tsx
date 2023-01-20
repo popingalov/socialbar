@@ -128,22 +128,3 @@ const IngredientsList = () => {
 };
 
 export default IngredientsList;
-
-// const getVisibleIngredients = (filterStatus: string) => {
-//   switch (filterStatus) {
-//     case ingredientFilterStatus.myBarShelf:
-//       // return myIngredients;
-//       return [];
-//     case ingredientFilterStatus.shoppingList:
-//       // return shoppingList;
-//       return [];
-//     default:
-//       return;
-//   }
-// };
-// const visibleIngredients = getVisibleIngredients(ingredientFilter);
-
-// const visibleIngredients = getVisibleIngredients(
-//   ingredients || [],
-//   ingredientFilter,
-// );
