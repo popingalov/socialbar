@@ -29,8 +29,8 @@ export const useGetVisibleCocktails = (filterStatus: string) => {
         return {
           visibleCocktails: [
             ...cocktails.haveAll,
-            ...cocktails.needMore,
             ...cocktails.mine.haveAll,
+            ...cocktails.needMore,
           ],
           isFetching: cocktailsFetching,
         };
@@ -48,8 +48,11 @@ export const useGetVisibleCocktails = (filterStatus: string) => {
 
     default:
       if (cocktails) {
+        const sorted = [...cocktails.all].sort(
+          (a, b) => a.lacks.length - b.lacks.length,
+        );
         return {
-          visibleCocktails: [...cocktails.all],
+          visibleCocktails: [...sorted],
           isFetching: cocktailsFetching,
         };
       }

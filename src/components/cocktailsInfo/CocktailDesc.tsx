@@ -94,16 +94,20 @@ const CocktailDescription = () => {
               mb={3}
             >
               <Title>{cocktail.title}</Title>
-              <Box display="flex" flexWrap="nowrap">
-                <EditBtn onClick={onClickEdit}>
-                  <HiPencil size={28} />
-                </EditBtn>
-                <FavoriteBtn
-                  onClick={() => onClickFavorite(cocktail.id)}
-                  favorite={favorite}
-                >
-                  <HiStar size={28} />
-                </FavoriteBtn>
+              <Box as={'ul'} display="flex" flexWrap="nowrap" gridGap={1}>
+                <li>
+                  <EditBtn onClick={onClickEdit}>
+                    <HiPencil size={24} />
+                  </EditBtn>
+                </li>
+                <li>
+                  <FavoriteBtn
+                    onClick={() => onClickFavorite(cocktail.id)}
+                    favorite={favorite}
+                  >
+                    <HiStar size={24} />
+                  </FavoriteBtn>
+                </li>
               </Box>
             </Box>
             <Image src={cocktail.picture} />

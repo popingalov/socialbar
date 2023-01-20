@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { selectPopUpStatus } from 'redux/modal/modalSelectors';
 import { setPopUpIsOpen } from 'redux/modal/modalSlice';
 import { selectSearchFilter } from 'redux/searchFilter/searchFilterSelector';
-import { changeSearchFilter } from 'redux/searchFilter/searchFilterSlice';
+import { changeSearchFilter } from 'redux/searchFilter/searchSlice';
 import { MainInput } from './SearchBar.styled';
 import PopUp from 'components/modal/popUp';
 
@@ -40,7 +40,7 @@ const SearchBar: React.FC = () => {
     const { value } = event.currentTarget;
     dispatch(changeSearchFilter(value));
 
-    // check if anything is in list search
+    //TODO: check if anything is in list search
     if (value) {
       dispatch(setPopUpIsOpen(true));
       return;

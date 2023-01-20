@@ -17,7 +17,7 @@ import { selectContextMenuStatus } from 'redux/modal/modalSelectors';
 import { useDispatch } from 'react-redux';
 import PopUp from 'components/modal/popUp';
 import ContextMenuIngredients from './contextMenu/ContextMenuIngredients';
-import { ListItem } from './IngredientsList.styled';
+import { FilteredMessage, ListItem } from './IngredientsList.styled';
 import { useGetFilteredIngredients } from 'hooks/useGetFilteredIngredients';
 
 const IngredientsList = () => {
@@ -32,10 +32,9 @@ const IngredientsList = () => {
   const isMyBar = ingredientFilterStatus.myBarShelf === ingredientFilter;
   const isShoppingList =
     ingredientFilterStatus.shoppingList === ingredientFilter;
-  // console.log('visibleIngredients', visibleIngredients);
 
-  const filteredIngredients = useGetFilteredIngredients(visibleIngredients);
-  // console.log('filteredIngredients', filteredIngredients);
+  const { filteredIngredients, filteredItems } =
+    useGetFilteredIngredients(visibleIngredients);
 
   const [selectCoordinates, setSelectCoordinates] = useState<ICoordinates>({
     top: null,
@@ -79,7 +78,8 @@ const IngredientsList = () => {
       {filteredIngredients && (
         <BarList>
           {filteredIngredients.map((ingredient: IIngredient) => {
-            const { title, id, picture, iHave, shopping } = ingredient;
+            const { title, id, picture, iHave, shopping, cocktails } =
+              ingredient;
             const isInMyBar = iHave || isMyBar;
 
             return (
@@ -98,11 +98,20 @@ const IngredientsList = () => {
                   isInShoppingList={shopping}
                   isInMyBar={iHave}
                   imageUrl={picture}
+                  usedIn={cocktails}
                 />
               </ListItem>
             );
           })}
         </BarList>
+      )}
+
+      {!isFetching && filteredItems !== 0 && (
+        <FollowUpMessage>
+          <FilteredMessage>
+            ( +{filteredItems} ingredients filtered )
+          </FilteredMessage>
+        </FollowUpMessage>
       )}
       {!isFetching && !isShoppingList && (
         <FollowUpMessage>

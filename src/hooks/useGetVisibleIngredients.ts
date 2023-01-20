@@ -9,9 +9,6 @@ export const useGetVisibleIngredients = (filterStatus: string) => {
   const { data: myBar, isFetching: myBarFetching } = useGetMyBarQuery();
   const { data: shoppingList, isFetching: shoppingListFetching } =
     useGetShoppingListQuery();
-  // console.log('allIngredients', allIngredients);
-  // console.log('myBar', myBar);
-  // console.log('shoppingList', shoppingList);
 
   switch (filterStatus) {
     case ingredientFilterStatus.myBarShelf:

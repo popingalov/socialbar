@@ -15,8 +15,10 @@ export const ButtonBase = styled.button`
   border: none;
   outline: none;
   background-color: transparent;
-  margin-left: ${({ theme }) => theme.space[1]}px;
   cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const EditBtn = styled(ButtonBase)`

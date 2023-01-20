@@ -23,7 +23,7 @@ import {
 } from 'redux/filter/filterSelectors';
 import { useGetPageCategories } from 'hooks/useGetPageCategories';
 import { useGetNavSelectLabel } from 'hooks/useGetNavSelectLabel';
-import { changeSearchFilter } from 'redux/searchFilter/searchFilterSlice';
+import { changeSearchFilter } from 'redux/searchFilter/searchSlice';
 import { initialSearchStatus } from 'redux/searchFilter/searchConstants';
 
 const Navigation = () => {

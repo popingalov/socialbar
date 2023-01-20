@@ -6,6 +6,8 @@ export const CocktailsName = styled.p`
 `;
 
 export const Ingredients = styled.p`
+  max-height: 15px;
+  overflow-y: hidden;
   text-transform: capitalize;
   color: ${({ theme }) => theme.colors.secondaryText};
   font-size: ${({ theme }) => theme.fontSizes.xs};
