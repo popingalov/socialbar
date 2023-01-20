@@ -1,5 +1,4 @@
 import { ICocktail } from 'types/cocktail';
-import { IIngredient } from '../../types/ingredient';
 import inthegut from '../helpers/inthegut';
 interface IParams {
   id: string;
