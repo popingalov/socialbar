@@ -19,6 +19,7 @@ export interface ICocktail {
 
 export interface IIngredientIn {
   _id: string;
+  id: string;
   data: IIngredient;
   measure: string;
   measureType: string;

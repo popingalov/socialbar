@@ -33,6 +33,7 @@ const CocktailList = () => {
   const isAllCocktails = cocktailFilterStatus.allCocktails === cocktailFilter;
   const isFavoriteCocktails =
     cocktailFilterStatus.favoriteCocktails === cocktailFilter;
+  console.log(isFavoriteCocktails);
 
   const { filteredCocktails, filteredItems } =
     useGetFilteredCocktails(visibleCocktails);

@@ -9,8 +9,6 @@
 // service worker, and the Workbox build step will be skipped.
 
 // import { url } from 'inspector';
-import takeCocktail from 'serviceWorker/controllers/takeCocktail';
-import takeIngredient from 'serviceWorker/controllers/takeIngredient';
 
 import { clientsClaim } from 'workbox-core';
 import { ExpirationPlugin } from 'workbox-expiration';
@@ -20,7 +18,9 @@ import { StaleWhileRevalidate } from 'workbox-strategies';
 //
 import { cacheName } from './serviceWorker/base';
 import checkUrl from './serviceWorker/helpers/checkUrl';
-
+import takeCocktail from 'serviceWorker/controllers/takeCocktail';
+import takeIngredient from 'serviceWorker/controllers/takeIngredient';
+import favorite from 'serviceWorker/controllers/favorite';
 //
 declare const self: ServiceWorkerGlobalScope;
 
@@ -106,6 +106,13 @@ async function takeCache(req: any, url: string, id: any, baseUrl: any) {
   const cached = await caches.match(url);
   if (cached) {
     return cached;
+  }
+
+  switch (url) {
+    case '/api/favorite':
+      const result = await favorite(url, req);
+      addToCache(result.clone(), url);
+      return result;
   }
   if (id) {
     switch (baseUrl) {
