@@ -108,12 +108,12 @@ async function takeCache(req: any, url: string, id: any, baseUrl: any) {
     return cached;
   }
 
-  switch (url) {
-    case '/api/favorite':
-      const result = await favorite(url, req);
-      addToCache(result.clone(), url);
-      return result;
-  }
+  // switch (url) {
+  //   case '/api/favorite':
+  //     const result = await favorite(url, req);
+  //     addToCache(result.clone(), url);
+  //     return result;
+  // }
   if (id) {
     switch (baseUrl) {
       case 'api/ingredients':
