@@ -21,7 +21,16 @@ import ContextMenuCocktails from './contextMenu/ContextMenuCocktails';
 import { useGetFilteredCocktails } from 'hooks/useGetFilteredCocktails';
 import { ICocktail } from 'types/cocktail';
 
-const CocktailList = () => {
+interface IProps {
+  isInIngredient?: boolean;
+  ingredientCocktails?: ICocktail[];
+}
+
+const CocktailList: React.FC<IProps> = ({
+  isInIngredient = false,
+  ingredientCocktails,
+}) => {
+  console.log('ingredientCocktails', ingredientCocktails);
   const cocktailFilter = useSelector(selectCocktailFilter);
   const contextMenuIsOpen = useSelector(selectContextMenuStatus);
   const dispatch = useDispatch();
@@ -33,7 +42,7 @@ const CocktailList = () => {
   const isAllCocktails = cocktailFilterStatus.allCocktails === cocktailFilter;
   const isFavoriteCocktails =
     cocktailFilterStatus.favoriteCocktails === cocktailFilter;
-  console.log(isFavoriteCocktails);
+  // console.log(isFavoriteCocktails);
 
   const { filteredCocktails, filteredItems } =
     useGetFilteredCocktails(visibleCocktails);
@@ -78,7 +87,51 @@ const CocktailList = () => {
     <>
       {isFetching && <Loader isLoading={isFetching} />}
 
-      {filteredCocktails.length !== 0 && (
+      {isInIngredient && ingredientCocktails && (
+        <BarList>
+          {ingredientCocktails.map(
+            ({
+              title,
+              description,
+              ingredients,
+              id,
+              picture,
+              iCan,
+              favorite,
+              lacks,
+            }) => {
+              const ingredientNames = ingredients.map(
+                ingredient => ingredient.data.title,
+              );
+
+              return (
+                <>
+                  <ListItem
+                    key={id}
+                    id={id}
+                    name={JSON.stringify({ title, favorite })}
+                    allIngredientsAreAvailable={iCan}
+                    onClick={() => navigate(`${id}`)}
+                    {...longPressHandle()}
+                  >
+                    <CocktailCard
+                      isFavorite={favorite}
+                      allAvailable={iCan}
+                      name={title}
+                      description={description}
+                      imageUrl={picture}
+                      ingredients={ingredientNames}
+                      lacks={lacks}
+                    />
+                  </ListItem>
+                </>
+              );
+            },
+          )}
+        </BarList>
+      )}
+
+      {!isInIngredient && filteredCocktails.length !== 0 && (
         <>
           <BarList>
             {(!isMyCocktails ? filteredCocktails : haveAllIngredients).map(
@@ -133,7 +186,7 @@ const CocktailList = () => {
         </>
       )}
 
-      {isMyCocktails && needMoreIngredients.length !== 0 && (
+      {!isInIngredient && isMyCocktails && needMoreIngredients.length !== 0 && (
         <>
           <FollowUpMessage>
             <p>For the cocktails listed below you need more ingredients</p>
@@ -183,14 +236,16 @@ const CocktailList = () => {
         </>
       )}
 
-      {!isFetching && (isMyCocktails || isAllCocktails) && (
+      {!isFetching && (isMyCocktails || isAllCocktails || isInIngredient) && (
         <FollowUpMessage>
           <CocktailBottomMessage
             isMyCocktails={isMyCocktails}
             isAllCocktails={isAllCocktails}
+            isIngredient={isInIngredient}
           />
         </FollowUpMessage>
       )}
+
       <AnimatePresence>
         {contextMenuIsOpen && (
           <PopUp key="popUp" coordinates={selectCoordinates} type="context">

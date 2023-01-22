@@ -5,6 +5,7 @@ import { BiChevronUp, BiChevronDown } from 'react-icons/bi';
 import Box from 'components/box/Box';
 
 import {
+  AdditionalInfoTitle,
   CartBtn,
   // Checkbox,
   Description,
@@ -26,6 +27,7 @@ import {
   useAddToShoppingMutation,
   useDeleteFromShoppingMutation,
 } from 'redux/api/shoppingApi';
+import CocktailList from 'components/cocktailList';
 
 const IngredientInfo: React.FC = () => {
   const { ingredientId } = useParams();
@@ -88,61 +90,63 @@ const IngredientInfo: React.FC = () => {
 
   if (!ingredient) return <Loader isLoading={!ingredient} />;
 
-  const { title, id, iHave, shopping, picture, description } = ingredient;
+  const { title, id, iHave, shopping, picture, description, cocktails } =
+    ingredient;
 
   return (
-    <Box px={3} py={3}>
-      <Box
-        display="flex"
-        justifyContent="space-between"
-        alignItems="center"
-        mb={3}
-      >
-        <Title>{title}</Title>
+    <>
+      <Box px={3} py={3}>
         <Box
-          as={'ul'}
           display="flex"
           justifyContent="space-between"
           alignItems="center"
-          gridGap={1}
+          mb={3}
         >
-          <ItemButton>
-            <EditBtn onClick={onClickEdit}>
-              <HiPencil size={24} />
-            </EditBtn>
-          </ItemButton>
-          <ItemButton>
-            <CartBtn
-              onClick={() => {
-                toggleCart(shopping, id);
-              }}
-              isShopping={shopping}
-            >
-              <HiShoppingCart size={24} />
-            </CartBtn>
-          </ItemButton>
-          <ItemButton>
-            <Checkbox
-              checked={iHave}
-              onChange={() => {
-                toggleCheckBox(iHave, id);
-              }}
-            />
-          </ItemButton>
+          <Title>{title}</Title>
+          <Box
+            as={'ul'}
+            display="flex"
+            justifyContent="space-between"
+            alignItems="center"
+            gridGap={1}
+          >
+            <ItemButton>
+              <EditBtn onClick={onClickEdit}>
+                <HiPencil size={24} />
+              </EditBtn>
+            </ItemButton>
+            <ItemButton>
+              <CartBtn
+                onClick={() => {
+                  toggleCart(shopping, id);
+                }}
+                isShopping={shopping}
+              >
+                <HiShoppingCart size={24} />
+              </CartBtn>
+            </ItemButton>
+            <ItemButton>
+              <Checkbox
+                checked={iHave}
+                onChange={() => {
+                  toggleCheckBox(iHave, id);
+                }}
+              />
+            </ItemButton>
+          </Box>
         </Box>
+        <Image src={picture} />
+        <Description ref={refComponent} showMore={showMore}>
+          {description}
+        </Description>
+        <ShowMoreBtn type="button" onClick={showDescription}>
+          {showMore && <BiChevronUp size={24} />}
+          {!showMore && heightEl > 44 && <BiChevronDown size={24} />}
+        </ShowMoreBtn>
       </Box>
-
-      <Image src={picture} />
-
-      <Description ref={refComponent} showMore={showMore}>
-        {description}
-      </Description>
-
-      <ShowMoreBtn type="button" onClick={showDescription}>
-        {showMore && <BiChevronUp size={24} />}
-        {!showMore && heightEl > 44 && <BiChevronDown size={24} />}
-      </ShowMoreBtn>
-    </Box>
+      <AdditionalInfoTitle>Cocktails with {title}</AdditionalInfoTitle>
+      <CocktailList isInIngredient={true} ingredientCocktails={cocktails} />
+    </>
   );
 };
 
