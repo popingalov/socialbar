@@ -79,12 +79,7 @@ const IngredientCard: React.FC<IProps> = ({
         <LowIcon type="ingredients" />
       )}
       {isShoppingList && (
-        <IconButton
-          onClick={event => {
-            event.stopPropagation();
-            deleteFromShoppingList(id);
-          }}
-        >
+        <IconButton onClick={() => deleteFromShoppingList(id)}>
           <RxCross2 aria-label="delete" />
         </IconButton>
       )}

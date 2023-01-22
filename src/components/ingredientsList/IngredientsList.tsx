@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import { IIngredient } from 'types/ingredient';
 import { useGetVisibleIngredients } from 'hooks/useGetVisibleIngredients';
 import { useLongPress } from 'use-long-press';
-import { useState } from 'react';
+import { MouseEvent, useState } from 'react';
 import { setContextMenuIsOpen } from 'redux/modal/modalSlice';
 import { AnimatePresence } from 'framer-motion';
 import { selectContextMenuStatus } from 'redux/modal/modalSelectors';
@@ -71,6 +71,18 @@ const IngredientsList = () => {
     console.log('Long pressed!');
   });
 
+  const handleClick = (
+    event: MouseEvent<HTMLLIElement, globalThis.MouseEvent>,
+    id: string,
+  ) => {
+    const target = event.target as Element;
+    const isCheckbox = target.closest('label');
+    const isButton = target.closest('button');
+    if (isCheckbox || isButton) return;
+
+    navigate(`${id}`);
+  };
+
   return (
     <>
       {isFetching && <Loader isLoading={isFetching} />}
@@ -87,7 +99,7 @@ const IngredientsList = () => {
                 id={id}
                 name={JSON.stringify({ title, iHave, shopping })}
                 isInMyBar={isInMyBar}
-                onClick={() => navigate(`${id}`)}
+                onClick={event => handleClick(event, id)}
                 {...longPressHandle()}
               >
                 <IngredientCard
