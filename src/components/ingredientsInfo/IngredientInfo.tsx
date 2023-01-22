@@ -95,8 +95,7 @@ const IngredientInfo: React.FC = () => {
 
   const { title, id, iHave, shopping, picture, description, cocktails } =
     ingredient;
-  // console.log('cocktails', cocktails);
-  // console.log('ingredient', ingredient);
+  console.log('cocktails', cocktails);
 
   return (
     <>
@@ -151,7 +150,10 @@ const IngredientInfo: React.FC = () => {
       </Box>
       <AdditionalInfoTitle>Cocktails with {title}</AdditionalInfoTitle>
       {/* TODO: ROUTING */}
-      <CocktailList cocktails={cocktails as ICocktail[]} />
+      <CocktailList
+        inIngredientCard={true}
+        cocktails={cocktails as ICocktail[]}
+      />
       <FollowUpMessage>
         <CocktailBottomMessage isIngredient={true} />
       </FollowUpMessage>

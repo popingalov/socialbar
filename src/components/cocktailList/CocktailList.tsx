@@ -16,11 +16,13 @@ import ContextMenuCocktails from './contextMenu/ContextMenuCocktails';
 interface IProps {
   cocktails: ICocktail[];
   isFavoritePage?: boolean;
+  inIngredientCard?: boolean;
 }
 
 const CocktailList: React.FC<IProps> = ({
   cocktails,
   isFavoritePage = false,
+  inIngredientCard = false,
 }) => {
   const contextMenuIsOpen = useSelector(selectContextMenuStatus);
   const dispatch = useDispatch();
@@ -53,6 +55,15 @@ const CocktailList: React.FC<IProps> = ({
     console.log('Long pressed!');
   });
 
+  const handleClick = (id: string) => {
+    if (inIngredientCard) {
+      navigate(`/cocktails/${id}`);
+      return;
+    }
+
+    navigate(`${id}`);
+  };
+
   return (
     <>
       <BarList>
@@ -77,7 +88,7 @@ const CocktailList: React.FC<IProps> = ({
                 id={id}
                 name={JSON.stringify({ title, favorite })}
                 allIngredientsAreAvailable={iCan}
-                onClick={() => navigate(`${id}`)}
+                onClick={() => handleClick(id)}
                 {...longPressHandle()}
               >
                 <CocktailCard

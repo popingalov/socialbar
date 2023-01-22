@@ -39,7 +39,9 @@ const CocktailBottomMessage: React.FC<IProps> = ({
       {isIngredient && (
         <>
           You can{' '}
-          <BottomMessageLink to="new">create a new cocktail </BottomMessageLink>{' '}
+          <BottomMessageLink to="/cocktails/new">
+            create a new cocktail{' '}
+          </BottomMessageLink>{' '}
           with this ingredient
         </>
       )}
