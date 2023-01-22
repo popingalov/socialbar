@@ -16,11 +16,9 @@ import { precacheAndRoute, createHandlerBoundToURL } from 'workbox-precaching';
 import { registerRoute } from 'workbox-routing';
 import { StaleWhileRevalidate } from 'workbox-strategies';
 //
-import { cacheName } from './serviceWorker/base';
 import checkUrl from './serviceWorker/helpers/checkUrl';
-import takeCocktail from 'serviceWorker/controllers/takeCocktail';
-import takeIngredient from 'serviceWorker/controllers/takeIngredient';
-import favorite from 'serviceWorker/controllers/favorite';
+
+import controller from 'serviceWorker/controller';
 //
 declare const self: ServiceWorkerGlobalScope;
 
@@ -102,36 +100,10 @@ self.addEventListener('fetch', async (event: FetchEvent): Promise<any> => {
   }
 });
 
-async function takeCache(req: any, url: string, id: any, baseUrl: any) {
+async function takeCache(req: Request, url: string, id: any, baseUrl: any) {
   const cached = await caches.match(url);
   if (cached) {
     return cached;
   }
-
-  // switch (url) {
-  //   case '/api/favorite':
-  //     const result = await favorite(url, req);
-  //     addToCache(result.clone(), url);
-  //     return result;
-  // }
-  if (id) {
-    switch (baseUrl) {
-      case 'api/ingredients':
-        const result = await takeIngredient({ id, baseUrl, url });
-        addToCache(result.clone(), url);
-        return result;
-      case 'api/cocktails':
-        const result1 = await takeCocktail({ id, baseUrl, url });
-        addToCache(result1.clone(), url);
-        return result1;
-    }
-  }
-
-  const response = await fetch(req);
-  addToCache(response.clone(), url);
-  return response;
-}
-
-async function addToCache(response: any, url: string): Promise<any> {
-  (await caches.open(cacheName)).put(url, response);
+  return controller(req, url, id, baseUrl);
 }
