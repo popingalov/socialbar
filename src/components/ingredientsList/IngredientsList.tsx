@@ -81,7 +81,6 @@ const IngredientsList = () => {
             const { title, id, picture, iHave, shopping, cocktails } =
               ingredient;
             const isInMyBar = iHave || isMyBar;
-
             return (
               <ListItem
                 key={id}

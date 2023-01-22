@@ -39,6 +39,8 @@ const CocktailList = () => {
   let haveAllIngredients: ICocktail[] = [];
   let needMoreIngredients: ICocktail[] = [];
 
+  console.log('visibleCocktails', visibleCocktails);
+
   if (isMyCocktails) {
     haveAllIngredients = filteredCocktails.filter(({ lacks }) => !lacks.length);
     needMoreIngredients = filteredCocktails.filter(({ lacks }) => lacks.length);
@@ -105,6 +107,7 @@ const CocktailList = () => {
                     >
                       <CocktailCard
                         isFavorite={favorite}
+                        isFavoritePage={isFavoriteCocktails}
                         allAvailable={iCan}
                         name={title}
                         description={description}
@@ -162,6 +165,7 @@ const CocktailList = () => {
                     >
                       <CocktailCard
                         isFavorite={favorite}
+                        isFavoritePage={isFavoriteCocktails}
                         allAvailable={iCan}
                         name={title}
                         description={description}

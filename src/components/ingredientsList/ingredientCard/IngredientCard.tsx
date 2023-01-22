@@ -61,9 +61,9 @@ const IngredientCard: React.FC<IProps> = ({
         <IngredientName>{name}</IngredientName>
         {(isBarShelf || isShoppingList) && (
           <ExtraInfo>
-            {usedIn.length === 1
-              ? `is used in ${usedIn[0]}`
-              : `is used in ${usedIn.length} cocktails`}
+            {usedIn.length === 0 && `is not used in cocktails yet`}
+            {usedIn.length === 1 && `is used in ${usedIn[0].id}`}
+            {usedIn.length > 1 && `is used in ${usedIn.length} cocktails`}
           </ExtraInfo>
         )}
       </Box>
