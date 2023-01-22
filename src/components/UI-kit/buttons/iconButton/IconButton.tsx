@@ -1,4 +1,3 @@
-import { useDeleteFromShoppingMutation } from 'redux/api/shoppingApi';
 import { IconButtonStyled } from './iconButton.styled';
 
 interface IProps {

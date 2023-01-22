@@ -6,6 +6,7 @@ import { CocktailsName, Ingredients } from './CocktailCard.styled';
 interface IProps {
   name: string;
   description: string;
+  isFavoritePage: boolean;
   isFavorite?: boolean;
   allAvailable?: boolean;
   imageUrl: string;
@@ -15,6 +16,7 @@ interface IProps {
 
 const CocktailCard: React.FC<IProps> = ({
   isFavorite,
+  isFavoritePage,
   name,
   allAvailable = false,
   imageUrl,
@@ -38,7 +40,7 @@ const CocktailCard: React.FC<IProps> = ({
           <BiCheck size={28} />
         </Box>
       )}
-      {isFavorite && <LowIcon type="cocktails" />}
+      {(isFavorite || isFavoritePage) && <LowIcon type="cocktails" />}
     </Box>
   );
 };
