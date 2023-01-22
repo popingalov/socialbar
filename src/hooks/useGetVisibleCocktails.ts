@@ -8,7 +8,7 @@ export const useGetVisibleCocktails = (filterStatus: string) => {
   const { data: favoriteCocktails, isFetching: favoriteCocktailsFetching } =
     useGetFavoritesQuery();
 
-  // console.log('cocktails', cocktails);
+  console.log('cocktails', cocktails);
   // console.log('favoriteCocktails', favoriteCocktails);
 
   switch (filterStatus) {

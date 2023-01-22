@@ -6,7 +6,7 @@ export interface IIngredient {
   description: string;
   picture: string;
   category: string;
-  cocktails: ICocktail[];
+  cocktails: ICocktail[] | string[];
   isDefault: boolean;
   iHave: boolean;
   shopping: boolean;

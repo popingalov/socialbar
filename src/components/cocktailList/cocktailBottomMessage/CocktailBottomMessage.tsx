@@ -5,17 +5,16 @@ import BottomMessageButton from 'components/UI-kit/buttons/bottomMessageButton';
 import BottomMessageLink from 'components/UI-kit/bottomMessageLink';
 
 interface IProps {
-  isMyCocktails: boolean;
-  isAllCocktails: boolean;
+  isMyCocktails?: boolean;
+  isAllCocktails?: boolean;
   isIngredient?: boolean;
 }
 
 const CocktailBottomMessage: React.FC<IProps> = ({
-  isMyCocktails,
-  isAllCocktails,
+  isMyCocktails = false,
+  isAllCocktails = false,
   isIngredient = false,
 }) => {
-  console.log('isAllCocktails', isAllCocktails);
   const dispatch = useAppDispatch();
   const handleClick = () => {
     dispatch(setCocktailStatusFilter(cocktailFilterStatus.allCocktails));

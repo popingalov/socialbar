@@ -28,6 +28,8 @@ import {
   useDeleteFromShoppingMutation,
 } from 'redux/api/shoppingApi';
 import CocktailList from 'components/cocktailList';
+import FollowUpMessage from 'components/UI-kit/followUpMessage';
+import CocktailBottomMessage from 'components/cocktailList/cocktailBottomMessage';
 
 const IngredientInfo: React.FC = () => {
   const { ingredientId } = useParams();
@@ -92,7 +94,8 @@ const IngredientInfo: React.FC = () => {
 
   const { title, id, iHave, shopping, picture, description, cocktails } =
     ingredient;
-  console.log('cocktails', cocktails);
+  // console.log('cocktails', cocktails);
+  // console.log('ingredient', ingredient);
 
   return (
     <>
@@ -146,7 +149,11 @@ const IngredientInfo: React.FC = () => {
         </ShowMoreBtn>
       </Box>
       <AdditionalInfoTitle>Cocktails with {title}</AdditionalInfoTitle>
+      {/* TODO: ROUTING */}
       {/* <CocktailList cocktails={cocktails} /> */}
+      <FollowUpMessage>
+        <CocktailBottomMessage isIngredient={true} />
+      </FollowUpMessage>
     </>
   );
 };

@@ -12,7 +12,6 @@ import {
 } from 'redux/api/myBarApi';
 import { useDeleteFromShoppingMutation } from 'redux/api/shoppingApi';
 import { ICocktail } from 'types/cocktail';
-// import fallback from 'assets/fallback.png';
 
 interface IProps {
   filter: string;
@@ -21,7 +20,7 @@ interface IProps {
   isInMyBar: boolean;
   id: string;
   imageUrl: string;
-  usedIn: ICocktail[];
+  usedIn: string[];
 }
 
 const IngredientCard: React.FC<IProps> = ({
@@ -62,7 +61,7 @@ const IngredientCard: React.FC<IProps> = ({
         {(isBarShelf || isShoppingList) && (
           <ExtraInfo>
             {usedIn.length === 0 && `is not used in cocktails yet`}
-            {usedIn.length === 1 && `is used in ${usedIn[0].id}`}
+            {usedIn.length === 1 && `is used in ${usedIn[0]}`}
             {usedIn.length > 1 && `is used in ${usedIn.length} cocktails`}
           </ExtraInfo>
         )}
