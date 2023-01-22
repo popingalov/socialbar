@@ -13,7 +13,7 @@ interface IProps {
 
 const Checkbox: React.FC<IProps> = ({ checked, ...props }) => {
   return (
-    <CheckboxLabel onClick={e => e.stopPropagation()}>
+    <CheckboxLabel>
       <HiddenCheckbox checked={checked} {...props} />
       <StyledCheckbox whileTap={{ scale: 0.9 }} checked={checked}>
         <Icon viewBox="2 2 20 20">

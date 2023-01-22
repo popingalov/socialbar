@@ -10,7 +10,7 @@ import Loader from 'components/loader';
 import { useNavigate } from 'react-router-dom';
 import { useGetVisibleCocktails } from 'hooks/useGetVisibleCocktails';
 import { useLongPress } from 'use-long-press';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
 import { setContextMenuIsOpen } from 'redux/modal/modalSlice';
 import { AnimatePresence } from 'framer-motion';
@@ -39,6 +39,8 @@ const CocktailList = () => {
     useGetFilteredCocktails(visibleCocktails);
   let haveAllIngredients: ICocktail[] = [];
   let needMoreIngredients: ICocktail[] = [];
+
+  console.log('visibleCocktails', visibleCocktails);
 
   if (isMyCocktails) {
     haveAllIngredients = filteredCocktails.filter(({ lacks }) => !lacks.length);
@@ -106,6 +108,7 @@ const CocktailList = () => {
                     >
                       <CocktailCard
                         isFavorite={favorite}
+                        isFavoritePage={isFavoriteCocktails}
                         allAvailable={iCan}
                         name={title}
                         description={description}
@@ -163,6 +166,7 @@ const CocktailList = () => {
                     >
                       <CocktailCard
                         isFavorite={favorite}
+                        isFavoritePage={isFavoriteCocktails}
                         allAvailable={iCan}
                         name={title}
                         description={description}

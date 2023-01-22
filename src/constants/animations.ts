@@ -35,9 +35,14 @@ export const popUpMenuAnimation = {
 };
 
 const listAnimationType = {
-  hidden: { opacity: 0, translateX: '100px' },
-  show: { opacity: 1, translateX: 0 },
+  hidden: { opacity: 0 },
+  show: { opacity: 1 },
 };
+
+// const listAnimationType = {
+//   hidden: { opacity: 0, translateX: '100px' },
+//   show: { opacity: 1, translateX: 0 },
+// };
 
 export const listAnimation = {
   variants: listAnimationType,
