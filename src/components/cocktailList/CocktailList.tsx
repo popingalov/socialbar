@@ -41,7 +41,6 @@ const CocktailList: React.FC<IProps> = ({
     const data = event.target.closest('li').getAttribute('name');
     const id = event.target.closest('li').getAttribute('id');
     const { title, favorite } = JSON.parse(data);
-    console.log('id', id);
 
     setSelectCoordinates({
       top: event.changedTouches[0].clientY,
@@ -82,6 +81,7 @@ const CocktailList: React.FC<IProps> = ({
                 {...longPressHandle()}
               >
                 <CocktailCard
+                  isFavoritePage={isFavoritePage}
                   isFavorite={favorite}
                   allAvailable={iCan}
                   name={title}

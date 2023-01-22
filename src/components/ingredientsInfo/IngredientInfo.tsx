@@ -92,6 +92,7 @@ const IngredientInfo: React.FC = () => {
 
   const { title, id, iHave, shopping, picture, description, cocktails } =
     ingredient;
+  console.log('cocktails', cocktails);
 
   return (
     <>
@@ -145,7 +146,7 @@ const IngredientInfo: React.FC = () => {
         </ShowMoreBtn>
       </Box>
       <AdditionalInfoTitle>Cocktails with {title}</AdditionalInfoTitle>
-      {/* <CocktailList isInIngredient={true} ingredientCocktails={cocktails} /> */}
+      {/* <CocktailList cocktails={cocktails} /> */}
     </>
   );
 };

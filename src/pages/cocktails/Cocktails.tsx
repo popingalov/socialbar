@@ -21,21 +21,15 @@ const Cocktails = () => {
   const isAllCocktails = cocktailFilterStatus.allCocktails === cocktailFilter;
   const isFavoriteCocktails =
     cocktailFilterStatus.favoriteCocktails === cocktailFilter;
-  // console.log(isFavoriteCocktails);
 
   const { filteredCocktails, filteredItems } =
     useGetFilteredCocktails(visibleCocktails);
   let haveAllIngredients: ICocktail[] = [];
   let needMoreIngredients: ICocktail[] = [];
 
-  // console.log('visibleCocktails', visibleCocktails);
   if (isMyCocktails) {
     haveAllIngredients = filteredCocktails.filter(({ lacks }) => !lacks.length);
-    needMoreIngredients = filteredCocktails.filter(({ lacks }) => {
-      // console.log('lacks.length', lacks.length);
-
-      return lacks.length;
-    });
+    needMoreIngredients = filteredCocktails.filter(({ lacks }) => lacks.length);
   }
 
   return (
