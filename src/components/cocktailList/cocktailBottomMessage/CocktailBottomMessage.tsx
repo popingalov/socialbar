@@ -7,13 +7,13 @@ import BottomMessageLink from 'components/UI-kit/bottomMessageLink';
 interface IProps {
   isMyCocktails: boolean;
   isAllCocktails: boolean;
-  isIngredient: boolean;
+  isIngredient?: boolean;
 }
 
 const CocktailBottomMessage: React.FC<IProps> = ({
   isMyCocktails,
   isAllCocktails,
-  isIngredient,
+  isIngredient = false,
 }) => {
   console.log('isAllCocktails', isAllCocktails);
   const dispatch = useAppDispatch();
@@ -24,7 +24,7 @@ const CocktailBottomMessage: React.FC<IProps> = ({
   return (
     <>
       Can't find a cocktail you like? {` `}
-      {isMyCocktails && (
+      {isMyCocktails && !isIngredient && (
         <>
           Check {` `}
           <BottomMessageButton onClick={handleClick}>
@@ -39,7 +39,7 @@ const CocktailBottomMessage: React.FC<IProps> = ({
       )}
       {isIngredient && (
         <>
-          You can always{' '}
+          You can{' '}
           <BottomMessageLink to="new">create a new cocktail </BottomMessageLink>{' '}
           with this ingredient
         </>

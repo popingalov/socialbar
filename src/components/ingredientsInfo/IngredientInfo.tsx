@@ -145,7 +145,7 @@ const IngredientInfo: React.FC = () => {
         </ShowMoreBtn>
       </Box>
       <AdditionalInfoTitle>Cocktails with {title}</AdditionalInfoTitle>
-      <CocktailList isInIngredient={true} ingredientCocktails={cocktails} />
+      {/* <CocktailList isInIngredient={true} ingredientCocktails={cocktails} /> */}
     </>
   );
 };

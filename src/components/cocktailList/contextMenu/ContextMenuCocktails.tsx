@@ -5,8 +5,8 @@ import {
   useAddFavoriteMutation,
   useDeleteFavoriteMutation,
 } from 'redux/api/favoriteApi';
-import { useDispatch } from 'react-redux';
 import { setContextMenuIsOpen } from 'redux/modal/modalSlice';
+import { useDispatch } from 'react-redux';
 
 interface IProps {
   name: string;
@@ -14,6 +14,7 @@ interface IProps {
   isFavoritePage: boolean;
   isFavorite: boolean;
 }
+
 const ContextMenuCocktails: React.FC<IProps> = ({
   name,
   id,

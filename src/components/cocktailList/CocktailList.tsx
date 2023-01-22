@@ -1,4 +1,121 @@
-import BarList from 'components/barList';
+import BarList from 'components/barList/BarList';
+import { ICocktail } from 'types/cocktail';
+import { ListItem } from './CocktailList.styled';
+import CocktailCard from './cocktailCard/CocktailCard';
+import { useNavigate } from 'react-router';
+import { AnimatePresence } from 'framer-motion';
+import { useSelector } from 'react-redux';
+import { selectContextMenuStatus } from 'redux/modal/modalSelectors';
+import { setContextMenuIsOpen } from 'redux/modal/modalSlice';
+import { useLongPress } from 'use-long-press';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import PopUp from 'components/modal/popUp';
+import ContextMenuCocktails from './contextMenu/ContextMenuCocktails';
+
+interface IProps {
+  cocktails: ICocktail[];
+  isFavoritePage?: boolean;
+}
+
+const CocktailList: React.FC<IProps> = ({
+  cocktails,
+  isFavoritePage = false,
+}) => {
+  const contextMenuIsOpen = useSelector(selectContextMenuStatus);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const [selectCoordinates, setSelectCoordinates] = useState<ICoordinates>({
+    top: null,
+    left: null,
+    right: null,
+  });
+  const [selectedCocktail, setSelectedCocktail] = useState<{
+    name: string;
+    id: string;
+    isFavorite: boolean;
+  }>({ name: '', id: '', isFavorite: false });
+
+  const longPressHandle = useLongPress((event: any) => {
+    const data = event.target.closest('li').getAttribute('name');
+    const id = event.target.closest('li').getAttribute('id');
+    const { title, favorite } = JSON.parse(data);
+    console.log('id', id);
+
+    setSelectCoordinates({
+      top: event.changedTouches[0].clientY,
+      left: event.changedTouches[0].clientX,
+      right: null,
+    });
+    setSelectedCocktail({ name: title, id, isFavorite: favorite });
+
+    dispatch(setContextMenuIsOpen(true));
+    console.log('Long pressed!');
+  });
+
+  return (
+    <>
+      <BarList>
+        {cocktails.map(
+          ({
+            title,
+            description,
+            ingredients,
+            id,
+            picture,
+            iCan,
+            favorite,
+            lacks,
+          }) => {
+            const ingredientNames = ingredients.map(
+              ingredient => ingredient.data.title,
+            );
+
+            return (
+              <ListItem
+                key={id}
+                id={id}
+                name={JSON.stringify({ title, favorite })}
+                allIngredientsAreAvailable={iCan}
+                onClick={() => navigate(`${id}`)}
+                {...longPressHandle()}
+              >
+                <CocktailCard
+                  isFavorite={favorite}
+                  allAvailable={iCan}
+                  name={title}
+                  description={description}
+                  imageUrl={picture}
+                  ingredients={ingredientNames}
+                  lacks={lacks}
+                />
+              </ListItem>
+            );
+          },
+        )}
+      </BarList>
+
+      <AnimatePresence>
+        {contextMenuIsOpen && (
+          <PopUp key="popUp" coordinates={selectCoordinates} type="context">
+            <ContextMenuCocktails
+              name={selectedCocktail.name}
+              id={selectedCocktail.id}
+              isFavoritePage={isFavoritePage}
+              isFavorite={selectedCocktail.isFavorite}
+            />
+          </PopUp>
+        )}
+      </AnimatePresence>
+    </>
+  );
+};
+
+export default CocktailList;
+
+/**
+ * import BarList from 'components/barList';
 import { useSelector } from 'react-redux';
 import { selectCocktailFilter } from 'redux/filter/filterSelectors';
 import CocktailCard from 'components/cocktailList/cocktailCard';
@@ -20,6 +137,7 @@ import PopUp from 'components/modal/popUp';
 import ContextMenuCocktails from './contextMenu/ContextMenuCocktails';
 import { useGetFilteredCocktails } from 'hooks/useGetFilteredCocktails';
 import { ICocktail } from 'types/cocktail';
+import List from './List';
 
 interface IProps {
   isInIngredient?: boolean;
@@ -259,3 +377,6 @@ const CocktailList: React.FC<IProps> = ({
 };
 
 export default CocktailList;
+
+ * 
+ */
