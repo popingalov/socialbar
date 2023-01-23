@@ -2,6 +2,7 @@ import addToCache from './helpers/addToCache';
 import takeIngredient from './get/takeIngredient';
 import takeCocktail from './get/takeCocktail';
 import favorite from './get/favorite';
+import ingredientList from './post/ingredientList';
 export default async function controller(
   req: Request,
   url: string,
@@ -11,12 +12,12 @@ export default async function controller(
   const { method } = req;
 
   if (method === 'GET') {
-    // switch (url) {
-    //   case '/api/favorite':
-    //     const result = await favorite(url, req);
-    //     addToCache(result.clone(), url);
-    //     return result;
-    // }
+    switch (url) {
+      case '/api/favorite':
+        const result = await favorite(url, req);
+        addToCache(result.clone(), url);
+        return result;
+    }
     if (id) {
       switch (baseUrl) {
         case 'api/ingredients':
@@ -30,15 +31,26 @@ export default async function controller(
       }
     }
   }
+  console.log(url);
 
-  // if (method === 'POST') {
-  //   switch (url) {
-  //     case '/api/favorite':
-  //       const result = await favorite(url, req);
-  //       addToCache(result.clone(), url);
-  //       return result;
-  //   }
-  // }
+  if (method === 'POST') {
+    switch (url) {
+      case '/api/my-ingredient-list':
+        fetch(req.clone());
+        const result = await ingredientList(req);
+        addToCache(result.clone(), '/api/ingredients');
+        return result;
+    }
+  }
+  if (method === 'DELETE') {
+    switch (url) {
+      case '/api/my-ingredient-list':
+        fetch(req.clone());
+        const result = await ingredientList(req);
+        addToCache(result.clone(), '/api/ingredients');
+        return result;
+    }
+  }
   const response = await fetch(req);
   addToCache(response.clone(), url);
   return response;

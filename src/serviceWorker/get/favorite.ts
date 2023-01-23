@@ -5,8 +5,15 @@ export default async function favorite(url: string, req: Request) {
   ]);
 
   const favorite = await promiseFavorite.json();
+
   const { all } = await promiseCocktails?.json();
-  favorite.cocktails = all.filter((el: any) => el.favorite);
-  const result = new Response(favorite);
+  const helper = favorite.cocktails.map((el: any) => {
+    const result = all.find((els: any) => els.title === el.title);
+    return result;
+  });
+
+  favorite.cocktails = helper;
+  // favorite.cocktails = all.filter((el: any) => el.favorite);
+  const result = new Response(JSON.stringify(favorite));
   return result;
 }

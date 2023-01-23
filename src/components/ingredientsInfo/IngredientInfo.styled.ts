@@ -20,10 +20,11 @@ interface DescProp {
 
 export const Description = styled.p<DescProp>`
   max-height: ${p => !p.showMore && '45px'};
-  height: ${p => p.showMore && 'auto'};
+  max-height: ${p => p.showMore && '200px'};
   overflow: hidden;
   font-size: ${({ theme }) => theme.fontSizes.xs};
   color: ${({ theme }) => theme.colors.secondaryText};
+  transition: max-height 250ms ${p => p.theme.transitionTiming};
 `;
 
 export const ItemButton = styled.li`

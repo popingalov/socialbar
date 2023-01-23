@@ -30,6 +30,7 @@ import {
 import CocktailList from 'components/cocktailList';
 import FollowUpMessage from 'components/UI-kit/followUpMessage';
 import CocktailBottomMessage from 'components/cocktailList/cocktailBottomMessage';
+import { ICocktail } from 'types/cocktail';
 
 const IngredientInfo: React.FC = () => {
   const { ingredientId } = useParams();
@@ -95,7 +96,6 @@ const IngredientInfo: React.FC = () => {
   const { title, id, iHave, shopping, picture, description, cocktails } =
     ingredient;
   // console.log('cocktails', cocktails);
-  // console.log('ingredient', ingredient);
 
   return (
     <>
@@ -150,7 +150,10 @@ const IngredientInfo: React.FC = () => {
       </Box>
       <AdditionalInfoTitle>Cocktails with {title}</AdditionalInfoTitle>
       {/* TODO: ROUTING */}
-      {/* <CocktailList cocktails={cocktails} /> */}
+      <CocktailList
+        inIngredientCard={true}
+        cocktails={cocktails as ICocktail[]}
+      />
       <FollowUpMessage>
         <CocktailBottomMessage isIngredient={true} />
       </FollowUpMessage>
