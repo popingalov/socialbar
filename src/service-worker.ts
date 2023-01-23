@@ -93,6 +93,7 @@ self.addEventListener('activate', () => {
 self.addEventListener('fetch', async (event: FetchEvent): Promise<any> => {
   const req = event.request;
   const { test, url, id, baseUrl } = checkUrl(req.url);
+  console.log(req);
 
   if (test) {
     event.respondWith(takeCache(req, url, id, baseUrl));
@@ -102,7 +103,8 @@ self.addEventListener('fetch', async (event: FetchEvent): Promise<any> => {
 
 async function takeCache(req: Request, url: string, id: any, baseUrl: any) {
   const cached = await caches.match(url);
-  if (cached) {
+  const { method } = req;
+  if (cached && method === 'GET') {
     return cached;
   }
   return controller(req, url, id, baseUrl);
