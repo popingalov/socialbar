@@ -95,7 +95,7 @@ const IngredientInfo: React.FC = () => {
 
   const { title, id, iHave, shopping, picture, description, cocktails } =
     ingredient;
-  console.log('cocktails', cocktails);
+  // console.log('cocktails', cocktails);
 
   return (
     <>
