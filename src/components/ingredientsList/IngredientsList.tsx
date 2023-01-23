@@ -84,7 +84,7 @@ const IngredientsList: React.FC<IProps> = ({
         {ingredients.map((ingredient: IIngredient) => {
           const { title, id, picture, iHave, shopping, cocktails } = ingredient;
           const isInMyBar = iHave || isMyBar;
-          console.log('cocktails', cocktails);
+          // console.log('cocktails', cocktails);
           return (
             <ListItem
               key={id}
