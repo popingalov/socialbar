@@ -1,7 +1,8 @@
 import { IIngredient } from 'types/ingredient.d';
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { IBarResponse } from 'types/response.d.';
-
+import { ingredientApi } from './ingredientApi';
+import { cocktailApi } from './cocktailApi';
 import baseQuery from 'redux/baseQuery';
 import { TAGS_TYPES, MY_BAR_LIST_URL } from 'constants/api';
 
@@ -27,6 +28,16 @@ export const myBarApi = createApi({
         body: { id: ingredientId },
       }),
       invalidatesTags: [TAGS_TYPES.myBar],
+      async onQueryStarted(id, { dispatch, queryFulfilled }) {
+        console.log('starting!');
+        try {
+          await queryFulfilled;
+          dispatch(ingredientApi.util.invalidateTags([TAGS_TYPES.ingredients]));
+          dispatch(cocktailApi.util.invalidateTags([TAGS_TYPES.cocktails]));
+        } catch (err) {
+          console.log('error... ', err);
+        }
+      },
     }),
 
     deleteFromBar: builder.mutation<IBarResponse, string>({
@@ -34,7 +45,17 @@ export const myBarApi = createApi({
         url: `${MY_BAR_LIST_URL}/${ingredientId}`,
         method: 'DELETE',
       }),
-      invalidatesTags: [TAGS_TYPES.shopping],
+      invalidatesTags: [TAGS_TYPES.myBar],
+      async onQueryStarted(id, { dispatch, queryFulfilled }) {
+        console.log('starting!');
+        try {
+          await queryFulfilled;
+          dispatch(ingredientApi.util.invalidateTags([TAGS_TYPES.ingredients]));
+          dispatch(cocktailApi.util.invalidateTags([TAGS_TYPES.cocktails]));
+        } catch (err) {
+          console.log('error... ', err);
+        }
+      },
     }),
   }),
 });
