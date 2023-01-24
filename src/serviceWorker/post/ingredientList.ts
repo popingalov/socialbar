@@ -16,6 +16,9 @@ export default async function ingredientList(req: Request) {
   });
   const newList = new Response(JSON.stringify(list));
   await (await caches.open(cacheName)).put('/api/my-ingredient-list', newList);
-  const result = new Response(JSON.stringify(newIngArr));
+  const result = new Response(JSON.stringify(newIngArr), {
+    status: 201,
+    statusText: 'ok',
+  });
   return result;
 }

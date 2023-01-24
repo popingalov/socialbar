@@ -77,6 +77,7 @@ const IngredientsList: React.FC<IProps> = ({
 
     navigate(`${id}`);
   };
+  console.log('маю рендеретись', ingredients);
 
   return (
     <>

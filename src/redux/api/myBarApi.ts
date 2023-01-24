@@ -26,7 +26,7 @@ export const myBarApi = createApi({
         method: 'POST',
         body: { id: ingredientId },
       }),
-      invalidatesTags: [TAGS_TYPES.myBar],
+      invalidatesTags: [TAGS_TYPES.myBar, TAGS_TYPES.favorites],
     }),
 
     deleteFromBar: builder.mutation<IBarResponse, string>({

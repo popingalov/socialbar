@@ -1,17 +1,19 @@
 import { cacheName } from '../base';
 
-export default async function ingredientList(req: Request) {
-  const { id } = await req.json();
+export default async function ingredientListRemove(id: string) {
+  // const { id } = await req.json();
+  console.log('удаляю');
+
   const promiseIng = await caches.match('/api/ingredients');
   const ing = await promiseIng?.json();
   const promiselist = await caches.match('/api/my-ingredient-list');
   const list = await promiselist?.json();
 
-  const newIngArr = ing.filter((el: any) => {
+  const newIngArr = ing.map((el: any) => {
     if (el.id === id) {
       el.iHave = false;
     }
-    return el.id !== id;
+    return el;
   });
   const helper = list.list.filter((el: any) => el.id !== id);
   list.list = helper;

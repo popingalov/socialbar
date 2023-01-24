@@ -38,7 +38,7 @@ export default async function controller(
       case '/api/my-ingredient-list':
         fetch(req.clone());
         const result = await ingredientList(req);
-        addToCache(result.clone(), '/api/ingredients');
+        await addToCache(result.clone(), '/api/ingredients');
         return result;
     }
   }
