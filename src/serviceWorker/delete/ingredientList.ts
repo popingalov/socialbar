@@ -10,6 +10,8 @@ export default async function ingredientListRemove(id: string) {
   const list = await promiselist?.json();
 
   const newIngArr = ing.map((el: any) => {
+    console.log(el.id === id, el.id, id);
+
     if (el.id === id) {
       el.iHave = false;
     }

@@ -3,6 +3,7 @@ import takeIngredient from './get/takeIngredient';
 import takeCocktail from './get/takeCocktail';
 import favorite from './get/favorite';
 import ingredientList from './post/ingredientList';
+import ingredientListRemove from './delete/ingredientList';
 export default async function controller(
   req: Request,
   url: string,
@@ -42,11 +43,13 @@ export default async function controller(
         return result;
     }
   }
+  console.log(method, url);
+
   if (method === 'DELETE') {
-    switch (url) {
-      case '/api/my-ingredient-list':
+    switch (baseUrl) {
+      case 'api/my-ingredient-list':
         fetch(req.clone());
-        const result = await ingredientList(req);
+        const result = await ingredientListRemove(id);
         addToCache(result.clone(), '/api/ingredients');
         return result;
     }

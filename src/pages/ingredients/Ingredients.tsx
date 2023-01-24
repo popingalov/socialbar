@@ -22,7 +22,6 @@ const Ingredients = () => {
 
   const { filteredIngredients, filteredItems } =
     useGetFilteredIngredients(visibleIngredients);
-  console.log('маю рендеритись ще раз');
 
   return (
     <motion.section {...pageAnimation} transition={{ duration: 0.3 }}>
