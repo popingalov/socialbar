@@ -9,7 +9,6 @@ import Loader from 'components/loader';
 import { useGetVisibleCocktails } from 'hooks/useGetVisibleCocktails';
 import { useGetFilteredCocktails } from 'hooks/useGetFilteredCocktails';
 import { ICocktail } from 'types/cocktail';
-import { FilteredMessage } from 'components/cocktailList/CocktailList.styled';
 import CocktailList from 'components/cocktailList';
 
 const Cocktails = () => {
@@ -43,9 +42,7 @@ const Cocktails = () => {
           />
           {!isFetching && filteredItems !== 0 && (
             <FollowUpMessage>
-              <FilteredMessage>
-                ( +{filteredItems} cocktails filtered )
-              </FilteredMessage>
+              ( +{filteredItems} cocktails filtered )
             </FollowUpMessage>
           )}
         </>

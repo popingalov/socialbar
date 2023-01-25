@@ -11,4 +11,5 @@ export const Message = styled.div`
   background-color: ${({ theme }) => theme.colors.extraMessageBgColor};
   line-height: 1.5;
   letter-spacing: 0.028em;
+  text-align: center;
 `;

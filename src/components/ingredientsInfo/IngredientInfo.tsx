@@ -5,9 +5,7 @@ import { BiChevronUp, BiChevronDown } from 'react-icons/bi';
 import Box from 'components/box/Box';
 
 import {
-  AdditionalInfoTitle,
   CartBtn,
-  // Checkbox,
   Description,
   EditBtn,
   Image,
@@ -15,10 +13,7 @@ import {
   ShowMoreBtn,
   Title,
 } from './IngredientInfo.styled';
-import { useParams } from 'react-router';
-import { useGetIngredientByIdQuery } from 'redux/api/ingredientApi';
 import Checkbox from 'components/UI-kit/checkbox';
-import Loader from 'components/loader';
 import {
   useAddToBarMutation,
   useDeleteFromBarMutation,
@@ -27,16 +22,14 @@ import {
   useAddToShoppingMutation,
   useDeleteFromShoppingMutation,
 } from 'redux/api/shoppingApi';
-import CocktailList from 'components/cocktailList';
-import FollowUpMessage from 'components/UI-kit/followUpMessage';
-import CocktailBottomMessage from 'components/cocktailList/cocktailBottomMessage';
-import { ICocktail } from 'types/cocktail';
+import { IIngredient } from 'types/ingredient';
 
-const IngredientInfo: React.FC = () => {
-  const { ingredientId } = useParams();
-  const { data: ingredient } = useGetIngredientByIdQuery(
-    ingredientId as string,
-  );
+interface IProps {
+  ingredient: IIngredient;
+}
+
+const IngredientInfo: React.FC<IProps> = ({ ingredient }) => {
+  const { title, id, iHave, shopping, picture, description } = ingredient;
 
   const [addToMyBar, { isLoading: addingToMyBar }] = useAddToBarMutation();
   const [deleteFromMyBar, { isLoading: deletingFromMyBar }] =
@@ -48,8 +41,6 @@ const IngredientInfo: React.FC = () => {
 
   const [heightEl, setHeightEl] = useState<number>(0);
   const [showMore, setShowMore] = useState<boolean>(false);
-
-  // console.log('ingredient', ingredient);
 
   const refComponent = useRef<HTMLParagraphElement>(null);
 
@@ -91,73 +82,56 @@ const IngredientInfo: React.FC = () => {
     // addToMyBar(id);
   };
 
-  if (!ingredient) return <Loader isLoading={!ingredient} />;
-
-  const { title, id, iHave, shopping, picture, description, cocktails } =
-    ingredient;
-  // console.log('cocktails', cocktails);
-
   return (
-    <>
-      <Box px={3} py={3}>
+    <Box px={3} py={3}>
+      <Box
+        display="flex"
+        justifyContent="space-between"
+        alignItems="center"
+        mb={3}
+      >
+        <Title>{title}</Title>
         <Box
+          as={'ul'}
           display="flex"
           justifyContent="space-between"
           alignItems="center"
-          mb={3}
+          gridGap={1}
         >
-          <Title>{title}</Title>
-          <Box
-            as={'ul'}
-            display="flex"
-            justifyContent="space-between"
-            alignItems="center"
-            gridGap={1}
-          >
-            <ItemButton>
-              <EditBtn onClick={onClickEdit}>
-                <HiPencil size={24} />
-              </EditBtn>
-            </ItemButton>
-            <ItemButton>
-              <CartBtn
-                onClick={() => {
-                  toggleCart(shopping, id);
-                }}
-                isShopping={shopping}
-              >
-                <HiShoppingCart size={24} />
-              </CartBtn>
-            </ItemButton>
-            <ItemButton>
-              <Checkbox
-                checked={iHave}
-                onChange={() => {
-                  toggleCheckBox(iHave, id);
-                }}
-              />
-            </ItemButton>
-          </Box>
+          <ItemButton>
+            <EditBtn onClick={onClickEdit}>
+              <HiPencil size={24} />
+            </EditBtn>
+          </ItemButton>
+          <ItemButton>
+            <CartBtn
+              onClick={() => {
+                toggleCart(shopping, id);
+              }}
+              isShopping={shopping}
+            >
+              <HiShoppingCart size={24} />
+            </CartBtn>
+          </ItemButton>
+          <ItemButton>
+            <Checkbox
+              checked={iHave}
+              onChange={() => {
+                toggleCheckBox(iHave, id);
+              }}
+            />
+          </ItemButton>
         </Box>
-        <Image src={picture} />
-        <Description ref={refComponent} showMore={showMore}>
-          {description}
-        </Description>
-        <ShowMoreBtn type="button" onClick={showDescription}>
-          {showMore && <BiChevronUp size={24} />}
-          {!showMore && heightEl > 44 && <BiChevronDown size={24} />}
-        </ShowMoreBtn>
       </Box>
-      <AdditionalInfoTitle>Cocktails with {title}</AdditionalInfoTitle>
-      {/* TODO: ROUTING */}
-      <CocktailList
-        inIngredientCard={true}
-        cocktails={cocktails as ICocktail[]}
-      />
-      <FollowUpMessage>
-        <CocktailBottomMessage isIngredient={true} />
-      </FollowUpMessage>
-    </>
+      <Image src={picture} />
+      <Description ref={refComponent} showMore={showMore}>
+        {description}
+      </Description>
+      <ShowMoreBtn type="button" onClick={showDescription}>
+        {showMore && <BiChevronUp size={24} />}
+        {!showMore && heightEl > 44 && <BiChevronDown size={24} />}
+      </ShowMoreBtn>
+    </Box>
   );
 };
 
