@@ -9,7 +9,3 @@ export const ListItem = styled.li<{
       ? theme.colors.secondaryBackgroundColor
       : theme.colors.mainBackgroundColor};
 `;
-
-export const FilteredMessage = styled.p`
-  text-align: center;
-`;

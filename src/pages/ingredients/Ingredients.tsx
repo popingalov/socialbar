@@ -9,7 +9,6 @@ import IngredientBottomMessage from 'components/ingredientsList/ingredientBottom
 import Loader from 'components/loader';
 import { useGetVisibleIngredients } from 'hooks/useGetVisibleIngredients';
 import { useGetFilteredIngredients } from 'hooks/useGetFilteredIngredients';
-import { FilteredMessage } from 'components/ingredientsList/IngredientsList.styled';
 
 const Ingredients = () => {
   const ingredientFilter = useSelector(selectIngredientFilter);
@@ -38,9 +37,7 @@ const Ingredients = () => {
 
       {!isFetching && filteredItems !== 0 && (
         <FollowUpMessage>
-          <FilteredMessage>
-            ( +{filteredItems} ingredients filtered )
-          </FilteredMessage>
+          ( +{filteredItems} ingredients filtered )
         </FollowUpMessage>
       )}
 
