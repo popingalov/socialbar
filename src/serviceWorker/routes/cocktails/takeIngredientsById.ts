@@ -1,5 +1,7 @@
 import { ICocktail } from 'types/cocktail';
-import inthegut from '../helpers/inthegut';
+import inthegut from '../../helpers/inthegut';
+import respGenerator from 'serviceWorker/helpers/responseGenerator';
+
 interface IParams {
   id: string;
   baseUrl: string;
@@ -27,8 +29,7 @@ export default async function takeCocktail({ id, baseUrl, url }: IParams) {
   const favoritePromise = await caches.match('/api/favorite');
   const favorite: any = await favoritePromise?.json();
 
-  const result = new Response(
-    JSON.stringify(inthegut(cocktail, ingList, favorite)),
-  );
+  const result = respGenerator(inthegut(cocktail, ingList, favorite));
+
   return result;
 }

@@ -1,11 +1,12 @@
 import { IIngredient } from 'types/ingredient';
-import { cacheName } from '../base';
+import { cacheName } from '../../base';
+import respGenerator from 'serviceWorker/helpers/responseGenerator';
 
 interface IIngredientList {
   list: IIngredient[];
 }
 
-export default async function ingredientList(req: Request) {
+export default async function addToIngredientList(req: Request) {
   const { id } = await req.json();
   const promiseIng = await caches.match('/api/ingredients');
   const ing: IIngredient[] = await promiseIng?.json();
@@ -45,9 +46,7 @@ async function helper(
 ) {
   const newList = new Response(JSON.stringify(list));
   await (await caches.open(cacheName)).put('/api/my-ingredient-list', newList);
-  const result = new Response(JSON.stringify(newIngArr), {
-    status: 201,
-    statusText: 'ok',
-  });
+  const result = respGenerator(newIngArr, 201);
+
   return { result, trigger };
 }

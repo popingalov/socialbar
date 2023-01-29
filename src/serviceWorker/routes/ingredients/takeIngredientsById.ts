@@ -1,5 +1,7 @@
 import { ICocktail } from 'types/cocktail';
-import { IIngredient } from '../../types/ingredient';
+import { IIngredient } from '../../../types/ingredient';
+import respGenerator from 'serviceWorker/helpers/responseGenerator';
+
 interface IParams {
   id: string;
   baseUrl: string;
@@ -36,6 +38,7 @@ export default async function takeIngredient({ id, baseUrl, url }: IParams) {
   }, [] as any);
 
   ingredient.cocktails = includeCocktails;
-  const result = new Response(JSON.stringify(ingredient));
+  const result = respGenerator(ingredient);
+
   return result;
 }
