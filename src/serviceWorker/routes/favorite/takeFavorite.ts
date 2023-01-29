@@ -1,3 +1,5 @@
+import respGenerator from 'serviceWorker/helpers/responseGenerator';
+
 export default async function favorite(url: string, req: Request) {
   const [promiseFavorite, promiseCocktails] = await Promise.all([
     fetch(req),
@@ -14,6 +16,7 @@ export default async function favorite(url: string, req: Request) {
 
   favorite.cocktails = helper;
   // favorite.cocktails = all.filter((el: any) => el.favorite);
-  const result = new Response(JSON.stringify(favorite));
+  const result = respGenerator(favorite);
+
   return result;
 }

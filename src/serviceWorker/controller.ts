@@ -1,9 +1,9 @@
 import addToCache from './helpers/addToCache';
-import takeIngredient from './get/takeIngredient';
-import takeCocktail from './get/takeCocktail';
-import favorite from './get/favorite';
-import ingredientList from './post/ingredientList';
-import ingredientListRemove from './delete/ingredientList';
+import takeIngredient from './routes/ingredients/takeIngredientsById';
+import takeCocktail from './routes/cocktails/takeIngredientsById';
+import favorite from './routes/favorite/takeFavorite';
+import ingredientList from './routes/ingredientList/addToIngredientList';
+import ingredientListRemove from './routes/ingredientList/removeInIngredientList';
 export default async function controller(
   req: Request,
   url: string,
@@ -38,8 +38,9 @@ export default async function controller(
     switch (url) {
       case '/api/my-ingredient-list':
         fetch(req.clone());
-        const result = await ingredientList(req);
-        await addToCache(result.clone(), '/api/ingredients');
+        const { result, trigger } = await ingredientList(req);
+        const cacheUrl = trigger ? '/api/ingredients' : '/api/ingredients/my';
+        await addToCache(result.clone(), cacheUrl);
         return result;
     }
   }
@@ -49,9 +50,10 @@ export default async function controller(
     switch (baseUrl) {
       case 'api/my-ingredient-list':
         fetch(req.clone());
-        const result = await ingredientListRemove(id);
-        addToCache(result.clone(), '/api/ingredients');
-        return result;
+        const { result, trigger, respond } = await ingredientListRemove(id);
+        const cacheUrl = trigger ? '/api/ingredients' : '/api/ingredients/my';
+        addToCache(result.clone(), cacheUrl);
+        return respond;
     }
   }
   const response = await fetch(req);
