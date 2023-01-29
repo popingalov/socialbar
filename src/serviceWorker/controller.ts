@@ -38,8 +38,9 @@ export default async function controller(
     switch (url) {
       case '/api/my-ingredient-list':
         fetch(req.clone());
-        const result = await ingredientList(req);
-        await addToCache(result.clone(), '/api/ingredients');
+        const { result, trigger } = await ingredientList(req);
+        const cacheUrl = trigger ? '/api/ingredients' : '/api/ingredients/my';
+        await addToCache(result.clone(), cacheUrl);
         return result;
     }
   }
