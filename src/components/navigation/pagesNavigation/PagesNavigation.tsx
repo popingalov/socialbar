@@ -17,7 +17,8 @@ const PagesNavigation = () => {
   const location = useLocation();
 
   const navigation =
-    location.pathname === paths.ingredients
+    location.pathname === paths.ingredients ||
+    location.pathname === paths.searchIngredient
       ? ingredientsNavItems
       : cocktailsNavItems;
   const filter = useSelector(

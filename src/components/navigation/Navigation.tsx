@@ -44,7 +44,7 @@ const Navigation = () => {
     location.pathname === paths.newCocktail ||
     location.pathname === paths.newIngredient;
 
-  const isSearch = location.pathname === paths.search;
+  const isSearch = location.pathname === paths.searchIngredient;
   console.log(' location.pathname', isSearch);
   const isMainRouteSearching = isMainRoute && isSearch;
   const isMainRouteFilter = isMainRoute && !isSearch;
