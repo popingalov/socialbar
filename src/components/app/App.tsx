@@ -57,7 +57,9 @@ const App = () => {
           <Routes location={location} key={location.key}>
             <Route path="/" element={<Layout />}>
               <Route index element={<Navigate to="ingredients" replace />} />
-              <Route path="cocktails" element={<Cocktails />} />
+              <Route path="cocktails" element={<Cocktails />}>
+                <Route path="search" element={<Search />} />
+              </Route>
               <Route path="ingredients" element={<Ingredients />}>
                 <Route path="search" element={<Search />} />
               </Route>

@@ -44,13 +44,15 @@ const Navigation = () => {
     location.pathname === paths.newCocktail ||
     location.pathname === paths.newIngredient;
 
-  const isSearch = location.pathname === paths.searchIngredient;
+  const isSearch =
+    location.pathname === paths.searchIngredient ||
+    location.pathname === paths.searchCocktails;
   console.log(' location.pathname', isSearch);
   const isMainRouteSearching = isMainRoute && isSearch;
   const isMainRouteFilter = isMainRoute && !isSearch;
   const isCardRouteSearching = isSearch && !isMainRoute;
   const isIngredients = location.pathname === paths.ingredients;
-  // const isCocktails = location.pathname === paths.cocktails;
+  const isCocktails = location.pathname === paths.cocktails;
 
   const filter = useGetPageCategories(isIngredients);
   const selectLabel = useGetNavSelectLabel(isIngredients);
@@ -84,7 +86,7 @@ const Navigation = () => {
   };
 
   const handleBackButton = () => {
-    console.log('handle back btn');
+    dispatch(changeSearchFilter(initialSearchStatus));
     navigate(-1);
     // if (isSearch) {
     //   setSearch(false);
@@ -94,7 +96,15 @@ const Navigation = () => {
 
   const handleSearchButton = () => {
     // setSearch(prevState => !prevState);
-    navigate('/ingredients/search');
+    if (isIngredients) {
+      navigate('/ingredients/search');
+      return;
+    }
+
+    if (isCocktails) {
+      navigate('/cocktails/search');
+      return;
+    }
   };
 
   const handleAppMenu = () => {
