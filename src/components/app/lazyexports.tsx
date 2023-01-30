@@ -19,3 +19,5 @@ export const Ingredients: React.FC = React.lazy(
 );
 export const Layout: React.FC = React.lazy(() => import('layout'));
 export const Settings: React.FC = React.lazy(() => import('pages/settings'));
+
+export const Search: React.FC = React.lazy(() => import('pages/search'));

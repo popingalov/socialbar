@@ -5,4 +5,5 @@ interface IPaths {
   readonly settings: string;
   readonly newCocktail: string;
   readonly newIngredient: string;
+  readonly search: string;
 }

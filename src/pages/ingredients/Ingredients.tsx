@@ -1,6 +1,6 @@
 import IngredientsList from 'components/ingredientsList';
 import { pageAnimation } from 'constants/animations';
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { selectIngredientFilter } from 'redux/filter/filterSelectors';
 import { useSelector } from 'react-redux';
 import { ingredientFilterStatus } from 'redux/filter/filterConstants';
@@ -9,6 +9,8 @@ import IngredientBottomMessage from 'components/ingredientsList/ingredientBottom
 import Loader from 'components/loader';
 import { useGetVisibleIngredients } from 'hooks/useGetVisibleIngredients';
 import { useGetFilteredIngredients } from 'hooks/useGetFilteredIngredients';
+import { Suspense } from 'react';
+import { Outlet } from 'react-router';
 
 const Ingredients = () => {
   const ingredientFilter = useSelector(selectIngredientFilter);
@@ -23,30 +25,35 @@ const Ingredients = () => {
     useGetFilteredIngredients(visibleIngredients);
 
   return (
-    <motion.section {...pageAnimation} transition={{ duration: 0.3 }}>
-      {isFetching && <Loader isLoading={isFetching} />}
+    <>
+      <motion.section {...pageAnimation} transition={{ duration: 0.3 }}>
+        {isFetching && <Loader isLoading={isFetching} />}
 
-      {filteredIngredients && (
-        <IngredientsList
-          ingredients={filteredIngredients}
-          isMyBar={isMyBar}
-          isShoppingList={isShoppingList}
-          ingredientFilter={ingredientFilter}
-        />
-      )}
+        {filteredIngredients && (
+          <IngredientsList
+            ingredients={filteredIngredients}
+            isMyBar={isMyBar}
+            isShoppingList={isShoppingList}
+            ingredientFilter={ingredientFilter}
+          />
+        )}
 
-      {!isFetching && filteredItems !== 0 && (
-        <FollowUpMessage>
-          ( +{filteredItems} ingredients filtered )
-        </FollowUpMessage>
-      )}
+        {!isFetching && filteredItems !== 0 && (
+          <FollowUpMessage>
+            ( +{filteredItems} ingredients filtered )
+          </FollowUpMessage>
+        )}
 
-      {!isFetching && !isShoppingList && (
-        <FollowUpMessage>
-          <IngredientBottomMessage />
-        </FollowUpMessage>
-      )}
-    </motion.section>
+        {!isFetching && !isShoppingList && (
+          <FollowUpMessage>
+            <IngredientBottomMessage />
+          </FollowUpMessage>
+        )}
+      </motion.section>
+      <Suspense fallback={<Loader />}>
+        <Outlet />
+      </Suspense>
+    </>
   );
 };
 

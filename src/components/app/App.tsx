@@ -17,6 +17,7 @@ import {
   NewCocktail,
   NewIngredient,
   Settings,
+  Search,
 } from './lazyexports';
 import { GlobalStyle } from './App.styled';
 import Loader from 'components/loader';
@@ -57,7 +58,9 @@ const App = () => {
             <Route path="/" element={<Layout />}>
               <Route index element={<Navigate to="ingredients" replace />} />
               <Route path="cocktails" element={<Cocktails />} />
-              <Route path="ingredients" element={<Ingredients />} />
+              <Route path="ingredients" element={<Ingredients />}>
+                <Route path="search" element={<Search />} />
+              </Route>
               <Route
                 path="cocktails/:cocktailId"
                 element={<CocktailsDetails />}

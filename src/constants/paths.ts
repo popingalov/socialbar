@@ -5,4 +5,5 @@ export const paths: IPaths = {
   settings: '/settings',
   newCocktail: '/cocktails/new',
   newIngredient: '/ingredients/new',
+  search: '/ingredients/search' || '/cocktails/search',
 };
