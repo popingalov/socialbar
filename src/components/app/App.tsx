@@ -54,26 +54,52 @@ const App = () => {
       <GlobalStyle />
       <AnimatePresence>
         <Suspense fallback={<Loader />}>
-          <Routes location={location} key={location.key}>
-            <Route path="/" element={<Layout />}>
-              <Route index element={<Navigate to="ingredients" replace />} />
-              <Route path="cocktails" element={<Cocktails />}>
-                <Route path="search" element={<Search />} />
-              </Route>
-              <Route path="ingredients" element={<Ingredients />}>
+          <Routes location={location}>
+            <Route key={location.key} path="/" element={<Layout />}>
+              <Route
+                key={location.key}
+                index
+                element={<Navigate to="ingredients" replace />}
+              />
+              <Route
+                key={location.key}
+                path="cocktails"
+                element={<Cocktails />}
+              >
                 <Route path="search" element={<Search />} />
               </Route>
               <Route
+                key={location.key}
+                path="ingredients"
+                element={<Ingredients />}
+              >
+                <Route path="search" element={<Search />} />
+              </Route>
+              <Route
+                key={location.key}
                 path="cocktails/:cocktailId"
                 element={<CocktailsDetails />}
               />
-              <Route path="cocktails/new" element={<NewCocktail />} />
               <Route
+                key={location.key}
+                path="cocktails/new"
+                element={<NewCocktail />}
+              />
+              <Route
+                key={location.key}
                 path="ingredients/:ingredientId"
                 element={<IngredientDetails />}
               />
-              <Route path="ingredients/new" element={<NewIngredient />} />
-              <Route path="settings" element={<Settings />} />
+              <Route
+                key={location.key}
+                path="ingredients/new"
+                element={<NewIngredient />}
+              />
+              <Route
+                key={location.key}
+                path="settings"
+                element={<Settings />}
+              />
             </Route>
           </Routes>
         </Suspense>
