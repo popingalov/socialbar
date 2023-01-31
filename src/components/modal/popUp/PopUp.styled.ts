@@ -22,6 +22,7 @@ export const Modal = styled(motion.div)<IProps>`
     return right;
   }}px;
 
+  z-index: 100;
   padding: ${p => p.theme.space[2]}px;
 
   background-color: ${p => p.theme.colors.mainBackgroundColor};

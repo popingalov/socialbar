@@ -25,6 +25,7 @@ import { selectMobileMenuStatus } from 'redux/modal/modalSelectors';
 import { setToken } from 'redux/auth/authSlice';
 import { tokenState } from 'redux/auth/authSelectors';
 import { useGetMeQuery } from 'redux/api/userApi';
+import Search from 'pages/search';
 
 const App = () => {
   const location = useLocation();
@@ -53,22 +54,56 @@ const App = () => {
       <GlobalStyle />
       <AnimatePresence>
         <Suspense fallback={<Loader />}>
-          <Routes location={location} key={location.key}>
-            <Route path="/" element={<Layout />}>
-              <Route index element={<Navigate to="ingredients" replace />} />
-              <Route path="cocktails" element={<Cocktails />} />
-              <Route path="ingredients" element={<Ingredients />} />
+          <Routes location={location}>
+            <Route key={location.key} path="/" element={<Layout />}>
               <Route
+                key={location.key}
+                index
+                element={<Navigate to="ingredients" replace />}
+              />
+              <Route
+                key={location.key}
+                path="cocktails"
+                element={<Cocktails />}
+              >
+                <Route path="search" element={<Search />} />
+              </Route>
+              <Route
+                key={location.key}
+                path="ingredients"
+                element={<Ingredients />}
+              >
+                <Route path="search" element={<Search />} />
+              </Route>
+              <Route
+                key={location.key}
                 path="cocktails/:cocktailId"
                 element={<CocktailsDetails />}
-              />
-              <Route path="cocktails/new" element={<NewCocktail />} />
+              >
+                <Route path="search" element={<Search />} />
+              </Route>
               <Route
+                key={location.key}
+                path="cocktails/new"
+                element={<NewCocktail />}
+              />
+              <Route
+                key={location.key}
                 path="ingredients/:ingredientId"
                 element={<IngredientDetails />}
+              >
+                <Route path="search" element={<Search />} />
+              </Route>
+              <Route
+                key={location.key}
+                path="ingredients/new"
+                element={<NewIngredient />}
               />
-              <Route path="ingredients/new" element={<NewIngredient />} />
-              <Route path="settings" element={<Settings />} />
+              <Route
+                key={location.key}
+                path="settings"
+                element={<Settings />}
+              />
             </Route>
           </Routes>
         </Suspense>

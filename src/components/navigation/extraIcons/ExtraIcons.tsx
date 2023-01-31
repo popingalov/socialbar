@@ -6,16 +6,30 @@ import { useEffect, useRef, useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import PopUp from 'components/modal/popUp';
 import { useSelector } from 'react-redux';
-import { selectExtraMenuStatus } from 'redux/modal/modalSelectors';
+import {
+  selectExtraMenuStatus,
+  selectPopUpStatus,
+} from 'redux/modal/modalSelectors';
 import ExtraMenu from 'components/navigation/extraMenu';
+import { useLocation } from 'react-router';
 
 interface IProps {
+  handleDelete: () => void;
   handleSearch: () => void;
   handleAppMenu: () => void;
 }
 
-const ExtraIcons: React.FC<IProps> = ({ handleSearch, handleAppMenu }) => {
-  const popUpIsOpen = useSelector(selectExtraMenuStatus);
+const ExtraIcons: React.FC<IProps> = ({
+  handleSearch,
+  handleDelete,
+  handleAppMenu,
+}) => {
+  const extraMenuIsOpen = useSelector(selectExtraMenuStatus);
+  const isSearchPopUpOpen = useSelector(selectPopUpStatus);
+
+  const location = useLocation();
+  const pathData = location.pathname.split('/');
+  const isSearch = pathData[pathData.length - 1] === 'search';
 
   const [menuCoordinates, setMenuCoordinates] = useState<ICoordinates>({
     top: null,
@@ -34,9 +48,17 @@ const ExtraIcons: React.FC<IProps> = ({ handleSearch, handleAppMenu }) => {
   return (
     <>
       <Box display="flex">
-        <ClearButton aria-label="searching" onClick={handleSearch}>
-          <HeaderIcon type={headerIconTypes.searching} />
-        </ClearButton>
+        {!isSearch && (
+          <ClearButton aria-label="searching" onClick={handleSearch}>
+            <HeaderIcon type={headerIconTypes.searching} />
+          </ClearButton>
+        )}
+
+        {isSearchPopUpOpen && (
+          <ClearButton aria-label="delete search filter" onClick={handleDelete}>
+            <HeaderIcon type={headerIconTypes.cross} />
+          </ClearButton>
+        )}
 
         <ClearButton
           ref={menuIconRef}
@@ -46,8 +68,9 @@ const ExtraIcons: React.FC<IProps> = ({ handleSearch, handleAppMenu }) => {
           <HeaderIcon type={headerIconTypes.extraMenu} />
         </ClearButton>
       </Box>
+
       <AnimatePresence>
-        {popUpIsOpen && (
+        {extraMenuIsOpen && (
           <PopUp key="popUp" coordinates={menuCoordinates} type="extraMenu">
             <ul>
               <ExtraMenu />

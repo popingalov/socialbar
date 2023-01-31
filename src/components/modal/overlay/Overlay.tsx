@@ -10,8 +10,6 @@ import {
   setSettingsMenuIsOpen,
 } from 'redux/modal/modalSlice';
 import { createPortal } from 'react-dom';
-import { changeSearchFilter } from 'redux/searchFilter/searchSlice';
-import { initialSearchStatus } from 'redux/searchFilter/searchConstants';
 
 const modalRoot: HTMLDivElement = document.querySelector('#modal')!;
 
@@ -22,8 +20,7 @@ interface IProps {
     | 'select'
     | 'extraMenu'
     | 'settingsModal'
-    | 'context'
-    | 'search';
+    | 'context';
 }
 
 const Overlay: React.FC<IProps> = ({ children, modalType }) => {
@@ -31,10 +28,6 @@ const Overlay: React.FC<IProps> = ({ children, modalType }) => {
   const action = getAction(modalType);
   const handleBackdrop = (event: React.MouseEvent<HTMLDivElement>) => {
     if (event.target === event.currentTarget && action) dispatch(action);
-
-    if (modalType === 'search') {
-      dispatch(changeSearchFilter(initialSearchStatus)); //!
-    }
   };
 
   return createPortal(
@@ -55,8 +48,6 @@ function getAction(type: string) {
     case 'mobileMenu':
       return setMobileIsOpen(false);
     case 'select':
-      return setPopUpIsOpen(false);
-    case 'search':
       return setPopUpIsOpen(false);
     case 'extraMenu':
       return setExtraMenuIsOpen(false);

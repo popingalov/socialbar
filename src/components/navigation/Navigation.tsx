@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router';
 import { useDispatch } from 'react-redux';
 import ClearButton from 'components/UI-kit/buttons/clearButton';
@@ -11,30 +10,24 @@ import PagesNavigation from './pagesNavigation';
 import { paths } from 'constants/paths';
 import SearchBar from 'components/navigation/searchBar';
 import Select from 'components/UI-kit/select';
-import { setExtraMenuIsOpen, setMobileIsOpen } from 'redux/modal/modalSlice';
+import {
+  setExtraMenuIsOpen,
+  setMobileIsOpen,
+  setPopUpIsOpen,
+} from 'redux/modal/modalSlice';
 import {
   setCocktailCategory,
   setIngredientCategory,
 } from 'redux/categoriesFilter/categoriesFilterSlice';
-import { useSelector } from 'react-redux';
-import {
-  selectCocktailFilter,
-  selectIngredientFilter,
-} from 'redux/filter/filterSelectors';
 import { useGetPageCategories } from 'hooks/useGetPageCategories';
 import { useGetNavSelectLabel } from 'hooks/useGetNavSelectLabel';
 import { changeSearchFilter } from 'redux/searchFilter/searchSlice';
 import { initialSearchStatus } from 'redux/searchFilter/searchConstants';
 
 const Navigation = () => {
-  const ingredientFilter = useSelector(selectIngredientFilter);
-  const cocktailFilter = useSelector(selectCocktailFilter);
-
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
-  const [isSearch, setSearch] = useState(false);
-  const [currentPath, setCurrentPath] = useState('');
 
   const isMainRoute =
     location.pathname === paths.ingredients ||
@@ -43,51 +36,59 @@ const Navigation = () => {
     location.pathname === paths.settings ||
     location.pathname === paths.newCocktail ||
     location.pathname === paths.newIngredient;
-  const isMainRouteSearching = isMainRoute && isSearch;
-  const isMainRouteFilter = isMainRoute && !isSearch;
-  const isCardRouteSearching = isSearch && !isMainRoute;
+
+  const isMainRouteSearching =
+    location.pathname === paths.searchIngredient ||
+    location.pathname === paths.searchCocktails;
+  const pathData = location.pathname.split('/');
+  const isSearchInDetails =
+    pathData[pathData.length - 1] === 'search' && pathData.length === 4;
+  const isMainRouteFilter = isMainRoute && !isMainRouteSearching;
+  const isCardRouteSearching = isSearchInDetails && !isMainRoute;
   const isIngredients = location.pathname === paths.ingredients;
   const isCocktails = location.pathname === paths.cocktails;
 
   const filter = useGetPageCategories(isIngredients);
   const selectLabel = useGetNavSelectLabel(isIngredients);
 
-  useEffect(() => {
-    if (isIngredients && currentPath !== ingredientFilter && isSearch) {
-      setSearch(false);
-      dispatch(changeSearchFilter(initialSearchStatus));
-    }
-
-    if (isCocktails && currentPath !== cocktailFilter && isSearch) {
-      setSearch(false);
-      dispatch(changeSearchFilter(initialSearchStatus));
-    }
-
-    isIngredients
-      ? setCurrentPath(ingredientFilter)
-      : setCurrentPath(cocktailFilter);
-  }, [
-    ingredientFilter,
-    cocktailFilter,
-    isIngredients,
-    currentPath,
-    dispatch,
-    isSearch,
-    isCocktails,
-  ]);
-
   const handleSideMenu = () => {
     dispatch(setMobileIsOpen(true));
   };
 
   const handleBackButton = () => {
-    if (isSearch) {
-      setSearch(false);
-      dispatch(changeSearchFilter(initialSearchStatus));
-    } else navigate(-1);
+    navigate(-1);
+    dispatch(setPopUpIsOpen(false));
+    dispatch(changeSearchFilter(initialSearchStatus));
   };
 
-  const handleSearchButton = () => setSearch(prevState => !prevState);
+  const handleSearchButton = () => {
+    if (isIngredients) {
+      navigate('/ingredients/search');
+      return;
+    }
+
+    if (isCocktails) {
+      navigate('/cocktails/search');
+      return;
+    }
+
+    if (isMainRouteSearching || isSearchInDetails) {
+      navigate(-1);
+      dispatch(setPopUpIsOpen(false));
+      dispatch(changeSearchFilter(initialSearchStatus));
+      return;
+    }
+
+    if (!isMainRoute) {
+      navigate(`${location.pathname}/search`);
+      return;
+    }
+  };
+
+  const handleDelete = () => {
+    dispatch(setPopUpIsOpen(false));
+    dispatch(changeSearchFilter(initialSearchStatus));
+  };
 
   const handleAppMenu = () => {
     dispatch(setExtraMenuIsOpen(true));
@@ -97,15 +98,13 @@ const Navigation = () => {
     isIngredients
       ? dispatch(setIngredientCategory(value))
       : dispatch(setCocktailCategory(value));
-
-    // setSelectValue(value);
   };
 
   return (
     <>
       {filter && (
         <Wrapper isExtraRoute={isExtraRoute}>
-          {isMainRouteFilter && filter && (
+          {isMainRouteFilter && (
             <>
               <ClearButton aria-label="mobile-menu" onClick={handleSideMenu}>
                 <HeaderIcon type={headerIconTypes.burgerMenu} />
@@ -117,6 +116,7 @@ const Navigation = () => {
               />
             </>
           )}
+
           {(isMainRouteSearching || !isMainRoute) && (
             <ClearButton aria-label="back-button" onClick={handleBackButton}>
               <HeaderIcon type={headerIconTypes.backArrow} />
@@ -129,12 +129,14 @@ const Navigation = () => {
           ) : (
             <ExtraIcons
               handleSearch={handleSearchButton}
+              handleDelete={handleDelete}
               handleAppMenu={handleAppMenu}
             />
           )}
         </Wrapper>
       )}
-      {isMainRoute && filter && (
+
+      {(isMainRoute || isMainRouteSearching) && filter && (
         <NavigationListStyled role="tablist">
           <PagesNavigation />
         </NavigationListStyled>
@@ -144,5 +146,3 @@ const Navigation = () => {
 };
 
 export default Navigation;
-
-// const [selectValue, setSelectValue] = useState(initialFilterStatus);

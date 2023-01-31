@@ -3,6 +3,7 @@ interface IHeaderIconTypes {
   readonly backArrow: string;
   readonly searching: string;
   readonly extraMenu: string;
+  readonly cross: string;
 }
 
 export const headerIconTypes: IHeaderIconTypes = {
@@ -10,4 +11,5 @@ export const headerIconTypes: IHeaderIconTypes = {
   backArrow: 'backArrow',
   searching: 'searching',
   extraMenu: 'extraMenu',
+  cross: 'cross',
 };

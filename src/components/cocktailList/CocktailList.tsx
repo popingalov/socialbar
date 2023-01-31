@@ -5,13 +5,18 @@ import CocktailCard from './cocktailCard/CocktailCard';
 import { useNavigate } from 'react-router';
 import { AnimatePresence } from 'framer-motion';
 import { useSelector } from 'react-redux';
-import { selectContextMenuStatus } from 'redux/modal/modalSelectors';
-import { setContextMenuIsOpen } from 'redux/modal/modalSlice';
+import {
+  selectContextMenuStatus,
+  selectPopUpStatus,
+} from 'redux/modal/modalSelectors';
+import { setContextMenuIsOpen, setPopUpIsOpen } from 'redux/modal/modalSlice';
 import { useLongPress } from 'use-long-press';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import PopUp from 'components/modal/popUp';
 import ContextMenuCocktails from './contextMenu/ContextMenuCocktails';
+import { changeSearchFilter } from 'redux/searchFilter/searchSlice';
+import { initialSearchStatus } from 'redux/searchFilter/searchConstants';
 
 interface IProps {
   cocktails: ICocktail[];
@@ -25,6 +30,8 @@ const CocktailList: React.FC<IProps> = ({
   inIngredientCard = false,
 }) => {
   const contextMenuIsOpen = useSelector(selectContextMenuStatus);
+  const isSearchOpen = useSelector(selectPopUpStatus);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -56,6 +63,12 @@ const CocktailList: React.FC<IProps> = ({
   });
 
   const handleClick = (id: string) => {
+    if (isSearchOpen) {
+      dispatch(setPopUpIsOpen(false));
+      dispatch(changeSearchFilter(initialSearchStatus));
+      return;
+    }
+
     if (inIngredientCard) {
       navigate(`/cocktails/${id}`);
       return;

@@ -40,12 +40,12 @@ const Cocktails = () => {
             cocktails={!isMyCocktails ? filteredCocktails : haveAllIngredients}
             isFavoritePage={isFavoriteCocktails}
           />
-          {!isFetching && filteredItems !== 0 && (
-            <FollowUpMessage>
-              ( +{filteredItems} cocktails filtered )
-            </FollowUpMessage>
-          )}
         </>
+      )}
+      {!isFetching && filteredItems !== 0 && (
+        <FollowUpMessage>
+          ( +{filteredItems} cocktails filtered )
+        </FollowUpMessage>
       )}
 
       {isMyCocktails && needMoreIngredients.length !== 0 && (
