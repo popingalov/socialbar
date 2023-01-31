@@ -1,8 +1,9 @@
 import Button from 'components/UI-kit/buttons/button';
 import { cocktailsNavItems, ingredientsNavItems } from 'constants/navItems';
 import { paths } from 'constants/paths';
+import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import { useLocation } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 import {
   selectCocktailFilter,
   selectIngredientFilter,
@@ -11,27 +12,40 @@ import {
   setCocktailStatusFilter,
   setIngredientStatusFilter,
 } from 'redux/filter/filterSlice';
-import { useAppDispatch } from 'redux/hooks';
+import { setPopUpIsOpen } from 'redux/modal/modalSlice';
+import { initialSearchStatus } from 'redux/searchFilter/searchConstants';
+import { changeSearchFilter } from 'redux/searchFilter/searchSlice';
 
 const PagesNavigation = () => {
   const location = useLocation();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const navigation =
+  const isMainRouteSearching =
+    location.pathname === paths.searchIngredient ||
+    location.pathname === paths.searchCocktails;
+  const isIngredients =
     location.pathname === paths.ingredients ||
-    location.pathname === paths.searchIngredient
-      ? ingredientsNavItems
-      : cocktailsNavItems;
+    location.pathname === paths.searchIngredient;
+
+  const navigation = isIngredients ? ingredientsNavItems : cocktailsNavItems;
   const filter = useSelector(
     location.pathname === paths.ingredients
       ? selectIngredientFilter
       : selectCocktailFilter,
   );
-  const dispatch = useAppDispatch();
+
   const handleStatusFilterChange = (value: string) => {
-    const setStatusFilter =
-      location.pathname === paths.ingredients
-        ? setIngredientStatusFilter
-        : setCocktailStatusFilter;
+    if (isMainRouteSearching) {
+      navigate(-1);
+      dispatch(setPopUpIsOpen(false));
+      dispatch(changeSearchFilter(initialSearchStatus));
+    }
+
+    const setStatusFilter = isIngredients
+      ? setIngredientStatusFilter
+      : setCocktailStatusFilter;
+
     dispatch(setStatusFilter(value));
   };
 

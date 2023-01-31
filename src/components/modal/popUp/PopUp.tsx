@@ -15,19 +15,35 @@ const PopUp: React.FC<IProps> = ({
   coordinates: { top, left, right },
 }) => {
   return (
-    <Overlay modalType={type}>
-      <Modal
-        key="popUp"
-        {...popUpMenuAnimation}
-        transition={{ duration: 0.2 }}
-        type={type}
-        top={top}
-        left={left}
-        right={right}
-      >
-        {children}
-      </Modal>
-    </Overlay>
+    <>
+      {type !== 'search' ? (
+        <Overlay modalType={type}>
+          <Modal
+            key="popUp"
+            {...popUpMenuAnimation}
+            transition={{ duration: 0.2 }}
+            type={type}
+            top={top}
+            left={left}
+            right={right}
+          >
+            {children}
+          </Modal>
+        </Overlay>
+      ) : (
+        <Modal
+          key="popUp"
+          {...popUpMenuAnimation}
+          transition={{ duration: 0.2 }}
+          type={type}
+          top={top}
+          left={left}
+          right={right}
+        >
+          {children}
+        </Modal>
+      )}
+    </>
   );
 };
 

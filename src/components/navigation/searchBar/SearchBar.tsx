@@ -8,10 +8,14 @@ import { selectSearchFilter } from 'redux/searchFilter/searchFilterSelector';
 import { changeSearchFilter } from 'redux/searchFilter/searchSlice';
 import { MainInput } from './SearchBar.styled';
 import PopUp from 'components/modal/popUp';
+import SearchList from 'components/searchList';
+import { useGetSearchedItems } from 'hooks/useGetSearchedItems';
 
 const SearchBar: React.FC = () => {
   const searchValue = useSelector(selectSearchFilter);
   const popUpIsOpen = useSelector(selectPopUpStatus);
+  const { cocktails, ingredients, isFetching } = useGetSearchedItems();
+  console.log('searchedItems', cocktails, ingredients);
 
   const dispatch = useDispatch();
   const inputRef = useRef<HTMLInputElement>();
@@ -22,6 +26,8 @@ const SearchBar: React.FC = () => {
   });
 
   useEffect(() => {
+    if (inputRef.current) inputRef.current.focus();
+
     window.addEventListener('resize', getCoordinates);
 
     function getCoordinates() {
@@ -36,17 +42,17 @@ const SearchBar: React.FC = () => {
     return () => window.removeEventListener('resize', getCoordinates);
   }, []);
 
-  const handleInput = (event: React.FormEvent<HTMLInputElement>) => {
-    const { value } = event.currentTarget;
-    dispatch(changeSearchFilter(value));
-
-    //TODO: check if anything is in list search
-    if (value) {
+  useEffect(() => {
+    if (searchValue && (cocktails?.length !== 0 || ingredients?.length !== 0)) {
       dispatch(setPopUpIsOpen(true));
       return;
     }
-
     dispatch(setPopUpIsOpen(false));
+  }, [cocktails?.length, dispatch, ingredients?.length, searchValue]);
+
+  const handleInput = (event: React.FormEvent<HTMLInputElement>) => {
+    const { value } = event.currentTarget;
+    dispatch(changeSearchFilter(value));
   };
 
   return (
@@ -59,12 +65,10 @@ const SearchBar: React.FC = () => {
       />
 
       <AnimatePresence>
-        {popUpIsOpen && (
-          <PopUp
-            key="popUp"
-            coordinates={selectCoordinates}
-            type="search"
-          ></PopUp>
+        {popUpIsOpen && cocktails && ingredients && (
+          <PopUp key="popUp" coordinates={selectCoordinates} type="search">
+            <SearchList cocktails={cocktails} ingredients={ingredients} />
+          </PopUp>
         )}
       </AnimatePresence>
     </>

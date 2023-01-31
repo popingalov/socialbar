@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router';
 import { useDispatch } from 'react-redux';
 import ClearButton from 'components/UI-kit/buttons/clearButton';
@@ -11,30 +10,24 @@ import PagesNavigation from './pagesNavigation';
 import { paths } from 'constants/paths';
 import SearchBar from 'components/navigation/searchBar';
 import Select from 'components/UI-kit/select';
-import { setExtraMenuIsOpen, setMobileIsOpen } from 'redux/modal/modalSlice';
+import {
+  setExtraMenuIsOpen,
+  setMobileIsOpen,
+  setPopUpIsOpen,
+} from 'redux/modal/modalSlice';
 import {
   setCocktailCategory,
   setIngredientCategory,
 } from 'redux/categoriesFilter/categoriesFilterSlice';
-import { useSelector } from 'react-redux';
-import {
-  selectCocktailFilter,
-  selectIngredientFilter,
-} from 'redux/filter/filterSelectors';
 import { useGetPageCategories } from 'hooks/useGetPageCategories';
 import { useGetNavSelectLabel } from 'hooks/useGetNavSelectLabel';
 import { changeSearchFilter } from 'redux/searchFilter/searchSlice';
 import { initialSearchStatus } from 'redux/searchFilter/searchConstants';
 
 const Navigation = () => {
-  const ingredientFilter = useSelector(selectIngredientFilter);
-  const cocktailFilter = useSelector(selectCocktailFilter);
-
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
-
-  const [currentPath, setCurrentPath] = useState('');
 
   const isMainRoute =
     location.pathname === paths.ingredients ||
@@ -58,43 +51,14 @@ const Navigation = () => {
   const filter = useGetPageCategories(isIngredients);
   const selectLabel = useGetNavSelectLabel(isIngredients);
 
-  // useEffect(() => {
-  //   console.log('currentPath', currentPath);
-  //   console.log('isIngredients', isIngredients);
-  //   if (
-  //     isIngredients &&
-  //     currentPath !== ingredientFilter &&
-  //     isMainRouteSearching
-  //   ) {
-  //     dispatch(changeSearchFilter(initialSearchStatus));
-  //   }
-
-  //   if (isCocktails && currentPath !== cocktailFilter && isMainRouteSearching) {
-  //     dispatch(changeSearchFilter(initialSearchStatus));
-  //     navigate(-1);
-  //   }
-
-  //   isIngredients
-  //     ? setCurrentPath(ingredientFilter)
-  //     : setCurrentPath(cocktailFilter);
-  // }, [
-  //   ingredientFilter,
-  //   cocktailFilter,
-  //   isIngredients,
-  //   currentPath,
-  //   dispatch,
-  //   isMainRouteSearching,
-  //   isCocktails,
-  //   navigate,
-  // ]);
-
   const handleSideMenu = () => {
     dispatch(setMobileIsOpen(true));
   };
 
   const handleBackButton = () => {
-    dispatch(changeSearchFilter(initialSearchStatus));
     navigate(-1);
+    dispatch(setPopUpIsOpen(false));
+    dispatch(changeSearchFilter(initialSearchStatus));
   };
 
   const handleSearchButton = () => {
@@ -110,6 +74,8 @@ const Navigation = () => {
 
     if (isMainRouteSearching || isSearchInDetails) {
       navigate(-1);
+      dispatch(setPopUpIsOpen(false));
+      dispatch(changeSearchFilter(initialSearchStatus));
       return;
     }
 
@@ -117,6 +83,11 @@ const Navigation = () => {
       navigate(`${location.pathname}/search`);
       return;
     }
+  };
+
+  const handleDelete = () => {
+    dispatch(setPopUpIsOpen(false));
+    dispatch(changeSearchFilter(initialSearchStatus));
   };
 
   const handleAppMenu = () => {
@@ -158,6 +129,7 @@ const Navigation = () => {
           ) : (
             <ExtraIcons
               handleSearch={handleSearchButton}
+              handleDelete={handleDelete}
               handleAppMenu={handleAppMenu}
             />
           )}
@@ -174,62 +146,3 @@ const Navigation = () => {
 };
 
 export default Navigation;
-
-// const [selectValue, setSelectValue] = useState(initialFilterStatus);
-
-// return (
-//   <>
-//     {filter && (
-//       <Wrapper isExtraRoute={isExtraRoute}>
-
-/* {isMainRouteFilter && filter && (
-            <>
-              <ClearButton aria-label="mobile-menu" onClick={handleSideMenu}>
-                <HeaderIcon type={headerIconTypes.burgerMenu} />
-              </ClearButton>
-              <Select
-                label={selectLabel}
-                options={filter}
-                onChange={handleFilter}
-              />
-            </>
-          )} */
-
-/* {(isMainRouteSearching || !isMainRoute) && (
-            <ClearButton aria-label="back-button" onClick={handleBackButton}>
-              <HeaderIcon type={headerIconTypes.backArrow} />
-            </ClearButton>
-          )}
-          {(isMainRouteSearching || isCardRouteSearching) && <SearchBar />} */
-
-/* 
-          {isExtraRoute ? (
-            <PageName>{getHeaderName(location.pathname)}</PageName>
-          ) : (
-            <ExtraIcons
-              handleSearch={handleSearchButton}
-              handleAppMenu={handleAppMenu}
-            />
-          )}
-        </Wrapper>
-      )}
-
-      {isMainRoute && filter && (
-        <NavigationListStyled role="tablist">
-          <PagesNavigation />
-        </NavigationListStyled>
-      )}
-    </>
-  );
-}; */
-
-/* <>
-            <ClearButton aria-label="mobile-menu" onClick={handleSideMenu}>
-              <HeaderIcon type={headerIconTypes.burgerMenu} />
-            </ClearButton>
-            <Select
-              label={selectLabel}
-              options={filter}
-              onChange={handleFilter}
-            />
-          </> */

@@ -2,6 +2,7 @@ import { IconContext } from 'react-icons';
 import { headerIconTypes } from 'constants/headerIconTypes';
 import { BiArrowBack, BiDotsVerticalRounded } from 'react-icons/bi';
 import { AiOutlineBlock, AiOutlineMenu, AiOutlineSearch } from 'react-icons/ai';
+import { RxCross2 } from 'react-icons/rx';
 
 interface IProps {
   type: string;
@@ -30,6 +31,8 @@ function getIcon(type: string) {
       return <BiArrowBack />;
     case headerIconTypes.searching:
       return <AiOutlineSearch />;
+    case headerIconTypes.cross:
+      return <RxCross2 />;
     case headerIconTypes.extraMenu:
       return <BiDotsVerticalRounded />;
     default:

@@ -26,12 +26,6 @@ const Cocktails = () => {
   let haveAllIngredients: ICocktail[] = [];
   let needMoreIngredients: ICocktail[] = [];
 
-  console.log(
-    ' filteredCocktails, filteredItems',
-    filteredCocktails,
-    filteredItems,
-  );
-
   if (isMyCocktails) {
     haveAllIngredients = filteredCocktails.filter(({ lacks }) => !lacks.length);
     needMoreIngredients = filteredCocktails.filter(({ lacks }) => lacks.length);
