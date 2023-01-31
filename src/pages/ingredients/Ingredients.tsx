@@ -50,9 +50,6 @@ const Ingredients = () => {
           </FollowUpMessage>
         )}
       </motion.section>
-      <Suspense fallback={<Loader />}>
-        <Outlet />
-      </Suspense>
     </>
   );
 };

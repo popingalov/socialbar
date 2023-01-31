@@ -33,8 +33,8 @@ const Navigation = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
-  // const [isSearch, setSearch] = useState(false);
-  // const [currentPath, setCurrentPath] = useState('');
+
+  const [currentPath, setCurrentPath] = useState('');
 
   const isMainRoute =
     location.pathname === paths.ingredients ||
@@ -44,13 +44,14 @@ const Navigation = () => {
     location.pathname === paths.newCocktail ||
     location.pathname === paths.newIngredient;
 
-  const isSearch =
+  const isMainRouteSearching =
     location.pathname === paths.searchIngredient ||
     location.pathname === paths.searchCocktails;
-  // console.log(' location.pathname', isSearch);
-  const isMainRouteSearching = isMainRoute && isSearch;
-  const isMainRouteFilter = isMainRoute && !isSearch;
-  const isCardRouteSearching = isSearch && !isMainRoute;
+  const pathData = location.pathname.split('/');
+  const isSearchInDetails =
+    pathData[pathData.length - 1] === 'search' && pathData.length === 4;
+  const isMainRouteFilter = isMainRoute && !isMainRouteSearching;
+  const isCardRouteSearching = isSearchInDetails && !isMainRoute;
   const isIngredients = location.pathname === paths.ingredients;
   const isCocktails = location.pathname === paths.cocktails;
 
@@ -58,15 +59,20 @@ const Navigation = () => {
   const selectLabel = useGetNavSelectLabel(isIngredients);
 
   // useEffect(() => {
-  // if (isIngredients && currentPath !== ingredientFilter && isSearch) {
-  //   setSearch(false);
-  //   dispatch(changeSearchFilter(initialSearchStatus));
-  // }
+  //   console.log('currentPath', currentPath);
+  //   console.log('isIngredients', isIngredients);
+  //   if (
+  //     isIngredients &&
+  //     currentPath !== ingredientFilter &&
+  //     isMainRouteSearching
+  //   ) {
+  //     dispatch(changeSearchFilter(initialSearchStatus));
+  //   }
 
-  // if (isCocktails && currentPath !== cocktailFilter && isSearch) {
-  //   setSearch(false);
-  //   dispatch(changeSearchFilter(initialSearchStatus));
-  // }
+  //   if (isCocktails && currentPath !== cocktailFilter && isMainRouteSearching) {
+  //     dispatch(changeSearchFilter(initialSearchStatus));
+  //     navigate(-1);
+  //   }
 
   //   isIngredients
   //     ? setCurrentPath(ingredientFilter)
@@ -75,10 +81,11 @@ const Navigation = () => {
   //   ingredientFilter,
   //   cocktailFilter,
   //   isIngredients,
-  // currentPath,
-  // dispatch,
-  // isSearch,
-  // isCocktails,
+  //   currentPath,
+  //   dispatch,
+  //   isMainRouteSearching,
+  //   isCocktails,
+  //   navigate,
   // ]);
 
   const handleSideMenu = () => {
@@ -88,14 +95,9 @@ const Navigation = () => {
   const handleBackButton = () => {
     dispatch(changeSearchFilter(initialSearchStatus));
     navigate(-1);
-    // if (isSearch) {
-    //   setSearch(false);
-    //   dispatch(changeSearchFilter(initialSearchStatus));
-    // } else navigate(-1);
   };
 
   const handleSearchButton = () => {
-    // setSearch(prevState => !prevState);
     if (isIngredients) {
       navigate('/ingredients/search');
       return;
@@ -103,6 +105,16 @@ const Navigation = () => {
 
     if (isCocktails) {
       navigate('/cocktails/search');
+      return;
+    }
+
+    if (isMainRouteSearching || isSearchInDetails) {
+      navigate(-1);
+      return;
+    }
+
+    if (!isMainRoute) {
+      navigate(`${location.pathname}/search`);
       return;
     }
   };
@@ -115,15 +127,13 @@ const Navigation = () => {
     isIngredients
       ? dispatch(setIngredientCategory(value))
       : dispatch(setCocktailCategory(value));
-
-    // setSelectValue(value);
   };
 
   return (
     <>
       {filter && (
         <Wrapper isExtraRoute={isExtraRoute}>
-          {isMainRouteFilter && filter && (
+          {isMainRouteFilter && (
             <>
               <ClearButton aria-label="mobile-menu" onClick={handleSideMenu}>
                 <HeaderIcon type={headerIconTypes.burgerMenu} />
@@ -154,7 +164,7 @@ const Navigation = () => {
         </Wrapper>
       )}
 
-      {(isMainRoute || isSearch) && filter && (
+      {(isMainRoute || isMainRouteSearching) && filter && (
         <NavigationListStyled role="tablist">
           <PagesNavigation />
         </NavigationListStyled>

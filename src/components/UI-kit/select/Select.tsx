@@ -16,7 +16,7 @@ interface IProps {
 }
 
 const Select: React.FC<IProps> = ({ label, onChange, options }) => {
-  const [currentValue, setCurrentValue] = useState(label);
+  const [currentValue, setCurrentValue] = useState('');
   const [selectCoordinates, setSelectCoordinates] = useState<ICoordinates>({
     top: null,
     left: null,
@@ -25,6 +25,10 @@ const Select: React.FC<IProps> = ({ label, onChange, options }) => {
   const dispatch = useDispatch();
   const popUpIsOpen = useSelector(selectPopUpStatus);
   const btnRef = useRef<HTMLButtonElement>();
+
+  useEffect(() => {
+    setCurrentValue(label);
+  }, [label]);
 
   useEffect(() => {
     window.addEventListener('resize', getCoordinates);

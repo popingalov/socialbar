@@ -17,7 +17,6 @@ import {
   NewCocktail,
   NewIngredient,
   Settings,
-  Search,
 } from './lazyexports';
 import { GlobalStyle } from './App.styled';
 import Loader from 'components/loader';
@@ -26,6 +25,7 @@ import { selectMobileMenuStatus } from 'redux/modal/modalSelectors';
 import { setToken } from 'redux/auth/authSlice';
 import { tokenState } from 'redux/auth/authSelectors';
 import { useGetMeQuery } from 'redux/api/userApi';
+import Search from 'pages/search';
 
 const App = () => {
   const location = useLocation();
@@ -79,7 +79,9 @@ const App = () => {
                 key={location.key}
                 path="cocktails/:cocktailId"
                 element={<CocktailsDetails />}
-              />
+              >
+                <Route path="search" element={<Search />} />
+              </Route>
               <Route
                 key={location.key}
                 path="cocktails/new"
@@ -89,7 +91,9 @@ const App = () => {
                 key={location.key}
                 path="ingredients/:ingredientId"
                 element={<IngredientDetails />}
-              />
+              >
+                <Route path="search" element={<Search />} />
+              </Route>
               <Route
                 key={location.key}
                 path="ingredients/new"

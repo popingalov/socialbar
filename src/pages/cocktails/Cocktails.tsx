@@ -26,6 +26,12 @@ const Cocktails = () => {
   let haveAllIngredients: ICocktail[] = [];
   let needMoreIngredients: ICocktail[] = [];
 
+  console.log(
+    ' filteredCocktails, filteredItems',
+    filteredCocktails,
+    filteredItems,
+  );
+
   if (isMyCocktails) {
     haveAllIngredients = filteredCocktails.filter(({ lacks }) => !lacks.length);
     needMoreIngredients = filteredCocktails.filter(({ lacks }) => lacks.length);
@@ -40,12 +46,12 @@ const Cocktails = () => {
             cocktails={!isMyCocktails ? filteredCocktails : haveAllIngredients}
             isFavoritePage={isFavoriteCocktails}
           />
-          {!isFetching && filteredItems !== 0 && (
-            <FollowUpMessage>
-              ( +{filteredItems} cocktails filtered )
-            </FollowUpMessage>
-          )}
         </>
+      )}
+      {!isFetching && filteredItems !== 0 && (
+        <FollowUpMessage>
+          ( +{filteredItems} cocktails filtered )
+        </FollowUpMessage>
       )}
 
       {isMyCocktails && needMoreIngredients.length !== 0 && (
