@@ -76,7 +76,7 @@ const Navigation = () => {
     }
   };
 
-  const handleDelete = () => {
+  const handleDeleteSearch = () => {
     dispatch(setPopUpIsOpen(false));
     dispatch(changeSearchFilter(initialSearchStatus));
   };
@@ -120,7 +120,7 @@ const Navigation = () => {
           ) : (
             <ExtraIcons
               handleSearch={handleSearchButton}
-              handleDelete={handleDelete}
+              handleDelete={handleDeleteSearch}
               handleAppMenu={handleAppMenu}
             />
           )}

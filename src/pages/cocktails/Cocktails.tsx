@@ -1,26 +1,18 @@
 import { pageAnimation } from 'constants/animations';
 import { motion } from 'framer-motion';
-import { useSelector } from 'react-redux';
-import { selectCocktailFilter } from 'redux/filter/filterSelectors';
 import FollowUpMessage from 'components/UI-kit/followUpMessage';
-import { cocktailFilterStatus } from 'redux/filter/filterConstants';
 import CocktailBottomMessage from 'components/cocktailList/cocktailBottomMessage';
 import Loader from 'components/loader';
 import { useGetVisibleCocktails } from 'hooks/useGetVisibleCocktails';
 import { useGetFilteredCocktails } from 'hooks/useGetFilteredCocktails';
 import { ICocktail } from 'types/cocktail';
 import CocktailList from 'components/cocktailList';
+import { useGetCocktailTabStatus } from 'hooks/useGetCocktailTabStatus';
 
 const Cocktails = () => {
-  const cocktailFilter = useSelector(selectCocktailFilter);
-
-  const { visibleCocktails, isFetching } =
-    useGetVisibleCocktails(cocktailFilter);
-  const isMyCocktails = cocktailFilterStatus.myCocktails === cocktailFilter;
-  const isAllCocktails = cocktailFilterStatus.allCocktails === cocktailFilter;
-  const isFavoriteCocktails =
-    cocktailFilterStatus.favoriteCocktails === cocktailFilter;
-
+  const { isMyCocktails, isAllCocktails, isFavoriteCocktails } =
+    useGetCocktailTabStatus();
+  const { visibleCocktails, isFetching } = useGetVisibleCocktails();
   const { filteredCocktails, filteredItems } =
     useGetFilteredCocktails(visibleCocktails);
   let haveAllIngredients: ICocktail[] = [];
