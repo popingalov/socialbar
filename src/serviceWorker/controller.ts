@@ -1,6 +1,6 @@
 import addToCache from './helpers/addToCache';
 import takeIngredient from './routes/ingredients/takeIngredientsById';
-import takeCocktail from './routes/cocktails/takeIngredientsById';
+import takeCocktail from './routes/cocktails/takeCocktailById';
 import favorite from './routes/favorite/takeFavorite';
 import ingredientList from './routes/ingredientList/addToIngredientList';
 import ingredientListRemove from './routes/ingredientList/removeInIngredientList';
@@ -9,6 +9,7 @@ export default async function controller(
   url: string,
   id: string,
   baseUrl: string,
+  myLastTry: any,
 ) {
   const { method } = req;
 
@@ -32,13 +33,16 @@ export default async function controller(
       }
     }
   }
-  console.log(url);
+  console.log(method);
 
   if (method === 'POST') {
     switch (url) {
       case '/api/my-ingredient-list':
         fetch(req.clone());
-        const { result, trigger } = await ingredientList(req);
+
+        const { result, trigger, callback } = await ingredientList(req);
+        myLastTry.funTime = callback;
+
         const cacheUrl = trigger ? '/api/ingredients' : '/api/ingredients/my';
         await addToCache(result.clone(), cacheUrl);
         return result;

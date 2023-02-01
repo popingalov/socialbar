@@ -89,23 +89,36 @@ self.addEventListener('message', event => {
 self.addEventListener('activate', () => {
   console.log('я працюю 1 раз під час оновлення білда');
 });
-
+type MyFunc = (id: string) => void;
+const myLastTry: { funTime: null | MyFunc } = {
+  funTime: null,
+};
 self.addEventListener('fetch', async (event: FetchEvent): Promise<any> => {
   const req = event.request;
   const { test, url, id, baseUrl } = checkUrl(req.url);
   // console.log(req);
 
   if (test) {
-    event.respondWith(takeCache(req, url, id, baseUrl));
+    event.respondWith(takeCache(req, url, id, baseUrl, myLastTry));
+    if (myLastTry.funTime) {
+      await myLastTry.funTime('s3123');
+      myLastTry.funTime = null;
+    }
     // event.waitUntil(addToCache(req, url));
   }
 });
 
-async function takeCache(req: Request, url: string, id: any, baseUrl: any) {
+async function takeCache(
+  req: Request,
+  url: string,
+  id: any,
+  baseUrl: any,
+  myLastTry: any,
+) {
   const cached = await caches.match(url);
   const { method } = req;
   if (cached && method === 'GET') {
     return cached;
   }
-  return controller(req, url, id, baseUrl);
+  return controller(req, url, id, baseUrl, myLastTry);
 }
