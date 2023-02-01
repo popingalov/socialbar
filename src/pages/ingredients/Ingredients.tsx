@@ -34,7 +34,6 @@ const Ingredients = () => {
             ingredients={filteredIngredients}
             isMyBar={isMyBar}
             isShoppingList={isShoppingList}
-            ingredientFilter={ingredientFilter}
           />
         )}
 

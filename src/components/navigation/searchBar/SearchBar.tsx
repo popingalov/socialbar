@@ -14,8 +14,7 @@ import { useGetSearchedItems } from 'hooks/useGetSearchedItems';
 const SearchBar: React.FC = () => {
   const searchValue = useSelector(selectSearchFilter);
   const popUpIsOpen = useSelector(selectPopUpStatus);
-  const { cocktails, ingredients, isFetching } = useGetSearchedItems();
-  console.log('searchedItems', cocktails, ingredients);
+  const { cocktails, ingredients } = useGetSearchedItems();
 
   const dispatch = useDispatch();
   const inputRef = useRef<HTMLInputElement>();

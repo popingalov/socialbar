@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { IIngredient } from 'types/ingredient';
 import { useLongPress } from 'use-long-press';
 import { MouseEvent, useState } from 'react';
-import { setContextMenuIsOpen, setPopUpIsOpen } from 'redux/modal/modalSlice';
+import { setContextMenuIsOpen } from 'redux/modal/modalSlice';
 import { AnimatePresence } from 'framer-motion';
 import {
   selectContextMenuStatus,
@@ -15,24 +15,22 @@ import { useDispatch } from 'react-redux';
 import PopUp from 'components/modal/popUp';
 import ContextMenuIngredients from './contextMenu/ContextMenuIngredients';
 import { ListItem } from './IngredientsList.styled';
-import { changeSearchFilter } from 'redux/searchFilter/searchSlice';
-import { initialSearchStatus } from 'redux/searchFilter/searchConstants';
+import { selectIngredientFilter } from 'redux/filter/filterSelectors';
 
 interface IProps {
   ingredients: IIngredient[];
-  ingredientFilter: string;
   isMyBar: boolean;
   isShoppingList: boolean;
 }
 
 const IngredientsList: React.FC<IProps> = ({
   ingredients,
-  ingredientFilter,
   isMyBar,
   isShoppingList,
 }) => {
   const contextMenuIsOpen = useSelector(selectContextMenuStatus);
   const isSearchOpen = useSelector(selectPopUpStatus);
+  const ingredientFilter = useSelector(selectIngredientFilter);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -76,11 +74,7 @@ const IngredientsList: React.FC<IProps> = ({
     event: MouseEvent<HTMLLIElement, globalThis.MouseEvent>,
     id: string,
   ) => {
-    if (isSearchOpen) {
-      dispatch(setPopUpIsOpen(false));
-      dispatch(changeSearchFilter(initialSearchStatus));
-      return;
-    }
+    if (isSearchOpen) return;
 
     const target = event.target as Element;
     const isCheckbox = target.closest('label');

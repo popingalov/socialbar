@@ -27,7 +27,9 @@ export const Modal = styled(motion.div)<IProps>`
 
   background-color: ${p => p.theme.colors.mainBackgroundColor};
   min-width: 150px;
-  max-width: 220px;
+  /* max-width: 220px; */
+  max-width: ${({ type }) => (type === 'search' ? '80%' : '220px')};
+  max-height: 100vh;
   overflow-y: scroll;
   border-radius: 3px;
   border: 1px solid rgba(0, 0, 0, 0.2);

@@ -23,31 +23,22 @@ import { useGetPageCategories } from 'hooks/useGetPageCategories';
 import { useGetNavSelectLabel } from 'hooks/useGetNavSelectLabel';
 import { changeSearchFilter } from 'redux/searchFilter/searchSlice';
 import { initialSearchStatus } from 'redux/searchFilter/searchConstants';
+import { getLocation } from 'helpers/getLocation';
 
 const Navigation = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
-
-  const isMainRoute =
-    location.pathname === paths.ingredients ||
-    location.pathname === paths.cocktails;
-  const isExtraRoute =
-    location.pathname === paths.settings ||
-    location.pathname === paths.newCocktail ||
-    location.pathname === paths.newIngredient;
-
-  const isMainRouteSearching =
-    location.pathname === paths.searchIngredient ||
-    location.pathname === paths.searchCocktails;
-  const pathData = location.pathname.split('/');
-  const isSearchInDetails =
-    pathData[pathData.length - 1] === 'search' && pathData.length === 4;
-  const isMainRouteFilter = isMainRoute && !isMainRouteSearching;
-  const isCardRouteSearching = isSearchInDetails && !isMainRoute;
-  const isIngredients = location.pathname === paths.ingredients;
-  const isCocktails = location.pathname === paths.cocktails;
-
+  const {
+    isMainRoute,
+    isExtraRoute,
+    isMainRouteSearching,
+    isMainRouteFilter,
+    isCardRouteSearching,
+    isIngredients,
+    isCocktails,
+    isSearchInDetails,
+  } = getLocation(location.pathname);
   const filter = useGetPageCategories(isIngredients);
   const selectLabel = useGetNavSelectLabel(isIngredients);
 
