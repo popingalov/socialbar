@@ -54,7 +54,7 @@ const ExtraIcons: React.FC<IProps> = ({
           </ClearButton>
         )}
 
-        {isSearchPopUpOpen && (
+        {isSearchPopUpOpen && isSearch && (
           <ClearButton aria-label="delete search filter" onClick={handleDelete}>
             <HeaderIcon type={headerIconTypes.cross} />
           </ClearButton>

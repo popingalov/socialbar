@@ -8,28 +8,30 @@ interface IProps extends ICoordinates {
 export const Modal = styled(motion.div)<IProps>`
   position: absolute;
   top: ${({ top }) => (top ? top : '0')}px;
-  left: ${({ left, type }) => {
-    if (type === 'select' || type === 'search') return left ? left : '0';
+
+  left: ${({ left, type, theme }) => {
+    if (type === 'select' || type === 'context' || type === 'search') {
+      return `${left}px`;
+    }
     return 'none';
-  }}px;
-  left: ${({ left, type }) => {
-    if (type === 'select' || type === 'context' || type === 'search')
-      return left ? left : '0';
-    return 'none';
-  }}px;
+  }};
+
   right: ${({ right, type, theme }) => {
-    if (type !== 'select') return theme.space[1];
-    return right;
-  }}px;
+    if (type === 'select') {
+      return `${right}px`;
+    }
+    if (type === 'search') {
+      return `${theme.space[4]}px`;
+    }
+    return `${theme.space[1]}px`;
+  }};
 
   z-index: 100;
   padding: ${p => p.theme.space[2]}px;
 
   background-color: ${p => p.theme.colors.mainBackgroundColor};
   min-width: 150px;
-  /* max-width: 220px; */
-  /* TODO: coordinates only top / and centered */
-  max-width: ${({ type }) => (type === 'search' ? '80%' : '220px')};
+  max-width: ${({ type }) => (type === 'search' ? '350px' : '220px')};
   max-height: 100vh;
   overflow-y: scroll;
   border-radius: 3px;
