@@ -11,7 +11,7 @@ export interface IStaticURL {
   'api/favorite': boolean;
   next: boolean;
 }
-export const staticUrl: IStaticURL = {
+export const STATIC_URL: IStaticURL = {
   'api/ingredients': true,
   'api/ingredients/my': true,
   'api/my-ingredient-list': true,
@@ -24,4 +24,4 @@ export const staticUrl: IStaticURL = {
   next: false,
 };
 // перед заміною не забути почистити попередній кеш
-export const cacheName = 'version-one';
+export const CACHES_NAME = 'version-one';

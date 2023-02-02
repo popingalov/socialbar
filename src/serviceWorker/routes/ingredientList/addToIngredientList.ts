@@ -1,7 +1,6 @@
 import { IIngredient } from 'types/ingredient';
-import { cacheName } from '../../base';
+import { CACHES_NAME } from '../../staticObjects/baseData';
 import respGenerator from 'serviceWorker/helpers/responseGenerator';
-import mapNewCocktails from '../cocktails/mapNewCocktails';
 
 interface IIngredientList {
   list: IIngredient[];
@@ -47,8 +46,10 @@ async function helper(
   id: string,
 ) {
   const newList = new Response(JSON.stringify(list));
-  await (await caches.open(cacheName)).put('/api/my-ingredient-list', newList);
+  await (
+    await caches.open(CACHES_NAME)
+  ).put('/api/my-ingredient-list', newList);
   const result = respGenerator(newIngArr, 201);
 
-  return { result, trigger, callback: () => mapNewCocktails(id) };
+  return { result, trigger, id };
 }

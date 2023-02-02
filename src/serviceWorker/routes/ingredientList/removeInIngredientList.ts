@@ -1,5 +1,5 @@
 import { IIngredient } from 'types/ingredient';
-import { cacheName } from '../../base';
+import { CACHES_NAME } from '../../staticObjects/baseData';
 import respGenerator from 'serviceWorker/helpers/responseGenerator';
 
 interface IIngredientList {
@@ -44,7 +44,7 @@ async function resultHelper(
 ) {
   const responseList = new Response(JSON.stringify(list));
   await (
-    await caches.open(cacheName)
+    await caches.open(CACHES_NAME)
   ).put('/api/my-ingredient-list', responseList);
 
   const result = respGenerator(arr);

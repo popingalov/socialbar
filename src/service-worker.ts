@@ -19,6 +19,7 @@ import { StaleWhileRevalidate } from 'workbox-strategies';
 import checkUrl from './serviceWorker/helpers/checkUrl';
 
 import controller from 'serviceWorker/controller';
+import { callbackObj } from 'serviceWorker/staticObjects/callbackObject';
 //
 declare const self: ServiceWorkerGlobalScope;
 
@@ -89,10 +90,7 @@ self.addEventListener('message', event => {
 self.addEventListener('activate', () => {
   console.log('я працюю 1 раз під час оновлення білда');
 });
-type MyFunc = (id: string) => void;
-const myLastTry: { funTime: null | MyFunc } = {
-  funTime: null,
-};
+
 self.addEventListener('fetch', async (event: FetchEvent): Promise<any> => {
   const req = event.request;
   const { test, url, id, baseUrl } = checkUrl(req.url);
@@ -100,26 +98,31 @@ self.addEventListener('fetch', async (event: FetchEvent): Promise<any> => {
   // console.log(req);
 
   if (test) {
-    event.respondWith(takeCache(req, url, id, baseUrl, myLastTry));
-    if (myLastTry.funTime) {
-      await myLastTry.funTime('s3123');
-      myLastTry.funTime = null;
+    if (callbackObj.reqArr.length > 2 && online) {
+      console.log(callbackObj);
+      callbackObj.functionOfline();
+    }
+    event.respondWith(cacheControl(req, url, id, baseUrl));
+
+    const { nameFunc, trigger, id: objId } = callbackObj;
+    if (trigger) {
+      await callbackObj[nameFunc](objId);
+      // callbackObj.trigger = false;
+      if (req.method !== 'GET' && !online) {
+        callbackObj.reqArr.push(req.clone());
+      }
+
+      callbackObj.id = null;
     }
     // event.waitUntil(addToCache(req, url));
   }
 });
 
-async function takeCache(
-  req: Request,
-  url: string,
-  id: any,
-  baseUrl: any,
-  myLastTry: any,
-) {
+async function cacheControl(req: Request, url: string, id: any, baseUrl: any) {
   const cached = await caches.match(url);
   const { method } = req;
   if (cached && method === 'GET') {
     return cached;
   }
-  return controller(req, url, id, baseUrl, myLastTry);
+  return controller(req, url, id, baseUrl);
 }

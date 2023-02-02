@@ -9,7 +9,7 @@
 
 // To learn more about the benefits of this model and instructions on how to
 // opt-in, read https://cra.link/PWA
-
+import { callbackObj } from './serviceWorker/staticObjects/callbackObject';
 const isLocalhost = Boolean(
   window.location.hostname === 'localhost' ||
     // [::1] is the IPv6 localhost address.
@@ -46,6 +46,9 @@ export function register(config?: Config) {
         // Add some additional logging to localhost, pointing developers to the
         // service worker/PWA documentation.
         navigator.serviceWorker.ready.then(async () => {
+          console.log('callbackObj', callbackObj);
+          // callbackObj.functionOfline();
+
           console.log('Провіряти кеш після офлайн тут');
         });
       } else {
