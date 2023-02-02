@@ -7,7 +7,6 @@ import HeaderIcon from 'components/UI-kit/icons/headerIcon';
 import { headerIconTypes } from 'constants/headerIconTypes';
 import { NavigationListStyled, PageName, Wrapper } from './Navigation.styled';
 import PagesNavigation from './pagesNavigation';
-import { paths } from 'constants/paths';
 import SearchBar from 'components/navigation/searchBar';
 import Select from 'components/UI-kit/select';
 import {
@@ -23,7 +22,7 @@ import { useGetPageCategories } from 'hooks/useGetPageCategories';
 import { useGetNavSelectLabel } from 'hooks/useGetNavSelectLabel';
 import { changeSearchFilter } from 'redux/searchFilter/searchSlice';
 import { initialSearchStatus } from 'redux/searchFilter/searchConstants';
-import { getLocation } from 'helpers/getLocation';
+import { useGetLocation } from 'hooks/useGetLocation';
 
 const Navigation = () => {
   const navigate = useNavigate();
@@ -38,7 +37,7 @@ const Navigation = () => {
     isIngredients,
     isCocktails,
     isSearchInDetails,
-  } = getLocation(location.pathname);
+  } = useGetLocation();
   const filter = useGetPageCategories(isIngredients);
   const selectLabel = useGetNavSelectLabel(isIngredients);
 

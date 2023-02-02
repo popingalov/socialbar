@@ -16,17 +16,20 @@ import PopUp from 'components/modal/popUp';
 import ContextMenuIngredients from './contextMenu/ContextMenuIngredients';
 import { ListItem } from './IngredientsList.styled';
 import { selectIngredientFilter } from 'redux/filter/filterSelectors';
+import { useGetLocation } from 'hooks/useGetLocation';
 
 interface IProps {
   ingredients: IIngredient[];
   isMyBar: boolean;
   isShoppingList: boolean;
+  type?: string;
 }
 
 const IngredientsList: React.FC<IProps> = ({
   ingredients,
   isMyBar,
   isShoppingList,
+  type = 'main',
 }) => {
   const contextMenuIsOpen = useSelector(selectContextMenuStatus);
   const isSearchOpen = useSelector(selectPopUpStatus);
@@ -34,6 +37,7 @@ const IngredientsList: React.FC<IProps> = ({
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { isSearch } = useGetLocation();
 
   const [selectCoordinates, setSelectCoordinates] = useState<ICoordinates>({
     top: null,
@@ -49,6 +53,8 @@ const IngredientsList: React.FC<IProps> = ({
   }>({ name: '', id: '', iHave: false, shopping: false });
 
   const longPressHandle = useLongPress((event: any) => {
+    if (isSearchOpen && isSearch) return;
+
     const data = event.target.closest('li').getAttribute('name');
     const id = event.target.closest('li').getAttribute('id');
 
@@ -74,19 +80,27 @@ const IngredientsList: React.FC<IProps> = ({
     event: MouseEvent<HTMLLIElement, globalThis.MouseEvent>,
     id: string,
   ) => {
-    if (isSearchOpen) return;
+    const isModalSearch =
+      event.currentTarget.closest('div')?.getAttribute('type') === 'search';
 
     const target = event.target as Element;
     const isCheckbox = target.closest('label');
     const isButton = target.closest('button');
     if (isCheckbox || isButton) return;
 
+    if (isSearchOpen && isSearch) {
+      if (!isModalSearch) return;
+
+      navigate(`/ingredients/${id}`);
+      return;
+    }
+
     navigate(`${id}`);
   };
 
   return (
     <>
-      <BarList>
+      <BarList type={type}>
         {ingredients.map((ingredient: IIngredient) => {
           const { title, id, picture, iHave, shopping, cocktails } = ingredient;
           const isInMyBar = iHave || isMyBar;

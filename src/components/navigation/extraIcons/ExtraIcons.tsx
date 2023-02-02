@@ -11,8 +11,7 @@ import {
   selectPopUpStatus,
 } from 'redux/modal/modalSelectors';
 import ExtraMenu from 'components/navigation/extraMenu';
-import { useLocation } from 'react-router';
-import { getLocation } from 'helpers/getLocation';
+import { useGetLocation } from 'hooks/useGetLocation';
 
 interface IProps {
   handleDelete: () => void;
@@ -27,9 +26,7 @@ const ExtraIcons: React.FC<IProps> = ({
 }) => {
   const extraMenuIsOpen = useSelector(selectExtraMenuStatus);
   const isSearchPopUpOpen = useSelector(selectPopUpStatus);
-
-  const location = useLocation();
-  const { isSearch } = getLocation(location.pathname);
+  const { isSearch } = useGetLocation();
 
   const [menuCoordinates, setMenuCoordinates] = useState<ICoordinates>({
     top: null,

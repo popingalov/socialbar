@@ -1,13 +1,16 @@
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
 
-export const BarListStyled = styled(motion.ul)`
-  /* background-color: ${p => p.theme.colors.secondaryBackgroundColor}; */
+export const BarListStyled = styled(motion.ul)<{ type: string }>`
   display: flex;
   flex-direction: column;
 
   li {
-    border-bottom: 1px solid ${p => p.theme.colors.borderBottom};
+    border-bottom: 1px solid
+      ${({ theme, type }) =>
+        type === 'search'
+          ? theme.colors.mainBackgroundColor
+          : theme.colors.borderBottom};
     display: block;
     padding-top: ${p => p.theme.space[2]}px;
     padding-bottom: ${p => p.theme.space[2]}px;

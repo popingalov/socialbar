@@ -1,9 +1,9 @@
 import Button from 'components/UI-kit/buttons/button';
 import { cocktailsNavItems, ingredientsNavItems } from 'constants/navItems';
-import { getLocation } from 'helpers/getLocation';
+import { useGetLocation } from 'hooks/useGetLocation';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import { useLocation, useNavigate } from 'react-router';
+import { useNavigate } from 'react-router';
 import {
   selectCocktailFilter,
   selectIngredientFilter,
@@ -17,11 +17,10 @@ import { initialSearchStatus } from 'redux/searchFilter/searchConstants';
 import { changeSearchFilter } from 'redux/searchFilter/searchSlice';
 
 const PagesNavigation = () => {
-  const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { isMainRouteSearching, isIngredientsAndSearch, isIngredients } =
-    getLocation(location.pathname);
+    useGetLocation();
 
   const navigation = isIngredientsAndSearch
     ? ingredientsNavItems

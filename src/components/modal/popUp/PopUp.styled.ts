@@ -9,7 +9,7 @@ export const Modal = styled(motion.div)<IProps>`
   position: absolute;
   top: ${({ top }) => (top ? top : '0')}px;
 
-  left: ${({ left, type, theme }) => {
+  left: ${({ left, type }) => {
     if (type === 'select' || type === 'context' || type === 'search') {
       return `${left}px`;
     }
@@ -31,7 +31,7 @@ export const Modal = styled(motion.div)<IProps>`
 
   background-color: ${p => p.theme.colors.mainBackgroundColor};
   min-width: 150px;
-  max-width: ${({ type }) => (type === 'search' ? '350px' : '220px')};
+  max-width: ${({ type }) => (type === 'search' ? '300px' : '220px')};
   max-height: 100vh;
   overflow-y: scroll;
   border-radius: 3px;

@@ -1,6 +1,10 @@
 import { paths } from 'constants/paths';
+import { useLocation } from 'react-router';
 
-export const getLocation = (path: string) => {
+export const useGetLocation = () => {
+  const location = useLocation();
+  const path = location.pathname;
+
   const isMainRoute = path === paths.ingredients || path === paths.cocktails;
   const isIngredients = path === paths.ingredients;
   const isCocktails = path === paths.cocktails;

@@ -3,11 +3,17 @@ import { BarListStyled } from './BarList.styled';
 
 interface IProps {
   children?: React.ReactNode;
+  type: string;
 }
 
-const BarList: React.FC<IProps> = ({ children }) => {
+const BarList: React.FC<IProps> = ({ children, type }) => {
   return (
-    <BarListStyled key="list" {...listAnimation} transition={{ duration: 0.2 }}>
+    <BarListStyled
+      type={type}
+      key="list"
+      {...listAnimation}
+      transition={{ duration: 0.2 }}
+    >
       {children}
     </BarListStyled>
   );

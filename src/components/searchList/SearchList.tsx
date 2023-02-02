@@ -11,8 +11,9 @@ interface IProps {
 const SearchList: React.FC<IProps> = ({ cocktails, ingredients }) => {
   return (
     <>
-      <CocktailList cocktails={cocktails} />
+      <CocktailList cocktails={cocktails} type="search" />
       <IngredientsList
+        type="search"
         ingredients={ingredients}
         isMyBar={false}
         isShoppingList={false}

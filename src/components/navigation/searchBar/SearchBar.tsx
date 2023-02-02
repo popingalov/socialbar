@@ -24,7 +24,6 @@ const SearchBar: React.FC = () => {
     right: null,
   });
 
-  // TODO: coordinates only top / and centered
   useEffect(() => {
     if (inputRef.current) inputRef.current.focus();
 

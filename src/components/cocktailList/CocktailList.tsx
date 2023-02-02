@@ -11,27 +11,31 @@ import {
 } from 'redux/modal/modalSelectors';
 import { setContextMenuIsOpen } from 'redux/modal/modalSlice';
 import { useLongPress } from 'use-long-press';
-import { useState } from 'react';
+import { MouseEvent, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import PopUp from 'components/modal/popUp';
 import ContextMenuCocktails from './contextMenu/ContextMenuCocktails';
+import { useGetLocation } from 'hooks/useGetLocation';
 
 interface IProps {
   cocktails: ICocktail[];
   isFavoritePage?: boolean;
   inIngredientCard?: boolean;
+  type?: string;
 }
 
 const CocktailList: React.FC<IProps> = ({
   cocktails,
   isFavoritePage = false,
   inIngredientCard = false,
+  type = 'main',
 }) => {
   const contextMenuIsOpen = useSelector(selectContextMenuStatus);
   const isSearchOpen = useSelector(selectPopUpStatus);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { isSearch } = useGetLocation();
 
   const [selectCoordinates, setSelectCoordinates] = useState<ICoordinates>({
     top: null,
@@ -45,6 +49,8 @@ const CocktailList: React.FC<IProps> = ({
   }>({ name: '', id: '', isFavorite: false });
 
   const longPressHandle = useLongPress((event: any) => {
+    if (isSearchOpen && isSearch) return;
+
     const data = event.target.closest('li').getAttribute('name');
     const id = event.target.closest('li').getAttribute('id');
     const { title, favorite } = JSON.parse(data);
@@ -60,10 +66,21 @@ const CocktailList: React.FC<IProps> = ({
     console.log('Long pressed!');
   });
 
-  const handleClick = (id: string) => {
-    if (isSearchOpen) return;
+  const handleClick = (
+    event: MouseEvent<HTMLLIElement, globalThis.MouseEvent>,
+    id: string,
+  ) => {
+    const isModalSearch =
+      event.currentTarget.closest('div')?.getAttribute('type') === 'search';
 
     if (inIngredientCard) {
+      navigate(`/cocktails/${id}`);
+      return;
+    }
+
+    if (isSearchOpen && isSearch) {
+      if (!isModalSearch) return;
+
       navigate(`/cocktails/${id}`);
       return;
     }
@@ -73,7 +90,7 @@ const CocktailList: React.FC<IProps> = ({
 
   return (
     <>
-      <BarList>
+      <BarList type={type}>
         {cocktails.map(
           ({
             title,
@@ -95,7 +112,7 @@ const CocktailList: React.FC<IProps> = ({
                 id={id}
                 name={JSON.stringify({ title, favorite })}
                 allIngredientsAreAvailable={iCan}
-                onClick={() => handleClick(id)}
+                onClick={event => handleClick(event, id)}
                 {...longPressHandle()}
               >
                 <CocktailCard
