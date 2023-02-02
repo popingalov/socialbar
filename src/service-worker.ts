@@ -96,6 +96,7 @@ const myLastTry: { funTime: null | MyFunc } = {
 self.addEventListener('fetch', async (event: FetchEvent): Promise<any> => {
   const req = event.request;
   const { test, url, id, baseUrl } = checkUrl(req.url);
+  const online = navigator.onLine;
   // console.log(req);
 
   if (test) {
