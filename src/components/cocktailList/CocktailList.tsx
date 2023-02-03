@@ -2,7 +2,7 @@ import BarList from 'components/barList/BarList';
 import { ICocktail } from 'types/cocktail';
 import { ListItem } from './CocktailList.styled';
 import CocktailCard from './cocktailCard/CocktailCard';
-import { useLocation, useNavigate } from 'react-router';
+import { useNavigate } from 'react-router';
 import { AnimatePresence } from 'framer-motion';
 import { useSelector } from 'react-redux';
 import {
@@ -11,7 +11,7 @@ import {
 } from 'redux/modal/modalSelectors';
 import { setContextMenuIsOpen } from 'redux/modal/modalSlice';
 import { useLongPress } from 'use-long-press';
-import { MouseEvent, useRef, useState } from 'react';
+import { MouseEvent, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import PopUp from 'components/modal/popUp';
 import ContextMenuCocktails from './contextMenu/ContextMenuCocktails';
@@ -36,7 +36,6 @@ const CocktailList: React.FC<IProps> = ({
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const location = useLocation();
   const { isSearch } = useGetLocation();
 
   const [selectCoordinates, setSelectCoordinates] = useState<ICoordinates>({
@@ -85,7 +84,7 @@ const CocktailList: React.FC<IProps> = ({
 
       dispatch(changeSearchFilter(''));
       navigate(`/cocktails/${id}`, {
-        state: { from: `${location.pathname}` },
+        state: { from: `search` },
       });
       return;
     }
