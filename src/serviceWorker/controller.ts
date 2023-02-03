@@ -10,6 +10,7 @@ export default async function controller(
   url: string,
   id: string,
   baseUrl: string,
+  online: boolean,
 ) {
   const { method } = req;
 
@@ -38,23 +39,22 @@ export default async function controller(
   if (method === 'POST') {
     switch (url) {
       case '/api/my-ingredient-list':
-        // fetch(req.clone());
+        online && fetch(req.clone());
 
-        const { result, trigger, id } = await ingredientList(req);
+        const { result, trigger, ingredient } = await ingredientList(req);
         callbackObj.nameFunc = 'cocktails';
         callbackObj.trigger = true;
-        callbackObj.id = id;
+        callbackObj.ingredient = ingredient;
         const cacheUrl = trigger ? '/api/ingredients' : '/api/ingredients/my';
         await addToCache(result.clone(), cacheUrl);
         return result;
     }
   }
-  console.log(method, url);
 
   if (method === 'DELETE') {
     switch (baseUrl) {
       case 'api/my-ingredient-list':
-        fetch(req.clone());
+        online && fetch(req.clone());
         const { result, trigger, respond } = await ingredientListRemove(id);
         const cacheUrl = trigger ? '/api/ingredients' : '/api/ingredients/my';
         addToCache(result.clone(), cacheUrl);

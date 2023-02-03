@@ -1,11 +1,21 @@
+import { IIngredient } from 'types/ingredient';
 import mapAndChcangeCocktails from '../routes/cocktails/mapNewCocktails';
+//
+export interface ICallbackObj {
+  [key: string]: any;
+  cocktails: any;
+  trigger: boolean;
+  nameFunc: string;
+  ingredient: IIngredient | null;
+  reqArr: any[];
+}
 
 class CallbackObj implements ICallbackObj {
   [key: string]: any;
   cocktails: any;
   trigger: boolean;
   nameFunc: string;
-  id: string | null;
+  ingredient: IIngredient | null;
   reqArr: any[];
   functionOfline: any;
 
@@ -13,7 +23,7 @@ class CallbackObj implements ICallbackObj {
     this.cocktails = mapAndChcangeCocktails;
     this.trigger = false;
     this.nameFunc = 'cocktails';
-    this.id = null;
+    this.ingredient = null;
     this.reqArr = [];
     this.functionOfline = () => {
       console.log(this.reqArr);
@@ -28,28 +38,3 @@ class CallbackObj implements ICallbackObj {
 }
 
 export const callbackObj = new CallbackObj();
-export interface ICallbackObj {
-  [key: string]: any;
-  cocktails: any;
-  trigger: boolean;
-  nameFunc: string;
-  id: string | null;
-  reqArr: any[];
-}
-// function myLastTry() {
-//   console.log('my try', callbackObj);
-
-//   callbackObj.reqArr.forEach((el: Request) => {
-//     console.log(el);
-
-//     fetch(el);
-//   });
-//   callbackObj.reqArr = [];
-// }
-// export const callbackObj: ICallbackObj = {
-//   cocktails: mapAndChcangeCocktails,
-//   trigger: false,
-//   nameFunc: 'cocktails',
-//   id: null,
-//   reqArr: [],
-// };

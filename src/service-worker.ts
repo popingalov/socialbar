@@ -95,19 +95,17 @@ self.addEventListener('fetch', async (event: FetchEvent): Promise<any> => {
   const req = event.request;
   const { test, url, id, baseUrl } = checkUrl(req.url);
   const online = navigator.onLine;
-  // console.log(req);
 
   if (test) {
-    if (callbackObj.reqArr.length > 2 && online) {
-      console.log(callbackObj);
+    if (callbackObj.reqArr.length !== 0 && online) {
       callbackObj.functionOfline();
     }
-    event.respondWith(cacheControl(req, url, id, baseUrl));
+    event.respondWith(cacheControl(req, url, id, baseUrl, online));
 
-    const { nameFunc, trigger, id: objId } = callbackObj;
+    const { nameFunc, trigger, ingredient } = callbackObj;
     if (trigger) {
-      await callbackObj[nameFunc](objId);
-      // callbackObj.trigger = false;
+      await callbackObj[nameFunc](ingredient);
+      callbackObj.trigger = false;
       if (req.method !== 'GET' && !online) {
         callbackObj.reqArr.push(req.clone());
       }
@@ -118,11 +116,17 @@ self.addEventListener('fetch', async (event: FetchEvent): Promise<any> => {
   }
 });
 
-async function cacheControl(req: Request, url: string, id: any, baseUrl: any) {
+async function cacheControl(
+  req: Request,
+  url: string,
+  id: any,
+  baseUrl: any,
+  online: boolean,
+) {
   const cached = await caches.match(url);
   const { method } = req;
   if (cached && method === 'GET') {
     return cached;
   }
-  return controller(req, url, id, baseUrl);
+  return controller(req, url, id, baseUrl, online);
 }
