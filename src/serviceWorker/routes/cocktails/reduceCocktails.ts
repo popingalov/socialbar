@@ -10,6 +10,7 @@ export default function reduceCocktails(
       acc.all.push(cocktail);
       //блок є все
       if (cocktail.lacks.length === 0) {
+        cocktail.iCan = true;
         if (cocktail.isDefault) {
           acc.haveAll.push(cocktail);
           return acc;
@@ -21,6 +22,7 @@ export default function reduceCocktails(
       if (cocktail.lacks.length === 1) {
         const test = cocktail.lacks.includes(ingredient.title);
         if (test) {
+          cocktail.iCan = true;
           cocktail.lacks.shift();
           if (cocktail.isDefault) {
             acc.haveAll.push(cocktail);
@@ -45,7 +47,7 @@ export default function reduceCocktails(
         return acc;
       }
       const newLucks = cocktail.lacks.filter(el => el !== ingredient.title);
-      if (newLucks.length !== 2) {
+      if (newLucks.length !== cocktail.lacks.length) {
         cocktail.lacks = newLucks;
         if (cocktail.isDefault) {
           acc.other.push(cocktail);
