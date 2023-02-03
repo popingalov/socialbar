@@ -95,7 +95,7 @@ const IngredientsList: React.FC<IProps> = ({
 
       dispatch(changeSearchFilter(''));
       navigate(`/ingredients/${id}`, {
-        state: { from: `${location.pathname}` },
+        state: { from: `search` },
       });
       return;
     }

@@ -85,7 +85,7 @@ const CocktailList: React.FC<IProps> = ({
 
       dispatch(changeSearchFilter(''));
       navigate(`/cocktails/${id}`, {
-        state: { from: `${location.pathname}` },
+        state: { from: `search` },
       });
       return;
     }

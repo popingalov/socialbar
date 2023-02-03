@@ -23,7 +23,6 @@ import { useGetNavSelectLabel } from 'hooks/useGetNavSelectLabel';
 import { changeSearchFilter } from 'redux/searchFilter/searchSlice';
 import { initialSearchStatus } from 'redux/searchFilter/searchConstants';
 import { useGetLocation } from 'hooks/useGetLocation';
-import { useGetPreviousPageWithoutSearch } from 'hooks/useGetPreviousPageWithoutSearch';
 
 const Navigation = () => {
   const navigate = useNavigate();
@@ -42,30 +41,21 @@ const Navigation = () => {
   const filter = useGetPageCategories(isIngredients);
   const selectLabel = useGetNavSelectLabel(isIngredients);
   const { isSearch } = useGetLocation();
-  const pathToBack = useGetPreviousPageWithoutSearch();
 
   const handleSideMenu = () => {
     dispatch(setMobileIsOpen(true));
   };
 
   const handleBackButton = () => {
-    // console.log('isSearch', isSearch);
-    // console.log('pathToBack', pathToBack);
-
-    if (isSearch) {
-      navigate(-1);
-      dispatch(setPopUpSearchIsOpen(false));
-      dispatch(changeSearchFilter(initialSearchStatus));
+    if (location?.state?.from) {
+      navigate(-2);
       return;
     }
 
-    // TODO: path сохраняется, если я перехожу внутри одной страницы -
-    // TODO: то есть с коктейля на коктейль
-    // TODO: с коктейля на ингредиент
-    // if (pathToBack) {
-    //   navigate(pathToBack);
-    //   return;
-    // }
+    if (isSearch) {
+      dispatch(setPopUpSearchIsOpen(false));
+      dispatch(changeSearchFilter(initialSearchStatus));
+    }
 
     navigate(-1);
   };
