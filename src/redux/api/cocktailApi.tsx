@@ -2,17 +2,9 @@ import { createApi } from '@reduxjs/toolkit/query/react';
 import baseQuery from '../baseQuery';
 import type { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import { COCKTAIL_URL, TAGS_TYPES } from 'constants/api';
-import { ICocktail } from 'types/cocktail';
+import { ICocktail, AllCocktailsResponse } from 'types/cocktail';
 import { ICocktailResponse } from 'types/response.d.';
 import { IIngredient } from 'types/ingredient';
-
-interface AllCocktailsResponse {
-  all: ICocktail[];
-  haveAll: ICocktail[];
-  needMore: ICocktail[];
-  other: ICocktail[];
-  mine: { haveAll: ICocktail[]; other: ICocktail[] } | null;
-}
 
 export const cocktailApi = createApi({
   reducerPath: 'cocktailApi',

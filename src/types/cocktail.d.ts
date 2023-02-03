@@ -1,6 +1,16 @@
 import { IIngredient } from 'types/ingredient';
 import { IGlass } from 'types/manual';
-
+export interface AllCocktailsResponse {
+  all: ICocktail[];
+  haveAll: ICocktail[];
+  needMore: ICocktail[];
+  other: ICocktail[];
+  mine: {
+    haveAll: ICocktail[];
+    other: ICocktail[];
+    needMore: ICocktail[];
+  } | null;
+}
 export interface ICocktail {
   id: string;
   glass: IGlass;

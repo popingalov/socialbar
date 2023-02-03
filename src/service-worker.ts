@@ -19,6 +19,7 @@ import { StaleWhileRevalidate } from 'workbox-strategies';
 import checkUrl from './serviceWorker/helpers/checkUrl';
 
 import controller from 'serviceWorker/controller';
+import { callbackObj } from 'serviceWorker/staticObjects/callbackObject';
 //
 declare const self: ServiceWorkerGlobalScope;
 
@@ -93,19 +94,38 @@ self.addEventListener('activate', () => {
 self.addEventListener('fetch', async (event: FetchEvent): Promise<any> => {
   const req = event.request;
   const { test, url, id, baseUrl } = checkUrl(req.url);
-  // console.log(req);
+  const online = navigator.onLine;
 
   if (test) {
-    event.respondWith(takeCache(req, url, id, baseUrl));
+    if (callbackObj.reqArr.length !== 0 && online) {
+      callbackObj.functionOfline();
+    }
+    if (req.method !== 'GET' && !online) {
+      callbackObj.reqArr.push(req.clone());
+    }
+    event.respondWith(cacheControl(req, url, id, baseUrl, online));
+
+    const { nameFunc, trigger, ingredient } = callbackObj;
+    if (trigger) {
+      await callbackObj[nameFunc](ingredient);
+      callbackObj.trigger = false;
+      callbackObj.ingredient = null;
+    }
     // event.waitUntil(addToCache(req, url));
   }
 });
 
-async function takeCache(req: Request, url: string, id: any, baseUrl: any) {
+async function cacheControl(
+  req: Request,
+  url: string,
+  id: any,
+  baseUrl: any,
+  online: boolean,
+) {
   const cached = await caches.match(url);
   const { method } = req;
   if (cached && method === 'GET') {
     return cached;
   }
-  return controller(req, url, id, baseUrl);
+  return controller(req, url, id, baseUrl, online);
 }
