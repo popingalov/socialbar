@@ -1,9 +1,12 @@
+import { useSelector } from 'react-redux';
 import { useFetchIngredientsQuery } from 'redux/api/ingredientApi';
 import { useGetMyBarQuery } from 'redux/api/myBarApi';
 import { useGetShoppingListQuery } from 'redux/api/shoppingApi';
 import { ingredientFilterStatus } from 'redux/filter/filterConstants';
+import { selectIngredientFilter } from 'redux/filter/filterSelectors';
 
-export const useGetVisibleIngredients = (filterStatus: string) => {
+export const useGetVisibleIngredients = () => {
+  const filterStatus = useSelector(selectIngredientFilter);
   const { data: allIngredients, isFetching: allIngredientsFetching } =
     useFetchIngredientsQuery();
   const { data: myBar, isFetching: myBarFetching } = useGetMyBarQuery();

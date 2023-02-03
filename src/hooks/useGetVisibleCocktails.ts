@@ -1,15 +1,15 @@
+import { useSelector } from 'react-redux';
 import { useFetchCocktailsQuery } from 'redux/api/cocktailApi';
 import { useGetFavoritesQuery } from 'redux/api/favoriteApi';
 import { cocktailFilterStatus } from 'redux/filter/filterConstants';
+import { selectCocktailFilter } from 'redux/filter/filterSelectors';
 
-export const useGetVisibleCocktails = (filterStatus: string) => {
+export const useGetVisibleCocktails = () => {
+  const filterStatus = useSelector(selectCocktailFilter);
   const { data: cocktails, isFetching: cocktailsFetching } =
     useFetchCocktailsQuery();
   const { data: favoriteCocktails, isFetching: favoriteCocktailsFetching } =
     useGetFavoritesQuery();
-
-  // console.log('cocktails', cocktails);
-  // console.log('favoriteCocktails', favoriteCocktails);
 
   switch (filterStatus) {
     case cocktailFilterStatus.favoriteCocktails:

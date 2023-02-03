@@ -8,10 +8,10 @@ import PopUp from 'components/modal/popUp';
 import { useSelector } from 'react-redux';
 import {
   selectExtraMenuStatus,
-  selectPopUpStatus,
+  selectPopUpSearchStatus,
 } from 'redux/modal/modalSelectors';
 import ExtraMenu from 'components/navigation/extraMenu';
-import { useLocation } from 'react-router';
+import { useGetLocation } from 'hooks/useGetLocation';
 
 interface IProps {
   handleDelete: () => void;
@@ -25,11 +25,8 @@ const ExtraIcons: React.FC<IProps> = ({
   handleAppMenu,
 }) => {
   const extraMenuIsOpen = useSelector(selectExtraMenuStatus);
-  const isSearchPopUpOpen = useSelector(selectPopUpStatus);
-
-  const location = useLocation();
-  const pathData = location.pathname.split('/');
-  const isSearch = pathData[pathData.length - 1] === 'search';
+  const isSearchPopUpOpen = useSelector(selectPopUpSearchStatus);
+  const { isSearch } = useGetLocation();
 
   const [menuCoordinates, setMenuCoordinates] = useState<ICoordinates>({
     top: null,
@@ -53,8 +50,13 @@ const ExtraIcons: React.FC<IProps> = ({
             <HeaderIcon type={headerIconTypes.searching} />
           </ClearButton>
         )}
+        {!isSearchPopUpOpen && isSearch && (
+          <ClearButton aria-label="searching" onClick={handleSearch}>
+            <HeaderIcon type={headerIconTypes.searching} />
+          </ClearButton>
+        )}
 
-        {isSearchPopUpOpen && (
+        {isSearchPopUpOpen && isSearch && (
           <ClearButton aria-label="delete search filter" onClick={handleDelete}>
             <HeaderIcon type={headerIconTypes.cross} />
           </ClearButton>

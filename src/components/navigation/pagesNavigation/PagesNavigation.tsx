@@ -1,9 +1,9 @@
 import Button from 'components/UI-kit/buttons/button';
 import { cocktailsNavItems, ingredientsNavItems } from 'constants/navItems';
-import { paths } from 'constants/paths';
+import { useGetLocation } from 'hooks/useGetLocation';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import { useLocation, useNavigate } from 'react-router';
+import { useNavigate } from 'react-router';
 import {
   selectCocktailFilter,
   selectIngredientFilter,
@@ -17,22 +17,16 @@ import { initialSearchStatus } from 'redux/searchFilter/searchConstants';
 import { changeSearchFilter } from 'redux/searchFilter/searchSlice';
 
 const PagesNavigation = () => {
-  const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { isMainRouteSearching, isIngredientsAndSearch, isIngredients } =
+    useGetLocation();
 
-  const isMainRouteSearching =
-    location.pathname === paths.searchIngredient ||
-    location.pathname === paths.searchCocktails;
-  const isIngredients =
-    location.pathname === paths.ingredients ||
-    location.pathname === paths.searchIngredient;
-
-  const navigation = isIngredients ? ingredientsNavItems : cocktailsNavItems;
+  const navigation = isIngredientsAndSearch
+    ? ingredientsNavItems
+    : cocktailsNavItems;
   const filter = useSelector(
-    location.pathname === paths.ingredients
-      ? selectIngredientFilter
-      : selectCocktailFilter,
+    isIngredients ? selectIngredientFilter : selectCocktailFilter,
   );
 
   const handleStatusFilterChange = (value: string) => {
@@ -42,7 +36,7 @@ const PagesNavigation = () => {
       dispatch(changeSearchFilter(initialSearchStatus));
     }
 
-    const setStatusFilter = isIngredients
+    const setStatusFilter = isIngredientsAndSearch
       ? setIngredientStatusFilter
       : setCocktailStatusFilter;
 

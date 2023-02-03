@@ -1,5 +1,7 @@
 import { ICocktail } from 'types/cocktail';
 import { IIngredient } from 'types/ingredient';
+import CocktailList from 'components/cocktailList';
+import IngredientsList from 'components/ingredientsList';
 
 interface IProps {
   cocktails: ICocktail[];
@@ -7,16 +9,16 @@ interface IProps {
 }
 
 const SearchList: React.FC<IProps> = ({ cocktails, ingredients }) => {
-  console.log('items', cocktails, ingredients);
   return (
-    <ul>
-      {cocktails.map(item => (
-        <li>{item.title}</li>
-      ))}
-      {ingredients.map(item => (
-        <li>{item.title}</li>
-      ))}
-    </ul>
+    <>
+      <CocktailList cocktails={cocktails} type="search" />
+      <IngredientsList
+        type="search"
+        ingredients={ingredients}
+        isMyBar={false}
+        isShoppingList={false}
+      />
+    </>
   );
 };
 

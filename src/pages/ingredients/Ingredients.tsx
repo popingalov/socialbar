@@ -1,26 +1,16 @@
 import IngredientsList from 'components/ingredientsList';
 import { pageAnimation } from 'constants/animations';
-import { AnimatePresence, motion } from 'framer-motion';
-import { selectIngredientFilter } from 'redux/filter/filterSelectors';
-import { useSelector } from 'react-redux';
-import { ingredientFilterStatus } from 'redux/filter/filterConstants';
+import { motion } from 'framer-motion';
 import FollowUpMessage from 'components/UI-kit/followUpMessage';
 import IngredientBottomMessage from 'components/ingredientsList/ingredientBottomMessage';
 import Loader from 'components/loader';
 import { useGetVisibleIngredients } from 'hooks/useGetVisibleIngredients';
 import { useGetFilteredIngredients } from 'hooks/useGetFilteredIngredients';
-import { Suspense } from 'react';
-import { Outlet } from 'react-router';
+import { useGetIngredientsTabStatus } from 'hooks/useGetIngredientsTabStatus';
 
 const Ingredients = () => {
-  const ingredientFilter = useSelector(selectIngredientFilter);
-
-  const { visibleIngredients, isFetching } =
-    useGetVisibleIngredients(ingredientFilter);
-  const isMyBar = ingredientFilterStatus.myBarShelf === ingredientFilter;
-  const isShoppingList =
-    ingredientFilterStatus.shoppingList === ingredientFilter;
-
+  const { isMyBar, isShoppingList } = useGetIngredientsTabStatus();
+  const { visibleIngredients, isFetching } = useGetVisibleIngredients();
   const { filteredIngredients, filteredItems } =
     useGetFilteredIngredients(visibleIngredients);
 
@@ -34,7 +24,6 @@ const Ingredients = () => {
             ingredients={filteredIngredients}
             isMyBar={isMyBar}
             isShoppingList={isShoppingList}
-            ingredientFilter={ingredientFilter}
           />
         )}
 

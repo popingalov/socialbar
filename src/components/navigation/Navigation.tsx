@@ -7,13 +7,12 @@ import HeaderIcon from 'components/UI-kit/icons/headerIcon';
 import { headerIconTypes } from 'constants/headerIconTypes';
 import { NavigationListStyled, PageName, Wrapper } from './Navigation.styled';
 import PagesNavigation from './pagesNavigation';
-import { paths } from 'constants/paths';
 import SearchBar from 'components/navigation/searchBar';
 import Select from 'components/UI-kit/select';
 import {
   setExtraMenuIsOpen,
   setMobileIsOpen,
-  setPopUpIsOpen,
+  setPopUpSearchIsOpen,
 } from 'redux/modal/modalSlice';
 import {
   setCocktailCategory,
@@ -23,42 +22,52 @@ import { useGetPageCategories } from 'hooks/useGetPageCategories';
 import { useGetNavSelectLabel } from 'hooks/useGetNavSelectLabel';
 import { changeSearchFilter } from 'redux/searchFilter/searchSlice';
 import { initialSearchStatus } from 'redux/searchFilter/searchConstants';
+import { useGetLocation } from 'hooks/useGetLocation';
+import { useGetPreviousPageWithoutSearch } from 'hooks/useGetPreviousPageWithoutSearch';
 
 const Navigation = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
-
-  const isMainRoute =
-    location.pathname === paths.ingredients ||
-    location.pathname === paths.cocktails;
-  const isExtraRoute =
-    location.pathname === paths.settings ||
-    location.pathname === paths.newCocktail ||
-    location.pathname === paths.newIngredient;
-
-  const isMainRouteSearching =
-    location.pathname === paths.searchIngredient ||
-    location.pathname === paths.searchCocktails;
-  const pathData = location.pathname.split('/');
-  const isSearchInDetails =
-    pathData[pathData.length - 1] === 'search' && pathData.length === 4;
-  const isMainRouteFilter = isMainRoute && !isMainRouteSearching;
-  const isCardRouteSearching = isSearchInDetails && !isMainRoute;
-  const isIngredients = location.pathname === paths.ingredients;
-  const isCocktails = location.pathname === paths.cocktails;
-
+  const {
+    isMainRoute,
+    isExtraRoute,
+    isMainRouteSearching,
+    isMainRouteFilter,
+    isCardRouteSearching,
+    isIngredients,
+    isCocktails,
+    isSearchInDetails,
+  } = useGetLocation();
   const filter = useGetPageCategories(isIngredients);
   const selectLabel = useGetNavSelectLabel(isIngredients);
+  const { isSearch } = useGetLocation();
+  const pathToBack = useGetPreviousPageWithoutSearch();
 
   const handleSideMenu = () => {
     dispatch(setMobileIsOpen(true));
   };
 
   const handleBackButton = () => {
+    // console.log('isSearch', isSearch);
+    // console.log('pathToBack', pathToBack);
+
+    if (isSearch) {
+      navigate(-1);
+      dispatch(setPopUpSearchIsOpen(false));
+      dispatch(changeSearchFilter(initialSearchStatus));
+      return;
+    }
+
+    // TODO: path сохраняется, если я перехожу внутри одной страницы -
+    // TODO: то есть с коктейля на коктейль
+    // TODO: с коктейля на ингредиент
+    // if (pathToBack) {
+    //   navigate(pathToBack);
+    //   return;
+    // }
+
     navigate(-1);
-    dispatch(setPopUpIsOpen(false));
-    dispatch(changeSearchFilter(initialSearchStatus));
   };
 
   const handleSearchButton = () => {
@@ -74,7 +83,7 @@ const Navigation = () => {
 
     if (isMainRouteSearching || isSearchInDetails) {
       navigate(-1);
-      dispatch(setPopUpIsOpen(false));
+      dispatch(setPopUpSearchIsOpen(false));
       dispatch(changeSearchFilter(initialSearchStatus));
       return;
     }
@@ -85,8 +94,8 @@ const Navigation = () => {
     }
   };
 
-  const handleDelete = () => {
-    dispatch(setPopUpIsOpen(false));
+  const handleDeleteSearch = () => {
+    dispatch(setPopUpSearchIsOpen(false));
     dispatch(changeSearchFilter(initialSearchStatus));
   };
 
@@ -129,7 +138,7 @@ const Navigation = () => {
           ) : (
             <ExtraIcons
               handleSearch={handleSearchButton}
-              handleDelete={handleDelete}
+              handleDelete={handleDeleteSearch}
               handleAppMenu={handleAppMenu}
             />
           )}

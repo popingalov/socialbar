@@ -1,41 +1,45 @@
 import BarList from 'components/barList';
 import { useSelector } from 'react-redux';
 import IngredientCard from 'components/ingredientsList/ingredientCard';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { IIngredient } from 'types/ingredient';
 import { useLongPress } from 'use-long-press';
-import { MouseEvent, useState } from 'react';
-import { setContextMenuIsOpen, setPopUpIsOpen } from 'redux/modal/modalSlice';
+import { MouseEvent, useRef, useState } from 'react';
+import { setContextMenuIsOpen } from 'redux/modal/modalSlice';
 import { AnimatePresence } from 'framer-motion';
 import {
   selectContextMenuStatus,
-  selectPopUpStatus,
+  selectPopUpSearchStatus,
 } from 'redux/modal/modalSelectors';
 import { useDispatch } from 'react-redux';
 import PopUp from 'components/modal/popUp';
 import ContextMenuIngredients from './contextMenu/ContextMenuIngredients';
 import { ListItem } from './IngredientsList.styled';
+import { selectIngredientFilter } from 'redux/filter/filterSelectors';
+import { useGetLocation } from 'hooks/useGetLocation';
 import { changeSearchFilter } from 'redux/searchFilter/searchSlice';
-import { initialSearchStatus } from 'redux/searchFilter/searchConstants';
 
 interface IProps {
   ingredients: IIngredient[];
-  ingredientFilter: string;
   isMyBar: boolean;
   isShoppingList: boolean;
+  type?: string;
 }
 
 const IngredientsList: React.FC<IProps> = ({
   ingredients,
-  ingredientFilter,
   isMyBar,
   isShoppingList,
+  type = 'main',
 }) => {
   const contextMenuIsOpen = useSelector(selectContextMenuStatus);
-  const isSearchOpen = useSelector(selectPopUpStatus);
+  const isSearchOpen = useSelector(selectPopUpSearchStatus);
+  const ingredientFilter = useSelector(selectIngredientFilter);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
+  const { isSearch } = useGetLocation();
 
   const [selectCoordinates, setSelectCoordinates] = useState<ICoordinates>({
     top: null,
@@ -51,6 +55,8 @@ const IngredientsList: React.FC<IProps> = ({
   }>({ name: '', id: '', iHave: false, shopping: false });
 
   const longPressHandle = useLongPress((event: any) => {
+    if (isSearchOpen && isSearch) return;
+
     const data = event.target.closest('li').getAttribute('name');
     const id = event.target.closest('li').getAttribute('id');
 
@@ -76,23 +82,30 @@ const IngredientsList: React.FC<IProps> = ({
     event: MouseEvent<HTMLLIElement, globalThis.MouseEvent>,
     id: string,
   ) => {
-    if (isSearchOpen) {
-      dispatch(setPopUpIsOpen(false));
-      dispatch(changeSearchFilter(initialSearchStatus));
-      return;
-    }
-
     const target = event.target as Element;
     const isCheckbox = target.closest('label');
     const isButton = target.closest('button');
     if (isCheckbox || isButton) return;
+
+    const isModalSearch =
+      event.currentTarget.closest('div')?.getAttribute('type') === 'search';
+
+    if (isSearchOpen && isSearch) {
+      if (!isModalSearch) return;
+
+      dispatch(changeSearchFilter(''));
+      navigate(`/ingredients/${id}`, {
+        state: { from: `${location.pathname}` },
+      });
+      return;
+    }
 
     navigate(`${id}`);
   };
 
   return (
     <>
-      <BarList>
+      <BarList type={type}>
         {ingredients.map((ingredient: IIngredient) => {
           const { title, id, picture, iHave, shopping, cocktails } = ingredient;
           const isInMyBar = iHave || isMyBar;
