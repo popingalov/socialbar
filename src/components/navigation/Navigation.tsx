@@ -12,7 +12,7 @@ import Select from 'components/UI-kit/select';
 import {
   setExtraMenuIsOpen,
   setMobileIsOpen,
-  setPopUpIsOpen,
+  setPopUpSearchIsOpen,
 } from 'redux/modal/modalSlice';
 import {
   setCocktailCategory,
@@ -23,6 +23,7 @@ import { useGetNavSelectLabel } from 'hooks/useGetNavSelectLabel';
 import { changeSearchFilter } from 'redux/searchFilter/searchSlice';
 import { initialSearchStatus } from 'redux/searchFilter/searchConstants';
 import { useGetLocation } from 'hooks/useGetLocation';
+import { useGetPreviousPageWithoutSearch } from 'hooks/useGetPreviousPageWithoutSearch';
 
 const Navigation = () => {
   const navigate = useNavigate();
@@ -40,15 +41,33 @@ const Navigation = () => {
   } = useGetLocation();
   const filter = useGetPageCategories(isIngredients);
   const selectLabel = useGetNavSelectLabel(isIngredients);
+  const { isSearch } = useGetLocation();
+  const pathToBack = useGetPreviousPageWithoutSearch();
 
   const handleSideMenu = () => {
     dispatch(setMobileIsOpen(true));
   };
 
   const handleBackButton = () => {
+    // console.log('isSearch', isSearch);
+    // console.log('pathToBack', pathToBack);
+
+    if (isSearch) {
+      navigate(-1);
+      dispatch(setPopUpSearchIsOpen(false));
+      dispatch(changeSearchFilter(initialSearchStatus));
+      return;
+    }
+
+    // TODO: path сохраняется, если я перехожу внутри одной страницы -
+    // TODO: то есть с коктейля на коктейль
+    // TODO: с коктейля на ингредиент
+    // if (pathToBack) {
+    //   navigate(pathToBack);
+    //   return;
+    // }
+
     navigate(-1);
-    dispatch(setPopUpIsOpen(false));
-    dispatch(changeSearchFilter(initialSearchStatus));
   };
 
   const handleSearchButton = () => {
@@ -64,7 +83,7 @@ const Navigation = () => {
 
     if (isMainRouteSearching || isSearchInDetails) {
       navigate(-1);
-      dispatch(setPopUpIsOpen(false));
+      dispatch(setPopUpSearchIsOpen(false));
       dispatch(changeSearchFilter(initialSearchStatus));
       return;
     }
@@ -76,7 +95,7 @@ const Navigation = () => {
   };
 
   const handleDeleteSearch = () => {
-    dispatch(setPopUpIsOpen(false));
+    dispatch(setPopUpSearchIsOpen(false));
     dispatch(changeSearchFilter(initialSearchStatus));
   };
 

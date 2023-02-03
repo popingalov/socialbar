@@ -2,8 +2,8 @@ import { AnimatePresence } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import { selectPopUpStatus } from 'redux/modal/modalSelectors';
-import { setPopUpIsOpen } from 'redux/modal/modalSlice';
+import { selectPopUpSearchStatus } from 'redux/modal/modalSelectors';
+import { setPopUpSearchIsOpen } from 'redux/modal/modalSlice';
 import { selectSearchFilter } from 'redux/searchFilter/searchFilterSelector';
 import { changeSearchFilter } from 'redux/searchFilter/searchSlice';
 import { MainInput } from './SearchBar.styled';
@@ -13,7 +13,7 @@ import { useGetSearchedItems } from 'hooks/useGetSearchedItems';
 
 const SearchBar: React.FC = () => {
   const searchValue = useSelector(selectSearchFilter);
-  const popUpIsOpen = useSelector(selectPopUpStatus);
+  const popUpIsOpen = useSelector(selectPopUpSearchStatus);
   const { cocktails, ingredients } = useGetSearchedItems();
 
   const dispatch = useDispatch();
@@ -43,10 +43,10 @@ const SearchBar: React.FC = () => {
 
   useEffect(() => {
     if (searchValue && (cocktails?.length !== 0 || ingredients?.length !== 0)) {
-      dispatch(setPopUpIsOpen(true));
+      dispatch(setPopUpSearchIsOpen(true));
       return;
     }
-    dispatch(setPopUpIsOpen(false));
+    dispatch(setPopUpSearchIsOpen(false));
   }, [cocktails?.length, dispatch, ingredients?.length, searchValue]);
 
   const handleInput = (event: React.FormEvent<HTMLInputElement>) => {

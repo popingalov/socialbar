@@ -1,22 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-
-interface IModalStatus {
-  mobileMenuStatus: {
-    isOpen: boolean;
-  };
-  popUpSelect: {
-    isOpen: boolean;
-  };
-  popUpExtraMenu: {
-    isOpen: boolean;
-  };
-  settingsMenu: {
-    isOpen: boolean;
-  };
-  contextMenu: {
-    isOpen: boolean;
-  };
-}
+import { IModalStatus } from 'types/modalStatus';
 
 const modalStatusInitialState: IModalStatus = {
   mobileMenuStatus: {
@@ -32,6 +15,9 @@ const modalStatusInitialState: IModalStatus = {
     isOpen: false,
   },
   contextMenu: {
+    isOpen: false,
+  },
+  popUpSearch: {
     isOpen: false,
   },
 };
@@ -55,6 +41,9 @@ const modalSlice = createSlice({
     setContextMenuIsOpen(state, { payload }: PayloadAction<boolean>) {
       state.contextMenu.isOpen = payload;
     },
+    setPopUpSearchIsOpen(state, { payload }: PayloadAction<boolean>) {
+      state.popUpSearch.isOpen = payload;
+    },
   },
 });
 
@@ -64,5 +53,6 @@ export const {
   setExtraMenuIsOpen,
   setSettingsMenuIsOpen,
   setContextMenuIsOpen,
+  setPopUpSearchIsOpen,
 } = modalSlice.actions;
 export const modalReducer = modalSlice.reducer;

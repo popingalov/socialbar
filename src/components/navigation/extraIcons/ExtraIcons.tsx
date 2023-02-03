@@ -8,7 +8,7 @@ import PopUp from 'components/modal/popUp';
 import { useSelector } from 'react-redux';
 import {
   selectExtraMenuStatus,
-  selectPopUpStatus,
+  selectPopUpSearchStatus,
 } from 'redux/modal/modalSelectors';
 import ExtraMenu from 'components/navigation/extraMenu';
 import { useGetLocation } from 'hooks/useGetLocation';
@@ -25,7 +25,7 @@ const ExtraIcons: React.FC<IProps> = ({
   handleAppMenu,
 }) => {
   const extraMenuIsOpen = useSelector(selectExtraMenuStatus);
-  const isSearchPopUpOpen = useSelector(selectPopUpStatus);
+  const isSearchPopUpOpen = useSelector(selectPopUpSearchStatus);
   const { isSearch } = useGetLocation();
 
   const [menuCoordinates, setMenuCoordinates] = useState<ICoordinates>({
@@ -46,6 +46,11 @@ const ExtraIcons: React.FC<IProps> = ({
     <>
       <Box display="flex">
         {!isSearch && (
+          <ClearButton aria-label="searching" onClick={handleSearch}>
+            <HeaderIcon type={headerIconTypes.searching} />
+          </ClearButton>
+        )}
+        {!isSearchPopUpOpen && isSearch && (
           <ClearButton aria-label="searching" onClick={handleSearch}>
             <HeaderIcon type={headerIconTypes.searching} />
           </ClearButton>

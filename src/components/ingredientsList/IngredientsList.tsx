@@ -1,15 +1,15 @@
 import BarList from 'components/barList';
 import { useSelector } from 'react-redux';
 import IngredientCard from 'components/ingredientsList/ingredientCard';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { IIngredient } from 'types/ingredient';
 import { useLongPress } from 'use-long-press';
-import { MouseEvent, useState } from 'react';
+import { MouseEvent, useRef, useState } from 'react';
 import { setContextMenuIsOpen } from 'redux/modal/modalSlice';
 import { AnimatePresence } from 'framer-motion';
 import {
   selectContextMenuStatus,
-  selectPopUpStatus,
+  selectPopUpSearchStatus,
 } from 'redux/modal/modalSelectors';
 import { useDispatch } from 'react-redux';
 import PopUp from 'components/modal/popUp';
@@ -17,6 +17,7 @@ import ContextMenuIngredients from './contextMenu/ContextMenuIngredients';
 import { ListItem } from './IngredientsList.styled';
 import { selectIngredientFilter } from 'redux/filter/filterSelectors';
 import { useGetLocation } from 'hooks/useGetLocation';
+import { changeSearchFilter } from 'redux/searchFilter/searchSlice';
 
 interface IProps {
   ingredients: IIngredient[];
@@ -32,11 +33,12 @@ const IngredientsList: React.FC<IProps> = ({
   type = 'main',
 }) => {
   const contextMenuIsOpen = useSelector(selectContextMenuStatus);
-  const isSearchOpen = useSelector(selectPopUpStatus);
+  const isSearchOpen = useSelector(selectPopUpSearchStatus);
   const ingredientFilter = useSelector(selectIngredientFilter);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
   const { isSearch } = useGetLocation();
 
   const [selectCoordinates, setSelectCoordinates] = useState<ICoordinates>({
@@ -80,18 +82,21 @@ const IngredientsList: React.FC<IProps> = ({
     event: MouseEvent<HTMLLIElement, globalThis.MouseEvent>,
     id: string,
   ) => {
-    const isModalSearch =
-      event.currentTarget.closest('div')?.getAttribute('type') === 'search';
-
     const target = event.target as Element;
     const isCheckbox = target.closest('label');
     const isButton = target.closest('button');
     if (isCheckbox || isButton) return;
 
+    const isModalSearch =
+      event.currentTarget.closest('div')?.getAttribute('type') === 'search';
+
     if (isSearchOpen && isSearch) {
       if (!isModalSearch) return;
 
-      navigate(`/ingredients/${id}`);
+      dispatch(changeSearchFilter(''));
+      navigate(`/ingredients/${id}`, {
+        state: { from: `${location.pathname}` },
+      });
       return;
     }
 
