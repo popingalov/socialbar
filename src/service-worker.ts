@@ -100,17 +100,16 @@ self.addEventListener('fetch', async (event: FetchEvent): Promise<any> => {
     if (callbackObj.reqArr.length !== 0 && online) {
       callbackObj.functionOfline();
     }
+    if (req.method !== 'GET' && !online) {
+      callbackObj.reqArr.push(req.clone());
+    }
     event.respondWith(cacheControl(req, url, id, baseUrl, online));
 
     const { nameFunc, trigger, ingredient } = callbackObj;
     if (trigger) {
       await callbackObj[nameFunc](ingredient);
       callbackObj.trigger = false;
-      if (req.method !== 'GET' && !online) {
-        callbackObj.reqArr.push(req.clone());
-      }
-
-      callbackObj.id = null;
+      callbackObj.ingredient = null;
     }
     // event.waitUntil(addToCache(req, url));
   }
