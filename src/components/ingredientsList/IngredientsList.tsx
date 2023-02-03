@@ -1,10 +1,10 @@
 import BarList from 'components/barList';
 import { useSelector } from 'react-redux';
 import IngredientCard from 'components/ingredientsList/ingredientCard';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { IIngredient } from 'types/ingredient';
 import { useLongPress } from 'use-long-press';
-import { MouseEvent, useRef, useState } from 'react';
+import { MouseEvent, useState } from 'react';
 import { setContextMenuIsOpen } from 'redux/modal/modalSlice';
 import { AnimatePresence } from 'framer-motion';
 import {
@@ -38,7 +38,6 @@ const IngredientsList: React.FC<IProps> = ({
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const location = useLocation();
   const { isSearch } = useGetLocation();
 
   const [selectCoordinates, setSelectCoordinates] = useState<ICoordinates>({
