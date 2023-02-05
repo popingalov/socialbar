@@ -30,9 +30,25 @@ export const UserIconWrapper = styled.div`
   background-color: ${({ theme }) => theme.colors.lightText};
   margin-bottom: ${p => p.theme.space[4]}px;
 
+  img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+  }
+
   svg {
     width: 30px;
     height: 30px;
     fill: ${({ theme }) => theme.colors.accent};
   }
+`;
+
+export const UserEmail = styled.div`
+  width: 100%;
+  overflow-x: hidden;
+  padding-top: ${p => p.theme.space[2]}px;
+  padding-bottom: ${p => p.theme.space[2]}px;
+  color: ${p => p.theme.colors.lightText};
+  font-size: ${p => p.theme.fontSizes.s};
+  font-family: inherit;
 `;

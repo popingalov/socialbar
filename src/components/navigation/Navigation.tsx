@@ -37,10 +37,10 @@ const Navigation = () => {
     isIngredients,
     isCocktails,
     isSearchInDetails,
+    isSearch,
   } = useGetLocation();
   const filter = useGetPageCategories(isIngredients);
   const selectLabel = useGetNavSelectLabel(isIngredients);
-  const { isSearch } = useGetLocation();
 
   const handleSideMenu = () => {
     dispatch(setMobileIsOpen(true));
