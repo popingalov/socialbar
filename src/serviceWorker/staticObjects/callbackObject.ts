@@ -1,35 +1,37 @@
 import { IIngredient } from 'types/ingredient';
-import mapAndChcangeCocktails from '../routes/cocktails/mapNewCocktails';
+import changeIngList from '../routes/cocktails/changeIngList';
+// import changeIngList from '../routes/cocktails/remove/removeIng';
 //
-export interface ICallbackObj {
+// export interface ICallbackObj {
+//   [key: string]: any;
+//   cocktails: any;
+//   trigger: boolean;
+//   nameFunc: string;
+//   ingredient: IIngredient | null;
+//   reqArr: any[];
+//   method: string;
+// }
+// implements ICallbackObj
+class CallbackObj {
   [key: string]: any;
   cocktails: any;
   trigger: boolean;
   nameFunc: string;
   ingredient: IIngredient | null;
   reqArr: any[];
-}
-
-class CallbackObj implements ICallbackObj {
-  [key: string]: any;
-  cocktails: any;
-  trigger: boolean;
-  nameFunc: string;
-  ingredient: IIngredient | null;
-  reqArr: any[];
+  method: string;
   functionOfline: any;
 
   constructor() {
-    this.cocktails = mapAndChcangeCocktails;
+    this.addIngToList = changeIngList;
+    this.removeIngToList = changeIngList;
     this.trigger = false;
     this.nameFunc = 'cocktails';
     this.ingredient = null;
     this.reqArr = [];
+    this.method = 'GET';
     this.functionOfline = () => {
-      console.log(this.reqArr);
-      console.log(this);
       this.reqArr.forEach((el: Request) => {
-        console.log(el);
         fetch(el);
       });
       this.reqArr = [];
