@@ -26,7 +26,7 @@ export default async function takeIngredient({ id, baseUrl, url }: IParams) {
 
   const ingredient = [...allIngredients, ...my].find(el => el.id === id);
   if (!ingredient) {
-    throw new Error('Bad id');
+    throw new Error('bad id');
   }
   const includeCocktails = cocktails.all.reduce((acc, el) => {
     const test = el.ingredients.filter(ell => ell._id === id);

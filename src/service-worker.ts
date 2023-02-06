@@ -105,16 +105,18 @@ self.addEventListener('fetch', async (event: FetchEvent): Promise<any> => {
     }
     event.respondWith(cacheControl(req, url, id, baseUrl, online));
 
-    const { nameFunc, trigger, ingredient } = callbackObj;
-    if (trigger) {
-      await callbackObj[nameFunc](ingredient);
-      callbackObj.trigger = false;
-      callbackObj.ingredient = null;
-    }
-    // event.waitUntil(addToCache(req, url));
+    event.waitUntil(continuationWork());
   }
 });
 
+async function continuationWork() {
+  const { nameFunc, trigger, ingredient, method } = callbackObj;
+  if (trigger) {
+    await callbackObj[nameFunc](ingredient, method);
+    callbackObj.trigger = false;
+    callbackObj.ingredient = null;
+  }
+}
 async function cacheControl(
   req: Request,
   url: string,

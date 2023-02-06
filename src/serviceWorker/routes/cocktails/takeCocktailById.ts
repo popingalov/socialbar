@@ -23,10 +23,12 @@ export default async function takeCocktail({ id, baseUrl, url }: IParams) {
   if (!cocktail) {
     throw new Error('Bad id');
   }
-  const ingListPromise: any = await caches.match('/api/my-ingredient-list');
-  const ingList: any = await ingListPromise?.json();
 
-  const favoritePromise = await caches.match('/api/favorite');
+  const [ingListPromise, favoritePromise] = await Promise.all([
+    caches.match('/api/my-ingredient-list'),
+    caches.match('/api/favorite'),
+  ]);
+  const ingList: any = await ingListPromise?.json();
   const favorite: any = await favoritePromise?.json();
 
   const result = respGenerator(inthegut(cocktail, ingList, favorite));
