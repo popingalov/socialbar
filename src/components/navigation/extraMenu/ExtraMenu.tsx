@@ -9,7 +9,6 @@ import {
 import { setExtraMenuIsOpen } from 'redux/modal/modalSlice';
 
 const ExtraMenu = () => {
-  // const user = useSee
   const navigation = extraMenuNavLinks;
   const dispatch = useDispatch();
 

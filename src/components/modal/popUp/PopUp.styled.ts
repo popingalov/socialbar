@@ -1,19 +1,52 @@
 import { motion } from 'framer-motion';
+import { IWindowDimensions } from 'hooks/useGetWindowDimensions';
 import styled from 'styled-components';
 
 interface IProps extends ICoordinates {
   type: 'select' | 'extraMenu' | 'context' | 'search';
+  modaldimensions: {
+    width: number;
+    height: number;
+  };
+  windowdimensions: IWindowDimensions;
 }
 
 export const Modal = styled(motion.div)<IProps>`
   position: absolute;
-  top: ${({ top }) => (top ? top : '0')}px;
 
-  left: ${({ left, type }) => {
-    if (type === 'select' || type === 'context' || type === 'search') {
+  top: ${({
+    top,
+    type,
+    modaldimensions: { height },
+    windowdimensions: { windowHeight },
+  }) => {
+    if (type === 'context') {
+      if (top && top > windowHeight - 10 - height) {
+        return `${top - height}px`;
+      }
+      return `${top}px`;
+    }
+    return `${top}px`;
+  }};
+
+  left: ${({
+    left,
+    type,
+    modaldimensions: { width },
+    windowdimensions: { windowWidth },
+  }) => {
+    if (type === 'select' || type === 'search') {
       return `${left}px`;
     }
-    return 'none';
+
+    if (type === 'context') {
+      if (left && left > windowWidth - 10 - width) {
+        return `${left - width}px`;
+      }
+      return `${left}px`;
+    }
+
+    return 'auto';
   }};
 
   right: ${({ right, type, theme }) => {
@@ -23,14 +56,17 @@ export const Modal = styled(motion.div)<IProps>`
     if (type === 'search') {
       return `${theme.space[4]}px`;
     }
-    return `${theme.space[1]}px`;
+    if (type === 'extraMenu') {
+      return `${theme.space[1]}px`;
+    }
+    return `auto`;
   }};
 
   z-index: 100;
   padding: ${p => p.theme.space[2]}px;
 
   background-color: ${p => p.theme.colors.mainBackgroundColor};
-  min-width: 150px;
+  min-width: ${({ type }) => (type === 'context' ? '190px' : '150px')};
   max-width: ${({ type }) => (type === 'search' ? '300px' : '220px')};
   max-height: 100vh;
   overflow-y: scroll;
