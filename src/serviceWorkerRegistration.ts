@@ -84,9 +84,9 @@ function registerValidSW(swUrl: string, config?: Config) {
               // At this point, everything has been precached.
               // It's the perfect time to display a
               // "Content is cached for offline use." message.
+              window.location.reload();
+
               console.log('Content is cached for offline use.');
-              // eslint-disable-next-line no-restricted-globals
-              location.reload();
 
               // Execute callback
               if (config && config.onSuccess) {
@@ -131,7 +131,14 @@ function checkValidServiceWorker(swUrl: string, config?: Config) {
       );
     });
 }
+if ('connection' in navigator) {
+  const connection: any = navigator.connection;
+  connection.addEventListener('change', handleConnectionChange);
 
+  function handleConnectionChange() {
+    console.log(connection.setData);
+  }
+}
 export function unregister() {
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.ready
