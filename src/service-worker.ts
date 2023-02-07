@@ -93,9 +93,13 @@ self.addEventListener('activate', () => {
 
 self.addEventListener('fetch', async (event: FetchEvent): Promise<any> => {
   const req = event.request;
+
   const { test, url, id, baseUrl } = checkUrl(req.url);
   const online = navigator.onLine;
-
+  if ('connection' in navigator) {
+    const connection: any = navigator.connection;
+    console.log('worker', connection);
+  }
   if (test) {
     console.log(callbackObj);
 

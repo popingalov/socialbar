@@ -36,7 +36,18 @@ const App = () => {
   useGetMeQuery(undefined, {
     skip: token === null,
   });
+  let stringy = '';
+  if ('connection' in navigator) {
+    const connection: any = navigator.connection;
+    // connection.addEventListener('change', handleConnectionChange);
 
+    function handleConnectionChange() {
+      const online = navigator.onLine;
+      console.log(online, connection);
+      stringy = `${connection.rtt},${connection.saveData},${connection.downlink}`;
+    }
+    handleConnectionChange();
+  }
   useEffect(() => {
     const token = searchParams.get('token');
     if (token) {
@@ -51,6 +62,7 @@ const App = () => {
 
   return (
     <>
+      <h1>{stringy}</h1>
       <GlobalStyle />
       <AnimatePresence>
         <Suspense fallback={<Loader />}>
