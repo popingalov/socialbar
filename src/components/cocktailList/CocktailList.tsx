@@ -1,22 +1,21 @@
-import BarList from 'components/barList/BarList';
-import { ICocktail } from 'types/cocktail';
-import { ListItem } from './CocktailList.styled';
-import CocktailCard from './cocktailCard/CocktailCard';
+import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
 import { AnimatePresence } from 'framer-motion';
-import { useSelector } from 'react-redux';
+import BarList from 'components/barList/BarList';
+import CocktailCard from './cocktailCard/CocktailCard';
+import ContextMenuCocktails from './contextMenu/ContextMenuCocktails';
+import { changeSearchFilter } from 'redux/searchFilter/searchSlice';
+import { ICocktail } from 'types/cocktail';
+import { ListItem } from './CocktailList.styled';
+import { MouseEvent, useState } from 'react';
+import PopUp from 'components/modal/popUp';
 import {
   selectContextMenuStatus,
   selectPopUpSearchStatus,
 } from 'redux/modal/modalSelectors';
 import { setContextMenuIsOpen } from 'redux/modal/modalSlice';
-import { useLongPress } from 'use-long-press';
-import { MouseEvent, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import PopUp from 'components/modal/popUp';
-import ContextMenuCocktails from './contextMenu/ContextMenuCocktails';
 import { useGetLocation } from 'hooks/useGetLocation';
-import { changeSearchFilter } from 'redux/searchFilter/searchSlice';
+import { useLongPress } from 'use-long-press';
 
 interface IProps {
   cocktails: ICocktail[];

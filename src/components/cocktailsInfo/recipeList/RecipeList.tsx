@@ -1,4 +1,3 @@
-import React from 'react';
 import { IIngredientIn } from 'types/cocktail';
 import RecipeItem from './RecipeItem';
 import { RecipeListStyled } from './RecipeList.styled';

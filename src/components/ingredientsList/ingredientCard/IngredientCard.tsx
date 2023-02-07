@@ -1,17 +1,15 @@
-import { ingredientFilterStatus } from 'redux/filter/filterConstants';
-
-import { RxCross2 } from 'react-icons/rx';
-import Checkbox from 'components/UI-kit/checkbox';
 import Box from 'components/box';
-import LowIcon from 'components/UI-kit/icons/lowIcon';
-import IconButton from 'components/UI-kit/buttons/iconButton';
+import Checkbox from 'components/UI-kit/checkbox';
 import { ExtraInfo, IngredientName } from './IngredientCard.styled';
+import { ingredientFilterStatus } from 'redux/filter/filterConstants';
+import IconButton from 'components/UI-kit/buttons/iconButton';
+import LowIcon from 'components/UI-kit/icons/lowIcon';
+import { RxCross2 } from 'react-icons/rx';
 import {
   useAddToBarMutation,
   useDeleteFromBarMutation,
 } from 'redux/api/myBarApi';
 import { useDeleteFromShoppingMutation } from 'redux/api/shoppingApi';
-import { ICocktail } from 'types/cocktail';
 
 interface IProps {
   filter: string;

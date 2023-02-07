@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { IIngredientIn } from 'types/cocktail';
-import { searchWord, dividedRecipe } from 'helpers';
 import { IngredientPart, Recipe, RecipePart } from './RecipeList.styled';
+import { searchWord, dividedRecipe } from 'helpers';
 
 interface IRecipeItem {
   item: string;

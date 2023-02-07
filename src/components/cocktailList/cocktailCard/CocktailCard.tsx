@@ -1,7 +1,7 @@
-import LowIcon from 'components/UI-kit/icons/lowIcon';
 import Box from 'components/box';
 import { BiCheck } from 'react-icons/bi';
 import { CocktailsName, Ingredients } from './CocktailCard.styled';
+import LowIcon from 'components/UI-kit/icons/lowIcon';
 
 interface IProps {
   name: string;

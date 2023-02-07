@@ -1,9 +1,9 @@
-import Button from 'components/UI-kit/buttons/button';
-import { cocktailsNavItems, ingredientsNavItems } from 'constants/navItems';
-import { useGetLocation } from 'hooks/useGetLocation';
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
+import Button from 'components/UI-kit/buttons/button';
+import { changeSearchFilter } from 'redux/searchFilter/searchSlice';
+import { cocktailsNavItems, ingredientsNavItems } from 'constants/navItems';
+import { initialSearchStatus } from 'redux/searchFilter/searchConstants';
 import {
   selectCocktailFilter,
   selectIngredientFilter,
@@ -13,8 +13,7 @@ import {
   setIngredientStatusFilter,
 } from 'redux/filter/filterSlice';
 import { setPopUpIsOpen } from 'redux/modal/modalSlice';
-import { initialSearchStatus } from 'redux/searchFilter/searchConstants';
-import { changeSearchFilter } from 'redux/searchFilter/searchSlice';
+import { useGetLocation } from 'hooks/useGetLocation';
 
 const PagesNavigation = () => {
   const navigate = useNavigate();

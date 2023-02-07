@@ -1,23 +1,22 @@
-import BarList from 'components/barList';
-import { useSelector } from 'react-redux';
-import IngredientCard from 'components/ingredientsList/ingredientCard';
+import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { IIngredient } from 'types/ingredient';
-import { useLongPress } from 'use-long-press';
-import { MouseEvent, useState } from 'react';
-import { setContextMenuIsOpen } from 'redux/modal/modalSlice';
 import { AnimatePresence } from 'framer-motion';
+import BarList from 'components/barList';
+import { changeSearchFilter } from 'redux/searchFilter/searchSlice';
+import ContextMenuIngredients from './contextMenu/ContextMenuIngredients';
+import IngredientCard from 'components/ingredientsList/ingredientCard';
+import { IIngredient } from 'types/ingredient';
+import { ListItem } from './IngredientsList.styled';
+import { MouseEvent, useState } from 'react';
+import PopUp from 'components/modal/popUp';
+import { setContextMenuIsOpen } from 'redux/modal/modalSlice';
 import {
   selectContextMenuStatus,
   selectPopUpSearchStatus,
 } from 'redux/modal/modalSelectors';
-import { useDispatch } from 'react-redux';
-import PopUp from 'components/modal/popUp';
-import ContextMenuIngredients from './contextMenu/ContextMenuIngredients';
-import { ListItem } from './IngredientsList.styled';
 import { selectIngredientFilter } from 'redux/filter/filterSelectors';
 import { useGetLocation } from 'hooks/useGetLocation';
-import { changeSearchFilter } from 'redux/searchFilter/searchSlice';
+import { useLongPress } from 'use-long-press';
 
 interface IProps {
   ingredients: IIngredient[];

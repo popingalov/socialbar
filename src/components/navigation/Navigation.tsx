@@ -1,10 +1,12 @@
 import { useLocation, useNavigate } from 'react-router';
 import { useDispatch } from 'react-redux';
+import { changeSearchFilter } from 'redux/searchFilter/searchSlice';
 import ClearButton from 'components/UI-kit/buttons/clearButton';
 import ExtraIcons from 'components/navigation/extraIcons';
 import { getHeaderName } from 'helpers/getHeaderName';
 import HeaderIcon from 'components/UI-kit/icons/headerIcon';
 import { headerIconTypes } from 'constants/headerIconTypes';
+import { initialSearchStatus } from 'redux/searchFilter/searchConstants';
 import { NavigationListStyled, PageName, Wrapper } from './Navigation.styled';
 import PagesNavigation from './pagesNavigation';
 import SearchBar from 'components/navigation/searchBar';
@@ -20,8 +22,6 @@ import {
 } from 'redux/categoriesFilter/categoriesFilterSlice';
 import { useGetPageCategories } from 'hooks/useGetPageCategories';
 import { useGetNavSelectLabel } from 'hooks/useGetNavSelectLabel';
-import { changeSearchFilter } from 'redux/searchFilter/searchSlice';
-import { initialSearchStatus } from 'redux/searchFilter/searchConstants';
 import { useGetLocation } from 'hooks/useGetLocation';
 
 const Navigation = () => {

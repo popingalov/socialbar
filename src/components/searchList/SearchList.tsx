@@ -1,7 +1,7 @@
-import { ICocktail } from 'types/cocktail';
-import { IIngredient } from 'types/ingredient';
 import CocktailList from 'components/cocktailList';
 import IngredientsList from 'components/ingredientsList';
+import { ICocktail } from 'types/cocktail';
+import { IIngredient } from 'types/ingredient';
 
 interface IProps {
   cocktails: ICocktail[];

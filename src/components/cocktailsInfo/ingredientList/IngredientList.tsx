@@ -1,21 +1,15 @@
-import Box from 'components/box';
-import { IIngredientIn } from 'types/cocktail';
-import AdditionalInfo from '../AdditionalInfo';
-// import {
-//   IngredientImage,
-//   IngredientItem,
-//   IngredientName,
-//   IngredientQuantity,
-// } from './AdditionalIngredientsInfo.styled';
-import { BiCheck } from 'react-icons/bi';
-import defaultIngredientPicture from 'assets/images/default-ingredient.jpg';
 import { useNavigate } from 'react-router';
+import AdditionalInfo from '../AdditionalInfo';
+import Box from 'components/box';
+import { BiCheck } from 'react-icons/bi';
+import { IIngredientIn } from 'types/cocktail';
 import {
   IngredientImage,
   IngredientItem,
   IngredientName,
   IngredientQuantity,
 } from './IngredientList.styled';
+import defaultIngredientPicture from 'assets/images/default-ingredient.jpg';
 
 interface IProps {
   ingredients: IIngredientIn[];
