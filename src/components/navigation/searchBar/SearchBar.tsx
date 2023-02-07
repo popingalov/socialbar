@@ -2,13 +2,13 @@ import { AnimatePresence } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import { selectPopUpSearchStatus } from 'redux/modal/modalSelectors';
-import { setPopUpSearchIsOpen } from 'redux/modal/modalSlice';
-import { selectSearchFilter } from 'redux/searchFilter/searchFilterSelector';
 import { changeSearchFilter } from 'redux/searchFilter/searchSlice';
 import { MainInput } from './SearchBar.styled';
 import PopUp from 'components/modal/popUp';
 import SearchList from 'components/searchList';
+import { selectPopUpSearchStatus } from 'redux/modal/modalSelectors';
+import { setPopUpSearchIsOpen } from 'redux/modal/modalSlice';
+import { selectSearchFilter } from 'redux/searchFilter/searchFilterSelector';
 import { useGetSearchedItems } from 'hooks/useGetSearchedItems';
 
 const SearchBar: React.FC = () => {

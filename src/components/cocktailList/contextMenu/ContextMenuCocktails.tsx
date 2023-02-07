@@ -1,12 +1,11 @@
-import React from 'react';
-import { Title } from './ContextMenuCocktails.styled';
+import { useDispatch } from 'react-redux';
 import ContextButton from 'components/UI-kit/buttons/contextButton';
+import { setContextMenuIsOpen } from 'redux/modal/modalSlice';
+import { Title } from './ContextMenuCocktails.styled';
 import {
   useAddFavoriteMutation,
   useDeleteFavoriteMutation,
 } from 'redux/api/favoriteApi';
-import { setContextMenuIsOpen } from 'redux/modal/modalSlice';
-import { useDispatch } from 'react-redux';
 
 interface IProps {
   name: string;

@@ -1,18 +1,17 @@
-import React from 'react';
+import { useSelector } from 'react-redux';
+import { BASE_URL, GOOGLE_AUTH_URL } from 'constants/api';
+import { FiLogIn } from 'react-icons/fi';
+import { IoMdPerson } from 'react-icons/io';
+import MobileNavigation from 'components/mobileMenu/mobileNavigation';
+import MobileMenuButton from 'components/UI-kit/buttons/mobileMenuButton';
+import { mobileMenuAnimation } from 'constants/animations';
 import {
   Menu,
   MenuHeader,
   UserEmail,
   UserIconWrapper,
 } from './MobileMenu.styled';
-import MobileNavigation from 'components/mobileMenu/mobileNavigation';
-import { mobileMenuAnimation } from 'constants/animations';
-import { IoMdPerson } from 'react-icons/io';
-import MobileMenuButton from 'components/UI-kit/buttons/mobileMenuButton';
-import { FiLogIn } from 'react-icons/fi';
 import Overlay from 'components/modal/overlay';
-import { BASE_URL, GOOGLE_AUTH_URL } from 'constants/api';
-import { useSelector } from 'react-redux';
 import { userState } from 'redux/auth/authSelectors';
 
 const MobileMenu = () => {

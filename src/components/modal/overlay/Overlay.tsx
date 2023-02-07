@@ -1,6 +1,7 @@
-import { pageAnimation } from 'constants/animations';
+import { createPortal } from 'react-dom';
 import { ReactNode } from 'react';
 import { useDispatch } from 'react-redux';
+import { pageAnimation } from 'constants/animations';
 import { OverlayStyled } from './Overlay.styled';
 import {
   setContextMenuIsOpen,
@@ -9,7 +10,6 @@ import {
   setPopUpIsOpen,
   setSettingsMenuIsOpen,
 } from 'redux/modal/modalSlice';
-import { createPortal } from 'react-dom';
 
 const modalRoot: HTMLDivElement = document.querySelector('#modal')!;
 

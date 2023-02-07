@@ -1,8 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
-import { HiPencil } from 'react-icons/hi';
-import { HiShoppingCart } from 'react-icons/hi';
-import { BiChevronUp, BiChevronDown } from 'react-icons/bi';
 import Box from 'components/box/Box';
+import { BiChevronUp, BiChevronDown } from 'react-icons/bi';
+import { HiPencil, HiShoppingCart } from 'react-icons/hi';
 
 import {
   CartBtn,

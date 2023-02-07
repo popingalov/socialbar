@@ -1,6 +1,7 @@
-import React from 'react';
-import { Title } from './ContextMenuIngredients.styled';
+import { useDispatch } from 'react-redux';
 import ContextButton from 'components/UI-kit/buttons/contextButton';
+import { setContextMenuIsOpen } from 'redux/modal/modalSlice';
+import { Title } from './ContextMenuIngredients.styled';
 import {
   useAddToBarMutation,
   useDeleteFromBarMutation,
@@ -9,8 +10,6 @@ import {
   useAddToShoppingMutation,
   useDeleteFromShoppingMutation,
 } from 'redux/api/shoppingApi';
-import { useDispatch } from 'react-redux';
-import { setContextMenuIsOpen } from 'redux/modal/modalSlice';
 
 interface IProps {
   name: string;

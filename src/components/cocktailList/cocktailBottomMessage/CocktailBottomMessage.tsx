@@ -1,8 +1,8 @@
+import BottomMessageButton from 'components/UI-kit/buttons/bottomMessageButton';
+import BottomMessageLink from 'components/UI-kit/bottomMessageLink';
 import { cocktailFilterStatus } from 'redux/filter/filterConstants';
 import { setCocktailStatusFilter } from 'redux/filter/filterSlice';
 import { useAppDispatch } from 'redux/hooks';
-import BottomMessageButton from 'components/UI-kit/buttons/bottomMessageButton';
-import BottomMessageLink from 'components/UI-kit/bottomMessageLink';
 
 interface IProps {
   isMyCocktails?: boolean;

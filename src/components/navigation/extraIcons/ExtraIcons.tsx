@@ -1,16 +1,16 @@
+import { useEffect, useRef, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { AnimatePresence } from 'framer-motion';
 import Box from 'components/box';
 import ClearButton from 'components/UI-kit/buttons/clearButton';
+import ExtraMenu from 'components/navigation/extraMenu';
 import HeaderIcon from 'components/UI-kit/icons/headerIcon';
 import { headerIconTypes } from 'constants/headerIconTypes';
-import { useEffect, useRef, useState } from 'react';
-import { AnimatePresence } from 'framer-motion';
 import PopUp from 'components/modal/popUp';
-import { useSelector } from 'react-redux';
 import {
   selectExtraMenuStatus,
   selectPopUpSearchStatus,
 } from 'redux/modal/modalSelectors';
-import ExtraMenu from 'components/navigation/extraMenu';
 import { useGetLocation } from 'hooks/useGetLocation';
 
 interface IProps {

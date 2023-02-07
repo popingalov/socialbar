@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
+import { Modal } from './SettingsModal.styled';
 import Overlay from 'components/modal/overlay';
 import { settingModalAnimation } from 'constants/animations';
-import { Modal } from './SettingsModal.styled';
 
 interface IProps {
   children?: ReactNode;

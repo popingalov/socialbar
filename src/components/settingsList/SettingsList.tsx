@@ -1,23 +1,22 @@
-import { listAnimation } from 'constants/animations';
-import { settingList, settingTypes } from 'constants/settings';
+import { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { AnimatePresence } from 'framer-motion';
+import { getKeyByValue } from 'helpers/getKeyByValue';
+import { languageList } from 'constants/languages';
+import { listAnimation } from 'constants/animations';
+import { Options, Option } from './SettingsList.styled';
+import { startupScreenList } from 'constants/startupScreen';
+import { settingList, settingTypes } from 'constants/settings';
 import {
   SettingsItem,
   SettingsListStyled,
 } from 'pages/settings/Settings.styled';
-import { useSelector } from 'react-redux';
 import { selectSettingsMenuStatus } from 'redux/modal/modalSelectors';
-import SettingsModal from 'components/modal/settingsModal';
-import { useDispatch } from 'react-redux';
-import { setSettingsMenuIsOpen } from 'redux/modal/modalSlice';
-import { useState } from 'react';
 import { selectSettings } from 'redux/settings/settingsSelectors';
-import { languageList } from 'constants/languages';
-import { startupScreenList } from 'constants/startupScreen';
 import SettingsCard from 'components/settingsList/settingsCard';
-import { Options, Option } from './SettingsList.styled';
+import SettingsModal from 'components/modal/settingsModal';
+import { setSettingsMenuIsOpen } from 'redux/modal/modalSlice';
 import { setLanguage, setStartupScreen } from 'redux/settings/settingsSlice';
-import { getKeyByValue } from 'helpers/getKeyByValue';
 
 const SettingsList = () => {
   const settings = useSelector(selectSettings);
