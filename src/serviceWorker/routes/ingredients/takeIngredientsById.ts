@@ -19,7 +19,7 @@ export default async function takeIngredient({ id, baseUrl, url }: IParams) {
   const allIngredients: IIngredient[] = await allIngredientsPromise?.json();
 
   const myPromise = await caches.match('/api/ingredients/my');
-  const my: IIngredient[] = await myPromise?.json();
+  const my: IIngredient[] = (await myPromise?.json()) || [];
 
   const cocktailsPromise = await caches.match('/api/cocktails');
   const cocktails: AllCocktailsResponse = await cocktailsPromise?.json();

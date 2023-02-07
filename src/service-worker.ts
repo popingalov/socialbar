@@ -97,7 +97,11 @@ self.addEventListener('fetch', async (event: FetchEvent): Promise<any> => {
   const online = navigator.onLine;
 
   if (test) {
+    console.log(callbackObj);
+
     if (callbackObj.reqArr.length !== 0 && online) {
+      console.log('має працювати');
+
       callbackObj.functionOfline();
     }
     if (req.method !== 'GET' && !online) {
