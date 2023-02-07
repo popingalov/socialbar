@@ -9,7 +9,6 @@
 
 // To learn more about the benefits of this model and instructions on how to
 // opt-in, read https://cra.link/PWA
-import { callbackObj } from './serviceWorker/staticObjects/callbackObject';
 const isLocalhost = Boolean(
   window.location.hostname === 'localhost' ||
     // [::1] is the IPv6 localhost address.
@@ -131,14 +130,7 @@ function checkValidServiceWorker(swUrl: string, config?: Config) {
       );
     });
 }
-if ('connection' in navigator) {
-  const connection: any = navigator.connection;
-  connection.addEventListener('change', handleConnectionChange);
 
-  function handleConnectionChange() {
-    console.log(connection.setData);
-  }
-}
 export function unregister() {
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.ready

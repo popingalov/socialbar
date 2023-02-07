@@ -21,6 +21,7 @@ class CallbackObj {
   reqArr: any[];
   method: string;
   functionOfline: any;
+  internetSpeed: number;
 
   constructor() {
     this.addIngToList = changeIngList;
@@ -30,6 +31,7 @@ class CallbackObj {
     this.ingredient = null;
     this.reqArr = [];
     this.method = 'GET';
+    this.internetSpeed = 100;
     this.functionOfline = () => {
       this.reqArr.forEach((el: Request) => {
         fetch(el);

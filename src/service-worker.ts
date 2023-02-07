@@ -59,6 +59,16 @@ registerRoute(
   },
   createHandlerBoundToURL(process.env.PUBLIC_URL + '/index.html'),
 );
+const internetSpeed = { speed: 100 };
+if ('connection' in navigator) {
+  const connection: any = navigator.connection;
+  connection.addEventListener('change', handleConnectionChange);
+
+  function handleConnectionChange() {
+    internetSpeed.speed = connection.rtt;
+    console.log(internetSpeed);
+  }
+}
 
 // An example runtime caching route for requests that aren't handled by the
 // precache, in this case same-origin .png requests like those from in public/
@@ -95,14 +105,8 @@ self.addEventListener('fetch', async (event: FetchEvent): Promise<any> => {
   const req = event.request;
 
   const { test, url, id, baseUrl } = checkUrl(req.url);
-  const online = navigator.onLine;
-  if ('connection' in navigator) {
-    const connection: any = navigator.connection;
-    console.log('worker', connection);
-  }
+  const online = navigator.onLine && internetSpeed.speed < 1200;
   if (test) {
-    console.log(callbackObj);
-
     if (callbackObj.reqArr.length !== 0 && online) {
       console.log('має працювати');
 
