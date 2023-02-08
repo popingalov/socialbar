@@ -19,5 +19,15 @@
     "allCocktails": "All Cocktails",
     "myCocktails": "My Cocktails",
     "favoriteCocktails": "Favorite Cocktails"
+  },
+  "contextMenu": {
+    "addTo": "Add to ",
+    "removeFrom": "Remove from ",
+    "favorites": "favorites",
+    "completelyDelete": "Delete from application",
+    "changeRecipe": "Change the recipe",
+    "myBar": "my bar",
+    "shoppingList": "shopping list",
+    "edit": "Edit"
   }
 }

@@ -5,7 +5,7 @@ interface ILanguageType {
 export const languageTypes: ILanguageType = {
   en: 'en',
   ua: 'ua',
-  ru: 'ru',
+  // ru: 'ru',
 };
 
 interface ILanguage {
@@ -13,7 +13,7 @@ interface ILanguage {
 }
 
 export const languageList: ILanguage = {
-  ru: 'Russian',
+  // ru: 'Russian',
   en: 'English',
   ua: 'Ukrainian',
 };

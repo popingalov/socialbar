@@ -1,4 +1,5 @@
 import { useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import ContextButton from 'components/UI-kit/buttons/contextButton';
 import { setContextMenuIsOpen } from 'redux/modal/modalSlice';
 import { Title } from './ContextMenuCocktails.styled';
@@ -23,6 +24,7 @@ const ContextMenuCocktails: React.FC<IProps> = ({
   const [addFavorite] = useAddFavoriteMutation();
   const [deleteFavorite] = useDeleteFavoriteMutation();
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   const handleFavoriteClick = (id: string, toAdd: boolean) => {
     if (toAdd) {
@@ -55,9 +57,10 @@ const ContextMenuCocktails: React.FC<IProps> = ({
           handleFavoriteClick(id, !isFavoritePage && !isFavorite);
         }}
       >
-        {!isFavoritePage && !isFavorite && 'Add to '}
-        {(isFavoritePage || (!isFavoritePage && isFavorite)) && 'Remove from '}
-        favorites
+        {!isFavoritePage && !isFavorite && t('contextMenu.addTo')}
+        {(isFavoritePage || (!isFavoritePage && isFavorite)) &&
+          t('contextMenu.removeFrom')}
+        {t('contextMenu.favorites')}
       </ContextButton>
 
       <ContextButton
@@ -65,14 +68,14 @@ const ContextMenuCocktails: React.FC<IProps> = ({
           handleCompleteDelete(id);
         }}
       >
-        Delete from application
+        {t('contextMenu.completelyDelete')}
       </ContextButton>
       <ContextButton
         onClick={() => {
           handleCocktailEdit(id);
         }}
       >
-        Change the recipe
+        {t('contextMenu.changeRecipe')}
       </ContextButton>
     </>
   );

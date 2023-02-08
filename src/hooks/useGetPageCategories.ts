@@ -1,6 +1,8 @@
 import { useGetCategoriesQuery } from 'redux/api/manualApi';
 import { initialFilterStatus } from 'redux/categoriesFilter/categoriesConstants';
 
+export const useInitialFilterStatus = () => {};
+
 export const useGetPageCategories = (isIngredientPage: boolean) => {
   const { data } = useGetCategoriesQuery();
 

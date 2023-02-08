@@ -13,11 +13,21 @@
   "ingredientsNav": {
     "manageBarShelf": "Всі інгредієнти",
     "myBarShelf": "Мій бар",
-    "shoppingList": "Покупки"
+    "shoppingList": "Список покупки"
   },
   "cocktailsNav": {
     "allCocktails": "Всі коктейлі",
     "myCocktails": "Мої коктейлі",
     "favoriteCocktails": "Обрані коктейлі"
+  },
+  "contextMenu": {
+    "addTo": "Додати до ",
+    "removeFrom": "Видалити з ",
+    "favorites": "обраних",
+    "completelyDelete": "Видалити із застосунку",
+    "changeRecipe": "Змінити рецепт",
+    "myBar": "мого бару",
+    "shoppingList": "списку покупок",
+    "edit": "Редагувати"
   }
 }
