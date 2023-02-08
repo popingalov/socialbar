@@ -1,5 +1,4 @@
 import { useDispatch } from 'react-redux';
-import { extraMenuNavLinks } from 'constants/navItems';
 import { initialFilterStatus } from 'redux/categoriesFilter/categoriesConstants';
 import { LinkStyled } from './ExtraMenu.styled';
 import {
@@ -7,9 +6,10 @@ import {
   setIngredientCategory,
 } from 'redux/categoriesFilter/categoriesFilterSlice';
 import { setExtraMenuIsOpen } from 'redux/modal/modalSlice';
+import { useGetExtraMenuNavLinks } from 'hooks/useGetNavLinks';
 
 const ExtraMenu = () => {
-  const navigation = extraMenuNavLinks;
+  const navigation = useGetExtraMenuNavLinks();
   const dispatch = useDispatch();
 
   return (

@@ -1,10 +1,21 @@
 {
-  "ingredients": {
+  "mainNav": {
+    "ingredients": "Інгредієнти",
+    "cocktails": "Коктейлі",
+    "settings": "Налаштування"
+  },
+  "auth": "Авторизуватися",
+  "extraMenuNav": {
+    "settings": "Налаштування",
+    "createIngredient": "Створити інгредієнт",
+    "createCocktail": "Створити коктейль"
+  },
+  "ingredientsNav": {
     "manageBarShelf": "Всі інгредієнти",
     "myBarShelf": "Мій бар",
     "shoppingList": "Покупки"
   },
-  "cocktails": {
+  "cocktailsNav": {
     "allCocktails": "Всі коктейлі",
     "myCocktails": "Мої коктейлі",
     "favoriteCocktails": "Обрані коктейлі"

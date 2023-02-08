@@ -6,34 +6,34 @@ import { INavPageLink } from 'types/navPageLink';
 import { useTranslation } from 'react-i18next';
 
 export const useGetNavItems = (isIngredients: boolean) => {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
 
   const ingredientsNavItems: INavPageLink[] = [
     {
-      label: t('ingredients.manageBarShelf'),
+      label: t('ingredientsNav.manageBarShelf'),
       statusFilter: ingredientFilterStatus.manageBarShelf,
     },
     {
-      label: t('ingredients.myBarShelf'),
+      label: t('ingredientsNav.myBarShelf'),
       statusFilter: ingredientFilterStatus.myBarShelf,
     },
     {
-      label: t('ingredients.shoppingList'),
+      label: t('ingredientsNav.shoppingList'),
       statusFilter: ingredientFilterStatus.shoppingList,
     },
   ];
 
   const cocktailsNavItems: INavPageLink[] = [
     {
-      label: t('cocktails.allCocktails'),
+      label: t('cocktailsNav.allCocktails'),
       statusFilter: cocktailFilterStatus.allCocktails,
     },
     {
-      label: t('cocktails.myCocktails'),
+      label: t('cocktailsNav.myCocktails'),
       statusFilter: cocktailFilterStatus.myCocktails,
     },
     {
-      label: t('cocktails.favoriteCocktails'),
+      label: t('cocktailsNav.favoriteCocktails'),
       statusFilter: cocktailFilterStatus.favoriteCocktails,
     },
   ];

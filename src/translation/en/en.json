@@ -1,10 +1,21 @@
 {
-  "ingredients": {
+  "mainNav": {
+    "ingredients": "Ingredients",
+    "cocktails": "Cocktails",
+    "settings": "Settings"
+  },
+  "auth": "Sign in",
+  "extraMenuNav": {
+    "settings": "Settings",
+    "createIngredient": "Create an ingredient",
+    "createCocktail": "Create a cocktail"
+  },
+  "ingredientsNav": {
     "manageBarShelf": "Manage Bar Shelf",
     "myBarShelf": "My Bar Shelf",
     "shoppingList": "Shopping List"
   },
-  "cocktails": {
+  "cocktailsNav": {
     "allCocktails": "All Cocktails",
     "myCocktails": "My Cocktails",
     "favoriteCocktails": "Favorite Cocktails"
