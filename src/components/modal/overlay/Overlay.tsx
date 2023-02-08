@@ -10,17 +10,13 @@ import {
   setPopUpIsOpen,
   setSettingsMenuIsOpen,
 } from 'redux/modal/modalSlice';
+import { modalType } from 'types/modalTypes';
 
 const modalRoot: HTMLDivElement = document.querySelector('#modal')!;
 
 interface IProps {
   children: ReactNode;
-  modalType:
-    | 'mobileMenu'
-    | 'select'
-    | 'extraMenu'
-    | 'settingsModal'
-    | 'context';
+  modalType: modalType;
 }
 
 const Overlay: React.FC<IProps> = ({ children, modalType }) => {
