@@ -60,7 +60,6 @@ const IngredientsList: React.FC<IProps> = ({
 
     const { title, iHave, shopping } = JSON.parse(data);
 
-    // console.log('event', event);
     setSelectCoordinates({
       top: event.changedTouches[0].clientY,
       left: event.changedTouches[0].clientX,

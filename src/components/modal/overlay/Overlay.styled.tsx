@@ -1,9 +1,8 @@
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
+import { modalType } from 'types/modalTypes';
 
-type props = {
-  type: 'mobileMenu' | 'select' | 'extraMenu' | 'settingsModal' | 'context';
-};
+type props = { type: modalType };
 
 export const OverlayStyled = styled(motion.div)<props>`
   position: fixed;

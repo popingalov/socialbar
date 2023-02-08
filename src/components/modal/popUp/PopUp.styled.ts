@@ -22,11 +22,25 @@ export const Modal = styled(motion.div)<IProps>`
   }) => {
     if (type === 'context') {
       if (top && top > windowHeight - 10 - height) {
-        return `${top - height}px`;
+        return 'auto';
       }
       return `${top}px`;
     }
     return `${top}px`;
+  }};
+
+  bottom: ${({
+    top,
+    type,
+    modaldimensions: { height },
+    windowdimensions: { windowHeight },
+  }) => {
+    if (type === 'context') {
+      if (top && top > windowHeight - 10 - height) {
+        return `${windowHeight - top}px`;
+      }
+    }
+    return `auto`;
   }};
 
   left: ${({
@@ -41,7 +55,7 @@ export const Modal = styled(motion.div)<IProps>`
 
     if (type === 'context') {
       if (left && left > windowWidth - 10 - width) {
-        return `${left - width}px`;
+        return 'auto';
       }
       return `${left}px`;
     }
@@ -49,7 +63,14 @@ export const Modal = styled(motion.div)<IProps>`
     return 'auto';
   }};
 
-  right: ${({ right, type, theme }) => {
+  right: ${({
+    right,
+    type,
+    theme,
+    left,
+    modaldimensions: { width },
+    windowdimensions: { windowWidth },
+  }) => {
     if (type === 'select') {
       return `${right}px`;
     }
@@ -59,6 +80,13 @@ export const Modal = styled(motion.div)<IProps>`
     if (type === 'extraMenu') {
       return `${theme.space[1]}px`;
     }
+
+    if (type === 'context') {
+      if (left && left > windowWidth - 10 - width) {
+        return `${windowWidth - left}px`;
+      }
+    }
+
     return `auto`;
   }};
 
