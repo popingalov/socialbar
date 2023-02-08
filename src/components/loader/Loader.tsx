@@ -1,4 +1,4 @@
-import BarLoader from 'react-spinners/BarLoader';
+import PuffLoader from 'react-spinners/PuffLoader';
 import { theme } from 'constants/theme';
 import { Wrapper } from './Loader.styled';
 
@@ -13,16 +13,17 @@ interface IProps {
   isLoading?: boolean;
 }
 
-const Loader: React.FC<IProps> = ({ isLoading }) => (
-  <Wrapper>
-    <BarLoader
-      color={color}
-      loading={isLoading}
-      cssOverride={override}
-      width={160}
-      aria-label="Loading Spinner"
-    />
-  </Wrapper>
-);
+const Loader: React.FC<IProps> = ({ isLoading }) => {
+  return (
+    <Wrapper>
+      <PuffLoader
+        color={color}
+        loading={isLoading}
+        cssOverride={override}
+        aria-label="Loading Spinner"
+      />
+    </Wrapper>
+  );
+};
 
 export default Loader;
