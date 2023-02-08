@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 import Button from 'components/UI-kit/buttons/button';
 import { changeSearchFilter } from 'redux/searchFilter/searchSlice';
 import { cocktailsNavItems, ingredientsNavItems } from 'constants/navItems';
@@ -14,6 +14,7 @@ import {
 } from 'redux/filter/filterSlice';
 import { setPopUpIsOpen } from 'redux/modal/modalSlice';
 import { useGetLocation } from 'hooks/useGetLocation';
+import { useEffect, useRef } from 'react';
 
 const PagesNavigation = () => {
   const navigate = useNavigate();
@@ -42,13 +43,44 @@ const PagesNavigation = () => {
     dispatch(setStatusFilter(value));
   };
 
+  const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
+
+  const handleRef = (el: HTMLButtonElement) => {
+    const tabNames = tabRefs.current.map(button => button?.name);
+
+    if (tabNames.includes(el?.name)) {
+      tabRefs.current = tabRefs.current.filter(
+        button => button?.name !== el?.name,
+      );
+    }
+
+    if (tabRefs.current.length < 6 && el) {
+      tabRefs.current.push(el);
+    }
+  };
+
+  const executeScroll = (statusFilter: string) => {
+    tabRefs.current.forEach(button => {
+      if (button?.name === statusFilter) {
+        button.scrollIntoView({
+          behavior: 'smooth',
+          inline: 'center',
+          block: 'nearest',
+        });
+      }
+    });
+  };
+
   return (
     <>
       {navigation.map(({ label, statusFilter }) => (
         <li key={label}>
           <Button
+            tabName={statusFilter}
+            ref={handleRef}
             selected={filter === statusFilter}
             onClick={() => {
+              executeScroll(statusFilter);
               handleStatusFilterChange(statusFilter);
             }}
           >
