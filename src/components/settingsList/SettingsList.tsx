@@ -86,15 +86,9 @@ const SettingsList = () => {
       >
         {settingList.map(({ title, description, name }) => {
           return (
-            <>
-              <SettingsItem
-                key={name}
-                onClick={handleMenuItemClick}
-                name={name}
-              >
-                <SettingsCard title={title} description={description} />
-              </SettingsItem>
-            </>
+            <SettingsItem key={name} onClick={handleMenuItemClick} name={name}>
+              <SettingsCard title={title} description={description} />
+            </SettingsItem>
           );
         })}
       </SettingsListStyled>

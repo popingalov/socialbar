@@ -1,0 +1,12 @@
+{
+  "ingredients": {
+    "manageBarShelf": "Manage Bar Shelf",
+    "myBarShelf": "My Bar Shelf",
+    "shoppingList": "Shopping List"
+  },
+  "cocktails": {
+    "allCocktails": "All Cocktails",
+    "myCocktails": "My Cocktails",
+    "favoriteCocktails": "Favorite Cocktails"
+  }
+}

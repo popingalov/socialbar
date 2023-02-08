@@ -1,0 +1,12 @@
+{
+  "ingredients": {
+    "manageBarShelf": "Всі інгредієнти",
+    "myBarShelf": "Мій бар",
+    "shoppingList": "Покупки"
+  },
+  "cocktails": {
+    "allCocktails": "Всі коктейлі",
+    "myCocktails": "Мої коктейлі",
+    "favoriteCocktails": "Обрані коктейлі"
+  }
+}

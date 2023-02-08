@@ -22,6 +22,7 @@ import {
   useDeleteFromShoppingMutation,
 } from 'redux/api/shoppingApi';
 import { IIngredient } from 'types/ingredient';
+import Loader from 'components/loader';
 
 interface IProps {
   ingredient: IIngredient;
@@ -38,6 +39,11 @@ const IngredientInfo: React.FC<IProps> = ({ ingredient }) => {
     useDeleteFromShoppingMutation();
   const [addToShoppingList, { isLoading: addingToShoppingList }] =
     useAddToShoppingMutation();
+  const isUpdating =
+    addingToMyBar ||
+    deletingFromMyBar ||
+    deletingFromShopping ||
+    addingToShoppingList;
 
   const [heightEl, setHeightEl] = useState<number>(0);
   const [showMore, setShowMore] = useState<boolean>(false);
@@ -64,74 +70,77 @@ const IngredientInfo: React.FC<IProps> = ({ ingredient }) => {
 
     if (isInShopping) {
       console.log('deleteFromShopping', id);
-      // deleteFromShoppingList(id);
+      deleteFromShoppingList(id);
       return;
     }
     console.log('addtoShopping', id);
-    // addToShoppingList(id);
+    addToShoppingList(id);
   };
 
   const toggleCheckBox = (isInMyBar: boolean, id: string) => {
     console.log('isInMyBar', isInMyBar);
     if (isInMyBar) {
       console.log('deleteFromMyBar', id);
-      // deleteFromMyBar(id);
+      deleteFromMyBar(id);
       return;
     }
     console.log('addtoMyBAr', id);
-    // addToMyBar(id);
+    addToMyBar(id);
   };
 
   return (
-    <Box px={3} py={3}>
-      <Box
-        display="flex"
-        justifyContent="space-between"
-        alignItems="center"
-        mb={3}
-      >
-        <Title>{title}</Title>
+    <>
+      <Loader isLoading={isUpdating} />
+      <Box px={3} py={3}>
         <Box
-          as={'ul'}
           display="flex"
           justifyContent="space-between"
           alignItems="center"
-          gridGap={1}
+          mb={3}
         >
-          <ItemButton>
-            <EditBtn onClick={onClickEdit}>
-              <HiPencil size={24} />
-            </EditBtn>
-          </ItemButton>
-          <ItemButton>
-            <CartBtn
-              onClick={() => {
-                toggleCart(shopping, id);
-              }}
-              isShopping={shopping}
-            >
-              <HiShoppingCart size={24} />
-            </CartBtn>
-          </ItemButton>
-          <ItemButton>
-            <Checkbox
-              checked={iHave}
-              onChange={() => {
-                toggleCheckBox(iHave, id);
-              }}
-            />
-          </ItemButton>
+          <Title>{title}</Title>
+          <Box
+            as={'ul'}
+            display="flex"
+            justifyContent="space-between"
+            alignItems="center"
+            gridGap={1}
+          >
+            <ItemButton>
+              <EditBtn onClick={onClickEdit}>
+                <HiPencil size={24} />
+              </EditBtn>
+            </ItemButton>
+            <ItemButton>
+              <CartBtn
+                onClick={() => {
+                  toggleCart(shopping, id);
+                }}
+                isShopping={shopping}
+              >
+                <HiShoppingCart size={24} />
+              </CartBtn>
+            </ItemButton>
+            <ItemButton>
+              <Checkbox
+                checked={iHave}
+                onChange={() => {
+                  toggleCheckBox(iHave, id);
+                }}
+              />
+            </ItemButton>
+          </Box>
         </Box>
+        <Image src={picture} />
+        <Description ref={refComponent} showMore={showMore}>
+          {description}
+        </Description>
+        <ShowMoreBtn type="button" onClick={showDescription}>
+          {showMore && <BiChevronUp size={24} />}
+          {!showMore && heightEl > 44 && <BiChevronDown size={24} />}
+        </ShowMoreBtn>
       </Box>
-      <Image src={picture} />
-      <Description ref={refComponent} showMore={showMore}>
-        {description}
-      </Description>
-      <ShowMoreBtn type="button" onClick={showDescription}>
-        {showMore && <BiChevronUp size={24} />}
-        {!showMore && heightEl > 44 && <BiChevronDown size={24} />}
-      </ShowMoreBtn>
-    </Box>
+    </>
   );
 };
 
