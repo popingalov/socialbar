@@ -29,5 +29,23 @@
     "myBar": "мого бару",
     "shoppingList": "списку покупок",
     "edit": "Редагувати"
-  }
+  },
+  "initialFilter": "Без фільтру",
+  "cocktailBottomMessage": {
+    "cantFind": "Не можешь знайти потрібний коктейль?",
+    "check": "Перевір",
+    "create": "або створи",
+    "newOne": "Новий",
+    "canCreate": "Ти можеш створити новий!",
+    "youCan": "Ти можеш",
+    "createCocktail": "створити новий коктейль",
+    "withIngredient": "з цим інгредієнтом"
+  },
+  "ingredientBottomMessage": {
+    "cantFind": "Не можешь знайти інгредієнт?",
+    "canCreate": "Ти можеш створити новий!"
+  },
+  "cocktailsFiltered": "коктейль(ів) відфільтровано",
+  "cocktailsNeedMore": "Для вказаних нижче коктейлів потрібно більше інгредієнтів",
+  "filterIngredients": "інгредієнт(ів) відфільтровано"
 }

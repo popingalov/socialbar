@@ -29,5 +29,23 @@
     "myBar": "my bar",
     "shoppingList": "shopping list",
     "edit": "Edit"
-  }
+  },
+  "initialFilter": "No Filter",
+  "cocktailBottomMessage": {
+    "cantFind": "Can't find a cocktail you like?",
+    "check": "Check",
+    "create": "or create a",
+    "newOne": "New one",
+    "canCreate": "You can create one!",
+    "youCan": "You can",
+    "createCocktail": "create a new cocktail",
+    "withIngredient": "with this ingredient"
+  },
+  "ingredientBottomMessage": {
+    "cantFind": "Can't find an ingredient?",
+    "canCreate": "You can create one!"
+  },
+  "cocktailsFiltered": "cocktails filtered",
+  "cocktailsNeedMore": "For the cocktails listed below you need more ingredients",
+  "filterIngredients": "ingredients filtered"
 }
