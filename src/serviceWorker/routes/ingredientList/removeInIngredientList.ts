@@ -1,18 +1,20 @@
 import { IIngredient } from 'types/ingredient';
-import { CACHES_NAME } from '../../staticObjects/baseData';
 import respGenerator from 'serviceWorker/helpers/responseGenerator';
+import addToCache from 'serviceWorker/helpers/addToCache';
+import takeCacheJson from 'serviceWorker/helpers/takeCacheJson';
 
 interface IIngredientList {
   list: IIngredient[];
 }
 
 export default async function removeInIngredientList(id: string) {
-  const promiseIng = await caches.match('/api/ingredients');
-  const ing: IIngredient[] = await promiseIng?.json();
-  const myPromise = await caches.match('/api/ingredients/my');
-  const my: IIngredient[] = await myPromise?.json();
-  const promiselist = await caches.match('/api/my-ingredient-list');
-  const list: IIngredientList = await promiselist?.json();
+  const [ing, my, list]: [IIngredient[], IIngredient[], IIngredientList] =
+    await Promise.all([
+      takeCacheJson('/api/ingredients'),
+      takeCacheJson('/api/ingredients/my'),
+      takeCacheJson('/api/my-ingredient-list'),
+    ]);
+
   let ingredient: any = null;
 
   const newList = list.list.filter((el: any) => el.id !== id);
@@ -46,9 +48,7 @@ async function resultHelper(
   ingredient: IIngredient,
 ) {
   const responseList = new Response(JSON.stringify(list));
-  await (
-    await caches.open(CACHES_NAME)
-  ).put('/api/my-ingredient-list', responseList);
+  addToCache(responseList, '/api/my-ingredient-list');
 
   const result = respGenerator(arr);
 

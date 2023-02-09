@@ -1,7 +1,7 @@
 import { IIngredient } from 'types/ingredient';
-import { CACHES_NAME } from '../../staticObjects/baseData';
 import respGenerator from 'serviceWorker/helpers/responseGenerator';
 import addToCache from 'serviceWorker/helpers/addToCache';
+import takeCacheJson from 'serviceWorker/helpers/takeCacheJson';
 
 interface IIngredientList {
   list: IIngredient[];
@@ -9,13 +9,12 @@ interface IIngredientList {
 
 export default async function addToIngredientList(req: Request) {
   const { id } = await req.json();
-  const promiseIng = await caches.match('/api/ingredients');
-  const ing: IIngredient[] = await promiseIng?.json();
-  const myPromise = await caches.match('/api/ingredients/my');
-  const my: IIngredient[] = await myPromise?.json();
-
-  const promiselist = await caches.match('/api/my-ingredient-list');
-  const list: IIngredientList = await promiselist?.json();
+  const [ing, my, list]: [IIngredient[], IIngredient[], IIngredientList] =
+    await Promise.all([
+      takeCacheJson('/api/ingredients'),
+      takeCacheJson('/api/ingredients/my'),
+      takeCacheJson('/api/my-ingredient-list'),
+    ]);
 
   let trigger = false;
   let thisIngredient: IIngredient | null = null;

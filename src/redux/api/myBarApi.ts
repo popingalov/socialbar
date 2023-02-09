@@ -27,7 +27,7 @@ export const myBarApi = createApi({
         method: 'POST',
         body: { id: ingredientId },
       }),
-      // invalidatesTags: [TAGS_TYPES.myBar],
+      invalidatesTags: [TAGS_TYPES.myBar],
       async onQueryStarted(id, { dispatch, queryFulfilled }) {
         console.log('starting!');
         try {
