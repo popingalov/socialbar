@@ -1,6 +1,7 @@
 import { ICocktail } from 'types/cocktail';
 import { IIngredient } from '../../../types/ingredient';
 import respGenerator from 'serviceWorker/helpers/responseGenerator';
+import takeCacheJson from 'serviceWorker/helpers/takeCacheJson';
 
 interface IParams {
   id: string;
@@ -15,15 +16,15 @@ interface AllCocktailsResponse {
   mine: { haveAll: ICocktail[]; other: ICocktail[] } | null;
 }
 export default async function takeIngredient({ id, baseUrl, url }: IParams) {
-  const allIngredientsPromise = await caches.match(baseUrl);
-  const allIngredients: IIngredient[] = await allIngredientsPromise?.json();
-
-  const myPromise = await caches.match('/api/ingredients/my');
-  const my: IIngredient[] = (await myPromise?.json()) || [];
-
-  const cocktailsPromise = await caches.match('/api/cocktails');
-  const cocktails: AllCocktailsResponse = await cocktailsPromise?.json();
-
+  const [allIngredients, my, cocktails]: [
+    IIngredient[],
+    IIngredient[],
+    AllCocktailsResponse,
+  ] = await Promise.all([
+    takeCacheJson(baseUrl),
+    takeCacheJson('/api/ingredients/my'),
+    takeCacheJson('/api/cocktails'),
+  ]);
   const ingredient = [...allIngredients, ...my].find(el => el.id === id);
   if (!ingredient) {
     throw new Error('bad id');

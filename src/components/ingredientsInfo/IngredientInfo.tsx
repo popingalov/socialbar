@@ -64,22 +64,22 @@ const IngredientInfo: React.FC<IProps> = ({ ingredient }) => {
 
     if (isInShopping) {
       console.log('deleteFromShopping', id);
-      // deleteFromShoppingList(id);
+      deleteFromShoppingList(id);
       return;
     }
     console.log('addtoShopping', id);
-    // addToShoppingList(id);
+    addToShoppingList(id);
   };
 
   const toggleCheckBox = (isInMyBar: boolean, id: string) => {
     console.log('isInMyBar', isInMyBar);
     if (isInMyBar) {
       console.log('deleteFromMyBar', id);
-      // deleteFromMyBar(id);
+      deleteFromMyBar(id);
       return;
     }
     console.log('addtoMyBAr', id);
-    // addToMyBar(id);
+    addToMyBar(id);
   };
 
   return (
