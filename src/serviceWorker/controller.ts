@@ -8,6 +8,7 @@ import addOneToShop from './routes/shopingList/addOne';
 import removeOneInTheShop from './routes/shopingList/removeOne';
 import addOneToFavorite from './routes/favorite/addOne';
 import removeOneInTheFavorite from './routes/favorite/remove';
+import createNewIng from './routes/ingredients/createNewIng';
 export default async function controller(
   req: Request,
   url: string,
@@ -36,8 +37,6 @@ export default async function controller(
     if (method === 'POST') {
       switch (url) {
         case '/api/my-ingredient-list':
-          online && fetch(req.clone());
-
           const { result, trigger, ingredient } = await ingredientList(req);
 
           callbackObj.nameFunc = 'addIngToList';
@@ -50,22 +49,23 @@ export default async function controller(
           return result;
 
         case '/api/shoping-list':
-          online && fetch(req.clone());
           const r1 = await addOneToShop(req);
           await addToCache(r1.clone(), url);
           return r1;
         case '/api/favorite':
-          online && fetch(req.clone());
           const r2 = await addOneToFavorite(req);
           await addToCache(r2.clone(), url);
           return r2;
+        case '/api/ingredients':
+          const r3 = await createNewIng(req);
+          // await addToCache(r3.clone(), url);
+          return r3;
       }
     }
 
     if (method === 'DELETE') {
       switch (baseUrl) {
         case 'api/my-ingredient-list':
-          online && fetch(req.clone());
           const { result, trigger, respond, ingredient } =
             await ingredientListRemove(id);
           callbackObj.nameFunc = 'removeIngToList';
@@ -76,12 +76,10 @@ export default async function controller(
           addToCache(result.clone(), cacheUrl);
           return respond;
         case 'api/shoping-list':
-          online && fetch(req.clone());
           const r1 = await removeOneInTheShop(id);
           await addToCache(r1.clone(), `/${baseUrl}`);
           return r1;
         case 'api/favorite':
-          online && fetch(req.clone());
           const r2 = await removeOneInTheFavorite(id);
           await addToCache(r2.clone(), `/${baseUrl}`);
           return r2;

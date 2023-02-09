@@ -112,6 +112,8 @@ self.addEventListener('fetch', async (event: FetchEvent): Promise<any> => {
 
       callbackObj.functionOfline();
     }
+    online && fetch(req.clone());
+
     if (req.method !== 'GET' && !online) {
       callbackObj.reqArr.push(req.clone());
     }
