@@ -49,7 +49,7 @@ const FormIngridient: React.FC<IProps> = ({
             <ButtonAddPhoto
               onChange={changeInput}
               placeholder=""
-              value={ingredientImg}
+              // value={ingredientImg}
               src={cameraSvg}
               type="file"
               name="ingredientImg"
