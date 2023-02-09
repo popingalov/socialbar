@@ -39,7 +39,7 @@ const FormCreateIngredient: React.FC = () => {
         setIngredientName(value);
         break;
       case 'ingredientImg':
-        setIngredientImg(value);
+        setIngredientImg(event.currentTarget.files[0]);
         break;
       case 'ingredientDescription':
         setIngredientDescription(value);
@@ -56,31 +56,36 @@ const FormCreateIngredient: React.FC = () => {
     title: ingredientName,
     description: ingredientDescription,
     picture: ingredientImg,
-    ingredientImg,
     category: textCategory,
   };
 
   const addIngredientHandle = async () => {
     try {
-      const add = await adding(ingredient);
+      const respond = new FormData();
+      respond.append('title', ingredientName);
+      respond.append('description', ingredientDescription);
+      respond.append('picture', ingredientImg);
+      respond.append('category', textCategory);
+      const add = await adding(respond);
+
       console.log('add:', add);
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      console.log(error);
     }
   };
 
   const handleSubmitForm = (event: any) => {
     event.preventDefault();
     addIngredientHandle();
-    reset();
+    // reset();
   };
 
-  const reset = () => {
-    setIngredientName('');
-    setIngredientImg('');
-    setTextCategory('Strong alcohol');
-    setIngredientDescription('');
-  };
+  // const reset = () => {
+  //   setIngredientName('');
+  //   setIngredientImg('');
+  //   setTextCategory('Strong alcohol');
+  //   setIngredientDescription('');
+  // };
 
   // -----------------------------
 
@@ -105,7 +110,6 @@ const FormCreateIngredient: React.FC = () => {
           />
         </FormIngridient>
       </ContainerCreateIngridient>
-      <ul>{/* <li>{title}</li> */}</ul>
     </>
   );
 };
