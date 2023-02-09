@@ -56,7 +56,7 @@ const FormIngridient: React.FC<IProps> = ({
               type="file"
               name="ingredientImg"
               id="file"
-              required
+              // required
             ></ButtonAddPhoto>
             <ImageButton src={cameraSvg} alt="icon person" />
           </LabelButtonAddPhoto>
