@@ -37,10 +37,9 @@ const FormIngridient: React.FC<IProps> = ({
       <Form id="form" encType="multipart/form-data" onSubmit={submitForm}>
         <ContainerIngridientName>
           <InputIngridientName
-            // onChange={handleInputChange}
             onChange={changeInput}
             placeholder="Ingredient name"
-            value={ingredientName}
+            // value={ingredientName}
             type="text"
             name="ingredientName"
             src={cameraSvg}
@@ -48,7 +47,6 @@ const FormIngridient: React.FC<IProps> = ({
           ></InputIngridientName>
           <LabelButtonAddPhoto>
             <ButtonAddPhoto
-              // onChange={handleInputChange}
               onChange={changeInput}
               placeholder=""
               value={ingredientImg}
@@ -56,18 +54,15 @@ const FormIngridient: React.FC<IProps> = ({
               type="file"
               name="ingredientImg"
               id="file"
-              // required
             ></ButtonAddPhoto>
             <ImageButton src={cameraSvg} alt="icon person" />
           </LabelButtonAddPhoto>
         </ContainerIngridientName>
-
         <ContainerCategory>
           <Category>Category:</Category>
           {children}
         </ContainerCategory>
         <IngridientDescription
-          // onChange={handleInputChange}
           onChange={changeInput}
           placeholder="Ingredient description"
           value={ingredientDescription}
@@ -75,7 +70,6 @@ const FormIngridient: React.FC<IProps> = ({
           form="form"
           required
         ></IngridientDescription>
-        {/* <FormButton type="submit" onChange={handleSubmitForm}> */}
         <FormButton type="submit" onChange={submitForm}>
           save
         </FormButton>

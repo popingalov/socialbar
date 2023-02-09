@@ -59,7 +59,7 @@ export const ingredientApi = createApi({
       ],
     }),
 
-    addIngredient: builder.mutation<IIngredient, Partial<IIngredient>>({
+    addIngredient: builder.mutation<IIngredient, Partial<any>>({
       query: newIngredient => ({
         url: `${INGREDIENT_URL}`,
         method: 'POST',
