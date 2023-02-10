@@ -7,8 +7,8 @@
   "auth": "Sign in",
   "extraMenuNav": {
     "settings": "Settings",
-    "createIngredient": "Create an ingredient",
-    "createCocktail": "Create a cocktail"
+    "createIngredient": "Create ingredient",
+    "createCocktail": "Create cocktail"
   },
   "ingredientsNav": {
     "manageBarShelf": "Manage Bar Shelf",
@@ -47,5 +47,13 @@
   },
   "cocktailsFiltered": "cocktails filtered",
   "cocktailsNeedMore": "For the cocktails listed below you need more ingredients",
-  "filterIngredients": "ingredients filtered"
+  "filterIngredients": "ingredients filtered",
+  "settings": {
+    "startUp": "App Startup screen",
+    "language": "Language"
+  },
+  "languages": {
+    "en": "English",
+    "ua": "Ukrainian"
+  }
 }

@@ -27,6 +27,7 @@ import {
 import { useGetNavSelectLabel } from 'hooks/useGetNavSelectLabel';
 import { useGetLocation } from 'hooks/useGetLocation';
 import { initialFilterStatus } from 'redux/categoriesFilter/categoriesConstants';
+import { useGetHeaderName } from 'hooks/useGetHeaderName';
 
 const Navigation = () => {
   const navigate = useNavigate();
@@ -46,6 +47,7 @@ const Navigation = () => {
   const filter = useGetPageCategories(isIngredients);
   const selectLabel = useGetNavSelectLabel(isIngredients);
   const initialFilterStatusLabel = useInitialFilterStatusLabel();
+  const pageName = useGetHeaderName(location.pathname);
 
   const handleSideMenu = () => {
     dispatch(setMobileIsOpen(true));
@@ -132,7 +134,7 @@ const Navigation = () => {
           {(isMainRouteSearching || isCardRouteSearching) && <SearchBar />}
 
           {isExtraRoute ? (
-            <PageName>{getHeaderName(location.pathname)}</PageName>
+            <PageName>{pageName}</PageName>
           ) : (
             <ExtraIcons
               handleSearch={handleSearchButton}

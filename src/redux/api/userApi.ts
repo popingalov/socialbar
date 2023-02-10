@@ -3,7 +3,6 @@ import { setUser } from 'redux/auth/authSlice';
 import { IUser } from 'types/user';
 import baseQuery from 'redux/baseQuery';
 import { USER_URL, TAGS_TYPES } from 'constants/api';
-import { setLanguage, setStartupScreen } from 'redux/settings/settingsSlice';
 
 export const userApi = createApi({
   reducerPath: 'userApi',
@@ -21,8 +20,6 @@ export const userApi = createApi({
         try {
           const { data } = await queryFulfilled;
           dispatch(setUser(data));
-          dispatch(setLanguage(data.locale));
-          // dispatch(setStartupScreen(data.startPage));
         } catch (error) {}
       },
     }),

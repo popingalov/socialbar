@@ -13,7 +13,7 @@
   "ingredientsNav": {
     "manageBarShelf": "Всі інгредієнти",
     "myBarShelf": "Мій бар",
-    "shoppingList": "Список покупки"
+    "shoppingList": "Список покупок"
   },
   "cocktailsNav": {
     "allCocktails": "Всі коктейлі",
@@ -47,5 +47,13 @@
   },
   "cocktailsFiltered": "коктейль(ів) відфільтровано",
   "cocktailsNeedMore": "Для вказаних нижче коктейлів потрібно більше інгредієнтів",
-  "filterIngredients": "інгредієнт(ів) відфільтровано"
+  "filterIngredients": "інгредієнт(ів) відфільтровано",
+  "settings": {
+    "startUp": "Початковий екран",
+    "language": "Мова"
+  },
+  "languages": {
+    "en": "Англійська",
+    "ua": "Українська"
+  }
 }
