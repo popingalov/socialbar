@@ -4,6 +4,7 @@ import { IShoppingResponse } from 'types/response.d.';
 
 import baseQuery from 'redux/baseQuery';
 import { SHOPPING_LIST_URL, TAGS_TYPES } from 'constants/api';
+import { ingredientApi } from './ingredientApi';
 
 export const shoppingApi = createApi({
   reducerPath: 'shoppingApi',
@@ -27,6 +28,15 @@ export const shoppingApi = createApi({
         body: { id: ingredientId },
       }),
       invalidatesTags: [TAGS_TYPES.shopping],
+      async onQueryStarted(id, { dispatch, queryFulfilled }) {
+        console.log('starting!');
+        try {
+          await queryFulfilled;
+          dispatch(ingredientApi.util.invalidateTags([TAGS_TYPES.ingredients]));
+        } catch (err) {
+          console.log('error... ', err);
+        }
+      },
     }),
 
     deleteFromShopping: builder.mutation<IShoppingResponse, string>({
@@ -35,6 +45,15 @@ export const shoppingApi = createApi({
         method: 'DELETE',
       }),
       invalidatesTags: [TAGS_TYPES.shopping],
+      async onQueryStarted(id, { dispatch, queryFulfilled }) {
+        console.log('starting!');
+        try {
+          await queryFulfilled;
+          dispatch(ingredientApi.util.invalidateTags([TAGS_TYPES.ingredients]));
+        } catch (err) {
+          console.log('error... ', err);
+        }
+      },
     }),
   }),
 });

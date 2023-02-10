@@ -1,10 +1,11 @@
 import { ContainerCreateIngridient } from './FormCreateIngridient.styled';
 import React, { useState } from 'react';
+// import { useDispatch } from 'react-redux';
 import SelectMenu from './select/select';
 import FormIngridient from './form/formIngridient';
 
-// import Loader from 'components/loader';
-// import { useAddIngredientMutation } from '../../redux/api/ingredientApi';
+import Loader from 'components/loader';
+import { useAddIngredientMutation } from '../../redux/api/ingredientApi';
 
 const FormCreateIngredient: React.FC = () => {
   const [ingredientName, setIngredientName] = useState<string>('');
@@ -14,13 +15,15 @@ const FormCreateIngredient: React.FC = () => {
   const [open, setOpen] = useState<boolean>(false);
   const [textCategory, setTextCategory] = useState<string>('Strong alcohol');
 
+  // const dispatch = useDispatch();
+  const [adding] = useAddIngredientMutation();
+
   const handleShowMenu = () => setOpen(isOpen => !isOpen);
 
   const handleChoose = async (event: any) => {
     const chooseText = await event.target.innerText;
-    // console.log(event.target.innerText);
     try {
-      console.log('event.target.innerText:', event.target.innerText);
+      // console.log('event.target.innerText:', event.target.innerText);
       setOpen(isOpen => !isOpen);
     } catch (error: any) {
       throw new Error(error);
@@ -36,7 +39,7 @@ const FormCreateIngredient: React.FC = () => {
         setIngredientName(value);
         break;
       case 'ingredientImg':
-        setIngredientImg(value);
+        setIngredientImg(event.currentTarget.files[0]);
         break;
       case 'ingredientDescription':
         setIngredientDescription(value);
@@ -49,19 +52,31 @@ const FormCreateIngredient: React.FC = () => {
     }
   };
 
+  const ingredient = {
+    title: ingredientName,
+    description: ingredientDescription,
+    picture: ingredientImg,
+    category: textCategory,
+  };
+
+  const addIngredientHandle = async () => {
+    try {
+      const respond = new FormData();
+      respond.append('title', ingredientName);
+      respond.append('description', ingredientDescription);
+      respond.append('picture', ingredientImg);
+      respond.append('category', textCategory);
+      const add = await adding(respond);
+
+      console.log('add:', add);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const handleSubmitForm = (event: any) => {
     event.preventDefault();
-    // const { data: cocktails, isFetching: cocktailsFetching } =
-    //   useAddIngredientMutation();
-    //   console.log('useAddIngredientMutation:', useAddIngredientMutation);
-    const ingredient = {
-      ingredientName,
-      ingredientImg,
-      textCategory,
-      ingredientDescription,
-    };
-    console.log('Ingredient:', ingredient);
-
+    addIngredientHandle();
     // reset();
   };
 
@@ -74,26 +89,28 @@ const FormCreateIngredient: React.FC = () => {
 
   // -----------------------------
 
-  // if (!ingredient) return <Loader isLoading={!ingredient} />;
+  if (!ingredient) return <Loader isLoading={!ingredient} />;
   // -----------------------------
 
   return (
-    <ContainerCreateIngridient>
-      <FormIngridient
-        changeInput={handleInputChange}
-        ingredientName={ingredientName}
-        ingredientImg={ingredientImg}
-        ingredientDescription={ingredientDescription}
-        submitForm={handleSubmitForm}
-      >
-        <SelectMenu
-          text={textCategory}
-          isMenuOpen={open}
-          clickFunction={handleShowMenu}
-          chooseFunction={handleChoose}
-        />
-      </FormIngridient>
-    </ContainerCreateIngridient>
+    <>
+      <ContainerCreateIngridient>
+        <FormIngridient
+          changeInput={handleInputChange}
+          ingredientName={ingredientName}
+          ingredientImg={ingredientImg}
+          ingredientDescription={ingredientDescription}
+          submitForm={handleSubmitForm}
+        >
+          <SelectMenu
+            text={textCategory}
+            isMenuOpen={open}
+            clickFunction={handleShowMenu}
+            chooseFunction={handleChoose}
+          />
+        </FormIngridient>
+      </ContainerCreateIngridient>
+    </>
   );
 };
 export default FormCreateIngredient;

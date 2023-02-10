@@ -3,6 +3,7 @@ import { IFavoriteResponse } from 'types/response.d.';
 import { ICocktail } from 'types/cocktail';
 import baseQuery from 'redux/baseQuery';
 import { FAVORITE_URL, TAGS_TYPES } from 'constants/api';
+import { cocktailApi } from './cocktailApi';
 
 export const favoriteApi = createApi({
   reducerPath: 'favoriteApi',
@@ -26,6 +27,15 @@ export const favoriteApi = createApi({
         body: { id: cocktailId },
       }),
       invalidatesTags: [TAGS_TYPES.favorites],
+      async onQueryStarted(id, { dispatch, queryFulfilled }) {
+        console.log('starting!');
+        try {
+          await queryFulfilled;
+          dispatch(cocktailApi.util.invalidateTags([TAGS_TYPES.cocktails]));
+        } catch (err) {
+          console.log('error... ', err);
+        }
+      },
     }),
 
     deleteFavorite: builder.mutation<IFavoriteResponse, string>({
@@ -34,6 +44,15 @@ export const favoriteApi = createApi({
         method: 'DELETE',
       }),
       invalidatesTags: [TAGS_TYPES.favorites],
+      async onQueryStarted(id, { dispatch, queryFulfilled }) {
+        console.log('starting!');
+        try {
+          await queryFulfilled;
+          dispatch(cocktailApi.util.invalidateTags([TAGS_TYPES.cocktails]));
+        } catch (err) {
+          console.log('error... ', err);
+        }
+      },
     }),
   }),
 });
