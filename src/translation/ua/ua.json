@@ -55,5 +55,11 @@
   "languages": {
     "en": "Англійська",
     "ua": "Українська"
+  },
+  "createIngredient": {
+    "ingredientName": "Назва інгредієнту",
+    "category": "Категорія:",
+    "description": "Опис інгредієнту",
+    "save": "Зберегти"
   }
 }

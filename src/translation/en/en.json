@@ -55,5 +55,11 @@
   "languages": {
     "en": "English",
     "ua": "Ukrainian"
+  },
+  "createIngredient": {
+    "ingredientName": "Ingredient name",
+    "category": "Category:",
+    "description": "Ingredient description",
+    "save": "save"
   }
 }
