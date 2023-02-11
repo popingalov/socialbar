@@ -65,8 +65,9 @@ if ('connection' in navigator) {
   connection.addEventListener('change', handleConnectionChange);
 
   function handleConnectionChange() {
-    internetSpeed.speed = connection.rtt;
-    console.log(internetSpeed);
+    callbackObj.internetSpeed += connection.rtt;
+    // internetSpeed.speed += connection.rtt;
+    console.log(callbackObj.internetSpeed);
   }
 }
 
@@ -107,15 +108,16 @@ self.addEventListener('fetch', async (event: FetchEvent): Promise<any> => {
   const { test, url, id, baseUrl } = checkUrl(req.url);
   const online = navigator.onLine && internetSpeed.speed < 1200;
   if (test) {
-    if (callbackObj.reqArr.length !== 0 && online) {
+    if (online) {
       console.log('має працювати');
-
-      callbackObj.functionOfline();
+      // sendStoredRequests();
+      // callbackObj.functionOfline();
     }
     online && fetch(req.clone());
 
     if (req.method !== 'GET' && !online) {
-      callbackObj.reqArr.push(req.clone());
+      storeRequest(req.clone());
+      // callbackObj.reqArr.push(req.clone());
     }
     event.respondWith(cacheControl(req, url, id, baseUrl, online));
 
@@ -144,4 +146,77 @@ async function cacheControl(
     return cached;
   }
   return controller(req, url, id, baseUrl, online);
+}
+interface CustomRequestInit extends RequestInit {
+  duplex: boolean;
+}
+function storeRequest(request: Request) {
+  // Open a database
+  let requestDB: IDBDatabase;
+  const requestDBOpenRequest = indexedDB.open('requests', 1);
+
+  requestDBOpenRequest.onupgradeneeded = function () {
+    requestDB = requestDBOpenRequest.result;
+    const store = requestDB.createObjectStore('requests', { keyPath: 'url' });
+  };
+
+  requestDBOpenRequest.onsuccess = function () {
+    requestDB = requestDBOpenRequest.result;
+    const transaction = requestDB.transaction('requests', 'readwrite');
+    const store = transaction.objectStore('requests');
+    // const requestClone = new Request(request.url, {
+    //   method: request.method,
+    //   headers: request.headers,
+    //   body: request.body,
+    //   mode: request.mode,
+    //   credentials: request.credentials,
+    //   cache: request.cache,
+    //   redirect: request.redirect,
+    //   referrer: request.referrer,
+    //   integrity: request.integrity,
+    //   keepalive: request.keepalive,
+    //   signal: request.signal,
+    // } as CustomRequestInit);
+    const requestClone = request.json();
+    store.put({ url: request.url, request: JSON.stringify(requestClone) });
+  };
+}
+
+function sendStoredRequests() {
+  let requestDB: IDBDatabase;
+  const requestDBOpenRequest = indexedDB.open('requests', 1);
+
+  requestDBOpenRequest.onupgradeneeded = function () {
+    requestDB = requestDBOpenRequest.result;
+    const store = requestDB.createObjectStore('requests', { keyPath: 'url' });
+  };
+
+  requestDBOpenRequest.onsuccess = function () {
+    requestDB = requestDBOpenRequest.result;
+    const transaction = requestDB.transaction('requests', 'readwrite');
+    const store = transaction.objectStore('requests');
+    const request = store.getAll();
+
+    request.onsuccess = function () {
+      const storedRequests = request.result;
+      storedRequests.forEach(function (storedRequest) {
+        console.log(JSON.parse(storedRequest));
+
+        // const headers = new Headers(JSON.parse(storedRequest.headers));
+        // let req;
+        // if (storedRequest.hasOwnProperty('requestBody')) {
+        //   req = new Request(storedRequest.url, {
+        //     method: storedRequest.method,
+        //     headers: headers,
+        //     body: storedRequest.requestBody,
+        //     duplex: true,
+        //   } as CustomRequestInit);
+        // } else {
+        //   req = new Request(storedRequest.url, { headers });
+        // }
+        // fetch(req);
+      });
+      // store.clear();
+    };
+  };
 }
