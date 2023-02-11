@@ -1,6 +1,10 @@
 // This optional code is used to register a service worker.
 // register() is not called by default.
 
+import { BASE_URL, COCKTAIL_URL, FAVORITE_URL } from 'constants/api';
+import addToCache from 'serviceWorker/helpers/addToCache';
+import respGenerator from 'serviceWorker/helpers/responseGenerator';
+
 // This lets the app load faster on subsequent visits in production, and gives
 // it offline capabilities. However, it also means that developers (and users)
 // will only see deployed updates on subsequent visits to a page, after all the
@@ -64,7 +68,7 @@ function registerValidSW(swUrl: string, config?: Config) {
         if (installingWorker == null) {
           return;
         }
-        installingWorker.onstatechange = () => {
+        installingWorker.onstatechange = async () => {
           if (installingWorker.state === 'installed') {
             if (navigator.serviceWorker.controller) {
               // At this point, the updated precached content has been fetched,
@@ -83,8 +87,15 @@ function registerValidSW(swUrl: string, config?: Config) {
               // At this point, everything has been precached.
               // It's the perfect time to display a
               // "Content is cached for offline use." message.
-              window.location.reload();
+              const [cocktails, favorite] = await Promise.all([
+                fetch(`${BASE_URL}${COCKTAIL_URL}`),
+                fetch(`${BASE_URL}${FAVORITE_URL}`),
+              ]);
 
+              await addToCache(cocktails, `/api${COCKTAIL_URL}`);
+              await addToCache(favorite, `/api${FAVORITE_URL}`);
+
+              window.location.reload();
               console.log('Content is cached for offline use.');
 
               // Execute callback

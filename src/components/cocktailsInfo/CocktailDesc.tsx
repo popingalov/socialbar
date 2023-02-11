@@ -15,6 +15,7 @@ import {
 } from './CocktailDesc.styled';
 import { ICocktailResponse } from 'types/response.d.';
 import RecipeList from './recipeList';
+import Loader from 'components/loader';
 
 interface IProps {
   cocktailId: string;
@@ -23,8 +24,10 @@ interface IProps {
 
 const CocktailDescription: React.FC<IProps> = ({ cocktailId, cocktail }) => {
   const { data: favorites } = useGetFavoritesQuery();
-  const [addFavorite] = useAddFavoriteMutation();
-  const [deleteFavorite] = useDeleteFavoriteMutation();
+  const [addFavorite, { isLoading: isAddingFavorite }] =
+    useAddFavoriteMutation();
+  const [deleteFavorite, { isLoading: isDeletingFavorite }] =
+    useDeleteFavoriteMutation();
 
   const favorite: boolean = useMemo(() => {
     if (!favorites) {
@@ -59,44 +62,47 @@ const CocktailDescription: React.FC<IProps> = ({ cocktailId, cocktail }) => {
   };
 
   return (
-    <Box>
-      {cocktail && (
-        <Box px={3} py={3}>
-          <Box
-            display="flex"
-            justifyContent="space-between"
-            alignItems="center"
-            mb={3}
-          >
-            <Title>{cocktail.title}</Title>
-            <Box as={'ul'} display="flex" flexWrap="nowrap" gridGap={1}>
-              <li>
-                <EditBtn onClick={onClickEdit}>
-                  <HiPencil size={24} />
-                </EditBtn>
-              </li>
-              <li>
-                <FavoriteBtn
-                  onClick={() => onClickFavorite(cocktail.id)}
-                  favorite={favorite}
-                >
-                  <HiStar size={24} />
-                </FavoriteBtn>
-              </li>
+    <>
+      <Loader isLoading={isAddingFavorite || isDeletingFavorite} />
+      <Box>
+        {cocktail && (
+          <Box px={3} py={3}>
+            <Box
+              display="flex"
+              justifyContent="space-between"
+              alignItems="center"
+              mb={3}
+            >
+              <Title>{cocktail.title}</Title>
+              <Box as={'ul'} display="flex" flexWrap="nowrap" gridGap={1}>
+                <li>
+                  <EditBtn onClick={onClickEdit}>
+                    <HiPencil size={24} />
+                  </EditBtn>
+                </li>
+                <li>
+                  <FavoriteBtn
+                    onClick={() => onClickFavorite(cocktail.id)}
+                    favorite={favorite}
+                  >
+                    <HiStar size={24} />
+                  </FavoriteBtn>
+                </li>
+              </Box>
             </Box>
-          </Box>
-          <Image src={cocktail.picture} />
-          <Decs>{cocktail.description}</Decs>
+            <Image src={cocktail.picture} />
+            <Decs>{cocktail.description}</Decs>
 
-          {stepsForRecipe && (
-            <RecipeList
-              stepsForRecipe={stepsForRecipe}
-              ingredients={cocktail.ingredients}
-            />
-          )}
-        </Box>
-      )}
-    </Box>
+            {stepsForRecipe && (
+              <RecipeList
+                stepsForRecipe={stepsForRecipe}
+                ingredients={cocktail.ingredients}
+              />
+            )}
+          </Box>
+        )}
+      </Box>
+    </>
   );
 };
 

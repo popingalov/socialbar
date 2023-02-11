@@ -16,7 +16,7 @@ interface AllCocktailsResponse {
   mine: { haveAll: ICocktail[]; other: ICocktail[] } | null;
 }
 export default async function takeIngredient({ id, baseUrl, url }: IParams) {
-  const [allIngredients, my, cocktails]: [
+  const [defaultIng, my, cocktails]: [
     IIngredient[],
     IIngredient[],
     AllCocktailsResponse,
@@ -25,7 +25,9 @@ export default async function takeIngredient({ id, baseUrl, url }: IParams) {
     takeCacheJson('/api/ingredients/my'),
     takeCacheJson('/api/cocktails'),
   ]);
-  const ingredient = [...allIngredients, ...my].find(el => el.id === id);
+
+  const allIngrediesnt = my ? defaultIng.concat(my) : defaultIng;
+  const ingredient = allIngrediesnt.find(el => el.id === id);
   if (!ingredient) {
     throw new Error('bad id');
   }

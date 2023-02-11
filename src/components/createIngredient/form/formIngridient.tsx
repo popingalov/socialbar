@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { useTranslation } from 'react-i18next';
 import {
   Form,
   ContainerIngridientName,
@@ -32,6 +32,10 @@ const FormIngridient: React.FC<IProps> = ({
   ingredientDescription,
   submitForm,
 }) => {
+  const { t } = useTranslation();
+  const ingredientNamePlaceholder = t('createIngredient.ingredientName');
+  const descriptionPlaceholder = t('createIngredient.description');
+
   return (
     <>
       <Form id="form" encType="multipart/form-data" onSubmit={submitForm}>
@@ -40,6 +44,7 @@ const FormIngridient: React.FC<IProps> = ({
             onChange={changeInput}
             placeholder="Ingredient name"
             value={ingredientName}
+
             type="text"
             name="ingredientName"
             src={cameraSvg}
@@ -60,19 +65,19 @@ const FormIngridient: React.FC<IProps> = ({
           </LabelButtonAddPhoto>
         </ContainerIngridientName>
         <ContainerCategory>
-          <Category>Category:</Category>
+          <Category>{t('createIngredient.category')}</Category>
           {children}
         </ContainerCategory>
         <IngridientDescription
           onChange={changeInput}
-          placeholder="Ingredient description"
+          placeholder={descriptionPlaceholder}
           value={ingredientDescription}
           name="ingredientDescription"
           form="form"
           required
         ></IngridientDescription>
         <FormButton type="submit" onChange={submitForm}>
-          save
+          {t('createIngredient.save')}
         </FormButton>
       </Form>
     </>

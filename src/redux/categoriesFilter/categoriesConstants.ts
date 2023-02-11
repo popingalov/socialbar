@@ -1,1 +1,1 @@
-export const initialFilterStatus = 'No Filter';
+export const initialFilterStatus = '';

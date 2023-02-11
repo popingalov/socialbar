@@ -3,6 +3,7 @@ import BottomMessageLink from 'components/UI-kit/bottomMessageLink';
 import { cocktailFilterStatus } from 'redux/filter/filterConstants';
 import { setCocktailStatusFilter } from 'redux/filter/filterSlice';
 import { useAppDispatch } from 'redux/hooks';
+import { useTranslation } from 'react-i18next';
 
 interface IProps {
   isMyCocktails?: boolean;
@@ -16,33 +17,42 @@ const CocktailBottomMessage: React.FC<IProps> = ({
   isIngredient = false,
 }) => {
   const dispatch = useAppDispatch();
+  const { t } = useTranslation();
   const handleClick = () => {
     dispatch(setCocktailStatusFilter(cocktailFilterStatus.allCocktails));
   };
 
   return (
     <>
-      Can't find a cocktail you like? {` `}
+      {t('cocktailBottomMessage.cantFind')} {` `}
       {isMyCocktails && !isIngredient && (
         <>
-          Check {` `}
+          {t('cocktailBottomMessage.check')} {` `}
           <BottomMessageButton onClick={handleClick}>
-            All Cocktails
+            {t('cocktailsNav.allCocktails')}
           </BottomMessageButton>
           {` `}
-          or create a <BottomMessageLink to="new">New one</BottomMessageLink>!
+          {t('cocktailBottomMessage.create')}
+          {` `}
+          <BottomMessageLink to="new">
+            {' '}
+            {t('cocktailBottomMessage.newOne')}
+          </BottomMessageLink>
+          !
         </>
       )}
       {isAllCocktails && !isIngredient && (
-        <BottomMessageLink to="new">You can create one!</BottomMessageLink>
+        <BottomMessageLink to="new">
+          {t('cocktailBottomMessage.canCreate')}
+        </BottomMessageLink>
       )}
       {isIngredient && (
         <>
-          You can{' '}
+          {t('cocktailBottomMessage.youCan')}{' '}
           <BottomMessageLink to="/cocktails/new">
-            create a new cocktail{' '}
+            {t('cocktailBottomMessage.createCocktail')}{' '}
           </BottomMessageLink>{' '}
-          with this ingredient
+          {t('cocktailBottomMessage.withIngredient')}
         </>
       )}
     </>

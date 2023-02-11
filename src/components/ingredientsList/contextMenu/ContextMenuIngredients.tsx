@@ -1,4 +1,5 @@
 import { useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import ContextButton from 'components/UI-kit/buttons/contextButton';
 import { setContextMenuIsOpen } from 'redux/modal/modalSlice';
 import { Title } from './ContextMenuIngredients.styled';
@@ -29,6 +30,7 @@ const ContextMenuIngredients: React.FC<IProps> = ({
 }) => {
   // console.log('first', name, id, isAvailable, isInShoppingList);
 
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const [addMyBar] = useAddToBarMutation();
   const [deleteMyBar] = useDeleteFromBarMutation();
@@ -78,9 +80,9 @@ const ContextMenuIngredients: React.FC<IProps> = ({
           handleMyBarClick(id, !isMyBar && !isAvailable);
         }}
       >
-        {!isMyBar && !isAvailable && 'Add to '}
-        {(isMyBar || (!isMyBar && isAvailable)) && 'Remove from '}
-        my bar
+        {!isMyBar && !isAvailable && t('contextMenu.addTo')}
+        {(isMyBar || (!isMyBar && isAvailable)) && t('contextMenu.removeFrom')}
+        {t('contextMenu.myBar')}
       </ContextButton>
 
       <ContextButton
@@ -88,10 +90,10 @@ const ContextMenuIngredients: React.FC<IProps> = ({
           handleShoppingClick(id, !isShoppingList && !isInShoppingList);
         }}
       >
-        {!isShoppingList && !isInShoppingList && 'Add to '}
+        {!isShoppingList && !isInShoppingList && t('contextMenu.addTo')}
         {(isShoppingList || (!isShoppingList && isInShoppingList)) &&
-          'Remove from '}
-        shopping list
+          t('contextMenu.removeFrom')}
+        {t('contextMenu.shoppingList')}
       </ContextButton>
 
       <ContextButton
@@ -99,14 +101,14 @@ const ContextMenuIngredients: React.FC<IProps> = ({
           handleCompleteDelete(id);
         }}
       >
-        Delete from application
+        {t('contextMenu.completelyDelete')}
       </ContextButton>
       <ContextButton
         onClick={() => {
           handleIngredientEdit(id);
         }}
       >
-        Edit
+        {t('contextMenu.edit')}
       </ContextButton>
     </>
   );

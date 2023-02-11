@@ -1,6 +1,7 @@
 import IngredientsList from 'components/ingredientsList';
 import { pageAnimation } from 'constants/animations';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import FollowUpMessage from 'components/UI-kit/followUpMessage';
 import IngredientBottomMessage from 'components/ingredientsList/ingredientBottomMessage';
 import Loader from 'components/loader';
@@ -9,6 +10,7 @@ import { useGetFilteredIngredients } from 'hooks/useGetFilteredIngredients';
 import { useGetIngredientsTabStatus } from 'hooks/useGetIngredientsTabStatus';
 
 const Ingredients = () => {
+  const { t } = useTranslation();
   const { isMyBar, isShoppingList } = useGetIngredientsTabStatus();
   const { visibleIngredients, isFetching } = useGetVisibleIngredients();
   const { filteredIngredients, filteredItems } =
@@ -29,7 +31,7 @@ const Ingredients = () => {
 
         {!isFetching && filteredItems !== 0 && (
           <FollowUpMessage>
-            ( +{filteredItems} ingredients filtered )
+            ( +{filteredItems} {t('filterIngredients')} )
           </FollowUpMessage>
         )}
 
