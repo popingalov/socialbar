@@ -46,7 +46,7 @@ export const Option = styled.li<{ isActive: boolean }>`
   font-size: 0.9rem;
   font-weight: ${p => (p.isActive ? '500' : '400')};
   color: ${({ theme, isActive }) =>
-    isActive ? theme.colors.accent : theme.colors.mainText};
+    isActive ? theme.colors.secondaryAccent : theme.colors.mainText};
   border-radius: 4px;
   cursor: pointer;
   white-space: nowrap;
@@ -54,8 +54,8 @@ export const Option = styled.li<{ isActive: boolean }>`
   :hover,
   :focus,
   :focus:hover {
-    background-color: ${({ theme }) => theme.colors.hoverLinkBackgroundColor};
-    color: ${({ theme }) => theme.colors.lightText};
+    background-color: ${({ theme }) => theme.colors.activeLinkBackgroundColor};
+    /* color: ${({ theme }) => theme.colors.lightText}; */
     outline: none;
   }
 `;
