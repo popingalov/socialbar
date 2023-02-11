@@ -1,4 +1,5 @@
 import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { BASE_URL, GOOGLE_AUTH_URL } from 'constants/api';
 import { FiLogIn } from 'react-icons/fi';
 import { IoMdPerson } from 'react-icons/io';
@@ -15,6 +16,7 @@ import Overlay from 'components/modal/overlay';
 import { userState } from 'redux/auth/authSelectors';
 
 const MobileMenu = () => {
+  const { t, i18n } = useTranslation();
   const redirectToGoogleAuth = () => {
     window.open(
       `${BASE_URL}${GOOGLE_AUTH_URL}`,
@@ -41,7 +43,7 @@ const MobileMenu = () => {
             <UserEmail>{user.email}</UserEmail>
           ) : (
             <MobileMenuButton onClick={redirectToGoogleAuth}>
-              Default account
+              {t('auth')}
               <FiLogIn />
             </MobileMenuButton>
           )}

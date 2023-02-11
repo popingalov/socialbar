@@ -20,9 +20,14 @@ import {
   setCocktailCategory,
   setIngredientCategory,
 } from 'redux/categoriesFilter/categoriesFilterSlice';
-import { useGetPageCategories } from 'hooks/useGetPageCategories';
+import {
+  useGetPageCategories,
+  useInitialFilterStatusLabel,
+} from 'hooks/useGetPageCategories';
 import { useGetNavSelectLabel } from 'hooks/useGetNavSelectLabel';
 import { useGetLocation } from 'hooks/useGetLocation';
+import { initialFilterStatus } from 'redux/categoriesFilter/categoriesConstants';
+import { useGetHeaderName } from 'hooks/useGetHeaderName';
 
 const Navigation = () => {
   const navigate = useNavigate();
@@ -41,6 +46,8 @@ const Navigation = () => {
   } = useGetLocation();
   const filter = useGetPageCategories(isIngredients);
   const selectLabel = useGetNavSelectLabel(isIngredients);
+  const initialFilterStatusLabel = useInitialFilterStatusLabel();
+  const pageName = useGetHeaderName(location.pathname);
 
   const handleSideMenu = () => {
     dispatch(setMobileIsOpen(true));
@@ -94,9 +101,12 @@ const Navigation = () => {
   };
 
   const handleFilter = (value: string) => {
+    const filter =
+      value === initialFilterStatusLabel ? initialFilterStatus : value;
+
     isIngredients
-      ? dispatch(setIngredientCategory(value))
-      : dispatch(setCocktailCategory(value));
+      ? dispatch(setIngredientCategory(filter))
+      : dispatch(setCocktailCategory(filter));
   };
 
   return (
@@ -109,7 +119,7 @@ const Navigation = () => {
                 <HeaderIcon type={headerIconTypes.burgerMenu} />
               </ClearButton>
               <Select
-                label={selectLabel}
+                label={!selectLabel ? initialFilterStatusLabel : selectLabel}
                 options={filter}
                 onChange={handleFilter}
               />
@@ -124,7 +134,7 @@ const Navigation = () => {
           {(isMainRouteSearching || isCardRouteSearching) && <SearchBar />}
 
           {isExtraRoute ? (
-            <PageName>{getHeaderName(location.pathname)}</PageName>
+            <PageName>{pageName}</PageName>
           ) : (
             <ExtraIcons
               handleSearch={handleSearchButton}

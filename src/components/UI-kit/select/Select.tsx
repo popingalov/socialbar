@@ -66,7 +66,6 @@ const Select: React.FC<IProps> = ({ label, onChange, options }) => {
         ref={btnRef}
         onClick={handleOpen}
       >
-        {/* {value} */}
         {currentValue !== '' ? currentValue : label}
         <AiOutlineCaretDown />
       </SelectLabelButton>
@@ -80,7 +79,6 @@ const Select: React.FC<IProps> = ({ label, onChange, options }) => {
                   <Option
                     onClick={() => handleChange(option)}
                     isActive={option === currentValue}
-                    // isActive={option === value}
                     key={option}
                   >
                     {option}

@@ -26,11 +26,16 @@ import { setToken } from 'redux/auth/authSlice';
 import { tokenState } from 'redux/auth/authSelectors';
 import { useGetMeQuery } from 'redux/api/userApi';
 import Search from 'pages/search';
+import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+import { selectSettings } from 'redux/settings/settingsSelectors';
 
 const App = () => {
   const location = useLocation();
+  const { i18n } = useTranslation();
   const menuIsOpen = useAppSelector(selectMobileMenuStatus);
   const [searchParams] = useSearchParams();
+  const settings = useSelector(selectSettings);
   const token = useAppSelector(tokenState);
   const dispatch = useAppDispatch();
   useGetMeQuery(undefined, {
@@ -48,6 +53,10 @@ const App = () => {
       dispatch(setToken(persistToken));
     }
   }, [dispatch, searchParams]);
+
+  useEffect(() => {
+    i18n.changeLanguage(settings.language);
+  }, [i18n, settings.language]);
 
   return (
     <>

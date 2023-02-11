@@ -1,5 +1,6 @@
 import { pageAnimation } from 'constants/animations';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import FollowUpMessage from 'components/UI-kit/followUpMessage';
 import CocktailBottomMessage from 'components/cocktailList/cocktailBottomMessage';
 import Loader from 'components/loader';
@@ -10,6 +11,7 @@ import CocktailList from 'components/cocktailList';
 import { useGetCocktailTabStatus } from 'hooks/useGetCocktailTabStatus';
 
 const Cocktails = () => {
+  const { t } = useTranslation();
   const { isMyCocktails, isAllCocktails, isFavoriteCocktails } =
     useGetCocktailTabStatus();
   const { visibleCocktails, isFetching } = useGetVisibleCocktails();
@@ -36,14 +38,14 @@ const Cocktails = () => {
       )}
       {!isFetching && filteredItems !== 0 && (
         <FollowUpMessage>
-          ( +{filteredItems} cocktails filtered )
+          ( +{filteredItems} {t('cocktailsFiltered')} )
         </FollowUpMessage>
       )}
 
       {isMyCocktails && needMoreIngredients.length !== 0 && (
         <>
           <FollowUpMessage>
-            <p>For the cocktails listed below you need more ingredients</p>
+            <p>{t('cocktailsNeedMore')}</p>
           </FollowUpMessage>
           <CocktailList cocktails={needMoreIngredients} />
         </>

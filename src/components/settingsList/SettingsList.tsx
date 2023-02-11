@@ -2,11 +2,9 @@ import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { AnimatePresence } from 'framer-motion';
 import { getKeyByValue } from 'helpers/getKeyByValue';
-import { languageList } from 'constants/languages';
 import { listAnimation } from 'constants/animations';
 import { Options, Option } from './SettingsList.styled';
-import { startupScreenList } from 'constants/startupScreen';
-import { settingList, settingTypes } from 'constants/settings';
+import { settingTypes } from 'constants/settings';
 import {
   SettingsItem,
   SettingsListStyled,
@@ -17,6 +15,7 @@ import SettingsCard from 'components/settingsList/settingsCard';
 import SettingsModal from 'components/modal/settingsModal';
 import { setSettingsMenuIsOpen } from 'redux/modal/modalSlice';
 import { setLanguage, setStartupScreen } from 'redux/settings/settingsSlice';
+import { useSettings } from 'hooks/useSettings';
 
 const SettingsList = () => {
   const settings = useSelector(selectSettings);
@@ -24,27 +23,7 @@ const SettingsList = () => {
   const dispatch = useDispatch();
   const [type, setType] = useState('');
   const [values, setValues] = useState<string[]>([]);
-
-  if (settings) {
-    const { language, startupScreen } = settings;
-
-    const languageIdx = settingList.findIndex(
-      ({ name }) => name === settingTypes.language,
-    );
-    const startPageIdx = settingList.findIndex(
-      ({ name }) => name === settingTypes.startupScreen,
-    );
-
-    settingList[languageIdx] = {
-      ...settingList[languageIdx],
-      description: languageList[language],
-    };
-
-    settingList[startPageIdx] = {
-      ...settingList[startPageIdx],
-      description: startupScreenList[startupScreen],
-    };
-  }
+  const { settingList, startupScreenList, languageList } = useSettings();
 
   const handleMenuItemClick: React.MouseEventHandler<HTMLLIElement> = event => {
     const menuName = event.currentTarget.getAttribute('name');
@@ -86,15 +65,9 @@ const SettingsList = () => {
       >
         {settingList.map(({ title, description, name }) => {
           return (
-            <>
-              <SettingsItem
-                key={name}
-                onClick={handleMenuItemClick}
-                name={name}
-              >
-                <SettingsCard title={title} description={description} />
-              </SettingsItem>
-            </>
+            <SettingsItem key={name} onClick={handleMenuItemClick} name={name}>
+              <SettingsCard title={title} description={description} />
+            </SettingsItem>
           );
         })}
       </SettingsListStyled>
