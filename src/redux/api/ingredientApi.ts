@@ -2,6 +2,7 @@ import { createApi } from '@reduxjs/toolkit/query/react';
 import baseQuery from 'redux/baseQuery';
 import type { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import { IIngredient } from 'types/ingredient';
+// import { Respond } from 'types/respond';
 import { INGREDIENT_URL, TAGS_TYPES } from 'constants/api';
 import { RootState } from 'redux/store';
 
