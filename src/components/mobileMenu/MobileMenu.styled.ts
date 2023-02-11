@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import styled from 'styled-components';
 
 export const Menu = styled(motion.div)`
-  background-color: ${({ theme }) => theme.colors.mainBackgroundColor};
+  background-color: ${({ theme }) => theme.colors.modal};
   width: 70%;
   height: 100%;
 

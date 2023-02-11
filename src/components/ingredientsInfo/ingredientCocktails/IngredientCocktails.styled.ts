@@ -6,4 +6,5 @@ export const AdditionalInfoTitle = styled.p`
   padding-bottom: ${({ theme }) => theme.space[2]}px;
   font-weight: ${({ theme }) => theme.fontWeight.medium};
   border-bottom: 1px solid ${({ theme }) => theme.colors.borderBottom};
+  background-color: ${({ theme }) => theme.colors.mainBackgroundColor};
 `;

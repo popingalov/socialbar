@@ -12,7 +12,7 @@ export const Modal = styled(motion.div)`
   max-width: 90%;
   max-height: 95%;
 
-  background-color: ${p => p.theme.colors.white};
+  background-color: ${p => p.theme.colors.modal};
   overflow-y: scroll;
   border-radius: 3px;
   border: 1px solid rgba(0, 0, 0, 0.2);

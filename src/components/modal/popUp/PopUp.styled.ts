@@ -93,7 +93,7 @@ export const Modal = styled(motion.div)<IProps>`
   z-index: 100;
   padding: ${p => p.theme.space[2]}px;
 
-  background-color: ${p => p.theme.colors.mainBackgroundColor};
+  background-color: ${p => p.theme.colors.modal};
   min-width: ${({ type }) => (type === 'context' ? '190px' : '150px')};
   max-width: ${({ type }) => (type === 'search' ? '300px' : '220px')};
   max-height: 100vh;

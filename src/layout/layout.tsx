@@ -1,6 +1,5 @@
 import { Outlet } from 'react-router';
 import { Suspense } from 'react';
-
 import Box from 'components/box';
 import Loader from 'components/loader';
 import Navigation from 'components/navigation';

@@ -1,6 +1,4 @@
 import IngredientsList from 'components/ingredientsList';
-import { pageAnimation } from 'constants/animations';
-import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import FollowUpMessage from 'components/UI-kit/followUpMessage';
 import IngredientBottomMessage from 'components/ingredientsList/ingredientBottomMessage';
@@ -8,6 +6,7 @@ import Loader from 'components/loader';
 import { useGetVisibleIngredients } from 'hooks/useGetVisibleIngredients';
 import { useGetFilteredIngredients } from 'hooks/useGetFilteredIngredients';
 import { useGetIngredientsTabStatus } from 'hooks/useGetIngredientsTabStatus';
+import Section from 'components/section';
 
 const Ingredients = () => {
   const { t } = useTranslation();
@@ -17,31 +16,29 @@ const Ingredients = () => {
     useGetFilteredIngredients(visibleIngredients);
 
   return (
-    <>
-      <motion.section {...pageAnimation} transition={{ duration: 0.3 }}>
-        {isFetching && <Loader isLoading={isFetching} />}
+    <Section>
+      {isFetching && <Loader isLoading={isFetching} />}
 
-        {filteredIngredients && (
-          <IngredientsList
-            ingredients={filteredIngredients}
-            isMyBar={isMyBar}
-            isShoppingList={isShoppingList}
-          />
-        )}
+      {filteredIngredients && (
+        <IngredientsList
+          ingredients={filteredIngredients}
+          isMyBar={isMyBar}
+          isShoppingList={isShoppingList}
+        />
+      )}
 
-        {!isFetching && filteredItems !== 0 && (
-          <FollowUpMessage>
-            ( +{filteredItems} {t('filterIngredients')} )
-          </FollowUpMessage>
-        )}
+      {!isFetching && filteredItems !== 0 && (
+        <FollowUpMessage>
+          ( +{filteredItems} {t('filterIngredients')} )
+        </FollowUpMessage>
+      )}
 
-        {!isFetching && !isShoppingList && (
-          <FollowUpMessage>
-            <IngredientBottomMessage />
-          </FollowUpMessage>
-        )}
-      </motion.section>
-    </>
+      {!isFetching && !isShoppingList && (
+        <FollowUpMessage>
+          <IngredientBottomMessage />
+        </FollowUpMessage>
+      )}
+    </Section>
   );
 };
 

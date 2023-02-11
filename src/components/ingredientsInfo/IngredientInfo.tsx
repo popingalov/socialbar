@@ -91,7 +91,7 @@ const IngredientInfo: React.FC<IProps> = ({ ingredient }) => {
   return (
     <>
       <Loader isLoading={isUpdating} />
-      <Box px={3} py={3}>
+      <Box px={3} py={3} backgroundColor="mainBackgroundColor">
         <Box
           display="flex"
           justifyContent="space-between"
