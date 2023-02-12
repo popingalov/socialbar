@@ -134,7 +134,10 @@ async function tryCaches(req: Request) {
   const result: any = {};
   result.url = req.url;
   result.method = req.method;
-  result.headers = { authorization: req.headers.get('authorization') };
+  result.headers = {
+    authorization: req.headers.get('authorization'),
+    'Content-Type': 'application/json',
+  };
   result.mode = req.mode;
   const jsonBody = await req.json();
   result.body = jsonBody;
