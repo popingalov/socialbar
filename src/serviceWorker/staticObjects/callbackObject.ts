@@ -1,26 +1,12 @@
 import { IIngredient } from 'types/ingredient';
 import changeIngList from '../routes/cocktails/changeIngList';
-// import changeIngList from '../routes/cocktails/remove/removeIng';
-//
-// export interface ICallbackObj {
-//   [key: string]: any;
-//   cocktails: any;
-//   trigger: boolean;
-//   nameFunc: string;
-//   ingredient: IIngredient | null;
-//   reqArr: any[];
-//   method: string;
-// }
-// implements ICallbackObj
 class CallbackObj {
   [key: string]: any;
   cocktails: any;
   trigger: boolean;
   nameFunc: string;
   ingredient: IIngredient | null;
-  reqArr: any[];
   method: string;
-  functionOfline: any;
   internetSpeed: number;
 
   constructor() {
@@ -29,15 +15,8 @@ class CallbackObj {
     this.trigger = false;
     this.nameFunc = 'cocktails';
     this.ingredient = null;
-    this.reqArr = [];
     this.method = 'GET';
     this.internetSpeed = 100;
-    this.functionOfline = () => {
-      this.reqArr.forEach((el: Request) => {
-        fetch(el);
-      });
-      this.reqArr = [];
-    };
   }
 }
 
