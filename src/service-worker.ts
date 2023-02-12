@@ -68,8 +68,6 @@ if ('connection' in navigator) {
 
   function handleConnectionChange() {
     callbackObj.internetSpeed += connection.rtt;
-    // internetSpeed.speed += connection.rtt;
-    console.log(callbackObj.internetSpeed);
   }
 }
 
