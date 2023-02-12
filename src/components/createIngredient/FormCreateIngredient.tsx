@@ -1,9 +1,10 @@
 import { ContainerCreateIngridient } from './FormCreateIngridient.styled';
 import React, { useState } from 'react';
+
+import { useNavigate } from 'react-router';
 import SelectMenu from './select/select';
 import FormIngridient from './form/formIngridient';
 
-// import Loader from 'components/loader';
 import { useAddIngredientMutation } from '../../redux/api/ingredientApi';
 
 const FormCreateIngredient: React.FC = () => {
@@ -15,6 +16,8 @@ const FormCreateIngredient: React.FC = () => {
   const [textCategory, setTextCategory] = useState<string>('Strong alcohol');
 
   const [adding] = useAddIngredientMutation();
+
+  const navigate = useNavigate();
 
   const handleShowMenu = () => setOpen(isOpen => !isOpen);
 
@@ -48,7 +51,6 @@ const FormCreateIngredient: React.FC = () => {
         return;
     }
   };
-
   const addIngredientHandle = async () => {
     try {
       const respond = new FormData();
@@ -56,13 +58,15 @@ const FormCreateIngredient: React.FC = () => {
       respond.append('description', ingredientDescription);
       respond.append('picture', ingredientImg);
       respond.append('category', textCategory);
-      await adding(respond);
+      const newIngredient: any = await adding(respond);
+      const id = newIngredient.data.id;
+      navigate(`/ingredients/${id}`);
     } catch (error) {
       console.log(error);
     }
   };
 
-  const handleSubmitForm = (event: any) => {
+  const handleSubmitForm = async (event: any) => {
     event.preventDefault();
     addIngredientHandle();
     reset();
