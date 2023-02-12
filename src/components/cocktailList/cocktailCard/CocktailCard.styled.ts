@@ -3,6 +3,7 @@ import styled from 'styled-components';
 export const CocktailsName = styled.p`
   text-transform: capitalize;
   margin-bottom: 2px;
+  font-weight: 500;
 `;
 
 export const Ingredients = styled.p`

@@ -16,6 +16,7 @@ export const SelectLabelButton = styled(motion.button)<{ ref: any }>`
   max-width: 220px;
   width: 100%;
   text-align: left;
+  font-family: inherit;
   font-size: ${({ theme }) => theme.fontSizes.s};
   letter-spacing: 0.03em;
   font-weight: 500;

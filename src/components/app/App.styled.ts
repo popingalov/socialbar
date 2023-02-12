@@ -1,15 +1,6 @@
 import { createGlobalStyle } from 'styled-components';
 import background from '../../assets/images/background.jpg';
 
-// TODO: text color due to different bg
-/**
- * 
- * .text {
-  mix-blend-mode: multiply;
-  color: #ffffff;
-}
- */
-
 export const GlobalStyle = createGlobalStyle`
   body {
     height: 100vh;
