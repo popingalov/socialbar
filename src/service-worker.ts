@@ -24,6 +24,8 @@ import addToCache from 'serviceWorker/helpers/addToCache';
 import respGenerator from 'serviceWorker/helpers/responseGenerator';
 import takeCacheJson from 'serviceWorker/helpers/takeCacheJson';
 import { CACHES_NAME } from 'serviceWorker/staticObjects/baseData';
+import addReqToCaches from 'serviceWorker/offline/addReqToCaches';
+import fetchCachesReq from 'serviceWorker/offline/sendReqOnCaches';
 
 //
 declare const self: ServiceWorkerGlobalScope;
@@ -108,66 +110,55 @@ self.addEventListener('activate', () => {
 
 self.addEventListener('fetch', async (event: FetchEvent): Promise<any> => {
   const req = event.request;
-
   const { test, url, id, baseUrl } = checkUrl(req.url);
   const online = navigator.onLine && internetSpeed.speed < 1200;
   if (test) {
     if (req.method !== 'GET' && !online) {
-      tryCaches(req.clone());
-      // const result = await takeCacheJson('/my/test');
-      // console.log(result);
+      addReqToCaches(req.clone());
     }
 
     event.respondWith(cacheControl(req.clone(), url, id, baseUrl, online));
     if (online) {
       console.log('має працювати');
-      // testTakeCache();
-      // callbackObj.functionOfline();
       fetch(req);
-      tryDoFetch();
+      fetchCachesReq();
     }
     event.waitUntil(continuationWork());
   }
 });
 
-async function tryCaches(req: Request) {
-  const result: any = {};
-  result.url = req.url;
-  result.method = req.method;
-  result.headers = {
-    authorization: req.headers.get('authorization'),
-    'Content-Type': 'application/json',
-  };
-  result.mode = req.mode;
-  const jsonBody = await req.json();
-  result.body = jsonBody;
-  console.log(jsonBody);
-  console.log(result);
+// async function cachesOflineReq(req: Request) {
+//   const result: any = {};
+//   result.url = req.url;
+//   result.method = req.method;
+//   result.headers = {
+//     authorization: req.headers.get('authorization'),
+//     'Content-Type': 'application/json',
+//   };
+//   result.mode = req.mode;
+//   const jsonBody = await req.json();
+//   result.body = jsonBody;
 
-  const resResult = respGenerator(result);
+//   const resResult = respGenerator(result);
 
-  addToCache(resResult, '/my/test33');
-}
-async function tryDoFetch() {
-  const res = await takeCacheJson('/my/test33');
-  if (res) {
-    console.log(res);
-    const req = new Request(res.url, {
-      method: res.method,
-      body: JSON.stringify(res.body),
-      headers: res.headers,
-      mode: res.mode,
-    });
-    const result = await fetch(req);
-    console.log(result);
-    const result2 = result.json();
-    console.log(result2);
+//   addToCache(resResult, '/my/test33');
+// }
 
-    (await caches.open(CACHES_NAME)).delete('/my/test33');
-  }
-}
+// async function fetchCachesReq() {
+//   const res = await takeCacheJson('/my/test33');
+//   if (res) {
+//     const req = new Request(res.url, {
+//       method: res.method,
+//       body: JSON.stringify(res.body),
+//       headers: res.headers,
+//       mode: res.mode,
+//     });
+//     await fetch(req);
+
+//     (await caches.open(CACHES_NAME)).delete('/my/test33');
+//   }
+// }
 async function continuationWork() {
-  // tryDoFetch();
   const { nameFunc, trigger, ingredient, method } = callbackObj;
   if (trigger) {
     await callbackObj[nameFunc](ingredient, method);
