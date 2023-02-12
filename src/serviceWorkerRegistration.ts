@@ -107,7 +107,16 @@ function registerValidSW(swUrl: string, config?: Config) {
         };
       };
     })
-    .catch(error => {
+    .catch(async error => {
+      const [cocktails, favorite] = await Promise.all([
+        fetch(`${BASE_URL}${COCKTAIL_URL}`),
+        fetch(`${BASE_URL}${FAVORITE_URL}`),
+      ]);
+
+      await addToCache(cocktails, `/api${COCKTAIL_URL}`);
+      await addToCache(favorite, `/api${FAVORITE_URL}`);
+
+      window.location.reload();
       console.error('Error during service worker registration:', error);
     });
 }
