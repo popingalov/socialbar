@@ -1,9 +1,10 @@
+import CreateCocktail from 'components/createCocktail';
 import Section from 'components/section';
 
 const NewCocktail = () => {
   return (
     <Section>
-      <div>CreateCocktail</div>
+      <CreateCocktail />
     </Section>
   );
 };

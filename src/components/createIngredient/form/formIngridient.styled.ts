@@ -23,6 +23,7 @@ export const InputIngridientName = styled.input`
     ${({ theme }) => theme.colors.secondaryText};
   }
 `;
+
 export const LabelButtonAddPhoto = styled.label`
   cursor: pointer;
   width: 20px;
@@ -76,6 +77,7 @@ export const IngridientDescription = styled.textarea`
     outline: none;
   } */
 `;
+
 export const FormButton = styled.button`
   width: 100%;
   padding-top: ${({ theme }) => theme.space[2]}px;

@@ -1,10 +1,12 @@
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
 
-export const CheckboxLabel = styled.label`
-  display: inline-block;
-  vertical-align: middle;
-  font-size: 0;
+export const CheckboxLabel = styled.label<{ hasLabel: boolean }>`
+  display: flex;
+  align-items: center;
+  gap: ${({ theme }) => theme.space[2]}px;
+  font-size: ${({ theme, hasLabel }) => (hasLabel ? theme.fontSizes.xs : 0)};
+  font-weight: ${({ theme }) => theme.fontWeight.medium};
   cursor: pointer;
   padding: ${p => p.theme.space[1]}px;
 `;
