@@ -3,43 +3,46 @@ import Input from 'components/UI-kit/form/input';
 import Textarea from 'components/UI-kit/form/textarea/Textarea';
 import FormButton from 'components/UI-kit/buttons/formButton';
 import Box from 'components/box';
-import Select from 'components/UI-kit/select';
-import { useGetCategoriesQuery } from 'redux/api/manualApi';
+import FormSelect from 'components/UI-kit/form/formSelect';
+import { useGetGlassesQuery } from 'redux/api/manualApi';
 import {
   ChangeEventHandler,
   FormEventHandler,
   useEffect,
   useState,
 } from 'react';
-import IngredientRecipe from 'components/UI-kit/form/ingredientRecipe';
 import InputFile from 'components/UI-kit/form/inputFile';
-import { IRecipeIngredient } from 'types/recireIngredient';
+import { IRecipeIngredient } from 'types/recipeIngredient';
+import Glass from './glass';
+import { IGlass } from 'types/manual';
+import Categories from './categories/Categories';
+import Ingredients from './ingredients';
+import { recipeIngredientHandlerType } from 'types/handleRecipeIngredient';
+import { initialRecipeIngredient } from 'constants/initialRecipeIngredient';
 
 const CreateCocktail = () => {
   const [dataLS, setDataLS] = useState(null); // TODO: only for template LocalStorage
+  const { data: glasses } = useGetGlassesQuery();
 
-  const { data } = useGetCategoriesQuery();
-  const cocktailCategories = data?.cocktails.map(({ title }) => title);
-  const [cocktailName, setCocktailName] = useState('');
-
-  const [categories, setCategories] = useState([]); //TODO: array of categories
-  const [category, setCategory] = useState('Nothing choosed');
+  const initialGlass = glasses?.find(({ title }) => title === 'Standard');
+  const [name, setName] = useState('');
+  const [cocktailImg, setCocktailImg] = useState<File | null>(null);
+  const [glass, setGlass] = useState<IGlass | null>(null);
+  const [categories, setCategories] = useState<string[]>([]);
   const [description, setDescription] = useState('');
-  const [preparation, setPreparation] = useState('');
-
+  const [recipe, setRecipe] = useState('');
   const [ingredients, setIngredients] = useState<IRecipeIngredient[]>([
-    {
-      name: '',
-      quantity: '',
-      measure: '',
-      garnish: false,
-      optional: false,
-    },
+    initialRecipeIngredient,
   ]);
+
+  useEffect(() => {
+    if (initialGlass) setGlass(initialGlass);
+  }, [initialGlass]);
 
   useEffect(() => {
     // Перевірка локального сховища при монтуванні компонента
     const storedData = localStorage.getItem('myData');
+    // console.log('storedData', storedData);
     if (storedData) {
       setDataLS(JSON.parse(storedData));
     }
@@ -53,24 +56,201 @@ const CreateCocktail = () => {
     };
   }, [dataLS]); // Потрібно вказати data, щоб useEffect відслідковував його зміни
 
-  const handleChangeCocktailName: ChangeEventHandler<
-    HTMLInputElement
-  > = event => {
-    setCocktailName(event.target.value);
+  const handleChangeName: ChangeEventHandler<HTMLInputElement> = event => {
+    setName(event.target.value);
   };
-  const handleSelect = (value: string) => {
-    console.log(value);
-    setCategory(value);
+
+  const handleImgChange: ChangeEventHandler<HTMLInputElement> = event => {
+    const file = event.target.files?.[0];
+    if (file) {
+      setCocktailImg(file); // or setCocktailImg(URL.createObjectURL(file));
+    }
+  };
+
+  const handleGlass = (glass: IGlass) => {
+    setGlass(glass);
+  };
+
+  const handleCategorySelect = (value: string) => {
+    if (categories.includes(value)) {
+      return;
+    }
+    setCategories(prevState => [...prevState, value]);
   };
 
   const handleDescription: ChangeEventHandler<HTMLTextAreaElement> = event => {
     setDescription(event.target.value);
   };
 
-  const handlePreparationSteps: ChangeEventHandler<
-    HTMLTextAreaElement
-  > = event => {
-    setPreparation(event.target.value);
+  const handleRecipeSteps: ChangeEventHandler<HTMLTextAreaElement> = event => {
+    setRecipe(event.target.value);
+  };
+
+  const handleRecipeIngredient: recipeIngredientHandlerType = ({
+    index,
+    name,
+    value,
+    checked,
+  }) => {
+    let data = [...ingredients];
+    data[index][name] = value ? value : checked;
+
+    setIngredients(data);
+  };
+
+  const addIngredient = () => {
+    setIngredients([...ingredients, initialRecipeIngredient]);
+  };
+
+  const handleSubmit: FormEventHandler<HTMLFormElement> = event => {
+    event.preventDefault();
+    // TODO: check all required fields and send message what missed
+    const data = {
+      name,
+      cocktailImg,
+      glass,
+      categories,
+      description,
+      recipe,
+      ingredients,
+    };
+    console.log('data all', data);
+    // reset();
+  };
+
+  const reset = () => {
+    setName('');
+    setCocktailImg(null);
+    setGlass(null);
+    setCategories([]);
+    setDescription('');
+    setRecipe('');
+    setIngredients([]);
+  };
+
+  return (
+    <>
+      {glass && (
+        <FormStyled onSubmit={handleSubmit}>
+          <Box display="flex" alignItems="center" gridGap={2} mb={4}>
+            <Input
+              changeInput={handleChangeName}
+              placeholder="Create cocktail"
+              name="name"
+              value={name}
+            />
+            <InputFile
+              changeInput={handleImgChange}
+              name="cocktailImg"
+              id="file"
+            />
+          </Box>
+
+          <Glass onChoose={handleGlass} currentGlass={glass} />
+          <Categories
+            categories={categories}
+            handleCategorySelect={handleCategorySelect}
+          />
+          <Textarea
+            changeInput={handleDescription}
+            placeholder="cocktail description"
+            value={description}
+            name="cocktailDescription"
+          />
+          <Textarea
+            label="Preparation steps"
+            changeInput={handleRecipeSteps}
+            placeholder="1.Put some ice into a shaker"
+            value={recipe}
+            name="cocktailRecipe"
+          />
+          <Ingredients
+            ingredients={ingredients}
+            handleRecipeIngredient={handleRecipeIngredient}
+            addIngredient={addIngredient}
+          />
+          <FormButton>Save</FormButton>
+        </FormStyled>
+      )}
+    </>
+  );
+};
+
+export default CreateCocktail;
+
+/**
+ * 
+const CreateCocktail = () => {
+  const [dataLS, setDataLS] = useState(null); // TODO: only for template LocalStorage
+
+  const { data: glasses } = useGetGlassesQuery();
+
+  const initialGlass = glasses?.find(({ title }) => title === 'Standard');
+  const [name, setName] = useState('');
+  const [cocktailImg, setCocktailImg] = useState<File | null>(null);
+  const [glass, setGlass] = useState<IGlass | null>(null);
+  const [categories, setCategories] = useState<string[]>([]);
+  const [description, setDescription] = useState('');
+  const [recipe, setRecipe] = useState('');
+  const [ingredients, setIngredients] = useState<IRecipeIngredient[]>([
+    {
+      name: '',
+      quantity: '',
+      measure: '',
+      garnish: false,
+      optional: false,
+    },
+  ]);
+
+  useEffect(() => {
+    if (initialGlass) setGlass(initialGlass);
+  }, [initialGlass]);
+
+  useEffect(() => {
+    // Перевірка локального сховища при монтуванні компонента
+    const storedData = localStorage.getItem('myData');
+    // console.log('storedData', storedData);
+    if (storedData) {
+      setDataLS(JSON.parse(storedData));
+    }
+
+    // Повертаємо колбек-функцію, яка виконається при демонтажі компонента
+    return () => {
+      // Збереження даних в локальному сховищі при демонтажі компонента
+      if (dataLS) {
+        localStorage.setItem('myData', JSON.stringify(dataLS));
+      }
+    };
+  }, [dataLS]); // Потрібно вказати data, щоб useEffect відслідковував його зміни
+
+  const handleChangeName: ChangeEventHandler<HTMLInputElement> = event => {
+    setName(event.target.value);
+  };
+
+  const handleImgChange: ChangeEventHandler<HTMLInputElement> = event => {
+    const file = event.target.files?.[0];
+    if (file) {
+      setCocktailImg(file); // or setCocktailImg(URL.createObjectURL(file));
+    }
+  };
+
+  const handleGlass = (glass: IGlass) => {
+    setGlass(glass);
+  };
+
+  const handleCategorySelect = (value: string) => {
+    if (categories.includes(value)) {
+      return;
+    }
+    setCategories(prevState => [...prevState, value]);
+  };
+
+  const handleDescription: ChangeEventHandler<HTMLTextAreaElement> = event => {
+    setDescription(event.target.value);
+  };
+
+  const handleRecipeSteps: ChangeEventHandler<HTMLTextAreaElement> = event => {
+    setRecipe(event.target.value);
   };
 
   const handleRecipeIngredient = ({
@@ -96,7 +276,7 @@ const CreateCocktail = () => {
     setIngredients(data);
   };
 
-  const addFields = () => {
+  const addIngredient = () => {
     let newIngredient: IRecipeIngredient = {
       name: '',
       quantity: '',
@@ -109,62 +289,78 @@ const CreateCocktail = () => {
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = event => {
     event.preventDefault();
-    console.log(ingredients);
+    // TODO: check all required fields and send message what missed
+    const data = {
+      name,
+      cocktailImg,
+      glass,
+      categories,
+      description,
+      recipe,
+      ingredients,
+    };
+    console.log('data all', data);
+    // reset();
+  };
+
+  const reset = () => {
+    setName('');
+    setCocktailImg(null);
+    setGlass(null);
+    setCategories([]);
+    setDescription('');
+    setRecipe('');
+    setIngredients([]);
   };
 
   return (
-    <FormStyled onSubmit={handleSubmit}>
-      <button type="button" onClick={addFields}>
-        Add More ingredient
-      </button>
+    <>
+      {glass && (
+        <FormStyled onSubmit={handleSubmit}>
+          <Box display="flex" alignItems="center" gridGap={2} mb={4}>
+            <Input
+              changeInput={handleChangeName}
+              placeholder="Create cocktail"
+              name="name"
+              value={name}
+            />
+            <InputFile
+              changeInput={handleImgChange}
+              name="cocktailImg"
+              id="file"
+            />
+          </Box>
 
-      {ingredients.map((_, index) => {
-        return (
-          <IngredientRecipe
-            key={index}
-            index={index}
-            onChange={handleRecipeIngredient}
+          <Glass onChoose={handleGlass} currentGlass={glass} />
+          <Categories
+            categories={categories}
+            handleCategorySelect={handleCategorySelect}
           />
-        );
-      })}
-
-      <Box display="flex" alignItems="center" gridGap={2} mb={4}>
-        <Input
-          changeInput={handleChangeCocktailName}
-          placeholder="Create cocktail"
-          name="cocktail"
-          value={cocktailName}
-        />
-        <InputFile changeInput={() => {}} name="ingredientImg" id="file" />
-      </Box>
-      <Box>Glass - should be pop-up</Box>
-      <Box display="flex" gridGap={4} alignItems="center" mb={4}>
-        <p>Category:</p>
-        {cocktailCategories && (
-          <Select
-            label={category}
-            options={cocktailCategories}
-            onChange={handleSelect}
+          <Textarea
+            changeInput={handleDescription}
+            placeholder="cocktail description"
+            value={description}
+            name="cocktailDescription"
           />
-        )}
-      </Box>
-      <Textarea
-        changeInput={handleDescription}
-        placeholder="cocktail description"
-        value={description}
-        name="cocktailDescription"
-      />
-
-      <Textarea
-        label="Preparation steps"
-        changeInput={handlePreparationSteps}
-        placeholder="1.Put some ice into a shaker"
-        value={preparation}
-        name="cocktailRecipe"
-      />
-      <FormButton>Save</FormButton>
-    </FormStyled>
+          <Textarea
+            label="Preparation steps"
+            changeInput={handleRecipeSteps}
+            placeholder="1.Put some ice into a shaker"
+            value={recipe}
+            name="cocktailRecipe"
+          />
+          <Ingredients
+            ingredients={ingredients}
+            handleRecipeIngredient={handleRecipeIngredient}
+            addIngredient={addIngredient}
+          />
+          <FormButton>Save</FormButton>
+        </FormStyled>
+      )}
+    </>
   );
 };
 
 export default CreateCocktail;
+
+ */

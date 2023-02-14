@@ -3,4 +3,5 @@ export type modalType =
   | 'select'
   | 'extraMenu'
   | 'settingsModal'
-  | 'context';
+  | 'context'
+  | 'glass';

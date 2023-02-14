@@ -7,6 +7,7 @@ import {
   setContextMenuIsOpen,
   setExtraMenuIsOpen,
   setMobileIsOpen,
+  setPopUpGlassIsOpen,
   setPopUpIsOpen,
   setSettingsMenuIsOpen,
 } from 'redux/modal/modalSlice';
@@ -51,6 +52,8 @@ function getAction(type: string) {
       return setSettingsMenuIsOpen(false);
     case 'context':
       return setContextMenuIsOpen(false);
+    case 'glass':
+      return setPopUpGlassIsOpen(false);
     default:
       return;
   }

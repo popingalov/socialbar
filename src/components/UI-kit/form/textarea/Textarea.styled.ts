@@ -17,7 +17,7 @@ export const TextareaStyled = styled.textarea`
   display: flex;
   border: none;
   width: 100%;
-  height: 160px;
+  height: 120px;
   font-size: ${({ theme }) => theme.fontSizes.s};
   font-family: inherit;
   color: ${({ theme }) => theme.colors.secondaryText};

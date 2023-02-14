@@ -17,7 +17,7 @@ export const manualApi = createApi({
       },
       providesTags: [TAGS_TYPES.categories],
     }),
-    getGlasses: builder.query<IGlass, void>({
+    getGlasses: builder.query<IGlass[], void>({
       query() {
         return {
           url: `${GLASSES_URL}`,

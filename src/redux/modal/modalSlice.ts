@@ -20,6 +20,9 @@ const modalStatusInitialState: IModalStatus = {
   popUpSearch: {
     isOpen: false,
   },
+  popUpGlass: {
+    isOpen: false,
+  },
 };
 
 const modalSlice = createSlice({
@@ -44,6 +47,9 @@ const modalSlice = createSlice({
     setPopUpSearchIsOpen(state, { payload }: PayloadAction<boolean>) {
       state.popUpSearch.isOpen = payload;
     },
+    setPopUpGlassIsOpen(state, { payload }: PayloadAction<boolean>) {
+      state.popUpGlass.isOpen = payload;
+    },
   },
 });
 
@@ -54,5 +60,6 @@ export const {
   setSettingsMenuIsOpen,
   setContextMenuIsOpen,
   setPopUpSearchIsOpen,
+  setPopUpGlassIsOpen,
 } = modalSlice.actions;
 export const modalReducer = modalSlice.reducer;

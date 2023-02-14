@@ -7,7 +7,7 @@ import { useGetWindowDimensions } from 'hooks/useGetWindowDimensions';
 interface IProps {
   children?: ReactNode;
   coordinates: ICoordinates;
-  type: 'select' | 'extraMenu' | 'context' | 'search';
+  type: 'select' | 'extraMenu' | 'context' | 'search' | 'glass';
 }
 
 const PopUp: React.FC<IProps> = ({

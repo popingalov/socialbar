@@ -17,4 +17,7 @@ export interface IModalStatus {
   popUpSearch: {
     isOpen: boolean;
   };
+  popUpGlass: {
+    isOpen: boolean;
+  };
 }

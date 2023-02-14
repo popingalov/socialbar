@@ -1,17 +1,17 @@
 import styled from 'styled-components';
 
 export const RecipeIngredient = styled.div`
+  margin-bottom: ${({ theme }) => theme.space[4]}px;
+  padding-top: ${({ theme }) => theme.space[3]}px;
+  padding-bottom: ${({ theme }) => theme.space[3]}px;
+  padding-left: ${({ theme }) => theme.space[3]}px;
+  padding-right: ${({ theme }) => theme.space[3]}px;
   position: relative;
   display: flex;
   flex-direction: column;
   gap: ${({ theme }) => theme.space[2]}px;
   border: 1px solid ${({ theme }) => theme.colors.accent};
   border-radius: 4px;
-  margin-bottom: ${({ theme }) => theme.space[4]}px;
-  padding-top: ${({ theme }) => theme.space[2]}px;
-  padding-bottom: ${({ theme }) => theme.space[2]}px;
-  padding-left: ${({ theme }) => theme.space[2]}px;
-  padding-right: ${({ theme }) => theme.space[4]}px;
 `;
 
 export const DeleteButton = styled.button`

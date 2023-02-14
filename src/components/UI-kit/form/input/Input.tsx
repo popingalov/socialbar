@@ -6,9 +6,16 @@ interface IProps {
   placeholder: string;
   name: string;
   value: string;
+  isRecipeIngredient?: boolean;
 }
 
-const Input: React.FC<IProps> = ({ changeInput, placeholder, name, value }) => {
+const Input: React.FC<IProps> = ({
+  changeInput,
+  placeholder,
+  name,
+  value,
+  isRecipeIngredient,
+}) => {
   return (
     <InputStyled
       onChange={changeInput}
@@ -16,6 +23,7 @@ const Input: React.FC<IProps> = ({ changeInput, placeholder, name, value }) => {
       type="text"
       name={name}
       value={value}
+      isRecipeIngredient={isRecipeIngredient || false}
       required
     />
   );
