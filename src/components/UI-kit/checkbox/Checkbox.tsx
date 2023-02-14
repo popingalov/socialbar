@@ -8,10 +8,11 @@ import {
 
 interface IProps {
   checked: boolean;
+  label?: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const Checkbox: React.FC<IProps> = ({ checked, ...props }) => {
+const Checkbox: React.FC<IProps> = ({ checked, label, ...props }) => {
   return (
     <CheckboxLabel>
       <HiddenCheckbox checked={checked} {...props} />

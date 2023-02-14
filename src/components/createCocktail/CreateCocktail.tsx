@@ -6,6 +6,7 @@ import Box from 'components/box';
 import Select from 'components/UI-kit/select';
 import { useGetCategoriesQuery } from 'redux/api/manualApi';
 import { useState } from 'react';
+import IngredientRecipe from 'components/UI-kit/form/ingredientRecipe';
 
 const CreateCocktail = () => {
   const { data } = useGetCategoriesQuery();
@@ -50,6 +51,7 @@ const CreateCocktail = () => {
         name="cocktailRecipe"
       />
 
+      <IngredientRecipe />
       <FormButton onClick={() => {}}>Save</FormButton>
     </FormStyled>
   );
