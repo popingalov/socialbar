@@ -1,11 +1,12 @@
 import { ChangeEventHandler } from 'react';
-import { TextareaStyled } from './Textarea.styled';
+import { Label, TextareaStyled } from './Textarea.styled';
 
 interface IProps {
   changeInput: ChangeEventHandler<HTMLTextAreaElement>;
   placeholder: string;
   name: string;
   value: string;
+  label?: string;
 }
 
 const Textarea: React.FC<IProps> = ({
@@ -13,17 +14,19 @@ const Textarea: React.FC<IProps> = ({
   placeholder,
   value,
   name,
+  label,
 }) => {
   return (
-    <TextareaStyled
-      onChange={changeInput}
-      placeholder={placeholder}
-      value={value}
-      name={name}
-      required
-    >
-      Textarea
-    </TextareaStyled>
+    <Label>
+      {label && <span>{label}</span>}
+      <TextareaStyled
+        onChange={changeInput}
+        placeholder={placeholder}
+        value={value}
+        name={name}
+        required
+      />
+    </Label>
   );
 };
 

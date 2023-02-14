@@ -1,7 +1,17 @@
 import styled from 'styled-components';
 
-export const TextareaStyled = styled.textarea`
+export const Label = styled.label`
+  display: block;
+  cursor: pointer;
   margin-bottom: ${({ theme }) => theme.space[4]}px;
+
+  span {
+    display: block;
+    margin-bottom: ${({ theme }) => theme.space[2]}px;
+  }
+`;
+
+export const TextareaStyled = styled.textarea`
   padding-top: ${({ theme }) => theme.space[1]}px;
   padding-bottom: ${({ theme }) => theme.space[1]}px;
   display: flex;
@@ -19,8 +29,4 @@ export const TextareaStyled = styled.textarea`
   ::placeholder {
     ${({ theme }) => theme.colors.secondaryText};
   }
-  /* :focus {
-    height: 200px;
-    outline: none;
-  } */
 `;
