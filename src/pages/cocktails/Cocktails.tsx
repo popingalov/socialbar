@@ -1,5 +1,3 @@
-import { pageAnimation } from 'constants/animations';
-import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import FollowUpMessage from 'components/UI-kit/followUpMessage';
 import CocktailBottomMessage from 'components/cocktailList/cocktailBottomMessage';
@@ -9,6 +7,7 @@ import { useGetFilteredCocktails } from 'hooks/useGetFilteredCocktails';
 import { ICocktail } from 'types/cocktail';
 import CocktailList from 'components/cocktailList';
 import { useGetCocktailTabStatus } from 'hooks/useGetCocktailTabStatus';
+import Section from 'components/section';
 
 const Cocktails = () => {
   const { t } = useTranslation();
@@ -26,7 +25,7 @@ const Cocktails = () => {
   }
 
   return (
-    <motion.section {...pageAnimation} transition={{ duration: 0.3 }}>
+    <Section>
       {isFetching && <Loader isLoading={isFetching} />}
       {filteredCocktails.length !== 0 && (
         <>
@@ -59,7 +58,7 @@ const Cocktails = () => {
           />
         </FollowUpMessage>
       )}
-    </motion.section>
+    </Section>
   );
 };
 

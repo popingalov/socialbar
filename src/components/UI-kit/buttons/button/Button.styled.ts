@@ -13,17 +13,15 @@ export const ButtonStyled = styled(motion.button)<props>`
   padding-left: ${p => p.theme.space[3]}px;
   padding-right: ${p => p.theme.space[3]}px;
   white-space: nowrap;
-  background-color: inherit;
+  background-color: transparent;
+
   color: ${p => p.theme.colors.lightText};
   font-size: ${p => p.theme.fontSizes.s};
   font-weight: ${p => p.theme.fontWeight.semiBold};
   font-family: inherit;
   cursor: pointer;
-  border-bottom: 3px solid
-    ${p =>
-      p.selected
-        ? p.theme.colors.accent
-        : p.theme.colors.accentBackgroundColor};
+  border-bottom: 2px solid
+    ${p => (p.selected ? p.theme.colors.accent : 'transparent')};
   border-radius: 4px;
 
   transition: color 250ms ${p => p.theme.transitionTiming},

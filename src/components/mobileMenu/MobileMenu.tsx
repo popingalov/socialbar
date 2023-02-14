@@ -14,9 +14,10 @@ import {
 } from './MobileMenu.styled';
 import Overlay from 'components/modal/overlay';
 import { userState } from 'redux/auth/authSelectors';
+import Box from 'components/box';
 
 const MobileMenu = () => {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const redirectToGoogleAuth = () => {
     window.open(
       `${BASE_URL}${GOOGLE_AUTH_URL}`,
@@ -48,7 +49,13 @@ const MobileMenu = () => {
             </MobileMenuButton>
           )}
         </MenuHeader>
-        <MobileNavigation />
+        <Box
+          flexGrow={1}
+          style={{ backdropFilter: 'blur(50px)' }}
+          backgroundColor="mainBackgroundColor"
+        >
+          <MobileNavigation />
+        </Box>
       </Menu>
     </Overlay>
   );

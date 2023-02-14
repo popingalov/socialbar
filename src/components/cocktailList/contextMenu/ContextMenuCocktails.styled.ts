@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Title = styled.p`
-  color: ${({ theme }) => theme.colors.accent};
+  color: ${({ theme }) => theme.colors.secondaryAccent};
   margin-bottom: ${({ theme }) => theme.space[2]}px;
   font-weight: ${({ theme }) => theme.fontWeight.semiBold};
   font-size: ${({ theme }) => theme.fontSizes.xs};

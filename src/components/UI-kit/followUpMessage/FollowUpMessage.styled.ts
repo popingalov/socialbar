@@ -9,6 +9,9 @@ export const Message = styled.div`
   border-bottom: 1px solid ${p => p.theme.colors.borderBottom};
   font-size: ${({ theme }) => theme.fontSizes.xs};
   background-color: ${({ theme }) => theme.colors.extraMessageBgColor};
+  backdrop-filter: blur(40px);
+  mix-blend-mode: multiply;
+  color: ${({ theme }) => theme.colors.modal};
   line-height: 1.5;
   letter-spacing: 0.028em;
   text-align: center;

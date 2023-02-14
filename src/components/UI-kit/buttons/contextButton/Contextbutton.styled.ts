@@ -17,8 +17,8 @@ export const ButtonStyled = styled.button`
   :hover,
   :focus,
   :focus:hover {
-    background-color: ${({ theme }) => theme.colors.hoverLinkBackgroundColor};
-    color: ${({ theme }) => theme.colors.lightText};
+    background-color: ${({ theme }) => theme.colors.activeLinkBackgroundColor};
+    /* color: ${({ theme }) => theme.colors.lightText}; */
     outline: none;
   }
 `;

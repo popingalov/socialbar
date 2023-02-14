@@ -1,10 +1,9 @@
 import CocktailDescription from 'components/cocktailsInfo';
-import { pageAnimation } from 'constants/animations';
-import { motion } from 'framer-motion';
 import { useParams } from 'react-router';
 import { useGetCocktailByIdQuery } from 'redux/api/cocktailApi';
 import Loader from 'components/loader';
 import IngredientList from 'components/cocktailsInfo/ingredientList';
+import Section from 'components/section';
 
 const CocktailsDetails = () => {
   const { cocktailId } = useParams();
@@ -21,14 +20,14 @@ const CocktailsDetails = () => {
   }
 
   return (
-    <motion.section {...pageAnimation} transition={{ duration: 0.3 }}>
+    <Section>
       {cocktail && cocktailId && (
         <>
           <CocktailDescription cocktail={cocktail} cocktailId={cocktailId} />
           <IngredientList ingredients={cocktail.ingredients} />
         </>
       )}
-    </motion.section>
+    </Section>
   );
 };
 

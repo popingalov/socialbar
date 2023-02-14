@@ -1,13 +1,12 @@
 import { useParams } from 'react-router';
 import IngredientInfo from 'components/ingredientsInfo/IngredientInfo';
-import { motion } from 'framer-motion';
-import { pageAnimation } from 'constants/animations';
 import FollowUpMessage from 'components/UI-kit/followUpMessage';
 import CocktailBottomMessage from 'components/cocktailList/cocktailBottomMessage';
 import Loader from 'components/loader';
 import { useGetIngredientByIdQuery } from 'redux/api/ingredientApi';
 import { ICocktail } from 'types/cocktail';
 import IngredientCocktails from 'components/ingredientsInfo/ingredientCocktails';
+import Section from 'components/section';
 
 const IngredientDetails: React.FC = () => {
   const { ingredientId } = useParams();
@@ -19,7 +18,7 @@ const IngredientDetails: React.FC = () => {
 
   const { title, cocktails } = ingredient;
   return (
-    <motion.section {...pageAnimation} transition={{ duration: 0.3 }}>
+    <Section>
       {ingredient && (
         <>
           <IngredientInfo ingredient={ingredient} />
@@ -32,7 +31,7 @@ const IngredientDetails: React.FC = () => {
           </FollowUpMessage>
         </>
       )}
-    </motion.section>
+    </Section>
   );
 };
 

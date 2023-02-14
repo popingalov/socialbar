@@ -10,7 +10,6 @@ export const NewCocktail: React.FC = React.lazy(
 export const NewIngredient: React.FC = React.lazy(
   () => import('pages/newIngredient'),
 );
-export const Home: React.FC = React.lazy(() => import('pages/home'));
 export const IngredientDetails: React.FC = React.lazy(
   () => import('pages/ingredientDetails'),
 );

@@ -41,20 +41,21 @@ export const SelectHeader = styled.div`
   }
 `;
 export const SelectCurrent = styled.span`
-  font-size: 15px;
-  font-family: 'Montserrat', sans- serif;
-  color: #696969;
   padding: 0;
+  font-size: 15px;
+  font-family: inherit;
+  font-size: ${({ theme }) => theme.fontSizes.s};
+  color: ${({ theme }) => theme.colors.secondaryText};
   background: transparent;
   display: flex;
 `;
 export const ImgArrow = styled.img`
-display: flex
+  display: flex;
   width: 7px;
   height: 7px;
   margin: auto 5px auto auto;
-  
 `;
+
 export const SelectIcon = styled.div`
   display: flex;
   justify-content: center;
@@ -65,26 +66,29 @@ export const SelectIcon = styled.div`
 `;
 export const SelectBody = styled.ul`
   position: absolute;
-  width: 130px;
+  min-width: 130px;
   left: 0;
   top: 0;
   border: none;
   border-top: 0;
-  background: #ffffff;
-  padding: 10px 5px;
-  border-radius: 2px;
+  background: ${({ theme }) => theme.colors.modal};
+  /* padding: ${({ theme }) => theme.space[2]}px; */
   overflow: hidden;
+  border-radius: 3px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
 `;
 export const SelectItem = styled.li`
   position: relative;
-  padding: 0;
-  font-family: 'Montserrat', sans- serif;
-  color: #696969;
-  padding: 0;
-    cursor: pointer;
+  font-family: inherit;
+  color: ${({ theme }) => theme.colors.mainText};
+  padding: ${({ theme }) => theme.space[2]}px;
+  cursor: pointer;
+  /* 
   :not(:last-child) {
     margin-bottom: 20px;
-  }
+  } */
+
   :before {
     content: '';
     position: absolute;
@@ -92,9 +96,9 @@ export const SelectItem = styled.li`
     left: 62%;
     width: 1px;
     height: 1px;
-    background: transparent
+    background: transparent;
     transition: all 2s ease;
-     }
+  }
   :hover:before {
     transition: all 1s ease;
     background: #3aafa9;
@@ -103,5 +107,4 @@ export const SelectItem = styled.li`
     -ms-transform: scale(170, 50);
     transform: scale(170, 50);
   }
-
 `;
