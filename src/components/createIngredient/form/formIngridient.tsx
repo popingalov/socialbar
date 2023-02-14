@@ -42,8 +42,9 @@ const FormIngridient: React.FC<IProps> = ({
         <ContainerIngridientName>
           <InputIngridientName
             onChange={changeInput}
-            placeholder={ingredientNamePlaceholder}
-            // value={ingredientName}
+            placeholder="Ingredient name"
+            value={ingredientName}
+
             type="text"
             name="ingredientName"
             src={cameraSvg}
@@ -58,6 +59,7 @@ const FormIngridient: React.FC<IProps> = ({
               type="file"
               name="ingredientImg"
               id="file"
+              accept=".png, .jpg, .jpeg, .gif, .web"
             ></ButtonAddPhoto>
             <ImageButton src={cameraSvg} alt="icon person" />
           </LabelButtonAddPhoto>
