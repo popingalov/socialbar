@@ -1,18 +1,17 @@
-import { MouseEventHandler } from 'react';
+import { FormEventHandler } from 'react';
 import { FormButtonStyled } from './FormButton.styled';
 
 interface IProps {
-  type?: 'submit';
-  onClick?: MouseEventHandler<HTMLButtonElement>;
+  onSubmit?: FormEventHandler<HTMLButtonElement>;
   children?: React.ReactNode;
 }
 
-const FormButton: React.FC<IProps> = ({
-  type = 'submit',
-  onClick,
-  children,
-}) => {
-  return <FormButtonStyled>{children}</FormButtonStyled>;
+const FormButton: React.FC<IProps> = ({ onSubmit, children }) => {
+  return (
+    <FormButtonStyled type="submit" onSubmit={onSubmit}>
+      {children}
+    </FormButtonStyled>
+  );
 };
 
 export default FormButton;

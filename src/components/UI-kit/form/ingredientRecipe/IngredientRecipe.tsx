@@ -6,49 +6,72 @@ import Input from '../input';
 import { DeleteButton, RecipeIngredient } from './IngredientRecipe.styled';
 
 interface IProps {
-  state: string;
+  index: number;
   onChange?: ({
     name,
     value,
     checked,
+    index,
   }: {
     name: string;
     value: string;
     checked: boolean;
+    index: number;
   }) => void;
 }
 
-const IngredientRecipe: React.FC<IProps> = ({ state, onChange }) => {
+const IngredientRecipe: React.FC<IProps> = ({ onChange, index }) => {
   const [name, setName] = useState('');
   const [quantity, setQuantity] = useState('');
   const [garnish, setGarnish] = useState(false);
   const [optional, setOptional] = useState(false);
+  const [measure, setMeasure] = useState('');
 
   const handleIngredientName: ChangeEventHandler<HTMLInputElement> = event => {
     setName(event.target.value);
     if (onChange) {
-      onChange({ name: 'name', value: event.target.value, checked: false });
+      onChange({
+        name: 'name',
+        value: event.target.value,
+        checked: false,
+        index,
+      });
     }
   };
 
   const handleQuantity: ChangeEventHandler<HTMLInputElement> = event => {
     setQuantity(event.target.value);
     if (onChange) {
-      onChange({ name: 'measure', value: event.target.value, checked: false });
+      onChange({
+        name: 'measure',
+        value: event.target.value,
+        checked: false,
+        index,
+      });
     }
   };
 
   const handleGarnish = (event: ChangeEvent<HTMLInputElement>) => {
     setGarnish(event.target.checked);
     if (onChange) {
-      onChange({ name: 'garnish', checked: event.target.checked, value: '' });
+      onChange({
+        name: 'garnish',
+        checked: event.target.checked,
+        value: '',
+        index,
+      });
     }
   };
 
   const handleOptional = (event: ChangeEvent<HTMLInputElement>) => {
     setOptional(event.target.checked);
     if (onChange) {
-      onChange({ name: 'optional', checked: event.target.checked, value: '' });
+      onChange({
+        name: 'optional',
+        checked: event.target.checked,
+        value: '',
+        index,
+      });
     }
   };
 
@@ -60,14 +83,14 @@ const IngredientRecipe: React.FC<IProps> = ({ state, onChange }) => {
       <Input
         placeholder="Name"
         changeInput={handleIngredientName}
-        name="ingredientName"
+        name="name"
         value={name}
       />
       <Box display="flex" alignItems="center" justifyItems="center" gridGap={2}>
         <Input
           placeholder=""
           changeInput={handleQuantity}
-          name="measure"
+          name="quantity"
           value={quantity}
         />
         <Box

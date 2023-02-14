@@ -5,18 +5,53 @@ import FormButton from 'components/UI-kit/buttons/formButton';
 import Box from 'components/box';
 import Select from 'components/UI-kit/select';
 import { useGetCategoriesQuery } from 'redux/api/manualApi';
-import { ChangeEventHandler, useState } from 'react';
+import {
+  ChangeEventHandler,
+  FormEventHandler,
+  useEffect,
+  useState,
+} from 'react';
 import IngredientRecipe from 'components/UI-kit/form/ingredientRecipe';
 import InputFile from 'components/UI-kit/form/inputFile';
+import { IRecipeIngredient } from 'types/recireIngredient';
 
 const CreateCocktail = () => {
+  const [dataLS, setDataLS] = useState(null); // TODO: only for template LocalStorage
+
   const { data } = useGetCategoriesQuery();
   const cocktailCategories = data?.cocktails.map(({ title }) => title);
   const [cocktailName, setCocktailName] = useState('');
+
+  const [categories, setCategories] = useState([]); //TODO: array of categories
   const [category, setCategory] = useState('Nothing choosed');
   const [description, setDescription] = useState('');
   const [preparation, setPreparation] = useState('');
-  const [recipeIngredient, setRecipeIngredient] = useState('');
+
+  const [ingredients, setIngredients] = useState<IRecipeIngredient[]>([
+    {
+      name: '',
+      quantity: '',
+      measure: '',
+      garnish: false,
+      optional: false,
+    },
+  ]);
+
+  useEffect(() => {
+    // Перевірка локального сховища при монтуванні компонента
+    const storedData = localStorage.getItem('myData');
+    if (storedData) {
+      setDataLS(JSON.parse(storedData));
+    }
+
+    // Повертаємо колбек-функцію, яка виконається при демонтажі компонента
+    return () => {
+      // Збереження даних в локальному сховищі при демонтажі компонента
+      if (dataLS) {
+        localStorage.setItem('myData', JSON.stringify(dataLS));
+      }
+    };
+  }, [dataLS]); // Потрібно вказати data, щоб useEffect відслідковував його зміни
 
   const handleChangeCocktailName: ChangeEventHandler<
     HTMLInputElement
@@ -39,20 +74,60 @@ const CreateCocktail = () => {
   };
 
   const handleRecipeIngredient = ({
+    index,
     name,
     value,
     checked,
   }: {
+    index: number;
     name: string;
     value: string;
     checked: boolean;
   }) => {
-    console.log(name, value, checked);
-    // setRecipeIngredient;
+    console.log('index', index);
+    console.log('value', value);
+    console.log('checked', checked);
+
+    let data: IRecipeIngredient[] = [...ingredients];
+
+    data[index][name] = value ? value : checked;
+    console.log('data[index][name]', data[index][name]);
+
+    setIngredients(data);
+  };
+
+  const addFields = () => {
+    let newIngredient: IRecipeIngredient = {
+      name: '',
+      quantity: '',
+      measure: '',
+      garnish: false,
+      optional: false,
+    };
+    setIngredients([...ingredients, newIngredient]);
+  };
+
+  const handleSubmit: FormEventHandler<HTMLFormElement> = event => {
+    event.preventDefault();
+    console.log(ingredients);
   };
 
   return (
-    <FormStyled>
+    <FormStyled onSubmit={handleSubmit}>
+      <button type="button" onClick={addFields}>
+        Add More ingredient
+      </button>
+
+      {ingredients.map((_, index) => {
+        return (
+          <IngredientRecipe
+            key={index}
+            index={index}
+            onChange={handleRecipeIngredient}
+          />
+        );
+      })}
+
       <Box display="flex" alignItems="center" gridGap={2} mb={4}>
         <Input
           changeInput={handleChangeCocktailName}
@@ -87,12 +162,7 @@ const CreateCocktail = () => {
         value={preparation}
         name="cocktailRecipe"
       />
-
-      <IngredientRecipe
-        state={recipeIngredient}
-        onChange={handleRecipeIngredient}
-      />
-      <FormButton onClick={() => {}}>Save</FormButton>
+      <FormButton>Save</FormButton>
     </FormStyled>
   );
 };
