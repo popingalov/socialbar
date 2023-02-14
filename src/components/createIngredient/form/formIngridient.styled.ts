@@ -4,19 +4,24 @@ export const Form = styled.form`
   text-transform: capitalize;
 `;
 export const ContainerIngridientName = styled.div`
-  margin-bottom: 20px;
+  margin-bottom: ${({ theme }) => theme.space[4]}px;
   display: flex;
 `;
 export const InputIngridientName = styled.input`
+  margin-right: ${({ theme }) => theme.space[3]}px;
+  padding-top: ${({ theme }) => theme.space[2]}px;
+  padding-bottom: ${({ theme }) => theme.space[2]}px;
   background: transparent;
   border: none;
-  border-bottom: 2px solid #a9a9a9;
-  font-size: 15px;
-  font-family: 'Montserrat', sans- serif;
-  padding-bottom: 5px;
-  margin-right: 20px;
+  border-bottom: 2px solid ${({ theme }) => theme.colors.borderBottom};
+  font-size: ${({ theme }) => theme.fontSizes.s};
+  font-family: inherit;
   width: 100%;
   outline: none;
+
+  ::placeholder {
+    ${({ theme }) => theme.colors.secondaryText};
+  }
 `;
 export const LabelButtonAddPhoto = styled.label`
   cursor: pointer;
@@ -36,28 +41,36 @@ export const ImageButton = styled.img`
   height: 20px;
 `;
 export const ContainerCategory = styled.div`
-  margin-top: 15px;
   display: flex;
-  margin-bottom: 20px;
+  margin-bottom: ${({ theme }) => theme.space[4]}px;
 `;
 export const Category = styled.p`
-  font-size: 15px;
-  font-family: 'Montserrat', sans- serif;
-  margin-right: 15px;
-  color: #696969;
+  margin-right: ${({ theme }) => theme.space[3]}px;
+  font-weight: ${({ theme }) => theme.fontWeight.semiBold};
+  font-size: ${({ theme }) => theme.fontSizes.s};
+  font-family: inherit;
+  color: ${({ theme }) => theme.colors.mainText};
 `;
+
 export const IngridientDescription = styled.textarea`
-  margin-bottom: 20px;
+  margin-bottom: ${({ theme }) => theme.space[4]}px;
+  padding-top: ${({ theme }) => theme.space[1]}px;
+  padding-bottom: ${({ theme }) => theme.space[1]}px;
   display: flex;
   border: none;
   width: 100%;
-  height: 60px;
-  font-size: 15px;
-  font-family: 'Montserrat', sans- serif;
-  color: #696969;
-  background: #dcdcdc;
+  height: 200px;
+  font-size: ${({ theme }) => theme.fontSizes.s};
+  font-family: inherit;
+  color: ${({ theme }) => theme.colors.secondaryText};
+  background: ${({ theme }) => theme.colors.modal};
   overflow: hidden;
   outline: none;
+  border-radius: 4px;
+
+  ::placeholder {
+    ${({ theme }) => theme.colors.secondaryText};
+  }
   /* :focus {
     height: 200px;
     outline: none;
@@ -65,13 +78,17 @@ export const IngridientDescription = styled.textarea`
 `;
 export const FormButton = styled.button`
   width: 100%;
-  padding: 10px;
+  padding-top: ${({ theme }) => theme.space[2]}px;
+  padding-bottom: ${({ theme }) => theme.space[2]}px;
   display: flex;
-  text-transform: uppercase;
+  text-transform: capitalize;
   justify-content: center;
   border: none;
-  font-size: 15px;
-  font-family: 'Montserrat', sans- serif;
-  color: #ffffff;
-  background: #3aafa9;
+  font-family: inherit;
+  font-size: ${({ theme }) => theme.fontSizes.s};
+  font-weight: ${({ theme }) => theme.fontWeight.semiBold};
+  color: ${({ theme }) => theme.colors.lightText};
+  background: ${({ theme }) => theme.colors.accent};
+  cursor: pointer;
+  border-radius: 4px;
 `;
