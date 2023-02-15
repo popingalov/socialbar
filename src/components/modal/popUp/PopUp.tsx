@@ -7,13 +7,15 @@ import { useGetWindowDimensions } from 'hooks/useGetWindowDimensions';
 interface IProps {
   children?: ReactNode;
   coordinates: ICoordinates;
-  type: 'select' | 'extraMenu' | 'context' | 'search';
+  type: 'select' | 'extraMenu' | 'context' | 'search' | 'glass';
+  onClose?: () => void;
 }
 
 const PopUp: React.FC<IProps> = ({
   children,
   type,
   coordinates: { top, left, right },
+  onClose,
 }) => {
   const windowDimensions = useGetWindowDimensions();
   const popUpContext = useRef<HTMLDivElement>(null);
@@ -39,7 +41,7 @@ const PopUp: React.FC<IProps> = ({
   return (
     <>
       {type !== 'search' ? (
-        <Overlay modalType={type}>
+        <Overlay modalType={type} onClose={onClose}>
           <Modal
             windowdimensions={windowDimensions}
             modaldimensions={modalDimensions}

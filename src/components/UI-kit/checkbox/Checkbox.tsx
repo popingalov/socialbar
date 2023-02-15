@@ -8,14 +8,20 @@ import {
 
 interface IProps {
   checked: boolean;
+  name?: string;
   label?: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const Checkbox: React.FC<IProps> = ({ checked, label, ...props }) => {
+const Checkbox: React.FC<IProps> = ({
+  checked,
+  label,
+  name = 'checkbox',
+  ...props
+}) => {
   return (
     <CheckboxLabel hasLabel={!!label}>
-      <HiddenCheckbox checked={checked} {...props} />
+      <HiddenCheckbox name={name} checked={checked} {...props} />
       <StyledCheckbox whileTap={{ scale: 0.9 }} checked={checked}>
         <Icon viewBox="2 2 20 20">
           <polyline points="20 6 9 17 4 12" />

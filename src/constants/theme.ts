@@ -22,6 +22,7 @@ export const theme = {
 
     white: '#ffffff',
     extraMessageBgColor: 'rgba(48, 48, 48, 0.5)', // 'rgba(0, 0, 0, 0.04)'
+    secondaryFormButton: 'rgba(48, 48, 48, 0.1)',
     placeholder: 'rgba(235, 235, 235, 0.8)',
   },
 

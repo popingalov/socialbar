@@ -17,3 +17,6 @@ export const selectContextMenuStatus = (state: RootState) =>
 
 export const selectPopUpSearchStatus = (state: RootState) =>
   state.modalStatus.popUpSearch.isOpen;
+
+export const selectPopUpGlassStatus = (state: RootState) =>
+  state.modalStatus.popUpGlass.isOpen;

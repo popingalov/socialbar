@@ -18,6 +18,7 @@ const InputFile: React.FC<IProps> = ({ changeInput, name, id }) => {
         type="file"
         name={name}
         id={id}
+        accept=".png, .jpg, .jpeg, .gif, .web"
       />
       <FaCamera color={theme.colors.secondaryText} />
     </LabelAddPhoto>

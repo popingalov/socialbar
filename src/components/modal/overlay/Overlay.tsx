@@ -7,6 +7,7 @@ import {
   setContextMenuIsOpen,
   setExtraMenuIsOpen,
   setMobileIsOpen,
+  setPopUpGlassIsOpen,
   setPopUpIsOpen,
   setSettingsMenuIsOpen,
 } from 'redux/modal/modalSlice';
@@ -17,13 +18,22 @@ const modalRoot: HTMLDivElement = document.querySelector('#modal')!;
 interface IProps {
   children: ReactNode;
   modalType: modalType;
+  onClose?: () => void;
 }
 
-const Overlay: React.FC<IProps> = ({ children, modalType }) => {
+const Overlay: React.FC<IProps> = ({ children, modalType, onClose }) => {
   const dispatch = useDispatch();
   const action = getAction(modalType);
+
   const handleBackdrop = (event: React.MouseEvent<HTMLDivElement>) => {
-    if (event.target === event.currentTarget && action) dispatch(action);
+    if (event.target === event.currentTarget && onClose) {
+      onClose();
+      return;
+    }
+
+    if (event.target === event.currentTarget && action && !onClose) {
+      dispatch(action);
+    }
   };
 
   return createPortal(
@@ -51,6 +61,8 @@ function getAction(type: string) {
       return setSettingsMenuIsOpen(false);
     case 'context':
       return setContextMenuIsOpen(false);
+    case 'glass':
+      return setPopUpGlassIsOpen(false);
     default:
       return;
   }
