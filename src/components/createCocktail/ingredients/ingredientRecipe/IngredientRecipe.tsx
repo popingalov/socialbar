@@ -1,24 +1,47 @@
 import Box from 'components/box';
 import Checkbox from 'components/UI-kit/checkbox';
 import Input from 'components/UI-kit/form/input';
-import SecondaryButton from 'components/UI-kit/form/secondaryButton';
+import SecondaryButton from 'components/UI-kit/buttons/secondaryButton';
 import { ChangeEventHandler, useState } from 'react';
 import { RxCross2 } from 'react-icons/rx';
 import { recipeIngredientHandlerType } from 'types/handleRecipeIngredient';
 import { IIngredientRecipeData } from 'types/ingredientRecipeData';
-import { DeleteButton, RecipeIngredient } from './IngredientRecipe.styled';
+import {
+  DeleteButton,
+  Label,
+  MeasureBox,
+  RecipeIngredient,
+} from './IngredientRecipe.styled';
+import FormSelect from 'components/UI-kit/form/formSelect';
+import { measures } from 'constants/measures';
+import Measures from './measure/Measures';
+import { ingredientRecipeSelectStatus } from 'types/ingredientRecipeSelectStatus';
 
 interface IProps {
-  index: number;
+  id: string;
   onChange: recipeIngredientHandlerType;
+  deleteIngredient: (id: string) => void;
+  ingredientsSelectStatus: ingredientRecipeSelectStatus[];
+  toggleSelect: ({ type, status }: ingredientRecipeSelectStatus) => void;
 }
 
-const IngredientRecipe: React.FC<IProps> = ({ onChange, index }) => {
+const IngredientRecipe: React.FC<IProps> = ({
+  onChange,
+  id,
+  deleteIngredient,
+  ingredientsSelectStatus,
+  toggleSelect,
+}) => {
   const [name, setName] = useState('');
-  const [quantity, setQuantity] = useState('');
+  const [measure, setMeasure] = useState('');
   const [garnish, setGarnish] = useState(false);
   const [optional, setOptional] = useState(false);
-  // const [measure, setMeasure] = useState('');
+  const [measureType, setMeasureType] = useState('ml');
+
+  const measureTypeSelect = ingredientsSelectStatus.find(
+    ({ type }) => type === 'measureType',
+  );
+  const measureTypeSelectStatus = measureTypeSelect?.status || false;
 
   const handleFieldChange: ChangeEventHandler<HTMLInputElement> = event => {
     const { value, name, checked } = event.target;
@@ -26,7 +49,7 @@ const IngredientRecipe: React.FC<IProps> = ({ onChange, index }) => {
       name,
       value: null,
       checked: null,
-      index,
+      id,
     };
 
     switch (name) {
@@ -34,8 +57,8 @@ const IngredientRecipe: React.FC<IProps> = ({ onChange, index }) => {
         setName(value);
         ingredientData.value = value;
         break;
-      case 'quantity':
-        setQuantity(value);
+      case 'measure':
+        setMeasure(value);
         ingredientData.value = value;
         break;
       case 'garnish':
@@ -53,35 +76,60 @@ const IngredientRecipe: React.FC<IProps> = ({ onChange, index }) => {
     onChange(ingredientData);
   };
 
+  const handleSelect = (type: string, value: string) => {
+    if (type === 'measureType') setMeasureType(value);
+
+    const ingredientData: IIngredientRecipeData = {
+      name: type,
+      value: value,
+      checked: null,
+      id,
+    };
+
+    onChange(ingredientData);
+  };
+
+  const openSelectModal = (type: string) => {
+    toggleSelect({ type, status: true });
+  };
+
+  const closeSelectModal = (type: string) => {
+    toggleSelect({ type, status: false });
+  };
+
   return (
     <RecipeIngredient>
-      <DeleteButton onClick={() => {}}>
+      <DeleteButton
+        type="button"
+        onClick={() => {
+          deleteIngredient(id);
+        }}
+      >
         <RxCross2 aria-label="delete" />
       </DeleteButton>
-      <Input
-        placeholder="Name"
-        changeInput={handleFieldChange}
-        name="name"
-        value={name}
-        isRecipeIngredient={true}
-      />
-
-      <Box
-        display="flex"
-        alignItems="center"
-        justifyItems="center"
-        gridGap={2}
-        maxWidth="80px"
-      >
+      <Label>
         <Input
-          placeholder=""
+          placeholder="Name"
           changeInput={handleFieldChange}
-          name="quantity"
-          value={quantity}
+          name="name"
+          value={name}
           isRecipeIngredient={true}
         />
-        <span>ml</span>
-      </Box>
+      </Label>
+      <Measures
+        handleFieldChange={handleFieldChange}
+        handleSelect={handleSelect}
+        measure={measure}
+        measureTypes={measures}
+        measureType={measureType}
+        measureSelectIsOpen={measureTypeSelectStatus}
+        openSelect={() => {
+          openSelectModal('measureType');
+        }}
+        closeSelect={() => {
+          closeSelectModal('measureType');
+        }}
+      />
       <Box display="flex" gridGap={3}>
         <Checkbox
           name="garnish"

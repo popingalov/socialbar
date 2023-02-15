@@ -3,11 +3,11 @@ import Input from 'components/UI-kit/form/input';
 import Textarea from 'components/UI-kit/form/textarea/Textarea';
 import FormButton from 'components/UI-kit/buttons/formButton';
 import Box from 'components/box';
-import FormSelect from 'components/UI-kit/form/formSelect';
 import { useGetGlassesQuery } from 'redux/api/manualApi';
 import {
   ChangeEventHandler,
   FormEventHandler,
+  MouseEventHandler,
   useEffect,
   useState,
 } from 'react';
@@ -19,6 +19,9 @@ import Categories from './categories/Categories';
 import Ingredients from './ingredients';
 import { recipeIngredientHandlerType } from 'types/handleRecipeIngredient';
 import { initialRecipeIngredient } from 'constants/initialRecipeIngredient';
+import uuid from 'react-uuid';
+import { ingredientRecipeSelectStatus } from 'types/ingredientRecipeSelectStatus';
+import { initialIngredientRecipeSelectStatus } from 'constants/ingredientRecipeSelectStatus';
 
 const CreateCocktail = () => {
   const [dataLS, setDataLS] = useState(null); // TODO: only for template LocalStorage
@@ -31,9 +34,15 @@ const CreateCocktail = () => {
   const [categories, setCategories] = useState<string[]>([]);
   const [description, setDescription] = useState('');
   const [recipe, setRecipe] = useState('');
+  const firstIngredient = { ...initialRecipeIngredient, id: uuid() };
   const [ingredients, setIngredients] = useState<IRecipeIngredient[]>([
-    initialRecipeIngredient,
+    firstIngredient,
   ]);
+
+  const [categoriesSelectIsOpen, setCategoriesSelectIsOpen] = useState(false);
+  const [ingredientsSelectIsOpen, setIngredientsSelectIsOpen] = useState<
+    ingredientRecipeSelectStatus[]
+  >(initialIngredientRecipeSelectStatus);
 
   useEffect(() => {
     if (initialGlass) setGlass(initialGlass);
@@ -71,7 +80,7 @@ const CreateCocktail = () => {
     setGlass(glass);
   };
 
-  const handleCategorySelect = (value: string) => {
+  const handleCategorySelect = (type: string, value: string) => {
     if (categories.includes(value)) {
       return;
     }
@@ -87,19 +96,30 @@ const CreateCocktail = () => {
   };
 
   const handleRecipeIngredient: recipeIngredientHandlerType = ({
-    index,
+    id,
     name,
     value,
     checked,
   }) => {
-    let data = [...ingredients];
-    data[index][name] = value ? value : checked;
-
-    setIngredients(data);
+    setIngredients(prevState =>
+      prevState.map(ingredient => {
+        if (ingredient.id === id) {
+          ingredient[name] = value ? value : checked;
+        }
+        return ingredient;
+      }),
+    );
   };
 
   const addIngredient = () => {
-    setIngredients([...ingredients, initialRecipeIngredient]);
+    let newIngredient = { ...initialRecipeIngredient, id: uuid() };
+    setIngredients([...ingredients, newIngredient]);
+  };
+
+  const deleteIngredient = (id: string) => {
+    setIngredients(prevState =>
+      prevState.filter(ingredient => ingredient.id !== id),
+    );
   };
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = event => {
@@ -121,17 +141,41 @@ const CreateCocktail = () => {
   const reset = () => {
     setName('');
     setCocktailImg(null);
-    setGlass(null);
+    if (initialGlass) setGlass(initialGlass);
     setCategories([]);
     setDescription('');
     setRecipe('');
-    setIngredients([]);
+    setIngredients([firstIngredient]);
+  };
+
+  // TODO: add backdrop close select modal for ingredients selects
+  const handleClickBackdrop: MouseEventHandler<HTMLFormElement> = event => {
+    const select = event.target as Element;
+    const isOutsideCategorySelect =
+      select.closest('div')?.getAttribute('name') !== 'categorySelect';
+    if (categoriesSelectIsOpen && isOutsideCategorySelect) {
+      setCategoriesSelectIsOpen(false);
+    }
+  };
+
+  const handleIngredientSelect = ({
+    type,
+    status,
+  }: ingredientRecipeSelectStatus) => {
+    setIngredientsSelectIsOpen(preState =>
+      preState.map(select => {
+        if (select.type === type) {
+          select.status = status;
+        }
+        return select;
+      }),
+    );
   };
 
   return (
     <>
       {glass && (
-        <FormStyled onSubmit={handleSubmit}>
+        <FormStyled onClick={handleClickBackdrop} onSubmit={handleSubmit}>
           <Box display="flex" alignItems="center" gridGap={2} mb={4}>
             <Input
               changeInput={handleChangeName}
@@ -148,6 +192,13 @@ const CreateCocktail = () => {
 
           <Glass onChoose={handleGlass} currentGlass={glass} />
           <Categories
+            categoriesSelectIsOpen={categoriesSelectIsOpen}
+            openSelect={() => {
+              setCategoriesSelectIsOpen(true);
+            }}
+            closeSelect={() => {
+              setCategoriesSelectIsOpen(false);
+            }}
             categories={categories}
             handleCategorySelect={handleCategorySelect}
           />
@@ -168,6 +219,9 @@ const CreateCocktail = () => {
             ingredients={ingredients}
             handleRecipeIngredient={handleRecipeIngredient}
             addIngredient={addIngredient}
+            deleteIngredient={deleteIngredient}
+            ingredientsSelectStatus={ingredientsSelectIsOpen}
+            toggleSelect={handleIngredientSelect}
           />
           <FormButton>Save</FormButton>
         </FormStyled>

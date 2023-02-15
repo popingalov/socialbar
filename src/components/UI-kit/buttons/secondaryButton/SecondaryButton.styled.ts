@@ -10,11 +10,12 @@ export const ButtonStyled = styled(motion.button)`
   padding-left: ${p => p.theme.space[3]}px;
   padding-right: ${p => p.theme.space[3]}px;
   white-space: nowrap;
-  width: 200px;
-  background-color: ${({ theme }) => theme.colors.extraMessageBgColor};
-  color: ${p => p.theme.colors.mainText};
-  font-size: ${p => p.theme.fontSizes.s};
-  font-weight: ${p => p.theme.fontWeight.semiBold};
+  width: 130px;
+  overflow-x: hidden;
+  background-color: ${({ theme }) => theme.colors.secondaryFormButton};
+  color: ${p => p.theme.colors.secondaryText};
+  font-size: ${p => p.theme.fontSizes.xs};
+  font-weight: ${p => p.theme.fontWeight.medium};
   font-family: inherit;
   cursor: pointer;
   border-radius: 4px;
@@ -25,7 +26,7 @@ export const ButtonStyled = styled(motion.button)`
 
   &:hover,
   &:focus {
-    background-color: ${p => p.theme.colors.accent};
-    border-color: ${p => p.theme.colors.accent};
+    background-color: ${p => p.theme.colors.hoverLinkBackgroundColor};
+    border-color: ${p => p.theme.colors.hoverLinkBackgroundColor};
   }
 `;

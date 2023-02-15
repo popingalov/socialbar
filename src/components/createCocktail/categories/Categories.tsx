@@ -4,10 +4,19 @@ import { useGetCategoriesQuery } from 'redux/api/manualApi';
 
 interface IProps {
   categories: string[];
-  handleCategorySelect: (value: string) => void;
+  handleCategorySelect: (type: string, value: string) => void;
+  categoriesSelectIsOpen: boolean;
+  openSelect: () => void;
+  closeSelect: () => void;
 }
 
-const Categories: React.FC<IProps> = ({ categories, handleCategorySelect }) => {
+const Categories: React.FC<IProps> = ({
+  categories,
+  handleCategorySelect,
+  categoriesSelectIsOpen,
+  openSelect,
+  closeSelect,
+}) => {
   const { data } = useGetCategoriesQuery();
   const cocktailCategories = data?.cocktails.map(({ title }) => title);
 
@@ -19,6 +28,10 @@ const Categories: React.FC<IProps> = ({ categories, handleCategorySelect }) => {
 
       {cocktailCategories && (
         <FormSelect
+          name="category"
+          selectIsOpen={categoriesSelectIsOpen}
+          openSelect={openSelect}
+          closeSelect={closeSelect}
           options={cocktailCategories}
           onChange={handleCategorySelect}
         />

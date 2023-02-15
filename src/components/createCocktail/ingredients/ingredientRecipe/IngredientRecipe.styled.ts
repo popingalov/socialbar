@@ -14,12 +14,16 @@ export const RecipeIngredient = styled.div`
   border-radius: 4px;
 `;
 
+export const Label = styled.label`
+  width: 95%;
+`;
+
 export const DeleteButton = styled.button`
   position: absolute;
-  top: 0;
-  right: 0;
+  top: ${({ theme }) => theme.space[1]}px;
+  right: ${({ theme }) => theme.space[1]}px;
   margin: 0;
-  padding: ${p => p.theme.space[1]}px;
+  padding: ${({ theme }) => theme.space[1]}px;
   border: none;
   font: inherit;
   cursor: pointer;
@@ -44,4 +48,12 @@ export const DeleteButton = styled.button`
     width: 20px;
     height: 20px;
   }
+`;
+
+export const MeasureBox = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: ${({ theme }) => theme.space[2]}px;
+  max-width: 80px;
 `;

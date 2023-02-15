@@ -1,6 +1,6 @@
 export const initialRecipeIngredient = {
   name: '',
-  quantity: '',
+  measureType: '',
   measure: '',
   garnish: false,
   optional: false,

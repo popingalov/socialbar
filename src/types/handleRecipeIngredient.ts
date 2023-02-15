@@ -2,12 +2,12 @@ export interface IRecipeIngredientResponse {
   name: string;
   value: string | null;
   checked: boolean | null;
-  index: number;
+  id: string;
 }
 
 export type recipeIngredientHandlerType = ({
   name,
   value,
   checked,
-  index,
+  id,
 }: IRecipeIngredientResponse) => void;

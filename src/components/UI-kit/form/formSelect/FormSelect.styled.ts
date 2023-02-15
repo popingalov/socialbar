@@ -6,7 +6,7 @@ export const SelectContainer = styled.div`
   margin: 0;
 `;
 
-export const SelectLabelButton = styled(motion.button)<{ ref: any }>`
+export const SelectLabelButton = styled(motion.button)`
   padding-left: ${({ theme }) => theme.space[3]}px;
   padding-right: ${({ theme }) => theme.space[3]}px;
   padding-top: ${({ theme }) => theme.space[2]}px;
@@ -30,6 +30,20 @@ export const SelectLabelButton = styled(motion.button)<{ ref: any }>`
   /* &:hover {
     background-color: ${({ theme }) => theme.colors.hoverLinkBackgroundColor};
   } */
+`;
+
+export const Modal = styled(motion.div)<{ name: string }>`
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 100;
+  padding: ${p => p.theme.space[2]}px;
+
+  background-color: ${p => p.theme.colors.modal};
+  border-radius: 3px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+  background-clip: padding-box;
 `;
 
 export const OptionsList = styled.ul`
