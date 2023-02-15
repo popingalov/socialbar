@@ -14,10 +14,6 @@ export const RecipeIngredient = styled.div`
   border-radius: 4px;
 `;
 
-export const Label = styled.label`
-  width: 95%;
-`;
-
 export const DeleteButton = styled.button`
   position: absolute;
   top: ${({ theme }) => theme.space[1]}px;

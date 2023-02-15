@@ -40,9 +40,6 @@ const CreateCocktail = () => {
   ]);
 
   const [categoriesSelectIsOpen, setCategoriesSelectIsOpen] = useState(false);
-  const [ingredientsSelectIsOpen, setIngredientsSelectIsOpen] = useState<
-    ingredientRecipeSelectStatus[]
-  >(initialIngredientRecipeSelectStatus);
 
   useEffect(() => {
     if (initialGlass) setGlass(initialGlass);
@@ -158,20 +155,6 @@ const CreateCocktail = () => {
     }
   };
 
-  const handleIngredientSelect = ({
-    type,
-    status,
-  }: ingredientRecipeSelectStatus) => {
-    setIngredientsSelectIsOpen(preState =>
-      preState.map(select => {
-        if (select.type === type) {
-          select.status = status;
-        }
-        return select;
-      }),
-    );
-  };
-
   return (
     <>
       {glass && (
@@ -220,8 +203,6 @@ const CreateCocktail = () => {
             handleRecipeIngredient={handleRecipeIngredient}
             addIngredient={addIngredient}
             deleteIngredient={deleteIngredient}
-            ingredientsSelectStatus={ingredientsSelectIsOpen}
-            toggleSelect={handleIngredientSelect}
           />
           <FormButton>Save</FormButton>
         </FormStyled>

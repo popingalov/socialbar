@@ -1,7 +1,7 @@
 import Box from 'components/box';
 import FormSelect from 'components/UI-kit/form/formSelect';
 import Input from 'components/UI-kit/form/input';
-import { ChangeEventHandler } from 'react';
+import { ChangeEventHandler, useState } from 'react';
 import { MeasureBox, MeasureType } from './Measures.styled';
 
 interface IProps {
@@ -10,9 +10,6 @@ interface IProps {
   measure: string;
   measureTypes: string[];
   measureType: string;
-  measureSelectIsOpen: boolean;
-  openSelect: () => void;
-  closeSelect: () => void;
 }
 
 const Measures: React.FC<IProps> = ({
@@ -21,10 +18,9 @@ const Measures: React.FC<IProps> = ({
   measureTypes,
   measureType,
   handleSelect,
-  measureSelectIsOpen,
-  openSelect,
-  closeSelect,
 }) => {
+  const [isSelectOpen, setIsSelectOpen] = useState(false);
+
   return (
     <MeasureBox>
       <Input
@@ -41,9 +37,13 @@ const Measures: React.FC<IProps> = ({
           name="measureType"
           options={measureTypes}
           onChange={handleSelect}
-          selectIsOpen={measureSelectIsOpen}
-          openSelect={openSelect}
-          closeSelect={closeSelect}
+          selectIsOpen={isSelectOpen}
+          openSelect={() => {
+            setIsSelectOpen(true);
+          }}
+          closeSelect={() => {
+            setIsSelectOpen(false);
+          }}
         />
       </Box>
     </MeasureBox>

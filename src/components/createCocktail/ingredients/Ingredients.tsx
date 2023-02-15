@@ -9,8 +9,6 @@ interface IProps {
   handleRecipeIngredient: recipeIngredientHandlerType;
   addIngredient: () => void;
   deleteIngredient: (id: string) => void;
-  ingredientsSelectStatus: ingredientRecipeSelectStatus[];
-  toggleSelect: ({ type, status }: ingredientRecipeSelectStatus) => void;
 }
 
 const Ingredients: React.FC<IProps> = ({
@@ -18,8 +16,6 @@ const Ingredients: React.FC<IProps> = ({
   handleRecipeIngredient,
   addIngredient,
   deleteIngredient,
-  ingredientsSelectStatus,
-  toggleSelect,
 }) => {
   return (
     <>
@@ -30,8 +26,6 @@ const Ingredients: React.FC<IProps> = ({
             id={id}
             onChange={handleRecipeIngredient}
             deleteIngredient={deleteIngredient}
-            ingredientsSelectStatus={ingredientsSelectStatus}
-            toggleSelect={toggleSelect}
           />
         );
       })}
