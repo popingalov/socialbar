@@ -21,7 +21,7 @@ import checkUrl from './serviceWorker/helpers/checkUrl';
 import controller from 'serviceWorker/controller';
 import { callbackObj } from 'serviceWorker/staticObjects/callbackObject';
 import addReqToCaches from 'serviceWorker/offline/addReqToCaches';
-import fetchCachesReq from 'serviceWorker/offline/sendReqOnCaches';
+import sendRequest from 'serviceWorker/offline/sendReqOnCaches';
 
 //
 declare const self: ServiceWorkerGlobalScope;
@@ -106,6 +106,8 @@ self.addEventListener('fetch', async (event: FetchEvent): Promise<any> => {
   const req = event.request;
   const { test, url, id, baseUrl } = checkUrl(req.url);
   const online = navigator.onLine && internetSpeed.speed < 1200;
+  const token = req.headers.get('authorization');
+  const pathToCachesSave = token ? '/offline/token' : '/noToken';
   if (test) {
     if (req.method !== 'GET' && !online) {
       addReqToCaches(req.clone());
@@ -114,7 +116,7 @@ self.addEventListener('fetch', async (event: FetchEvent): Promise<any> => {
     event.respondWith(cacheControl(req.clone(), url, id, baseUrl, online));
     if (online) {
       fetch(req);
-      fetchCachesReq();
+      sendRequest();
     }
 
     event.waitUntil(continuationWork());

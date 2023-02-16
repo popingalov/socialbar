@@ -3,7 +3,7 @@ import respGenerator from 'serviceWorker/helpers/responseGenerator';
 import takeCacheJson from 'serviceWorker/helpers/takeCacheJson';
 
 export default async function cachesOflineReq(req: Request) {
-  const cachesRes = await takeCacheJson('/my/test33');
+  const cachesRes = await takeCacheJson('/offline/token');
   const result: any = {};
   result.url = req.url;
   result.method = req.method;
@@ -19,9 +19,9 @@ export default async function cachesOflineReq(req: Request) {
   if (cachesRes) {
     cachesRes.push(result);
     const resResult = respGenerator(cachesRes);
-    addToCache(resResult, '/my/test33');
+    addToCache(resResult, '/offline/token');
     return;
   }
   const resResult = respGenerator([result]);
-  addToCache(resResult, '/my/test33');
+  addToCache(resResult, '/offline/token');
 }

@@ -2,18 +2,18 @@ import takeCacheJson from 'serviceWorker/helpers/takeCacheJson';
 import { CACHES_NAME } from 'serviceWorker/staticObjects/baseData';
 
 export default async function fetchCachesReq() {
-  const res: Request[] = await takeCacheJson('/my/test33');
-  if (res) {
-    for (const el of res) {
-      if (el.method) {
-        await helperBody(el);
-      } else {
-        await helper(el);
-      }
-    }
+  const res: Request[] = await takeCacheJson('/offline/token');
+  if (!res) return;
 
-    (await caches.open(CACHES_NAME)).delete('/my/test33');
+  for (const el of res) {
+    if (el.method) {
+      await helperBody(el);
+    } else {
+      await helper(el);
+    }
   }
+
+  (await caches.open(CACHES_NAME)).delete('/offline/token');
 }
 async function helper(res: Request) {
   const req = new Request(res.url, {
