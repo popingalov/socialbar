@@ -1,3 +1,4 @@
+import { Field } from 'formik';
 import styled from 'styled-components';
 
 export const Label = styled.label`
@@ -29,4 +30,9 @@ export const TextareaStyled = styled.textarea`
   ::placeholder {
     ${({ theme }) => theme.colors.secondaryText};
   }
+`;
+
+export const ErrorText = styled.p`
+  color: red;
+  font-size: ${p => p.theme.fontSizes.xs};
 `;

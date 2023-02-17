@@ -23,379 +23,93 @@ import uuid from 'react-uuid';
 import { ingredientRecipeSelectStatus } from 'types/ingredientRecipeSelectStatus';
 import { initialIngredientRecipeSelectStatus } from 'constants/ingredientRecipeSelectStatus';
 
+import {
+  Formik,
+  Form,
+  Field,
+  FieldArray,
+  FormikValues,
+  FormikHelpers,
+  ErrorMessage,
+} from 'formik';
+import * as Yup from 'yup';
+
+interface FormValues {
+  //* name: string;
+  //* cocktailImg: string;
+  // glass: IGlass | undefined;
+  // categories: never[];
+  description: string;
+  // recipe: string;
+}
+
 const CreateCocktail = () => {
   const [dataLS, setDataLS] = useState(null); // TODO: only for template LocalStorage
   const { data: glasses } = useGetGlassesQuery();
-
   const initialGlass = glasses?.find(({ title }) => title === 'Standard');
-  const [name, setName] = useState('');
-  const [cocktailImg, setCocktailImg] = useState<File | null>(null);
-  const [glass, setGlass] = useState<IGlass | null>(null);
-  const [categories, setCategories] = useState<string[]>([]);
-  const [description, setDescription] = useState('');
-  const [recipe, setRecipe] = useState('');
-  const firstIngredient = { ...initialRecipeIngredient, id: uuid() };
-  const [ingredients, setIngredients] = useState<IRecipeIngredient[]>([
-    firstIngredient,
-  ]);
 
+  // const firstIngredient = { ...initialRecipeIngredient, id: uuid() };
   const [categoriesSelectIsOpen, setCategoriesSelectIsOpen] = useState(false);
 
-  useEffect(() => {
-    if (initialGlass) setGlass(initialGlass);
-  }, [initialGlass]);
-
-  useEffect(() => {
-    // Перевірка локального сховища при монтуванні компонента
-    const storedData = localStorage.getItem('myData');
-    // console.log('storedData', storedData);
-    if (storedData) {
-      setDataLS(JSON.parse(storedData));
-    }
-
-    // Повертаємо колбек-функцію, яка виконається при демонтажі компонента
-    return () => {
-      // Збереження даних в локальному сховищі при демонтажі компонента
-      if (dataLS) {
-        localStorage.setItem('myData', JSON.stringify(dataLS));
-      }
-    };
-  }, [dataLS]); // Потрібно вказати data, щоб useEffect відслідковував його зміни
-
-  const handleChangeName: ChangeEventHandler<HTMLInputElement> = event => {
-    setName(event.target.value);
+  const initialValues = {
+    name: '',
+    cocktailImg: '',
+    // glass: initialGlass,
+    // categories: [],
+    description: '',
+    recipe: '',
+    // ingredients: [firstIngredient],
   };
 
-  const handleImgChange: ChangeEventHandler<HTMLInputElement> = event => {
-    const file = event.target.files?.[0];
-    if (file) {
-      setCocktailImg(file); // or setCocktailImg(URL.createObjectURL(file));
-    }
-  };
+  const validationSchema = Yup.object().shape({
+    name: Yup.string().required('Required'),
+    cocktailImg: Yup.mixed().required('Required'),
+    // glass: Yup.object().required('Required'),
+    // categories: Yup.array().min(1, 'Please select at least one category'),
+    description: Yup.string().required('Required'),
+    recipe: Yup.string().required('Required'),
+    // ingredients: Yup.array()
+    //   .of(
+    //     Yup.object().shape({
+    //       name: Yup.string().required('Required'),
+    //       amount: Yup.string().required('Required'),
+    //     }),
+    //   )
+    //   .min(1, 'Please add at least one ingredient'),
+  });
 
-  const handleGlass = (glass: IGlass) => {
-    setGlass(glass);
-  };
-
-  const handleCategorySelect = (type: string, value: string) => {
-    if (categories.includes(value)) {
-      return;
-    }
-    setCategories(prevState => [...prevState, value]);
-  };
-
-  const handleDescription: ChangeEventHandler<HTMLTextAreaElement> = event => {
-    setDescription(event.target.value);
-  };
-
-  const handleRecipeSteps: ChangeEventHandler<HTMLTextAreaElement> = event => {
-    setRecipe(event.target.value);
-  };
-
-  const handleRecipeIngredient: recipeIngredientHandlerType = ({
-    id,
-    name,
-    value,
-    checked,
-  }) => {
-    setIngredients(prevState =>
-      prevState.map(ingredient => {
-        if (ingredient.id === id) {
-          ingredient[name] = value ? value : checked;
-        }
-        return ingredient;
-      }),
-    );
-  };
-
-  const addIngredient = () => {
-    let newIngredient = { ...initialRecipeIngredient, id: uuid() };
-    setIngredients([...ingredients, newIngredient]);
-  };
-
-  const deleteIngredient = (id: string) => {
-    setIngredients(prevState =>
-      prevState.filter(ingredient => ingredient.id !== id),
-    );
-  };
-
-  const handleSubmit: FormEventHandler<HTMLFormElement> = event => {
-    event.preventDefault();
-    // TODO: check all required fields and send message what missed
-    const data = {
-      name,
-      cocktailImg,
-      glass,
-      categories,
-      description,
-      recipe,
-      ingredients,
-    };
-    console.log('data all', data);
-    // reset();
-  };
-
-  const reset = () => {
-    setName('');
-    setCocktailImg(null);
-    if (initialGlass) setGlass(initialGlass);
-    setCategories([]);
-    setDescription('');
-    setRecipe('');
-    setIngredients([firstIngredient]);
-  };
-
-  // TODO: add backdrop close select modal for ingredients selects
-  const handleClickBackdrop: MouseEventHandler<HTMLFormElement> = event => {
-    const select = event.target as Element;
-    const isOutsideCategorySelect =
-      select.closest('div')?.getAttribute('name') !== 'categorySelect';
-    if (categoriesSelectIsOpen && isOutsideCategorySelect) {
-      setCategoriesSelectIsOpen(false);
-    }
+  const handleSubmit = (
+    values: FormValues,
+    actions: FormikHelpers<FormValues>,
+  ) => {
+    // const { resetForm, setSubmitting } = actions;
+    console.log('data all', values);
+    // setSubmitting(true);
+    // resetForm();
   };
 
   return (
     <>
-      {glass && (
-        <FormStyled onClick={handleClickBackdrop} onSubmit={handleSubmit}>
+      <Formik<FormValues>
+        initialValues={initialValues}
+        validationSchema={validationSchema}
+        onSubmit={handleSubmit}
+      >
+        <FormStyled>
           <Box display="flex" alignItems="center" gridGap={2} mb={4}>
-            <Input
-              changeInput={handleChangeName}
-              placeholder="Create cocktail"
-              name="name"
-              value={name}
-            />
-            <InputFile
-              changeInput={handleImgChange}
-              name="cocktailImg"
-              id="file"
-            />
+            <Input name="name" placeholder="create cocktail" />
+
+            <InputFile name="cocktailImg" id="file" />
           </Box>
 
-          <Glass onChoose={handleGlass} currentGlass={glass} />
-          <Categories
-            categoriesSelectIsOpen={categoriesSelectIsOpen}
-            openSelect={() => {
-              setCategoriesSelectIsOpen(true);
-            }}
-            closeSelect={() => {
-              setCategoriesSelectIsOpen(false);
-            }}
-            categories={categories}
-            handleCategorySelect={handleCategorySelect}
-          />
-          <Textarea
-            changeInput={handleDescription}
-            placeholder="cocktail description"
-            value={description}
-            name="cocktailDescription"
-          />
-          <Textarea
-            label="Preparation steps"
-            changeInput={handleRecipeSteps}
-            placeholder="1.Put some ice into a shaker"
-            value={recipe}
-            name="cocktailRecipe"
-          />
-          <Ingredients
-            ingredients={ingredients}
-            handleRecipeIngredient={handleRecipeIngredient}
-            addIngredient={addIngredient}
-            deleteIngredient={deleteIngredient}
-          />
+          <Textarea placeholder="1.Put some ice into a shaker" name="recipe" />
+          <Textarea placeholder="cocktail description" name="description" />
+
           <FormButton>Save</FormButton>
         </FormStyled>
-      )}
+      </Formik>
     </>
   );
 };
 
 export default CreateCocktail;
-
-/**
- * 
-const CreateCocktail = () => {
-  const [dataLS, setDataLS] = useState(null); // TODO: only for template LocalStorage
-
-  const { data: glasses } = useGetGlassesQuery();
-
-  const initialGlass = glasses?.find(({ title }) => title === 'Standard');
-  const [name, setName] = useState('');
-  const [cocktailImg, setCocktailImg] = useState<File | null>(null);
-  const [glass, setGlass] = useState<IGlass | null>(null);
-  const [categories, setCategories] = useState<string[]>([]);
-  const [description, setDescription] = useState('');
-  const [recipe, setRecipe] = useState('');
-  const [ingredients, setIngredients] = useState<IRecipeIngredient[]>([
-    {
-      name: '',
-      quantity: '',
-      measure: '',
-      garnish: false,
-      optional: false,
-    },
-  ]);
-
-  useEffect(() => {
-    if (initialGlass) setGlass(initialGlass);
-  }, [initialGlass]);
-
-  useEffect(() => {
-    // Перевірка локального сховища при монтуванні компонента
-    const storedData = localStorage.getItem('myData');
-    // console.log('storedData', storedData);
-    if (storedData) {
-      setDataLS(JSON.parse(storedData));
-    }
-
-    // Повертаємо колбек-функцію, яка виконається при демонтажі компонента
-    return () => {
-      // Збереження даних в локальному сховищі при демонтажі компонента
-      if (dataLS) {
-        localStorage.setItem('myData', JSON.stringify(dataLS));
-      }
-    };
-  }, [dataLS]); // Потрібно вказати data, щоб useEffect відслідковував його зміни
-
-  const handleChangeName: ChangeEventHandler<HTMLInputElement> = event => {
-    setName(event.target.value);
-  };
-
-  const handleImgChange: ChangeEventHandler<HTMLInputElement> = event => {
-    const file = event.target.files?.[0];
-    if (file) {
-      setCocktailImg(file); // or setCocktailImg(URL.createObjectURL(file));
-    }
-  };
-
-  const handleGlass = (glass: IGlass) => {
-    setGlass(glass);
-  };
-
-  const handleCategorySelect = (value: string) => {
-    if (categories.includes(value)) {
-      return;
-    }
-    setCategories(prevState => [...prevState, value]);
-  };
-
-  const handleDescription: ChangeEventHandler<HTMLTextAreaElement> = event => {
-    setDescription(event.target.value);
-  };
-
-  const handleRecipeSteps: ChangeEventHandler<HTMLTextAreaElement> = event => {
-    setRecipe(event.target.value);
-  };
-
-  const handleRecipeIngredient = ({
-    index,
-    name,
-    value,
-    checked,
-  }: {
-    index: number;
-    name: string;
-    value: string;
-    checked: boolean;
-  }) => {
-    console.log('index', index);
-    console.log('value', value);
-    console.log('checked', checked);
-
-    let data: IRecipeIngredient[] = [...ingredients];
-
-    data[index][name] = value ? value : checked;
-    console.log('data[index][name]', data[index][name]);
-
-    setIngredients(data);
-  };
-
-  const addIngredient = () => {
-    let newIngredient: IRecipeIngredient = {
-      name: '',
-      quantity: '',
-      measure: '',
-      garnish: false,
-      optional: false,
-    };
-    setIngredients([...ingredients, newIngredient]);
-  };
-
-  const handleSubmit: FormEventHandler<HTMLFormElement> = event => {
-    event.preventDefault();
-    // TODO: check all required fields and send message what missed
-    const data = {
-      name,
-      cocktailImg,
-      glass,
-      categories,
-      description,
-      recipe,
-      ingredients,
-    };
-    console.log('data all', data);
-    // reset();
-  };
-
-  const reset = () => {
-    setName('');
-    setCocktailImg(null);
-    setGlass(null);
-    setCategories([]);
-    setDescription('');
-    setRecipe('');
-    setIngredients([]);
-  };
-
-  return (
-    <>
-      {glass && (
-        <FormStyled onSubmit={handleSubmit}>
-          <Box display="flex" alignItems="center" gridGap={2} mb={4}>
-            <Input
-              changeInput={handleChangeName}
-              placeholder="Create cocktail"
-              name="name"
-              value={name}
-            />
-            <InputFile
-              changeInput={handleImgChange}
-              name="cocktailImg"
-              id="file"
-            />
-          </Box>
-
-          <Glass onChoose={handleGlass} currentGlass={glass} />
-          <Categories
-            categories={categories}
-            handleCategorySelect={handleCategorySelect}
-          />
-          <Textarea
-            changeInput={handleDescription}
-            placeholder="cocktail description"
-            value={description}
-            name="cocktailDescription"
-          />
-          <Textarea
-            label="Preparation steps"
-            changeInput={handleRecipeSteps}
-            placeholder="1.Put some ice into a shaker"
-            value={recipe}
-            name="cocktailRecipe"
-          />
-          <Ingredients
-            ingredients={ingredients}
-            handleRecipeIngredient={handleRecipeIngredient}
-            addIngredient={addIngredient}
-          />
-          <FormButton>Save</FormButton>
-        </FormStyled>
-      )}
-    </>
-  );
-};
-
-export default CreateCocktail;
-
- */

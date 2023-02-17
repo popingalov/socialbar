@@ -1,32 +1,23 @@
+import { ErrorMessage, Field } from 'formik';
 import { ChangeEventHandler } from 'react';
-import { Label, TextareaStyled } from './Textarea.styled';
+import { ErrorText, Label, TextareaStyled } from './Textarea.styled';
+import { useField } from 'formik';
 
 interface IProps {
-  changeInput: ChangeEventHandler<HTMLTextAreaElement>;
-  placeholder: string;
+  placeholder?: string;
   name: string;
-  value: string;
   label?: string;
 }
 
-const Textarea: React.FC<IProps> = ({
-  changeInput,
-  placeholder,
-  value,
-  name,
-  label,
-}) => {
+const Textarea: React.FC<IProps> = ({ placeholder, name, label }) => {
+  const [field] = useField(name);
+
   return (
-    <Label>
+    <label htmlFor={name}>
       {label && <span>{label}</span>}
-      <TextareaStyled
-        onChange={changeInput}
-        placeholder={placeholder}
-        value={value}
-        name={name}
-        required
-      />
-    </Label>
+      <TextareaStyled {...field} placeholder={placeholder} />
+      <ErrorMessage name={name} component={ErrorText} />
+    </label>
   );
 };
 

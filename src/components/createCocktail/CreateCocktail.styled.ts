@@ -1,6 +1,7 @@
+import { Form } from 'formik';
 import styled from 'styled-components';
 
-export const FormStyled = styled.form`
+export const FormStyled = styled(Form)`
   padding-top: ${p => p.theme.space[4]}px;
   padding-bottom: ${p => p.theme.space[4]}px;
   padding-left: ${p => p.theme.space[3]}px;
