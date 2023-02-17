@@ -6,6 +6,7 @@ export const InputStyled = styled(Field)<{
   // border: string;
   // backgroundColor: string;
 }>`
+  cursor: pointer;
   padding-top: ${({ theme, isRecipeIngredient }) =>
     isRecipeIngredient ? theme.space[1] : theme.space[2]}px;
   padding-bottom: ${({ theme, isRecipeIngredient }) =>

@@ -18,8 +18,6 @@ const Input: React.FC<IProps> = ({
   name,
   isRecipeIngredient,
   type = 'text',
-  errors,
-  touched,
 }) => {
   return (
     <label htmlFor={name}>
