@@ -1,7 +1,9 @@
+import { IIngredient } from './ingredient';
+
 export interface IRecipeIngredient {
   [key: string]: string | boolean | null;
   id: string;
-  name: string;
+  ingredient: IIngredient | null;
   measureType: string;
   measure: string;
   garnish: boolean;

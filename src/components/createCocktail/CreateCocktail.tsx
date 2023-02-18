@@ -35,6 +35,8 @@ import * as Yup from 'yup';
 import FormSelect from 'components/UI-kit/form/formSelect/FormSelect';
 import SecondaryButton from 'components/UI-kit/buttons/secondaryButton/SecondaryButton';
 import IngredientRecipe from './ingredients/ingredientRecipe/IngredientRecipe';
+import { IIngredient } from 'types/ingredient';
+import Name from './ingredients/ingredientRecipe/name/Name';
 
 interface FormValues {
   name: string;
@@ -43,6 +45,7 @@ interface FormValues {
   description: string;
   recipe: string;
   categories: string[];
+  ingredients: IRecipeIngredient[];
 
   // [key: string]: string | undefined;
   // additionalFields: {
@@ -74,9 +77,10 @@ const CreateCocktail = () => {
     categories: [],
     description: '',
     recipe: '',
-    // ingredients: [firstIngredient],
+    ingredients: [firstIngredient],
     // additionalFields: {},
   };
+  console.log('initialValues', initialValues);
 
   const validationSchema = Yup.object().shape({
     // name: Yup.string().required('Required'),
@@ -133,66 +137,80 @@ const CreateCocktail = () => {
           validationSchema={validationSchema}
           onSubmit={handleSubmit}
         >
-          {({ values, errors, touched, handleChange, handleBlur }) => (
-            <FormStyled>
-              <Box display="flex" alignItems="center" gridGap={2}>
-                <Input name="name" placeholder="create cocktail" />
-                <InputFile name="cocktailImg" id="file" />
-              </Box>
+          {({ values, errors, touched, handleChange, handleBlur }) => {
+            return (
+              <>
+                {values.glass && (
+                  <FormStyled>
+                    <Box display="flex" alignItems="center" gridGap={2}>
+                      <Input name="name" placeholder="create cocktail" />
+                      <InputFile name="cocktailImg" id="file" />
+                    </Box>
 
-              <Glass
-                currentGlass={glass}
-                onChoose={(glass: IGlass) => {
-                  setGlass(glass);
-                  handleChange({ target: { name: 'glass', value: glass } });
-                }}
-              />
+                    <Glass
+                      currentGlass={values.glass}
+                      onChoose={(glass: IGlass) => {
+                        handleChange({
+                          target: { name: 'glass', value: glass },
+                        });
+                      }}
+                    />
 
-              <Categories
-                categoriesSelectIsOpen={categoriesSelectIsOpen}
-                openSelect={() => {
-                  setCategoriesSelectIsOpen(true);
-                }}
-                closeSelect={() => {
-                  setCategoriesSelectIsOpen(false);
-                }}
-                categories={categories}
-                handleCategorySelect={(type: string, value: string) => {
-                  if (categories.includes(value)) {
-                    return;
-                  }
-                  setCategories(prevState => [...prevState, value]);
-                  handleChange({
-                    target: {
-                      name: 'categories',
-                      value: [...values.categories, value],
-                    },
-                  });
-                }}
-              />
-              <Textarea placeholder="cocktail description" name="description" />
-              <Textarea
-                placeholder="1.Put some ice into a shaker"
-                name="recipe"
-              />
+                    <Categories
+                      categoriesSelectIsOpen={categoriesSelectIsOpen}
+                      openSelect={() => {
+                        setCategoriesSelectIsOpen(true);
+                      }}
+                      closeSelect={() => {
+                        setCategoriesSelectIsOpen(false);
+                      }}
+                      categories={categories}
+                      handleCategorySelect={(type: string, value: string) => {
+                        if (categories.includes(value)) {
+                          return;
+                        }
+                        setCategories(prevState => [...prevState, value]);
+                        handleChange({
+                          target: {
+                            name: 'categories',
+                            value: [...values.categories, value],
+                          },
+                        });
+                      }}
+                    />
+                    {/* <Textarea
+                      placeholder="cocktail description"
+                      name="description"
+                    />
+                    <Textarea
+                      placeholder="1.Put some ice into a shaker"
+                      name="recipe"
+                    /> */}
 
-              {ingredients.map(({ id }) => {
-                return (
-                  <IngredientRecipe
-                    key={id}
-                    id={id}
-                    onChange={handleRecipeIngredient}
-                    deleteIngredient={deleteIngredient}
-                  />
-                );
-              })}
-              <SecondaryButton onClick={addIngredient}>
-                Add ingredient
-              </SecondaryButton>
+                    {ingredients.map(({ id }) => {
+                      return (
+                        // <IngredientRecipe
+                        //   key={id}
+                        //   id={id}
+                        //   onChange={handleRecipeIngredient}
+                        //   deleteIngredient={deleteIngredient}
+                        // />
+                        <div key={id}>
+                          {/* <p>ingredient</p> */}
+                          <Name />
+                        </div>
+                      );
+                    })}
+                    <SecondaryButton onClick={addIngredient}>
+                      Add ingredient
+                    </SecondaryButton>
 
-              <FormButton>Save</FormButton>
-            </FormStyled>
-          )}
+                    <FormButton>Save</FormButton>
+                  </FormStyled>
+                )}
+              </>
+            );
+          }}
         </Formik>
       )}
     </>
@@ -200,3 +218,46 @@ const CreateCocktail = () => {
 };
 
 export default CreateCocktail;
+
+/**
+ * import { Formik, Field, FieldArray } from 'formik';
+
+function MyForm() {
+  return (
+    <Formik
+      initialValues={{ mainField: '', subFields: [] }}
+      onSubmit={values => console.log(values)}
+    >
+      {formik => (
+        <form onSubmit={formik.handleSubmit}>
+          <Field name="mainField" />
+          <FieldArray name="subFields">
+            {arrayHelpers => (
+              <>
+                {formik.values.subFields.map((subField, index) => (
+                  <div key={index}>
+                    <Field name={`subFields.${index}.subField1`} />
+                    <Field name={`subFields.${index}.subField2`} />
+                  </div>
+                ))}
+                <button type="button" onClick={() => arrayHelpers.push({ subField1: '', subField2: '' })}>
+                  Add Sub-Field
+                </button>
+              </>
+            )}
+          </FieldArray>
+          <button type="submit">Submit</button>
+        </form>
+      )}
+    </Formik>
+  );
+}
+In this example, the subFields array is managed by the FieldArray component. Each item in the array represents a sub-form with two fields (subField1 and subField2). When the "Add Sub-Field" button is clicked, a new empty sub-form is added to the array. The name attribute of the Field components is set to a string that includes the index of the sub-form in the subFields array, so that Formik can correctly manage the nested state.
+
+Note that this example does not actually nest a <form> element inside another <form> element. Instead, the sub-forms are rendered as groups of fields within the main form. This approach should work for most use cases where you need to create nested forms.
+
+
+
+
+
+ */
