@@ -90,9 +90,9 @@ const IngredientRecipe: React.FC<IProps> = ({
       >
         <RxCross2 aria-label="delete" />
       </DeleteButton>
-      {/* <Name /> */}
+      <Name />
       {/* <Name handleFieldChange={handleFieldChange} value={name} /> */}
-      {/* <Measures
+      <Measures
         handleFieldChange={handleFieldChange}
         handleSelect={handleSelect}
         measure={measure}
@@ -112,8 +112,8 @@ const IngredientRecipe: React.FC<IProps> = ({
           onChange={handleFieldChange}
           label="Optional"
         />
-      </Box> */}
-      {/* <SecondaryButton>Add substitute</SecondaryButton> */}
+      </Box>
+      <SecondaryButton>Add substitute</SecondaryButton>
     </RecipeIngredient>
   );
 };

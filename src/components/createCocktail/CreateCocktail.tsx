@@ -35,8 +35,6 @@ import * as Yup from 'yup';
 import FormSelect from 'components/UI-kit/form/formSelect/FormSelect';
 import SecondaryButton from 'components/UI-kit/buttons/secondaryButton/SecondaryButton';
 import IngredientRecipe from './ingredients/ingredientRecipe/IngredientRecipe';
-import { IIngredient } from 'types/ingredient';
-import Name from './ingredients/ingredientRecipe/name/Name';
 
 interface FormValues {
   name: string;
@@ -45,7 +43,6 @@ interface FormValues {
   description: string;
   recipe: string;
   categories: string[];
-  ingredients: IRecipeIngredient[];
 
   // [key: string]: string | undefined;
   // additionalFields: {
@@ -77,10 +74,9 @@ const CreateCocktail = () => {
     categories: [],
     description: '',
     recipe: '',
-    ingredients: [firstIngredient],
+    // ingredients: [firstIngredient],
     // additionalFields: {},
   };
-  console.log('initialValues', initialValues);
 
   const validationSchema = Yup.object().shape({
     // name: Yup.string().required('Required'),
@@ -189,16 +185,12 @@ const CreateCocktail = () => {
 
                     {ingredients.map(({ id }) => {
                       return (
-                        // <IngredientRecipe
-                        //   key={id}
-                        //   id={id}
-                        //   onChange={handleRecipeIngredient}
-                        //   deleteIngredient={deleteIngredient}
-                        // />
-                        <div key={id}>
-                          {/* <p>ingredient</p> */}
-                          <Name />
-                        </div>
+                        <IngredientRecipe
+                          key={id}
+                          id={id}
+                          onChange={handleRecipeIngredient}
+                          deleteIngredient={deleteIngredient}
+                        />
                       );
                     })}
                     <SecondaryButton onClick={addIngredient}>

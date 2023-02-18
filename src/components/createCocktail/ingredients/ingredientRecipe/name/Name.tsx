@@ -6,15 +6,8 @@ import { changeSearchFilter } from 'redux/searchFilter/searchSlice';
 import { MainInput } from './Name.styled';
 import { setPopUpSearchIsOpen } from 'redux/modal/modalSlice';
 import { useGetSearchedIngredients } from 'hooks/useGetSearchedIngredients';
-import { ErrorMessage } from 'formik';
 
-interface IProps {
-  // name: string;
-  // value: string;
-}
-
-//{ name, value }
-const Name: React.FC<IProps> = () => {
+const Name: React.FC = () => {
   const [searchValue, setSearchValue] = useState('');
   const [ingredientSelectIsOpen, setIngredientSelectIsOpen] = useState(true);
   const { ingredients } = useGetSearchedIngredients(searchValue);
@@ -39,17 +32,13 @@ const Name: React.FC<IProps> = () => {
         onChange={handleInput}
         placeholder="Name"
       />
-      {/* <label htmlFor={name}>
-        <MainInput type="text" name={name} placeholder="Name" />
-        <ErrorMessagee name={name} />
-      </label> */}
 
       <AnimatePresence>
         {ingredientSelectIsOpen && ingredients && (
           <ul>
             {ingredients.map(({ title }, index, array) => (
               <li
-                key={index}
+                key={title}
                 onClick={() => {
                   setSearchValue(title);
                 }}
