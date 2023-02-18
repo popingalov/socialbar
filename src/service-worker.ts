@@ -115,7 +115,6 @@ self.addEventListener('fetch', async (event: FetchEvent): Promise<any> => {
 
     event.respondWith(cacheControl(req.clone(), url, id, baseUrl, online));
     if (online) {
-      fetch(req);
       sendRequest();
     }
 
