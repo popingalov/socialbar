@@ -48,7 +48,14 @@ const Name: React.FC<IProps> = () => {
         {ingredientSelectIsOpen && ingredients && (
           <ul>
             {ingredients.map(({ title }, index, array) => (
-              <li key={index}>{title}</li>
+              <li
+                key={index}
+                onClick={() => {
+                  setSearchValue(title);
+                }}
+              >
+                {title}
+              </li>
             ))}
           </ul>
         )}
