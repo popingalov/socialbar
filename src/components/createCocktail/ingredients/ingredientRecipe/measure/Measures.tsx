@@ -28,7 +28,7 @@ const Measures: React.FC<IProps> = ({
         changeInput={handleFieldChange}
         name="measure"
         type="number"
-        value={measure}
+        value={measure !== '' ? measure : '0'}
         isRecipeIngredient={true}
       />
       <Box display="flex" justifyContent="center" alignItems="center">

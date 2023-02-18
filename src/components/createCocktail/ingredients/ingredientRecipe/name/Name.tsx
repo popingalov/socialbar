@@ -1,10 +1,6 @@
 import { AnimatePresence } from 'framer-motion';
-import { useEffect, useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
-import { changeSearchFilter } from 'redux/searchFilter/searchSlice';
+import { useEffect, useState } from 'react';
 import { MainInput } from './Name.styled';
-import { setPopUpSearchIsOpen } from 'redux/modal/modalSlice';
 import { useGetSearchedIngredients } from 'hooks/useGetSearchedIngredients';
 
 const Name: React.FC = () => {

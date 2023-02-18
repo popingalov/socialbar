@@ -94,6 +94,7 @@ const CreateCocktail = () => {
   ) => {
     // const { resetForm, setSubmitting } = actions;
     console.log('data all', values);
+    console.log('ingredients', ingredients);
     // setSubmitting(true);
     // resetForm();
   };
@@ -174,14 +175,14 @@ const CreateCocktail = () => {
                         });
                       }}
                     />
-                    {/* <Textarea
+                    <Textarea
                       placeholder="cocktail description"
                       name="description"
                     />
                     <Textarea
                       placeholder="1.Put some ice into a shaker"
                       name="recipe"
-                    /> */}
+                    />
 
                     {ingredients.map(({ id }) => {
                       return (
