@@ -17,11 +17,17 @@ const Input: React.FC<IProps> = ({
   placeholder,
   name,
   isRecipeIngredient,
+  value,
   type = 'text',
 }) => {
   return (
     <label htmlFor={name}>
-      <InputStyled type={type} name={name} placeholder={placeholder} />
+      <InputStyled
+        type={type}
+        value={value}
+        name={name}
+        placeholder={placeholder}
+      />
       <ErrorMessage name={name} component={ErrorText} />
     </label>
   );

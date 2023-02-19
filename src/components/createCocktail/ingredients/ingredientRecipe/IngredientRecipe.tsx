@@ -22,17 +22,32 @@ interface IProps {
   onChange: recipeIngredientHandlerType;
   deleteIngredient: (id: string) => void;
 }
-
+interface IInitIng {
+  [key: string]: any;
+  name: string;
+  measure: string;
+  garnish: boolean;
+  optional: boolean;
+  measureType: string;
+}
+const initialIngredient: IInitIng = {
+  name: '',
+  measure: '0',
+  garnish: false,
+  optional: false,
+  measureType: 'ml',
+};
 const IngredientRecipe: React.FC<IProps> = ({
   onChange,
   id,
   deleteIngredient,
 }) => {
-  const [name, setName] = useState('');
-  const [measure, setMeasure] = useState('');
-  const [garnish, setGarnish] = useState(false);
-  const [optional, setOptional] = useState(false);
-  const [measureType, setMeasureType] = useState('ml');
+  // const [name, setName] = useState('');
+  // const [measure, setMeasure] = useState('');
+  // const [garnish, setGarnish] = useState(false);
+  // const [optional, setOptional] = useState(false);
+  // const [measureType, setMeasureType] = useState('ml');
+  const [ingredient, setIngredient] = useState(initialIngredient);
 
   const handleFieldChange: ChangeEventHandler<HTMLInputElement> = event => {
     const { value, name, checked } = event.target;
@@ -42,44 +57,55 @@ const IngredientRecipe: React.FC<IProps> = ({
       checked: null,
       id,
     };
+    setIngredient(state => {
+      const test = typeof value === 'boolean';
 
-    switch (name) {
-      case 'name':
-        setName(value);
-        ingredientData.value = value;
-        break;
-      case 'measure':
-        setMeasure(value);
-        ingredientData.value = value;
-        break;
-      case 'garnish':
-        setGarnish(checked);
-        ingredientData.checked = checked;
-        break;
-      case 'optional':
-        setOptional(checked);
-        ingredientData.checked = checked;
-        break;
-      default:
-        break;
-    }
+      state[name] = !checked ? value : false;
+      console.log(state, name);
 
-    onChange(ingredientData);
-  };
-
-  const handleSelect = (type: string, value: string) => {
-    if (type === 'measureType') setMeasureType(value);
-
-    const ingredientData: IIngredientRecipeData = {
-      name: type,
-      value: value,
-      checked: null,
-      id,
-    };
+      return state;
+    });
+    // switch (name) {
+    //   case 'name':
+    //    setName(value)
+    //     ingredientData.value = value;
+    //     break;
+    //   case 'measure':
+    //     setMeasure(value);
+    //     ingredientData.value = value;
+    //     break;
+    //   case 'garnish':
+    //     setGarnish(checked);
+    //     ingredientData.checked = checked;
+    //     break;
+    //   case 'optional':
+    //     setOptional(checked);
+    //     ingredientData.checked = checked;
+    //     break;
+    //   default:
+    //     break;
+    // }
 
     onChange(ingredientData);
   };
 
+  // const handleSelect = (type: string, value: string) => {
+  //   if (type === 'measureType')
+  //     setIngredient(state => {
+  //       state[type] = value;
+  //       return state;
+  //     });
+
+  //   const ingredientData: IIngredientRecipeData = {
+  //     name: type,
+  //     value: value,
+  //     checked: null,
+  //     id,
+  //   };
+
+  //   onChange(ingredientData);
+  // };
+  const { garnish, measure, measureType, name, optional } = ingredient;
   return (
     <RecipeIngredient>
       <DeleteButton
@@ -94,7 +120,7 @@ const IngredientRecipe: React.FC<IProps> = ({
       {/* <Name handleFieldChange={handleFieldChange} value={name} /> */}
       <Measures
         handleFieldChange={handleFieldChange}
-        handleSelect={handleSelect}
+        // handleSelect={handleFieldChange}
         measure={measure}
         measureTypes={measures}
         measureType={measureType}

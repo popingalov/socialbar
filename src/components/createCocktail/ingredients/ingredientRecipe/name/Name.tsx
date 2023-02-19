@@ -5,38 +5,33 @@ import { useGetSearchedIngredients } from 'hooks/useGetSearchedIngredients';
 
 const Name: React.FC = () => {
   const [searchValue, setSearchValue] = useState('');
-  const [ingredientSelectIsOpen, setIngredientSelectIsOpen] = useState(true);
+  const [value, setValue] = useState('');
   const { ingredients } = useGetSearchedIngredients(searchValue);
-
-  useEffect(() => {
-    if (searchValue && ingredients?.length !== 0) {
-      setIngredientSelectIsOpen(true);
-      return;
-    }
-    setIngredientSelectIsOpen(false);
-  }, [ingredients?.length, searchValue]);
 
   const handleInput = (event: React.FormEvent<HTMLInputElement>) => {
     const { value } = event.currentTarget;
     setSearchValue(value);
+    setValue(value);
   };
-
+  function handlClickOnIngredient({ title }: { title: string }) {
+    setSearchValue('');
+    setValue(title);
+  }
+  if (ingredients?.length === 1) {
+    handlClickOnIngredient(ingredients[0]);
+  }
   return (
     <>
-      <MainInput
-        value={searchValue}
-        onChange={handleInput}
-        placeholder="Name"
-      />
+      <MainInput value={value} onChange={handleInput} placeholder="Name" />
 
       <AnimatePresence>
-        {ingredientSelectIsOpen && ingredients && (
+        {ingredients && (
           <ul>
-            {ingredients.map(({ title }, index, array) => (
+            {ingredients.map(({ title, id }, index, array) => (
               <li
                 key={title}
                 onClick={() => {
-                  setSearchValue(title);
+                  handlClickOnIngredient({ title });
                 }}
               >
                 {title}

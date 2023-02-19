@@ -11,7 +11,7 @@ export const useGetSearchedIngredients = (searchValue: string) => {
   }
 
   const filteredIngredients = ingredients?.filter(({ title }) =>
-    title.includes(searchValue),
+    title.toLowerCase().includes(searchValue.toLowerCase()),
   );
 
   return {

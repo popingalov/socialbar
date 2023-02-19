@@ -1,12 +1,12 @@
 import Box from 'components/box';
 import FormSelect from 'components/UI-kit/form/formSelect';
 import Input from 'components/UI-kit/form/input';
-import { ChangeEventHandler, useState } from 'react';
+import { ChangeEvent, ChangeEventHandler, useState } from 'react';
 import { MeasureBox, MeasureType } from './Measures.styled';
 
 interface IProps {
   handleFieldChange: ChangeEventHandler<HTMLInputElement>;
-  handleSelect: (type: string, value: string) => void;
+  // handleSelect: (type: string, value: string) => void;
   measure: string;
   measureTypes: string[];
   measureType: string;
@@ -17,18 +17,26 @@ const Measures: React.FC<IProps> = ({
   measure,
   measureTypes,
   measureType,
-  handleSelect,
+  // handleSelect,
 }) => {
   const [isSelectOpen, setIsSelectOpen] = useState(false);
+  const [inMasure, setInMeasure] = useState('3');
+  const start = '3';
+  // return handleFieldChange(ev);
+  function handler(event: ChangeEvent<HTMLInputElement>) {
+    console.log(event, 'tyt');
 
+    const { value } = event.target;
+    setInMeasure(value);
+  }
   return (
     <MeasureBox>
       <Input
-        placeholder=""
-        changeInput={handleFieldChange}
+        placeholder="333"
+        changeInput={handler}
         name="measure"
         type="number"
-        value={measure !== '' ? measure : '0'}
+        value={start}
         isRecipeIngredient={true}
       />
       <Box display="flex" justifyContent="center" alignItems="center">
@@ -36,7 +44,7 @@ const Measures: React.FC<IProps> = ({
         <FormSelect
           name="measureType"
           options={measureTypes}
-          onChange={handleSelect}
+          // onChange={handleSelect}
           selectIsOpen={isSelectOpen}
           openSelect={() => {
             setIsSelectOpen(true);
