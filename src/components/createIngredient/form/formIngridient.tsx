@@ -6,14 +6,13 @@ import {
   InputIngridientName,
   LabelButtonAddPhoto,
   ButtonAddPhoto,
-  ImageButton,
   ContainerCategory,
   Category,
   IngridientDescription,
   FormButton,
 } from './formIngridient.styled';
 
-import cameraSvg from '../../../assets/images/newIngridient/camera-6728.svg';
+import { AiFillCamera } from 'react-icons/ai';
 
 interface IProps {
   children?: React.ReactNode;
@@ -28,7 +27,6 @@ const FormIngridient: React.FC<IProps> = ({
   children,
   changeInput,
   ingredientName,
-  ingredientImg,
   ingredientDescription,
   submitForm,
 }) => {
@@ -42,12 +40,10 @@ const FormIngridient: React.FC<IProps> = ({
         <ContainerIngridientName>
           <InputIngridientName
             onChange={changeInput}
-            placeholder="Ingredient name"
+            placeholder={ingredientNamePlaceholder}
             value={ingredientName}
-
             type="text"
             name="ingredientName"
-            src={cameraSvg}
             required
           ></InputIngridientName>
           <LabelButtonAddPhoto>
@@ -55,13 +51,12 @@ const FormIngridient: React.FC<IProps> = ({
               onChange={changeInput}
               placeholder=""
               // value={ingredientImg}
-              src={cameraSvg}
               type="file"
               name="ingredientImg"
               id="file"
               accept=".png, .jpg, .jpeg, .gif, .web"
             ></ButtonAddPhoto>
-            <ImageButton src={cameraSvg} alt="icon person" />
+            <AiFillCamera size={24} fill="#757575" />
           </LabelButtonAddPhoto>
         </ContainerIngridientName>
         <ContainerCategory>

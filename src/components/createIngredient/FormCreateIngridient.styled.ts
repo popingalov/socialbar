@@ -1,5 +1,5 @@
 import styled from 'styled-components';
 
 export const ContainerCreateIngridient = styled.div`
-  margin: 16px;
+  margin: ${({ theme }) => theme.space[2]}px;
 `;
