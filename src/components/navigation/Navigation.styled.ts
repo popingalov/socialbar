@@ -5,11 +5,11 @@ export const Wrapper = styled.nav<{ isExtraRoute: boolean }>`
   justify-content: ${({ isExtraRoute }) =>
     !isExtraRoute ? `space-between` : `none`};
   padding: ${({ theme }) => theme.space[1]}px;
-  background-color: ${({ theme }) => theme.colors.accentBackgroundColor};
+  backdrop-filter: blur(15px);
 `;
 
 export const NavigationListStyled = styled.ul`
-  background-color: ${p => p.theme.colors.accentBackgroundColor};
+  backdrop-filter: blur(15px);
   display: flex;
   scroll-behavior: smooth;
   text-align: center;

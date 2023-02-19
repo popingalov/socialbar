@@ -1,10 +1,14 @@
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
+import background from '../../assets/images/background.jpg';
 
 export const Menu = styled(motion.div)`
-  background-color: ${({ theme }) => theme.colors.mainBackgroundColor};
+  background-image: ${() => `url(${background})`};
+  /* background-color: ${({ theme }) => theme.colors.modal}; */
   width: 70%;
   height: 100%;
+  display: flex;
+  flex-direction: column;
 
   @media only screen and (max-width: 480px) {
     overflow-y: scroll;
@@ -14,7 +18,8 @@ export const Menu = styled(motion.div)`
 export const MenuHeader = styled.div`
   padding: ${({ theme }) => theme.space[2]}px;
   min-height: 100px;
-  background-color: ${({ theme }) => theme.colors.accentBackgroundColor};
+  /* background-color: ${({ theme }) => theme.colors.accent}; */
+  backdrop-filter: blur(20px);
 `;
 
 export const UserIconWrapper = styled.div`

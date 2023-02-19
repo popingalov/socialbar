@@ -23,7 +23,12 @@ const IngredientList: React.FC<IProps> = ({ ingredients }) => {
   };
 
   return (
-    <Box as="ul" borderTop="1px solid" borderColor="borderBottom">
+    <Box
+      as="ul"
+      borderTop="1px solid"
+      borderColor="borderBottom"
+      backgroundColor="mainBackgroundColor"
+    >
       {ingredients.map(ingredient => {
         const {
           measure,

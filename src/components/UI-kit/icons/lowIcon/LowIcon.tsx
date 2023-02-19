@@ -12,7 +12,8 @@ const LowIcon: React.FC<IProps> = ({ type }) => {
     <IconContext.Provider
       value={{
         style: {
-          color: theme.colors.accentBackgroundColor,
+          // color: theme.colors.accentBackgroundColor,
+          color: theme.colors.accent,
           position: 'absolute',
           bottom: '0',
           right: '-14px',

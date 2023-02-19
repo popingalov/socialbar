@@ -3,7 +3,7 @@ import { IWindowDimensions } from 'hooks/useGetWindowDimensions';
 import styled from 'styled-components';
 
 interface IProps extends ICoordinates {
-  type: 'select' | 'extraMenu' | 'context' | 'search';
+  type: 'select' | 'extraMenu' | 'context' | 'search' | 'glass';
   modaldimensions: {
     width: number;
     height: number;
@@ -49,7 +49,7 @@ export const Modal = styled(motion.div)<IProps>`
     modaldimensions: { width },
     windowdimensions: { windowWidth },
   }) => {
-    if (type === 'select' || type === 'search') {
+    if (type === 'select' || type === 'search' || type === 'glass') {
       return `${left}px`;
     }
 
@@ -93,7 +93,7 @@ export const Modal = styled(motion.div)<IProps>`
   z-index: 100;
   padding: ${p => p.theme.space[2]}px;
 
-  background-color: ${p => p.theme.colors.mainBackgroundColor};
+  background-color: ${p => p.theme.colors.modal};
   min-width: ${({ type }) => (type === 'context' ? '190px' : '150px')};
   max-width: ${({ type }) => (type === 'search' ? '300px' : '220px')};
   max-height: 100vh;

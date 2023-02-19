@@ -64,7 +64,7 @@ const CocktailDescription: React.FC<IProps> = ({ cocktailId, cocktail }) => {
   return (
     <>
       <Loader isLoading={isAddingFavorite || isDeletingFavorite} />
-      <Box>
+      <Box backgroundColor="mainBackgroundColor">
         {cocktail && (
           <Box px={3} py={3}>
             <Box

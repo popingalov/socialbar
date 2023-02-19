@@ -4,6 +4,8 @@ import styled from 'styled-components';
 export const SettingsListStyled = styled(motion.ul)`
   display: flex;
   flex-direction: column;
+  background-color: ${({ theme }) => theme.colors.mainBackgroundColor};
+  height: 100%;
 `;
 
 export const SettingsItem = styled.li<{ name: string }>`

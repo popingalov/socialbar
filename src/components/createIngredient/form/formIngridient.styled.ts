@@ -8,6 +8,9 @@ export const ContainerIngridientName = styled.div`
   display: flex;
 `;
 export const InputIngridientName = styled.input`
+  margin-right: ${({ theme }) => theme.space[3]}px;
+  padding-top: ${({ theme }) => theme.space[2]}px;
+  padding-bottom: ${({ theme }) => theme.space[2]}px;
   background: transparent;
   border: none;
   border-bottom: 2px solid ${({ theme }) => theme.colors.borderBottom};
@@ -21,7 +24,12 @@ export const InputIngridientName = styled.input`
   margin-right: ${({ theme }) => theme.space[2]}px;
   width: 100%;
   outline: none;
+
+  ::placeholder {
+    ${({ theme }) => theme.colors.secondaryText};
+  }
 `;
+
 export const LabelButtonAddPhoto = styled.label`
   cursor: pointer;
   width: 20px;
@@ -47,8 +55,9 @@ export const Category = styled.p`
   padding-right: ${({ theme }) => theme.space[3]}px;
   color: ${({ theme }) => theme.colors.secondaryText};
 `;
+
 export const IngridientDescription = styled.textarea`
-  margin-bottom: ${({ theme }) => theme.space[3]}px;
+margin-bottom: ${({ theme }) => theme.space[3]}px;
   display: flex;
   border: none;
   width: 100%;
@@ -62,11 +71,12 @@ export const IngridientDescription = styled.textarea`
   overflow: hidden;
   outline: none;
 `;
+
 export const FormButton = styled.button`
   width: 100%;
   padding: ${({ theme }) => theme.space[2]}px;
   display: flex;
-  text-transform: uppercase;
+  text-transform: capitalize;
   justify-content: center;
   border: none;
   font-size: ${({ theme }) => theme.fontSizes.s};

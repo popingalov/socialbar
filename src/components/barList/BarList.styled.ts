@@ -6,6 +6,7 @@ export const BarListStyled = styled(motion.ul)<{ type: string }>`
   flex-direction: column;
 
   li {
+    mix-blend-mode: multiply;
     border-bottom: 1px solid
       ${({ theme, type }) =>
         type === 'search'
@@ -24,7 +25,6 @@ export const BarListStyled = styled(motion.ul)<{ type: string }>`
     width: 50px;
     height: 50px;
     border: ${({ theme }) => `1px solid ${theme.colors.borderBottom}`};
-    /* object-fit: contain; */
     object-fit: cover;
     background-color: ${({ theme }) => theme.colors.white};
     margin-right: ${p => p.theme.space[3]}px;

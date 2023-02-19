@@ -1,10 +1,12 @@
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
 
-export const CheckboxLabel = styled.label`
-  display: inline-block;
-  vertical-align: middle;
-  font-size: 0;
+export const CheckboxLabel = styled.label<{ hasLabel: boolean }>`
+  display: flex;
+  align-items: center;
+  gap: ${({ theme }) => theme.space[2]}px;
+  font-size: ${({ theme, hasLabel }) => (hasLabel ? theme.fontSizes.xs : 0)};
+  font-weight: ${({ theme }) => theme.fontWeight.medium};
   cursor: pointer;
   padding: ${p => p.theme.space[1]}px;
 `;
@@ -34,8 +36,10 @@ export const StyledCheckbox = styled(motion.div)<{ checked: boolean }>`
   width: 20px;
   height: 20px;
   background-color: ${p =>
-    p.checked ? p.theme.colors.accent : p.theme.colors.mainBackgroundColor};
-  border: 2px solid ${p => p.theme.colors.accent};
+    p.checked
+      ? p.theme.colors.secondaryAccent
+      : p.theme.colors.mainBackgroundColor};
+  border: 2px solid ${p => p.theme.colors.secondaryAccent};
   border-radius: 3px;
   transition: all 150ms;
   transition: background-color 250ms ${p => p.theme.transitionTiming};

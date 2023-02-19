@@ -88,5 +88,4 @@ export const SelectItem = styled.li`
     -ms-transform: scale(170, 50);
     transform: scale(170, 50);
   }
-
 `;

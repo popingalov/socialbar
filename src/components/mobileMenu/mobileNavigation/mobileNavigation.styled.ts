@@ -30,7 +30,7 @@ export const Link = styled(NavLink)`
 
   &.active {
     background-color: ${({ theme }) => theme.colors.activeLinkBackgroundColor};
-    color: ${p => p.theme.colors.accent};
+    color: ${p => p.theme.colors.secondaryAccent};
   }
 
   &:hover:not(.active),
