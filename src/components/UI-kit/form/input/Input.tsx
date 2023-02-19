@@ -19,6 +19,7 @@ const Input: React.FC<IProps> = ({
   isRecipeIngredient,
   value,
   type = 'text',
+  changeInput,
 }) => {
   return (
     <label htmlFor={name}>
@@ -26,6 +27,7 @@ const Input: React.FC<IProps> = ({
         type={type}
         value={value}
         name={name}
+        onChange={changeInput}
         placeholder={placeholder}
       />
       <ErrorMessage name={name} component={ErrorText} />

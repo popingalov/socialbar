@@ -35,6 +35,7 @@ import * as Yup from 'yup';
 import FormSelect from 'components/UI-kit/form/formSelect/FormSelect';
 import SecondaryButton from 'components/UI-kit/buttons/secondaryButton/SecondaryButton';
 import IngredientRecipe from './ingredients/ingredientRecipe/IngredientRecipe';
+import { useAddCocktailMutation } from 'redux/api/cocktailApi';
 
 interface FormValues {
   name: string;
@@ -62,7 +63,7 @@ const CreateCocktail = () => {
   const [ingredients, setIngredients] = useState<IRecipeIngredient[]>([
     firstIngredient,
   ]);
-
+  const [fetchCocktail] = useAddCocktailMutation();
   useEffect(() => {
     if (initialGlass) setGlass(initialGlass);
   }, [initialGlass]);
@@ -97,22 +98,24 @@ const CreateCocktail = () => {
     console.log('ingredients', ingredients);
     // setSubmitting(true);
     // resetForm();
+    // const cocktail = new FormData();
+
+    // fetchCocktail(cocktail);
   };
 
-  const handleRecipeIngredient: recipeIngredientHandlerType = ({
-    id,
-    name,
-    value,
-    checked,
-  }) => {
-    setIngredients(prevState =>
-      prevState.map(ingredient => {
-        if (ingredient.id === id) {
-          ingredient[name] = value ? value : checked;
+  const handleRecipeIngredient: recipeIngredientHandlerType = ing => {
+    console.log('tyt', ing.id);
+
+    setIngredients(prevState => {
+      const newState = prevState.map(ingredient => {
+        if (ingredient.id === ing.id) {
+          return ing;
         }
         return ingredient;
-      }),
-    );
+      });
+
+      return newState;
+    });
   };
 
   const addIngredient = () => {

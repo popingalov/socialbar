@@ -2,8 +2,10 @@ import { AnimatePresence } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { MainInput } from './Name.styled';
 import { useGetSearchedIngredients } from 'hooks/useGetSearchedIngredients';
-
-const Name: React.FC = () => {
+interface IProps {
+  onChose: (el: any) => void;
+}
+const Name: React.FC<IProps> = ({ onChose }) => {
   const [searchValue, setSearchValue] = useState('');
   const [value, setValue] = useState('');
   const { ingredients } = useGetSearchedIngredients(searchValue);
@@ -13,9 +15,16 @@ const Name: React.FC = () => {
     setSearchValue(value);
     setValue(value);
   };
-  function handlClickOnIngredient({ title }: { title: string }) {
-    setSearchValue('');
+  function handlClickOnIngredient({
+    title,
+    id,
+  }: {
+    title: string;
+    id: string;
+  }) {
+    onChose({ title, id });
     setValue(title);
+    setSearchValue('');
   }
   if (ingredients?.length === 1) {
     handlClickOnIngredient(ingredients[0]);
@@ -31,7 +40,7 @@ const Name: React.FC = () => {
               <li
                 key={title}
                 onClick={() => {
-                  handlClickOnIngredient({ title });
+                  handlClickOnIngredient({ title, id });
                 }}
               >
                 {title}
