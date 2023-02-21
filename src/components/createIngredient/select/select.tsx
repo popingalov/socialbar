@@ -5,16 +5,16 @@ import {
   SelectIcon,
   SelectBody,
   SelectItem,
-  ImgArrow,
 } from './select.styled';
 
-import arrowSvg from '../../../assets/images/newIngridient/down-arrow-7425.svg';
 import React from 'react';
+
+import { AiFillCaretDown } from 'react-icons/ai';
 
 interface IProps {
   text: string;
   isMenuOpen?: boolean;
-  clickFunction: any;
+  clickFunction: () => void;
   chooseFunction: any;
 }
 
@@ -39,7 +39,7 @@ const SelectMenu: React.FC<IProps> = ({
         <SelectHeader onClick={clickFunction}>
           <SelectCurrent>{text}</SelectCurrent>
           <SelectIcon>
-            <ImgArrow src={arrowSvg} alt="Select arrow" />
+            <AiFillCaretDown size={14} fill="#757575" />
           </SelectIcon>
         </SelectHeader>
         {isMenuOpen && (

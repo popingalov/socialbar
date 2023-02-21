@@ -6,6 +6,7 @@ import SelectMenu from './select/select';
 import FormIngridient from './form/formIngridient';
 
 import { useAddIngredientMutation } from '../../redux/api/ingredientApi';
+import Loader from 'components/loader/Loader';
 
 const FormCreateIngredient: React.FC = () => {
   const [ingredientName, setIngredientName] = useState<string>('');
@@ -15,14 +16,20 @@ const FormCreateIngredient: React.FC = () => {
   const [open, setOpen] = useState<boolean>(false);
   const [textCategory, setTextCategory] = useState<string>('Strong alcohol');
 
-  const [adding] = useAddIngredientMutation();
+  const [adding, { isLoading: isAddingIngredient }] =
+    useAddIngredientMutation();
 
   const navigate = useNavigate();
 
   const handleShowMenu = () => setOpen(isOpen => !isOpen);
 
-  const handleChoose = async (event: any) => {
-    const chooseText = await event.target.innerText;
+  const handleChoose: React.MouseEventHandler<
+    HTMLLabelElement
+  > = async event => {
+    if (!(event.target instanceof HTMLElement)) return;
+    const chooseText = await (event.target as HTMLElement).innerText;
+    console.log(event);
+
     try {
       setOpen(isOpen => !isOpen);
     } catch (error: any) {
@@ -31,8 +38,9 @@ const FormCreateIngredient: React.FC = () => {
     setTextCategory(chooseText);
   };
 
-  const handleInputChange = (event: any) => {
+  const handleInputChange = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    if (!(event.currentTarget instanceof HTMLElement)) return;
     const { name, value } = event.currentTarget;
     switch (name) {
       case 'ingredientName':
@@ -58,15 +66,19 @@ const FormCreateIngredient: React.FC = () => {
       respond.append('description', ingredientDescription);
       respond.append('picture', ingredientImg);
       respond.append('category', textCategory);
-      const newIngredient: any = await adding(respond);
-      const id = newIngredient.data.id;
+      const newIngredient = (await adding(respond)) as { data: { id: string } };
+      console.log(newIngredient);
+      const id: string = newIngredient.data.id;
+      if (!id) {
+        return <Loader isLoading={!id} />;
+      }
       navigate(`/ingredients/${id}`);
-    } catch (error) {
+    } catch (error: any) {
       console.log(error);
     }
   };
 
-  const handleSubmitForm = async (event: any) => {
+  const handleSubmitForm = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     addIngredientHandle();
     reset();
@@ -81,6 +93,7 @@ const FormCreateIngredient: React.FC = () => {
 
   return (
     <>
+      <Loader isLoading={isAddingIngredient} />
       <ContainerCreateIngridient>
         <FormIngridient
           changeInput={handleInputChange}
