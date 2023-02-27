@@ -13,8 +13,8 @@ export const SelectHeader = styled.div`
   :before {
     content: '';
     position: absolute;
-    top: 57%;
-    right: 3px;
+    top: 40%;
+    right: 6px;
     width: 1px;
     height: 1px;
     border-radius: 50%;
@@ -52,10 +52,10 @@ export const SelectBody = styled.ul`
   border-top: 0;
   background: ${({ theme }) => theme.colors.white};
   padding-left: ${({ theme }) => theme.space[1]}px;
-  padding-bottom: ${({ theme }) => theme.space[2]}px;
+  padding-bottom: ${({ theme }) => theme.space[0]}px;
   padding-right: ${({ theme }) => theme.space[1]}px;
-  padding-top: ${({ theme }) => theme.space[2]}px;
-  border-radius: 2px;
+  padding-top: ${({ theme }) => theme.space[0]}px;
+  border-radius: 4px;
   overflow: hidden;
 `;
 export const SelectItem = styled.li`
@@ -73,7 +73,7 @@ export const SelectItem = styled.li`
   :before {
     content: '';
     position: absolute;
-    top: 75%;
+    top: 45%;
     left: 62%;
     width: 1px;
     height: 1px;
@@ -86,6 +86,6 @@ export const SelectItem = styled.li`
     opacity: 0.4;
     -webkit-transform: scale(170, 50);
     -ms-transform: scale(170, 50);
-    transform: scale(170, 50);
+    transform: scale(170, 25);
   }
 `;

@@ -1,4 +1,7 @@
-import { ContainerCreateIngridient } from './FormCreateIngridient.styled';
+import {
+  ContainerCreateIngridient,
+  ContainerImg,
+} from './FormCreateIngridient.styled';
 import React, { useState } from 'react';
 
 import { useNavigate } from 'react-router';
@@ -28,8 +31,6 @@ const FormCreateIngredient: React.FC = () => {
   > = async event => {
     if (!(event.target instanceof HTMLElement)) return;
     const chooseText = await (event.target as HTMLElement).innerText;
-    console.log(event);
-
     try {
       setOpen(isOpen => !isOpen);
     } catch (error: any) {
@@ -38,9 +39,41 @@ const FormCreateIngredient: React.FC = () => {
     setTextCategory(chooseText);
   };
 
+  const CreatePreviewImg = (addImg: HTMLElement | null, target: string) => {
+    if (!addImg) {
+      const firstImg = document.createElement('img');
+      firstImg.setAttribute('src', `${target}`);
+      firstImg.setAttribute('id', 'old');
+      firstImg.setAttribute('alt', 'preview');
+      document.getElementById('preview-photo')?.appendChild(firstImg);
+    } else {
+      const previewImg = document.createElement('img');
+      previewImg.setAttribute('src', `${target}`);
+      previewImg.setAttribute('id', 'old');
+      previewImg.setAttribute('alt', 'preview');
+      document
+        .getElementById('preview-photo')
+        ?.replaceChild(previewImg, addImg);
+    }
+  };
+
   const handleInputChange = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (!(event.currentTarget instanceof HTMLElement)) return;
+    // Add preview img
+    const target = event.target as HTMLInputElement;
+    const files = target.files;
+    if (files) {
+      const newFile = files[0];
+      const reader = new FileReader();
+      reader.onload = function (e: any) {
+        const oldImg = document.getElementById('old');
+        const value = e.target.result;
+        CreatePreviewImg(oldImg, value);
+      };
+      reader.readAsDataURL(newFile);
+    }
+    // --------------
     const { name, value } = event.currentTarget;
     switch (name) {
       case 'ingredientName':
@@ -48,6 +81,8 @@ const FormCreateIngredient: React.FC = () => {
         break;
       case 'ingredientImg':
         setIngredientImg(event.currentTarget.files[0]);
+        console.log(ingredientImg);
+
         break;
       case 'ingredientDescription':
         setIngredientDescription(value);
@@ -109,6 +144,7 @@ const FormCreateIngredient: React.FC = () => {
             chooseFunction={handleChoose}
           />
         </FormIngridient>
+        <ContainerImg id="preview-photo"></ContainerImg>
       </ContainerCreateIngridient>
     </>
   );

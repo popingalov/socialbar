@@ -57,17 +57,18 @@ export const Category = styled.p`
 `;
 
 export const IngridientDescription = styled.textarea`
-margin-bottom: ${({ theme }) => theme.space[3]}px;
+  margin-bottom: ${({ theme }) => theme.space[3]}px;
   display: flex;
   border: none;
   width: 100%;
   height: 80px;
+  border-radius: 4px;
   font-size: ${({ theme }) => theme.fontSizes.s};
   font-weight: ${({ theme }) => theme.fontWeight.normal};
   font-family: inherit;
   padding: ${({ theme }) => theme.space[1]}px;
   color: ${({ theme }) => theme.colors.secondaryText};
-  background: ${({ theme }) => theme.colors.backdropColor};
+  background: ${({ theme }) => theme.colors.mainBackgroundColor};
   overflow: hidden;
   outline: none;
 `;
@@ -79,6 +80,7 @@ export const FormButton = styled.button`
   text-transform: capitalize;
   justify-content: center;
   border: none;
+  border-radius: 4px;
   font-size: ${({ theme }) => theme.fontSizes.s};
   font-weight: ${({ theme }) => theme.fontWeight.normal};
   font-family: inherit;
