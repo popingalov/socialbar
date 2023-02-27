@@ -1,5 +1,12 @@
 import styled from 'styled-components';
 
 export const ContainerCreateIngridient = styled.div`
-  margin: ${({ theme }) => theme.space[2]}px;
+  padding-top: ${p => p.theme.space[4]}px;
+  padding-bottom: ${p => p.theme.space[4]}px;
+  padding-left: ${p => p.theme.space[3]}px;
+  padding-right: ${p => p.theme.space[3]}px;
+  background-color: ${({ theme }) => theme.colors.mainBackgroundColor};
+`;
+export const ContainerImg = styled.div`
+  margin-top: ${p => p.theme.space[4]}px;
 `;
