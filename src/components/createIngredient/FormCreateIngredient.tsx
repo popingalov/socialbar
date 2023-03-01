@@ -4,6 +4,8 @@ import {
 } from './FormCreateIngridient.styled';
 import React, { useState } from 'react';
 
+// import { useGetLocation } from 'hooks/useGetLocation';
+
 import { useNavigate } from 'react-router';
 import SelectMenu from './select/select';
 import FormIngridient from './form/formIngridient';
@@ -26,16 +28,10 @@ const FormCreateIngredient: React.FC = () => {
 
   const handleShowMenu = () => setOpen(isOpen => !isOpen);
 
-  const handleChoose: React.MouseEventHandler<
-    HTMLLabelElement
-  > = async event => {
+  const handleChoose: React.MouseEventHandler<HTMLLabelElement> = event => {
     if (!(event.target instanceof HTMLElement)) return;
-    const chooseText = await (event.target as HTMLElement).innerText;
-    try {
-      setOpen(isOpen => !isOpen);
-    } catch (error: any) {
-      throw new Error(error);
-    }
+    const chooseText = (event.target as HTMLElement).innerText;
+    setOpen(isOpen => !isOpen);
     setTextCategory(chooseText);
   };
 
