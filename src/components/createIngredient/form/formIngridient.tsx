@@ -60,7 +60,7 @@ const FormIngridient: React.FC<IProps> = ({
               accept=".png, .jpg, .jpeg, .gif, .web"
             ></ButtonAddPhoto>
             {!newPreviewPhoto ? (
-              <AiFillCamera size={24} fill="#757575" />
+              <AiFillCamera size={40} fill="#757575" />
             ) : (
               <ContainerImg id="preview-photo">
                 <img id="old" alt="preview" />
