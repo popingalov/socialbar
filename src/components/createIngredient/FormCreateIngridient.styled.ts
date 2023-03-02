@@ -7,6 +7,3 @@ export const ContainerCreateIngridient = styled.div`
   padding-right: ${p => p.theme.space[3]}px;
   background-color: ${({ theme }) => theme.colors.mainBackgroundColor};
 `;
-export const ContainerImg = styled.div`
-  margin-top: ${p => p.theme.space[4]}px;
-`;
