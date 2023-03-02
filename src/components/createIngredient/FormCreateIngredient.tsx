@@ -1,10 +1,5 @@
-import {
-  ContainerCreateIngridient,
-  ContainerImg,
-} from './FormCreateIngridient.styled';
+import { ContainerCreateIngridient } from './FormCreateIngridient.styled';
 import React, { useState } from 'react';
-
-// import { useGetLocation } from 'hooks/useGetLocation';
 
 import { useNavigate } from 'react-router';
 import SelectMenu from './select/select';
@@ -132,6 +127,7 @@ const FormCreateIngredient: React.FC = () => {
           ingredientImg={ingredientImg}
           ingredientDescription={ingredientDescription}
           submitForm={handleSubmitForm}
+          newPreviewPhoto={ingredientImg}
         >
           <SelectMenu
             text={textCategory}
@@ -140,7 +136,6 @@ const FormCreateIngredient: React.FC = () => {
             chooseFunction={handleChoose}
           />
         </FormIngridient>
-        <ContainerImg id="preview-photo"></ContainerImg>
       </ContainerCreateIngridient>
     </>
   );

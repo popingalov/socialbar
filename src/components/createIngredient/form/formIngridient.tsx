@@ -10,6 +10,7 @@ import {
   Category,
   IngridientDescription,
   FormButton,
+  ContainerImg,
 } from './formIngridient.styled';
 
 import { AiFillCamera } from 'react-icons/ai';
@@ -21,6 +22,7 @@ interface IProps {
   ingredientImg: string;
   ingredientDescription: string;
   submitForm: any;
+  newPreviewPhoto: any;
 }
 
 const FormIngridient: React.FC<IProps> = ({
@@ -29,6 +31,7 @@ const FormIngridient: React.FC<IProps> = ({
   ingredientName,
   ingredientDescription,
   submitForm,
+  newPreviewPhoto,
 }) => {
   const { t } = useTranslation();
   const ingredientNamePlaceholder = t('createIngredient.ingredientName');
@@ -56,7 +59,13 @@ const FormIngridient: React.FC<IProps> = ({
               id="file"
               accept=".png, .jpg, .jpeg, .gif, .web"
             ></ButtonAddPhoto>
-            <AiFillCamera size={24} fill="#757575" />
+            {!newPreviewPhoto ? (
+              <AiFillCamera size={24} fill="#757575" />
+            ) : (
+              <ContainerImg id="preview-photo">
+                <img id="old" alt="preview" />
+              </ContainerImg>
+            )}
           </LabelButtonAddPhoto>
         </ContainerIngridientName>
         <ContainerCategory>

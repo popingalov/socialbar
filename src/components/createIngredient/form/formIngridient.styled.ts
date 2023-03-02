@@ -21,7 +21,7 @@ export const InputIngridientName = styled.input`
   padding-bottom: ${({ theme }) => theme.space[1]}px;
   padding-left: ${({ theme }) => theme.space[1]}px;
   padding-right: ${({ theme }) => theme.space[1]}px;
-  margin-right: ${({ theme }) => theme.space[2]}px;
+  margin-right: ${({ theme }) => theme.space[3]}px;
   width: 100%;
   outline: none;
 
@@ -89,4 +89,15 @@ export const FormButton = styled.button`
   :hover {
     background: ${({ theme }) => theme.colors.accent};
   }
+`;
+export const ContainerImg = styled.div`
+  margin-top: ${p => p.theme.space[4]}px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  position: absolute;
+  top: 0;
+  right: ${({ theme }) => theme.space[3]}px;
 `;
