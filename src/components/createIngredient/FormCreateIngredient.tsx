@@ -54,15 +54,24 @@ const FormCreateIngredient: React.FC = () => {
     // Add preview img
     const target = event.target as HTMLInputElement;
     const files = target.files;
+
+    console.log(files);
+
     if (files) {
       const newFile = files[0];
-      const reader = new FileReader();
-      reader.onload = function (e: any) {
-        const oldImg = document.getElementById('old');
-        const value = e.target.result;
-        CreatePreviewImg(oldImg, value);
-      };
-      reader.readAsDataURL(newFile);
+      console.log(newFile.type);
+      if (newFile.type === 'video/mp4' || newFile.type === 'audio/mpeg') {
+        alert('Add correct photo!');
+        return;
+      } else {
+        const reader = new FileReader();
+        reader.onload = function (e: any) {
+          const oldImg = document.getElementById('old');
+          const value = e.target.result;
+          CreatePreviewImg(oldImg, value);
+        };
+        reader.readAsDataURL(newFile);
+      }
     }
     // --------------
     const { name, value } = event.currentTarget;
@@ -72,7 +81,7 @@ const FormCreateIngredient: React.FC = () => {
         break;
       case 'ingredientImg':
         setIngredientImg(event.currentTarget.files[0]);
-        console.log(ingredientImg);
+        // console.log(ingredientImg);
 
         break;
       case 'ingredientDescription':

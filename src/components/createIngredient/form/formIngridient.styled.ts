@@ -21,7 +21,7 @@ export const InputIngridientName = styled.input`
   padding-bottom: ${({ theme }) => theme.space[1]}px;
   padding-left: ${({ theme }) => theme.space[1]}px;
   padding-right: ${({ theme }) => theme.space[1]}px;
-  margin-right: ${({ theme }) => theme.space[3]}px;
+  margin-right: ${({ theme }) => theme.space[2]}px;
   width: 100%;
   outline: none;
 
@@ -32,8 +32,8 @@ export const InputIngridientName = styled.input`
 
 export const LabelButtonAddPhoto = styled.label`
   cursor: pointer;
-  width: 20px;
-  height: 20px;
+  width: 50px;
+  height: 50px;
 `;
 export const ButtonAddPhoto = styled.input`
   width: 0.1px;
@@ -92,12 +92,13 @@ export const FormButton = styled.button`
 `;
 export const ContainerImg = styled.div`
   margin-top: ${p => p.theme.space[4]}px;
-  width: 30px;
-  height: 30px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
   overflow: hidden;
   display: flex;
   position: absolute;
-  top: 0;
+  top: -20px;
+  border: ${({ theme }) => `1px solid ${theme.colors.borderBottom}`};
   right: ${({ theme }) => theme.space[3]}px;
 `;
