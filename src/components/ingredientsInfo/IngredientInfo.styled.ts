@@ -48,15 +48,25 @@ export const ButtonBase = styled.button`
   align-items: center;
 `;
 
-export const EditBtn = styled(ButtonBase)`
-  color: ${({ theme }) => theme.colors.secondaryText};
+interface BtnUpdateProps {
+  isUpdate: boolean;
+}
+export const EditBtn = styled(ButtonBase)<BtnUpdateProps>`
+  color: ${({ theme, isUpdate }) =>
+    !isUpdate ? theme.colors.link : theme.colors.secondaryText};
 `;
 
 export const CartBtn = styled(ButtonBase)<BtnProps>`
   color: ${({ theme, isShopping }) =>
     isShopping ? theme.colors.link : theme.colors.secondaryText};
 `;
-
+interface BtnDelProps {
+  isDelete: boolean;
+}
+export const DelBtn = styled(ButtonBase)<BtnDelProps>`
+  color: ${({ theme, isDelete }) =>
+    !isDelete ? theme.colors.link : theme.colors.secondaryText};
+`;
 export const Checkbox = styled.input`
   width: 20px;
   height: 20px;

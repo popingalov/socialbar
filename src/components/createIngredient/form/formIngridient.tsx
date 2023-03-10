@@ -13,7 +13,7 @@ import {
   ContainerImg,
 } from './formIngridient.styled';
 
-import { AiFillCamera } from 'react-icons/ai';
+import { FaCamera } from 'react-icons/fa';
 
 interface IProps {
   children?: React.ReactNode;
@@ -60,7 +60,7 @@ const FormIngridient: React.FC<IProps> = ({
               accept=".png, .jpg, .jpeg, .gif, .web"
             ></ButtonAddPhoto>
             {!newPreviewPhoto ? (
-              <AiFillCamera size={40} fill="#757575" />
+              <FaCamera size={40} />
             ) : (
               <ContainerImg id="preview-photo">
                 <img id="old" alt="preview" />

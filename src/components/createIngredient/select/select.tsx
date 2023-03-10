@@ -9,7 +9,7 @@ import {
 
 import React from 'react';
 
-import { AiFillCaretDown } from 'react-icons/ai';
+import { AiOutlineCaretDown } from 'react-icons/ai';
 
 interface IProps {
   text: string;
@@ -39,7 +39,7 @@ const SelectMenu: React.FC<IProps> = ({
         <SelectHeader onClick={clickFunction}>
           <SelectCurrent>{text}</SelectCurrent>
           <SelectIcon>
-            <AiFillCaretDown size={14} fill="#757575" />
+            <AiOutlineCaretDown size={16} />
           </SelectIcon>
         </SelectHeader>
         {isMenuOpen && (
