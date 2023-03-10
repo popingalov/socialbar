@@ -16,99 +16,109 @@ import { IRecipeIngredient } from 'types/recipeIngredient';
 import Glass from './glass';
 import { IGlass } from 'types/manual';
 import Categories from './categories/Categories';
-import Ingredients from './ingredients';
 import { recipeIngredientHandlerType } from 'types/handleRecipeIngredient';
 import { initialRecipeIngredient } from 'constants/initialRecipeIngredient';
 import uuid from 'react-uuid';
 import { ingredientRecipeSelectStatus } from 'types/ingredientRecipeSelectStatus';
 import { initialIngredientRecipeSelectStatus } from 'constants/ingredientRecipeSelectStatus';
 
-const CreateCocktail = () => {
-  const [dataLS, setDataLS] = useState(null); // TODO: only for template LocalStorage
-  const { data: glasses } = useGetGlassesQuery();
+import {
+  Formik,
+  Form,
+  Field,
+  FieldArray,
+  FormikValues,
+  FormikHelpers,
+  ErrorMessage,
+} from 'formik';
+import * as Yup from 'yup';
+import FormSelect from 'components/UI-kit/form/formSelect/FormSelect';
+import SecondaryButton from 'components/UI-kit/buttons/secondaryButton/SecondaryButton';
+import IngredientRecipe from './ingredients/ingredientRecipe/IngredientRecipe';
+import { useAddCocktailMutation } from 'redux/api/cocktailApi';
 
+interface FormValues {
+  name: string;
+  cocktailImg: string;
+  glass: IGlass | undefined;
+  description: string;
+  recipe: string;
+  categories: string[];
+
+  // [key: string]: string | undefined;
+  // additionalFields: {
+  //   [key: string]: string;
+  // };
+}
+
+const CreateCocktail = () => {
+  // const [dataLS, setDataLS] = useState(null); // TODO: only for template LocalStorage
+  const { data: glasses } = useGetGlassesQuery();
   const initialGlass = glasses?.find(({ title }) => title === 'Standard');
-  const [name, setName] = useState('');
-  const [cocktailImg, setCocktailImg] = useState<File | null>(null);
   const [glass, setGlass] = useState<IGlass | null>(null);
   const [categories, setCategories] = useState<string[]>([]);
-  const [description, setDescription] = useState('');
-  const [recipe, setRecipe] = useState('');
+
+  const [categoriesSelectIsOpen, setCategoriesSelectIsOpen] = useState(false);
   const firstIngredient = { ...initialRecipeIngredient, id: uuid() };
   const [ingredients, setIngredients] = useState<IRecipeIngredient[]>([
     firstIngredient,
   ]);
-
-  const [categoriesSelectIsOpen, setCategoriesSelectIsOpen] = useState(false);
-  const [ingredientsSelectIsOpen, setIngredientsSelectIsOpen] = useState<
-    ingredientRecipeSelectStatus[]
-  >(initialIngredientRecipeSelectStatus);
+  const [addCocktail] = useAddCocktailMutation();
 
   useEffect(() => {
     if (initialGlass) setGlass(initialGlass);
   }, [initialGlass]);
 
-  useEffect(() => {
-    // Перевірка локального сховища при монтуванні компонента
-    const storedData = localStorage.getItem('myData');
-    // console.log('storedData', storedData);
-    if (storedData) {
-      setDataLS(JSON.parse(storedData));
-    }
-
-    // Повертаємо колбек-функцію, яка виконається при демонтажі компонента
-    return () => {
-      // Збереження даних в локальному сховищі при демонтажі компонента
-      if (dataLS) {
-        localStorage.setItem('myData', JSON.stringify(dataLS));
-      }
-    };
-  }, [dataLS]); // Потрібно вказати data, щоб useEffect відслідковував його зміни
-
-  const handleChangeName: ChangeEventHandler<HTMLInputElement> = event => {
-    setName(event.target.value);
+  const initialValues = {
+    name: '',
+    cocktailImg: '',
+    glass: initialGlass,
+    categories: [],
+    description: '',
+    recipe: '',
+    // ingredients: [firstIngredient],
+    // additionalFields: {},
   };
 
-  const handleImgChange: ChangeEventHandler<HTMLInputElement> = event => {
-    const file = event.target.files?.[0];
-    if (file) {
-      setCocktailImg(file); // or setCocktailImg(URL.createObjectURL(file));
-    }
+  const validationSchema = Yup.object().shape({
+    // name: Yup.string().required('Required'),
+    // cocktailImg: Yup.mixed().required('Required'),
+    // glass: Yup.object().required('Required'),
+    // categories: Yup.array().min(1, 'Please select at least one category'),
+    // description: Yup.string().required('Required'),
+    // recipe: Yup.string().required('Required'),
+    // ingredients: Yup.array().min(1, 'Please add at least one ingredient'),
+  });
+
+  const handleSubmit = (
+    values: FormValues,
+    actions: FormikHelpers<FormValues>,
+  ) => {
+    // const { resetForm, setSubmitting } = actions;
+    console.log('data all', values);
+    console.log('categories submit', values.categories);
+    console.log('ingredients', ingredients);
+    // setSubmitting(true);
+    // resetForm();
+    // const cocktail = new FormData();
+
+    // addCocktail(cocktail);
   };
 
-  const handleGlass = (glass: IGlass) => {
-    setGlass(glass);
-  };
+  const handleRecipeIngredient: recipeIngredientHandlerType = ing => {
+    console.log('tyt', ing.id);
+    // console.log('ing', ing);
 
-  const handleCategorySelect = (type: string, value: string) => {
-    if (categories.includes(value)) {
-      return;
-    }
-    setCategories(prevState => [...prevState, value]);
-  };
-
-  const handleDescription: ChangeEventHandler<HTMLTextAreaElement> = event => {
-    setDescription(event.target.value);
-  };
-
-  const handleRecipeSteps: ChangeEventHandler<HTMLTextAreaElement> = event => {
-    setRecipe(event.target.value);
-  };
-
-  const handleRecipeIngredient: recipeIngredientHandlerType = ({
-    id,
-    name,
-    value,
-    checked,
-  }) => {
-    setIngredients(prevState =>
-      prevState.map(ingredient => {
-        if (ingredient.id === id) {
-          ingredient[name] = value ? value : checked;
+    setIngredients(prevState => {
+      const newState = prevState.map(ingredient => {
+        if (ingredient.id === ing.id) {
+          return ing;
         }
         return ingredient;
-      }),
-    );
+      });
+
+      return newState;
+    });
   };
 
   const addIngredient = () => {
@@ -122,109 +132,100 @@ const CreateCocktail = () => {
     );
   };
 
-  const handleSubmit: FormEventHandler<HTMLFormElement> = event => {
-    event.preventDefault();
-    // TODO: check all required fields and send message what missed
-    const data = {
-      name,
-      cocktailImg,
-      glass,
-      categories,
-      description,
-      recipe,
-      ingredients,
-    };
-    console.log('data all', data);
-    // reset();
-  };
-
-  const reset = () => {
-    setName('');
-    setCocktailImg(null);
-    if (initialGlass) setGlass(initialGlass);
-    setCategories([]);
-    setDescription('');
-    setRecipe('');
-    setIngredients([firstIngredient]);
-  };
-
-  // TODO: add backdrop close select modal for ingredients selects
-  const handleClickBackdrop: MouseEventHandler<HTMLFormElement> = event => {
-    const select = event.target as Element;
-    const isOutsideCategorySelect =
-      select.closest('div')?.getAttribute('name') !== 'categorySelect';
-    if (categoriesSelectIsOpen && isOutsideCategorySelect) {
-      setCategoriesSelectIsOpen(false);
-    }
-  };
-
-  const handleIngredientSelect = ({
-    type,
-    status,
-  }: ingredientRecipeSelectStatus) => {
-    setIngredientsSelectIsOpen(preState =>
-      preState.map(select => {
-        if (select.type === type) {
-          select.status = status;
-        }
-        return select;
-      }),
-    );
-  };
-
   return (
     <>
       {glass && (
-        <FormStyled onClick={handleClickBackdrop} onSubmit={handleSubmit}>
-          <Box display="flex" alignItems="center" gridGap={2} mb={4}>
-            <Input
-              changeInput={handleChangeName}
-              placeholder="Create cocktail"
-              name="name"
-              value={name}
-            />
-            <InputFile
-              changeInput={handleImgChange}
-              name="cocktailImg"
-              id="file"
-            />
-          </Box>
+        <Formik<FormValues>
+          initialValues={initialValues}
+          validationSchema={validationSchema}
+          onSubmit={handleSubmit}
+        >
+          {({ values, errors, touched, handleChange, handleBlur }) => {
+            return (
+              <>
+                {values.glass && (
+                  <FormStyled>
+                    <Box display="flex" alignItems="center" gridGap={2}>
+                      <Input name="name" placeholder="create cocktail" />
+                      <InputFile name="cocktailImg" id="file" />
+                    </Box>
 
-          <Glass onChoose={handleGlass} currentGlass={glass} />
-          <Categories
-            categoriesSelectIsOpen={categoriesSelectIsOpen}
-            openSelect={() => {
-              setCategoriesSelectIsOpen(true);
-            }}
-            closeSelect={() => {
-              setCategoriesSelectIsOpen(false);
-            }}
-            categories={categories}
-            handleCategorySelect={handleCategorySelect}
-          />
-          <Textarea
-            changeInput={handleDescription}
-            placeholder="cocktail description"
-            value={description}
-            name="cocktailDescription"
-          />
-          <Textarea
-            label="Preparation steps"
-            changeInput={handleRecipeSteps}
-            placeholder="1.Put some ice into a shaker"
-            value={recipe}
-            name="cocktailRecipe"
-          />
-          <Ingredients
-            ingredients={ingredients}
-            handleRecipeIngredient={handleRecipeIngredient}
-            addIngredient={addIngredient}
-            deleteIngredient={deleteIngredient}
-            ingredientsSelectStatus={ingredientsSelectIsOpen}
-            toggleSelect={handleIngredientSelect}
-          />
-          <FormButton>Save</FormButton>
-        </FormStyled>
+                    <Glass
+                      currentGlass={values.glass}
+                      onChoose={(glass: IGlass) => {
+                        handleChange({
+                          target: { name: 'glass', value: glass },
+                        });
+                      }}
+                    />
+
+                    <Categories
+                      categoriesSelectIsOpen={categoriesSelectIsOpen}
+                      openSelect={() => {
+                        setCategoriesSelectIsOpen(true);
+                      }}
+                      closeSelect={() => {
+                        setCategoriesSelectIsOpen(false);
+                      }}
+                      categories={categories}
+                      handleCategorySelect={(type: string, value: string) => {
+                        if (categories.includes(value)) {
+                          return;
+                        }
+                        setCategories(prevState => [...prevState, value]);
+                        handleChange({
+                          target: {
+                            name: 'categories',
+                            value: [...values.categories, value],
+                          },
+                        });
+                      }}
+                      handleDelete={(type: string, value: string) => {
+                        setCategories(prevState => {
+                          const indexToDelete = prevState.indexOf(value);
+                          if (indexToDelete !== -1) {
+                            prevState.splice(indexToDelete, 1);
+                          }
+                          return prevState;
+                        });
+                        handleChange({
+                          target: {
+                            name: 'categories',
+                            value: [...categories],
+                          },
+                        });
+                      }}
+                    />
+                    <Textarea
+                      placeholder="cocktail description"
+                      name="description"
+                    />
+                    <Textarea
+                      placeholder="1.Put some ice into a shaker"
+                      name="recipe"
+                    />
+
+                    {ingredients.map(({ id }) => {
+                      return (
+                        <IngredientRecipe
+                          key={id}
+                          id={id}
+                          onChange={handleRecipeIngredient}
+                          deleteIngredient={deleteIngredient}
+                        />
+                      );
+                    })}
+                    <SecondaryButton onClick={addIngredient}>
+                      Add ingredient
+                    </SecondaryButton>
+
+                    <FormButton>Save</FormButton>
+                  </FormStyled>
+                )}
+              </>
+            );
+          }}
+        </Formik>
       )}
     </>
   );
@@ -233,188 +234,44 @@ const CreateCocktail = () => {
 export default CreateCocktail;
 
 /**
- * 
-const CreateCocktail = () => {
-  const [dataLS, setDataLS] = useState(null); // TODO: only for template LocalStorage
+ * import { Formik, Field, FieldArray } from 'formik';
 
-  const { data: glasses } = useGetGlassesQuery();
-
-  const initialGlass = glasses?.find(({ title }) => title === 'Standard');
-  const [name, setName] = useState('');
-  const [cocktailImg, setCocktailImg] = useState<File | null>(null);
-  const [glass, setGlass] = useState<IGlass | null>(null);
-  const [categories, setCategories] = useState<string[]>([]);
-  const [description, setDescription] = useState('');
-  const [recipe, setRecipe] = useState('');
-  const [ingredients, setIngredients] = useState<IRecipeIngredient[]>([
-    {
-      name: '',
-      quantity: '',
-      measure: '',
-      garnish: false,
-      optional: false,
-    },
-  ]);
-
-  useEffect(() => {
-    if (initialGlass) setGlass(initialGlass);
-  }, [initialGlass]);
-
-  useEffect(() => {
-    // Перевірка локального сховища при монтуванні компонента
-    const storedData = localStorage.getItem('myData');
-    // console.log('storedData', storedData);
-    if (storedData) {
-      setDataLS(JSON.parse(storedData));
-    }
-
-    // Повертаємо колбек-функцію, яка виконається при демонтажі компонента
-    return () => {
-      // Збереження даних в локальному сховищі при демонтажі компонента
-      if (dataLS) {
-        localStorage.setItem('myData', JSON.stringify(dataLS));
-      }
-    };
-  }, [dataLS]); // Потрібно вказати data, щоб useEffect відслідковував його зміни
-
-  const handleChangeName: ChangeEventHandler<HTMLInputElement> = event => {
-    setName(event.target.value);
-  };
-
-  const handleImgChange: ChangeEventHandler<HTMLInputElement> = event => {
-    const file = event.target.files?.[0];
-    if (file) {
-      setCocktailImg(file); // or setCocktailImg(URL.createObjectURL(file));
-    }
-  };
-
-  const handleGlass = (glass: IGlass) => {
-    setGlass(glass);
-  };
-
-  const handleCategorySelect = (value: string) => {
-    if (categories.includes(value)) {
-      return;
-    }
-    setCategories(prevState => [...prevState, value]);
-  };
-
-  const handleDescription: ChangeEventHandler<HTMLTextAreaElement> = event => {
-    setDescription(event.target.value);
-  };
-
-  const handleRecipeSteps: ChangeEventHandler<HTMLTextAreaElement> = event => {
-    setRecipe(event.target.value);
-  };
-
-  const handleRecipeIngredient = ({
-    index,
-    name,
-    value,
-    checked,
-  }: {
-    index: number;
-    name: string;
-    value: string;
-    checked: boolean;
-  }) => {
-    console.log('index', index);
-    console.log('value', value);
-    console.log('checked', checked);
-
-    let data: IRecipeIngredient[] = [...ingredients];
-
-    data[index][name] = value ? value : checked;
-    console.log('data[index][name]', data[index][name]);
-
-    setIngredients(data);
-  };
-
-  const addIngredient = () => {
-    let newIngredient: IRecipeIngredient = {
-      name: '',
-      quantity: '',
-      measure: '',
-      garnish: false,
-      optional: false,
-    };
-    setIngredients([...ingredients, newIngredient]);
-  };
-
-  const handleSubmit: FormEventHandler<HTMLFormElement> = event => {
-    event.preventDefault();
-    // TODO: check all required fields and send message what missed
-    const data = {
-      name,
-      cocktailImg,
-      glass,
-      categories,
-      description,
-      recipe,
-      ingredients,
-    };
-    console.log('data all', data);
-    // reset();
-  };
-
-  const reset = () => {
-    setName('');
-    setCocktailImg(null);
-    setGlass(null);
-    setCategories([]);
-    setDescription('');
-    setRecipe('');
-    setIngredients([]);
-  };
-
+function MyForm() {
   return (
-    <>
-      {glass && (
-        <FormStyled onSubmit={handleSubmit}>
-          <Box display="flex" alignItems="center" gridGap={2} mb={4}>
-            <Input
-              changeInput={handleChangeName}
-              placeholder="Create cocktail"
-              name="name"
-              value={name}
-            />
-            <InputFile
-              changeInput={handleImgChange}
-              name="cocktailImg"
-              id="file"
-            />
-          </Box>
-
-          <Glass onChoose={handleGlass} currentGlass={glass} />
-          <Categories
-            categories={categories}
-            handleCategorySelect={handleCategorySelect}
-          />
-          <Textarea
-            changeInput={handleDescription}
-            placeholder="cocktail description"
-            value={description}
-            name="cocktailDescription"
-          />
-          <Textarea
-            label="Preparation steps"
-            changeInput={handleRecipeSteps}
-            placeholder="1.Put some ice into a shaker"
-            value={recipe}
-            name="cocktailRecipe"
-          />
-          <Ingredients
-            ingredients={ingredients}
-            handleRecipeIngredient={handleRecipeIngredient}
-            addIngredient={addIngredient}
-          />
-          <FormButton>Save</FormButton>
-        </FormStyled>
+    <Formik
+      initialValues={{ mainField: '', subFields: [] }}
+      onSubmit={values => console.log(values)}
+    >
+      {formik => (
+        <form onSubmit={formik.handleSubmit}>
+          <Field name="mainField" />
+          <FieldArray name="subFields">
+            {arrayHelpers => (
+              <>
+                {formik.values.subFields.map((subField, index) => (
+                  <div key={index}>
+                    <Field name={`subFields.${index}.subField1`} />
+                    <Field name={`subFields.${index}.subField2`} />
+                  </div>
+                ))}
+                <button type="button" onClick={() => arrayHelpers.push({ subField1: '', subField2: '' })}>
+                  Add Sub-Field
+                </button>
+              </>
+            )}
+          </FieldArray>
+          <button type="submit">Submit</button>
+        </form>
       )}
-    </>
+    </Formik>
   );
-};
+}
+In this example, the subFields array is managed by the FieldArray component. Each item in the array represents a sub-form with two fields (subField1 and subField2). When the "Add Sub-Field" button is clicked, a new empty sub-form is added to the array. The name attribute of the Field components is set to a string that includes the index of the sub-form in the subFields array, so that Formik can correctly manage the nested state.
 
-export default CreateCocktail;
+Note that this example does not actually nest a <form> element inside another <form> element. Instead, the sub-forms are rendered as groups of fields within the main form. This approach should work for most use cases where you need to create nested forms.
+
+
+
+
 
  */
