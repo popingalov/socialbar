@@ -1,22 +1,14 @@
 import Box from 'components/box';
 import Checkbox from 'components/UI-kit/checkbox';
-import Input from 'components/UI-kit/form/input';
 import SecondaryButton from 'components/UI-kit/buttons/secondaryButton';
 import { ChangeEventHandler, useState } from 'react';
 import { RxCross2 } from 'react-icons/rx';
-import { recipeIngredientHandlerType } from 'types/handleRecipeIngredient';
-import { IIngredientRecipeData } from 'types/ingredientRecipeData';
-import {
-  DeleteButton,
-  MeasureBox,
-  RecipeIngredient,
-} from './IngredientRecipe.styled';
-import FormSelect from 'components/UI-kit/form/formSelect';
+import { DeleteButton, RecipeIngredient } from './IngredientRecipe.styled';
 import { measures } from 'constants/measures';
 import Measures from './measure/Measures';
-import { ingredientRecipeSelectStatus } from 'types/ingredientRecipeSelectStatus';
 import Name from './name';
 import { IRecipeIngredient } from 'types/recipeIngredient';
+import Substitute from './substitute';
 
 interface IProps {
   id: string;
@@ -51,6 +43,7 @@ const IngredientRecipe: React.FC<IProps> = ({
     ...initialIngredient,
     id,
   });
+  const [substituteIsOpen, setSubstituteIsOpen] = useState(false);
 
   const handleFieldChange: ChangeEventHandler<HTMLInputElement> = event => {
     const { value, name, checked } = event.target;
@@ -79,7 +72,13 @@ const IngredientRecipe: React.FC<IProps> = ({
     onChange(ingredient);
   };
 
-  function handleChose({ title, id }: { title: string; id: string }) {
+  const handleIngredientChoose = ({
+    title,
+    id,
+  }: {
+    title: string;
+    id: string;
+  }) => {
     setIngredient(state => {
       state.name = title;
       state.ingredientId = id;
@@ -87,7 +86,10 @@ const IngredientRecipe: React.FC<IProps> = ({
       return state;
     });
     onChange(ingredient);
-  }
+  };
+
+  const handleSubstituteChoose = () => {};
+
   const { garnish, measure, measureType, name, optional } = ingredient;
   return (
     <RecipeIngredient>
@@ -99,8 +101,7 @@ const IngredientRecipe: React.FC<IProps> = ({
       >
         <RxCross2 aria-label="delete" />
       </DeleteButton>
-      <Name onChose={handleChose} />
-      {/* <Name handleFieldChange={handleFieldChange} value={name} /> */}
+      <Name onChoose={handleIngredientChoose} />
       <Measures
         handleFieldChange={handleFieldChange}
         handleSelect={handleSelect}
@@ -122,7 +123,20 @@ const IngredientRecipe: React.FC<IProps> = ({
           label="Optional"
         />
       </Box>
-      <SecondaryButton>Add substitute</SecondaryButton>
+      <SecondaryButton
+        onClick={() => {
+          setSubstituteIsOpen(true);
+        }}
+      >
+        Add substitute
+      </SecondaryButton>
+      <Substitute
+        onChoose={handleSubstituteChoose}
+        substituteIsOpen={substituteIsOpen}
+        closeSubstituteSelect={() => {
+          setSubstituteIsOpen(false);
+        }}
+      />
     </RecipeIngredient>
   );
 };

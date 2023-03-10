@@ -1,7 +1,7 @@
+import { ChangeEventHandler, useState } from 'react';
 import Box from 'components/box';
 import FormSelect from 'components/UI-kit/form/formSelect';
 import Input from 'components/UI-kit/form/input';
-import { ChangeEvent, ChangeEventHandler, useState } from 'react';
 import { MeasureBox, MeasureType } from './Measures.styled';
 
 interface IProps {
@@ -24,7 +24,7 @@ const Measures: React.FC<IProps> = ({
   return (
     <MeasureBox>
       <Input
-        placeholder="07"
+        placeholder="10"
         changeInput={handleFieldChange}
         name="measure"
         type="number"

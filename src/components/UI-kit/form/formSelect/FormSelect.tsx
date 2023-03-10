@@ -1,16 +1,12 @@
-import {
-  Modal,
-  Option,
-  OptionsList,
-  SelectLabelButton,
-} from './FormSelect.styled';
+import { SelectLabelButton } from './FormSelect.styled';
 import { AnimatePresence } from 'framer-motion';
 import { AiOutlineCaretDown } from 'react-icons/ai';
 import { theme } from 'constants/theme';
 import Box from 'components/box/Box';
+import OptionsList from '../optionsList';
 
 interface IProps {
-  options?: string[];
+  options: string[];
   onChange?: (type: string, value: string) => void;
   name: string;
   selectIsOpen: boolean;
@@ -51,16 +47,11 @@ const FormSelect: React.FC<IProps> = ({
 
       <AnimatePresence>
         {selectIsOpen && (
-          <Modal key="popUp" name="categorySelect">
-            <OptionsList>
-              {options &&
-                options.map((option: string) => (
-                  <Option onClick={() => handleChange(option)} key={option}>
-                    {option}
-                  </Option>
-                ))}
-            </OptionsList>
-          </Modal>
+          <OptionsList
+            options={options}
+            handleCategoryChange={handleChange}
+            name={name}
+          />
         )}
       </AnimatePresence>
     </Box>

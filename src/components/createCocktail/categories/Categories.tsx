@@ -44,9 +44,10 @@ const Categories: React.FC<IProps> = ({
             </li>
           ))}
       </CategoriesListStyled>
+
       {cocktailCategories && (
         <FormSelect
-          name="category"
+          name="categorySelect"
           selectIsOpen={categoriesSelectIsOpen}
           openSelect={openSelect}
           closeSelect={closeSelect}

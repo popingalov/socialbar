@@ -107,7 +107,7 @@ const CreateCocktail = () => {
 
   const handleRecipeIngredient: recipeIngredientHandlerType = ing => {
     console.log('tyt', ing.id);
-    console.log('ing', ing);
+    // console.log('ing', ing);
 
     setIngredients(prevState => {
       const newState = prevState.map(ingredient => {

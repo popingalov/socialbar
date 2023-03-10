@@ -1,11 +1,14 @@
 import { AnimatePresence } from 'framer-motion';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { MainInput } from './Name.styled';
 import { useGetSearchedIngredients } from 'hooks/useGetSearchedIngredients';
+import OptionsList from 'components/UI-kit/form/optionsList';
+
 interface IProps {
-  onChose: (el: any) => void;
+  onChoose: (el: any) => void;
 }
-const Name: React.FC<IProps> = ({ onChose }) => {
+
+const Name: React.FC<IProps> = ({ onChoose }) => {
   const [searchValue, setSearchValue] = useState('');
   const [value, setValue] = useState('');
   const { ingredients } = useGetSearchedIngredients(searchValue);
@@ -16,38 +19,33 @@ const Name: React.FC<IProps> = ({ onChose }) => {
     setValue(value);
   };
 
-  function handlClickOnIngredient({
+  const handleClickOnIngredient = ({
     title,
     id,
   }: {
     title: string;
     id: string;
-  }) {
-    onChose({ title, id });
+  }) => {
+    onChoose({ title, id });
     setValue(title);
     setSearchValue('');
-  }
-  if (ingredients?.length === 1) {
-    handlClickOnIngredient(ingredients[0]);
-  }
+  };
+
+  // if (ingredients?.length === 1) {
+  //   handleClickOnIngredient(ingredients[0]);
+  // }
+
   return (
     <>
       <MainInput value={value} onChange={handleInput} placeholder="Name" />
 
       <AnimatePresence>
-        {ingredients && (
-          <ul>
-            {ingredients.map(({ title, id }, index, array) => (
-              <li
-                key={title}
-                onClick={() => {
-                  handlClickOnIngredient({ title, id });
-                }}
-              >
-                {title}
-              </li>
-            ))}
-          </ul>
+        {ingredients && ingredients.length > 0 && (
+          <OptionsList
+            name="ingredientSelect"
+            options={ingredients}
+            handleIngredientChange={handleClickOnIngredient}
+          />
         )}
       </AnimatePresence>
     </>

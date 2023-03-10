@@ -1,5 +1,9 @@
 import Box from 'components/box';
 import PopUp from 'components/modal/popUp';
+import {
+  Option,
+  OptionsListStyled,
+} from 'components/UI-kit/form/optionsList/OptionsList.styled';
 import { theme } from 'constants/theme';
 import { AnimatePresence } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
@@ -68,18 +72,18 @@ const Glass: React.FC<IProps> = ({ onChoose, currentGlass }) => {
       <AnimatePresence>
         {popUpIsOpen && (
           <PopUp key="popUp" coordinates={selectCoordinates} type="glass">
-            <ul>
+            <OptionsListStyled>
               {glasses &&
                 glasses.map(glass => (
-                  <li
+                  <Option
                     onClick={() => handleOptionChange(glass)}
                     // isActive={option === currentValue}
                     key={glass._id}
                   >
                     <p>{glass.title}</p>
-                  </li>
+                  </Option>
                 ))}
-            </ul>
+            </OptionsListStyled>
           </PopUp>
         )}
       </AnimatePresence>
