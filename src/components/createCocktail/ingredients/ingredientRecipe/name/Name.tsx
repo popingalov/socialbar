@@ -15,6 +15,7 @@ const Name: React.FC<IProps> = ({ onChose }) => {
     setSearchValue(value);
     setValue(value);
   };
+
   function handlClickOnIngredient({
     title,
     id,

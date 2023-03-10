@@ -35,7 +35,7 @@ interface IInitIng {
 }
 const initialIngredient: IRecipeIngredient = {
   name: '',
-  measure: '30',
+  measure: '10',
   garnish: false,
   optional: false,
   measureType: 'ml',
@@ -58,9 +58,10 @@ const IngredientRecipe: React.FC<IProps> = ({
     const testOnChecked = value === 'iChecked';
     setIngredient(state => {
       state[name] = !testOnChecked ? value : checked;
-      onChange(state);
+      // onChange(state);
       return state;
     });
+    onChange(ingredient);
   };
 
   const helperHandler: ChangeEventHandler<HTMLInputElement> = event => {
@@ -72,17 +73,20 @@ const IngredientRecipe: React.FC<IProps> = ({
     if (type === 'measureType')
       setIngredient(state => {
         state[type] = value;
-        onChange(state);
+        // onChange(state);
         return state;
       });
+    onChange(ingredient);
   };
-  function handlerChose({ title, id }: { title: string; id: string }) {
+
+  function handleChose({ title, id }: { title: string; id: string }) {
     setIngredient(state => {
       state.name = title;
       state.ingredientId = id;
-      onChange(state);
+      // onChange(state);
       return state;
     });
+    onChange(ingredient);
   }
   const { garnish, measure, measureType, name, optional } = ingredient;
   return (
@@ -95,7 +99,7 @@ const IngredientRecipe: React.FC<IProps> = ({
       >
         <RxCross2 aria-label="delete" />
       </DeleteButton>
-      <Name onChose={handlerChose} />
+      <Name onChose={handleChose} />
       {/* <Name handleFieldChange={handleFieldChange} value={name} /> */}
       <Measures
         handleFieldChange={handleFieldChange}

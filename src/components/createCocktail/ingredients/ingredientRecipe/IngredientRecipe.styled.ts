@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 
 export const RecipeIngredient = styled.div`
-  margin-bottom: ${({ theme }) => theme.space[4]}px;
   padding-top: ${({ theme }) => theme.space[3]}px;
   padding-bottom: ${({ theme }) => theme.space[3]}px;
   padding-left: ${({ theme }) => theme.space[3]}px;

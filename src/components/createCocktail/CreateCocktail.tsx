@@ -63,7 +63,7 @@ const CreateCocktail = () => {
   const [ingredients, setIngredients] = useState<IRecipeIngredient[]>([
     firstIngredient,
   ]);
-  const [fetchCocktail] = useAddCocktailMutation();
+  const [addCocktail] = useAddCocktailMutation();
 
   useEffect(() => {
     if (initialGlass) setGlass(initialGlass);
@@ -101,11 +101,12 @@ const CreateCocktail = () => {
     // resetForm();
     // const cocktail = new FormData();
 
-    // fetchCocktail(cocktail);
+    // addCocktail(cocktail);
   };
 
   const handleRecipeIngredient: recipeIngredientHandlerType = ing => {
     console.log('tyt', ing.id);
+    console.log('ing', ing);
 
     setIngredients(prevState => {
       const newState = prevState.map(ingredient => {
