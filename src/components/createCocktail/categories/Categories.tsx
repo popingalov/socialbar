@@ -1,7 +1,9 @@
 import Box from 'components/box';
 import FormSelect from 'components/UI-kit/form/formSelect';
 import { ErrorMessage } from 'formik';
+import { RxCross2 } from 'react-icons/rx';
 import { useGetCategoriesQuery } from 'redux/api/manualApi';
+import { CategoriesListStyled, DeleteButton } from './Categories.styled';
 
 interface IProps {
   categories: string[];
@@ -9,6 +11,7 @@ interface IProps {
   categoriesSelectIsOpen: boolean;
   openSelect: () => void;
   closeSelect: () => void;
+  handleDelete: (type: string, value: string) => void;
 }
 
 const Categories: React.FC<IProps> = ({
@@ -17,16 +20,30 @@ const Categories: React.FC<IProps> = ({
   categoriesSelectIsOpen,
   openSelect,
   closeSelect,
+  handleDelete,
 }) => {
   const { data } = useGetCategoriesQuery();
   const cocktailCategories = data?.cocktails.map(({ title }) => title);
 
   return (
-    <Box display="flex" gridGap={4} alignItems="center" mb={4}>
+    <Box display="flex" gridGap={2} alignItems="center">
       <p>Categories:</p>
-      {categories &&
-        categories.map((category, index) => <p key={index}>{category}</p>)}
-
+      <CategoriesListStyled>
+        {categories &&
+          categories.map((category, index) => (
+            <li key={index}>
+              <p>{category}</p>
+              <DeleteButton
+                type="button"
+                onClick={() => {
+                  handleDelete('category', category);
+                }}
+              >
+                <RxCross2 aria-label="delete" />
+              </DeleteButton>
+            </li>
+          ))}
+      </CategoriesListStyled>
       {cocktailCategories && (
         <FormSelect
           name="category"

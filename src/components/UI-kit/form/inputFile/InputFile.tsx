@@ -10,7 +10,10 @@ interface IProps {
 
 const InputFile: React.FC<IProps> = ({ name, id }) => {
   return (
-    <label htmlFor={name} style={{ position: 'relative' }}>
+    <label
+      htmlFor={name}
+      style={{ position: 'relative', width: '24px', height: '24px' }}
+    >
       <InputAddPhoto
         placeholder="image"
         type="file"
@@ -24,10 +27,12 @@ const InputFile: React.FC<IProps> = ({ name, id }) => {
         color={theme.colors.secondaryText}
         style={{
           position: 'absolute',
-          top: 0,
-          right: 0,
-          margin: '8px',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
           pointerEvents: 'none',
+          width: '20px',
+          height: '20px',
         }}
       />
     </label>

@@ -1,7 +1,9 @@
 import Box from 'components/box';
 import PopUp from 'components/modal/popUp';
+import { theme } from 'constants/theme';
 import { AnimatePresence } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
+import { AiOutlineCaretDown } from 'react-icons/ai';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { useGetGlassesQuery } from 'redux/api/manualApi';
@@ -55,13 +57,13 @@ const Glass: React.FC<IProps> = ({ onChoose, currentGlass }) => {
 
   return (
     <>
-      <Box>
+      <Box display="flex" alignItems="center">
         <p>Glass:</p>
-        <p>{currentGlass.title}</p>
+        <ButtonStyled type="button" ref={ref} onClick={handleClick}>
+          {currentGlass.title}
+          <AiOutlineCaretDown color={theme.colors.mainText} />
+        </ButtonStyled>
       </Box>
-      <ButtonStyled type="button" ref={ref} onClick={handleClick}>
-        Choose glass
-      </ButtonStyled>
 
       <AnimatePresence>
         {popUpIsOpen && (

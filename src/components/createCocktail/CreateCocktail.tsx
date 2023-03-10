@@ -96,6 +96,7 @@ const CreateCocktail = () => {
   ) => {
     // const { resetForm, setSubmitting } = actions;
     console.log('data all', values);
+    console.log('categories submit', values.categories);
     console.log('ingredients', ingredients);
     // setSubmitting(true);
     // resetForm();
@@ -176,6 +177,21 @@ const CreateCocktail = () => {
                           target: {
                             name: 'categories',
                             value: [...values.categories, value],
+                          },
+                        });
+                      }}
+                      handleDelete={(type: string, value: string) => {
+                        setCategories(prevState => {
+                          const indexToDelete = prevState.indexOf(value);
+                          if (indexToDelete !== -1) {
+                            prevState.splice(indexToDelete, 1);
+                          }
+                          return prevState;
+                        });
+                        handleChange({
+                          target: {
+                            name: 'categories',
+                            value: [...categories],
                           },
                         });
                       }}

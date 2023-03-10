@@ -7,19 +7,14 @@ export const LabelAddPhoto = styled.label`
   display: flex;
   justify-content: center;
   align-items: center;
-
-  svg {
-    width: 20px;
-    height: 20px;
-  }
 `;
 
 export const InputAddPhoto = styled(Field)<{
   border: string;
   backgroundColor: string;
 }>`
-  width: 16px;
-  height: 16px;
+  width: 100%;
+  height: 100%;
   opacity: 0;
   overflow: hidden;
   /* position: absolute; */
