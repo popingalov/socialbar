@@ -82,7 +82,6 @@ const FormCreateIngredient: React.FC = () => {
       case 'ingredientImg':
         setIngredientImg(event.currentTarget.files[0]);
         // console.log(ingredientImg);
-
         break;
       case 'ingredientDescription':
         setIngredientDescription(value);
