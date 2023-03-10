@@ -64,6 +64,7 @@ const CreateCocktail = () => {
     firstIngredient,
   ]);
   const [fetchCocktail] = useAddCocktailMutation();
+
   useEffect(() => {
     if (initialGlass) setGlass(initialGlass);
   }, [initialGlass]);
