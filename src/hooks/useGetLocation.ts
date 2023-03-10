@@ -28,6 +28,9 @@ export const useGetLocation = () => {
   const isIngredientsAndSearch =
     path === paths.ingredients || path === paths.searchIngredient;
 
+  const isCreateNewIngredient =
+    pathData[pathData.length - 2] === 'ingredients' && pathData.length === 3;
+
   return {
     isMainRoute,
     isExtraRoute,
@@ -39,5 +42,6 @@ export const useGetLocation = () => {
     isIngredients,
     isCocktails,
     isIngredientsAndSearch,
+    isCreateNewIngredient,
   };
 };

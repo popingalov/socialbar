@@ -3,7 +3,7 @@ import baseQuery from 'redux/baseQuery';
 import type { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import { IIngredient } from 'types/ingredient';
 
-import { newIIngredient } from 'types/newIngredient';
+import { INewIngredient } from 'types/newIngredient';
 
 import { INGREDIENT_URL, TAGS_TYPES } from 'constants/api';
 import { RootState } from 'redux/store';
@@ -62,7 +62,7 @@ export const ingredientApi = createApi({
       ],
     }),
 
-    addIngredient: builder.mutation<IIngredient, Partial<newIIngredient>>({
+    addIngredient: builder.mutation<IIngredient, Partial<INewIngredient>>({
       query: newIngredient => ({
         url: `${INGREDIENT_URL}`,
         method: 'POST',

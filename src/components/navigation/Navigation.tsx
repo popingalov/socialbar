@@ -43,6 +43,7 @@ const Navigation = () => {
     isCocktails,
     isSearchInDetails,
     isSearch,
+    isCreateNewIngredient,
   } = useGetLocation();
   const filter = useGetPageCategories(isIngredients);
   const selectLabel = useGetNavSelectLabel(isIngredients);
@@ -64,6 +65,10 @@ const Navigation = () => {
       dispatch(changeSearchFilter(initialSearchStatus));
     }
 
+    if (isCreateNewIngredient) {
+      navigate('/ingredients');
+      return;
+    }
     navigate(-1);
   };
 

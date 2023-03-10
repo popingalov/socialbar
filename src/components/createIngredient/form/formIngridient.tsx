@@ -6,14 +6,14 @@ import {
   InputIngridientName,
   LabelButtonAddPhoto,
   ButtonAddPhoto,
-  ImageButton,
   ContainerCategory,
   Category,
   IngridientDescription,
   FormButton,
+  ContainerImg,
 } from './formIngridient.styled';
 
-import cameraSvg from '../../../assets/images/newIngridient/camera-6728.svg';
+import { AiFillCamera } from 'react-icons/ai';
 
 interface IProps {
   children?: React.ReactNode;
@@ -22,15 +22,16 @@ interface IProps {
   ingredientImg: string;
   ingredientDescription: string;
   submitForm: any;
+  newPreviewPhoto: any;
 }
 
 const FormIngridient: React.FC<IProps> = ({
   children,
   changeInput,
   ingredientName,
-  ingredientImg,
   ingredientDescription,
   submitForm,
+  newPreviewPhoto,
 }) => {
   const { t } = useTranslation();
   const ingredientNamePlaceholder = t('createIngredient.ingredientName');
@@ -42,12 +43,10 @@ const FormIngridient: React.FC<IProps> = ({
         <ContainerIngridientName>
           <InputIngridientName
             onChange={changeInput}
-            placeholder="Ingredient name"
+            placeholder={ingredientNamePlaceholder}
             value={ingredientName}
-
             type="text"
             name="ingredientName"
-            src={cameraSvg}
             required
           ></InputIngridientName>
           <LabelButtonAddPhoto>
@@ -55,13 +54,18 @@ const FormIngridient: React.FC<IProps> = ({
               onChange={changeInput}
               placeholder=""
               // value={ingredientImg}
-              src={cameraSvg}
               type="file"
               name="ingredientImg"
               id="file"
               accept=".png, .jpg, .jpeg, .gif, .web"
             ></ButtonAddPhoto>
-            <ImageButton src={cameraSvg} alt="icon person" />
+            {!newPreviewPhoto ? (
+              <AiFillCamera size={40} fill="#757575" />
+            ) : (
+              <ContainerImg id="preview-photo">
+                <img id="old" alt="preview" />
+              </ContainerImg>
+            )}
           </LabelButtonAddPhoto>
         </ContainerIngridientName>
         <ContainerCategory>
