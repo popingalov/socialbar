@@ -37,10 +37,9 @@ interface IProps {
 }
 
 const IngredientInfo: React.FC<IProps> = ({ ingredient }) => {
-
-  const { title, id, iHave, shopping, picture, description } = ingredient;
+  const { title, id, iHave, shopping, picture, description, isDefault } =
+    ingredient;
   // console.log('ingredient', ingredient);
-
 
   const [addToMyBar, { isLoading: addingToMyBar }] = useAddToBarMutation();
   const [deleteFromMyBar, { isLoading: deletingFromMyBar }] =
