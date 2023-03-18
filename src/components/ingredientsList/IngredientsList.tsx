@@ -23,6 +23,7 @@ interface IProps {
   isMyBar: boolean;
   isShoppingList: boolean;
   type?: string;
+  onSubstituteClick?: (id: string) => void;
 }
 
 const IngredientsList: React.FC<IProps> = ({
@@ -30,6 +31,7 @@ const IngredientsList: React.FC<IProps> = ({
   isMyBar,
   isShoppingList,
   type = 'main',
+  onSubstituteClick,
 }) => {
   const contextMenuIsOpen = useSelector(selectContextMenuStatus);
   const isSearchOpen = useSelector(selectPopUpSearchStatus);
@@ -81,6 +83,12 @@ const IngredientsList: React.FC<IProps> = ({
     id: string,
   ) => {
     const target = event.target as Element;
+
+    if (type === 'substitute' && onSubstituteClick) {
+      onSubstituteClick(id);
+      return;
+    }
+
     const isCheckbox = target.closest('label');
     const isButton = target.closest('button');
     if (isCheckbox || isButton) return;

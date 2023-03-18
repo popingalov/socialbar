@@ -1,4 +1,4 @@
-import { MouseEventHandler } from 'react';
+import React, { MouseEventHandler } from 'react';
 import { ButtonStyled } from './SecondaryButton.styled';
 
 interface IProps {
@@ -6,12 +6,21 @@ interface IProps {
   children?: React.ReactNode;
 }
 
-const SecondaryButton: React.FC<IProps> = ({ children, onClick }) => {
-  return (
-    <ButtonStyled type="button" onClick={onClick}>
-      {children}
-    </ButtonStyled>
-  );
-};
+export type Ref = HTMLButtonElement;
+
+const SecondaryButton = React.forwardRef<Ref, IProps>(
+  ({ children, onClick }, ref) => {
+    return (
+      <ButtonStyled
+        type="button"
+        onClick={onClick}
+        ref={ref}
+        whileTap={{ scale: 0.95 }}
+      >
+        {children}
+      </ButtonStyled>
+    );
+  },
+);
 
 export default SecondaryButton;

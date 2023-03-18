@@ -12,7 +12,7 @@ import {
 import { useDeleteFromShoppingMutation } from 'redux/api/shoppingApi';
 
 interface IProps {
-  filter: string;
+  filter?: string;
   name: string;
   isInShoppingList: boolean;
   isInMyBar: boolean;

@@ -1,7 +1,7 @@
 import Box from 'components/box';
 import Checkbox from 'components/UI-kit/checkbox';
 import SecondaryButton from 'components/UI-kit/buttons/secondaryButton';
-import { ChangeEventHandler, useState } from 'react';
+import { ChangeEventHandler, useEffect, useRef, useState } from 'react';
 import { RxCross2 } from 'react-icons/rx';
 import { DeleteButton, RecipeIngredient } from './IngredientRecipe.styled';
 import { measures } from 'constants/measures';
@@ -15,25 +15,17 @@ interface IProps {
   onChange: any;
   deleteIngredient: (id: string) => void;
 }
-interface IInitIng {
-  [key: string]: any;
-  name: string;
-  measure: string;
-  garnish: boolean;
-  optional: boolean;
-  measureType: string;
-  id: string;
-  ingredientId: string;
-}
+
 const initialIngredient: IRecipeIngredient = {
   name: '',
-  measure: '10',
+  measure: '',
   garnish: false,
   optional: false,
   measureType: 'ml',
   id: '',
   ingredientId: '',
 };
+
 const IngredientRecipe: React.FC<IProps> = ({
   onChange,
   id,
@@ -44,6 +36,30 @@ const IngredientRecipe: React.FC<IProps> = ({
     id,
   });
   const [substituteIsOpen, setSubstituteIsOpen] = useState(false);
+  const [substituteCoordinates, setSubstituteCoordinates] =
+    useState<ICoordinates>({
+      top: null,
+      left: null,
+      right: null,
+    });
+  const ref = useRef<HTMLButtonElement | null>(null);
+
+  useEffect(() => {
+    if (ref.current) ref.current.focus();
+
+    window.addEventListener('resize', getCoordinates);
+
+    function getCoordinates() {
+      if (ref.current) {
+        const { top, left, right, height } =
+          ref.current.getBoundingClientRect();
+        setSubstituteCoordinates({ top: top + height, left, right });
+      }
+    }
+    getCoordinates();
+
+    return () => window.removeEventListener('resize', getCoordinates);
+  }, []);
 
   const handleFieldChange: ChangeEventHandler<HTMLInputElement> = event => {
     const { value, name, checked } = event.target;
@@ -90,7 +106,7 @@ const IngredientRecipe: React.FC<IProps> = ({
 
   const handleSubstituteChoose = () => {};
 
-  const { garnish, measure, measureType, name, optional } = ingredient;
+  const { garnish, measure, measureType, optional } = ingredient;
   return (
     <RecipeIngredient>
       <DeleteButton
@@ -124,6 +140,7 @@ const IngredientRecipe: React.FC<IProps> = ({
         />
       </Box>
       <SecondaryButton
+        ref={ref}
         onClick={() => {
           setSubstituteIsOpen(true);
         }}
@@ -131,6 +148,7 @@ const IngredientRecipe: React.FC<IProps> = ({
         Add substitute
       </SecondaryButton>
       <Substitute
+        coordinates={substituteCoordinates}
         onChoose={handleSubstituteChoose}
         substituteIsOpen={substituteIsOpen}
         closeSubstituteSelect={() => {
@@ -142,3 +160,14 @@ const IngredientRecipe: React.FC<IProps> = ({
 };
 
 export default IngredientRecipe;
+
+// interface IInitIng {
+//   [key: string]: any;
+//   name: string;
+//   measure: string;
+//   garnish: boolean;
+//   optional: boolean;
+//   measureType: string;
+//   id: string;
+//   ingredientId: string;
+// }

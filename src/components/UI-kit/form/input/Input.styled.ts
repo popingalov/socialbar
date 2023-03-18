@@ -1,6 +1,10 @@
 import { Field } from 'formik';
 import styled from 'styled-components';
 
+export const LabelStyled = styled.label`
+  width: 100%;
+`;
+
 export const InputStyled = styled(Field)<{
   isRecipeIngredient: boolean;
   // border: string;

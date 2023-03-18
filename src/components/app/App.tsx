@@ -7,7 +7,8 @@ import {
   useSearchParams,
 } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
-import { useAppSelector, useAppDispatch } from 'redux/hooks';
+import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import {
   Cocktails,
   CocktailsDetails,
@@ -18,17 +19,16 @@ import {
   NewIngredient,
   Settings,
 } from './lazyexports';
-import { GlobalStyle } from './App.styled';
 import Loader from 'components/loader';
 import MobileMenu from 'components/mobileMenu';
+import Search from 'pages/search';
 import { selectMobileMenuStatus } from 'redux/modal/modalSelectors';
 import { setToken } from 'redux/auth/authSlice';
 import { tokenState } from 'redux/auth/authSelectors';
-import { useGetMeQuery } from 'redux/api/userApi';
-import Search from 'pages/search';
-import { useSelector } from 'react-redux';
-import { useTranslation } from 'react-i18next';
 import { selectSettings } from 'redux/settings/settingsSelectors';
+import { useAppSelector, useAppDispatch } from 'redux/hooks';
+import { useGetMeQuery } from 'redux/api/userApi';
+import { GlobalStyle } from './App.styled';
 
 const App = () => {
   const location = useLocation();

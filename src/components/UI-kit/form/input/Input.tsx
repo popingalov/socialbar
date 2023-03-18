@@ -1,6 +1,6 @@
-import { ErrorMessage, Field, FieldProps } from 'formik';
+import { ErrorMessage } from 'formik';
 import { ChangeEventHandler } from 'react';
-import { ErrorText, InputStyled } from './Input.styled';
+import { ErrorText, InputStyled, LabelStyled } from './Input.styled';
 
 interface IProps {
   changeInput?: ChangeEventHandler<HTMLInputElement>;
@@ -22,7 +22,7 @@ const Input: React.FC<IProps> = ({
   changeInput,
 }) => {
   return (
-    <label htmlFor={name}>
+    <LabelStyled htmlFor={name}>
       <InputStyled
         type={type}
         value={value}
@@ -31,7 +31,7 @@ const Input: React.FC<IProps> = ({
         placeholder={placeholder}
       />
       <ErrorMessage name={name} component={ErrorText} />
-    </label>
+    </LabelStyled>
   );
 };
 

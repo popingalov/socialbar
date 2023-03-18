@@ -1,6 +1,5 @@
 import Box from 'components/box';
 import FormSelect from 'components/UI-kit/form/formSelect';
-import { ErrorMessage } from 'formik';
 import { RxCross2 } from 'react-icons/rx';
 import { useGetCategoriesQuery } from 'redux/api/manualApi';
 import { CategoriesListStyled, DeleteButton } from './Categories.styled';

@@ -1,46 +1,53 @@
-import Box from 'components/box/Box';
-import CocktailList from 'components/cocktailList';
-import PopUp from 'components/modal/popUp';
-import { AnimatePresence } from 'framer-motion';
 import React from 'react';
-import { useFetchCocktailsQuery } from 'redux/api/cocktailApi';
+import { AnimatePresence } from 'framer-motion';
+import Box from 'components/box/Box';
+import PopUp from 'components/modal/popUp';
+import { useFetchIngredientsQuery } from 'redux/api/ingredientApi';
+import {
+  Option,
+  OptionsListStyled,
+} from 'components/UI-kit/form/optionsList/OptionsList.styled';
+import IngredientsList from 'components/ingredientsList';
+import IngredientCard from 'components/ingredientsList/ingredientCard';
 
 interface IProps {
   onChoose: (el: any) => void;
   substituteIsOpen: boolean;
   closeSubstituteSelect: () => void;
+  coordinates: any;
 }
 
 const Substitute: React.FC<IProps> = ({
   onChoose,
   substituteIsOpen,
   closeSubstituteSelect,
+  coordinates,
 }) => {
-  const { data: cocktails, isFetching: cocktailsFetching } =
-    useFetchCocktailsQuery();
-  // console.log('cocktails', cocktails);
+  const { data: ingredients, isFetching } = useFetchIngredientsQuery();
+
+  const handleSubstituteSelectClick = (id: string) => {
+    console.log('substitute click: id', id);
+  };
 
   return (
     <>
       <Box>here should be list of substitutes</Box>
       <AnimatePresence>
-        {cocktails && substituteIsOpen && (
+        {ingredients && substituteIsOpen && (
           <PopUp
             type="select"
             coordinates={{ top: 0, left: 0, right: 0 }}
             onClose={closeSubstituteSelect}
           >
-            <CocktailList cocktails={cocktails?.all} />
+            <IngredientsList
+              onSubstituteClick={handleSubstituteSelectClick}
+              ingredients={ingredients}
+              isMyBar={false}
+              isShoppingList={false}
+              type="substitute"
+            />
           </PopUp>
         )}
-
-        {/* {ingredients && ingredients.length > 0 && (
-          <OptionsList
-            name="ingredientSelect"
-            options={ingredients}
-            handleIngredientChange={handleClickOnIngredient}
-          />
-        )} */}
       </AnimatePresence>
     </>
   );
