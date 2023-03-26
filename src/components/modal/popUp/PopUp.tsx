@@ -3,6 +3,9 @@ import { Modal } from './PopUp.styled';
 import Overlay from 'components/modal/overlay';
 import { popUpMenuAnimation } from 'constants/animations';
 import { useGetWindowDimensions } from 'hooks/useGetWindowDimensions';
+import { createPortal } from 'react-dom';
+
+const modalRoot: HTMLDivElement = document.querySelector('#modal')!;
 
 interface IProps {
   children?: ReactNode;
@@ -58,19 +61,22 @@ const PopUp: React.FC<IProps> = ({
           </Modal>
         </Overlay>
       ) : (
-        <Modal
-          windowdimensions={windowDimensions}
-          modaldimensions={modalDimensions}
-          key="popUp"
-          {...popUpMenuAnimation}
-          transition={{ duration: 0.2 }}
-          type={type}
-          top={top}
-          left={left}
-          right={right}
-        >
-          {children}
-        </Modal>
+        createPortal(
+          <Modal
+            windowdimensions={windowDimensions}
+            modaldimensions={modalDimensions}
+            key="popUp"
+            {...popUpMenuAnimation}
+            transition={{ duration: 0.2 }}
+            type={type}
+            top={top}
+            left={left}
+            right={right}
+          >
+            {children}
+          </Modal>,
+          modalRoot,
+        )
       )}
     </>
   );

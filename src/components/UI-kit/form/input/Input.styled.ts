@@ -1,6 +1,12 @@
+import { Field } from 'formik';
 import styled from 'styled-components';
 
-export const InputStyled = styled.input<{ isRecipeIngredient: boolean }>`
+export const InputStyled = styled(Field)<{
+  isRecipeIngredient: boolean;
+  // border: string;
+  // backgroundColor: string;
+}>`
+  cursor: pointer;
   padding-top: ${({ theme, isRecipeIngredient }) =>
     isRecipeIngredient ? theme.space[1] : theme.space[2]}px;
   padding-bottom: ${({ theme, isRecipeIngredient }) =>
@@ -16,4 +22,9 @@ export const InputStyled = styled.input<{ isRecipeIngredient: boolean }>`
   ::placeholder {
     ${({ theme }) => theme.colors.secondaryText};
   }
+`;
+
+export const ErrorText = styled.p`
+  color: red;
+  font-size: ${p => p.theme.fontSizes.xs};
 `;

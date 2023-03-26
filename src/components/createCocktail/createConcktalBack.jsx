@@ -40,9 +40,6 @@ const CreateCocktail = () => {
   ]);
 
   const [categoriesSelectIsOpen, setCategoriesSelectIsOpen] = useState(false);
-  const [ingredientsSelectIsOpen, setIngredientsSelectIsOpen] = useState<
-    ingredientRecipeSelectStatus[]
-  >(initialIngredientRecipeSelectStatus);
 
   useEffect(() => {
     if (initialGlass) setGlass(initialGlass);
@@ -135,7 +132,7 @@ const CreateCocktail = () => {
       ingredients,
     };
     console.log('data all', data);
-    reset();
+    // reset();
   };
 
   const reset = () => {
@@ -156,20 +153,6 @@ const CreateCocktail = () => {
     if (categoriesSelectIsOpen && isOutsideCategorySelect) {
       setCategoriesSelectIsOpen(false);
     }
-  };
-
-  const handleIngredientSelect = ({
-    type,
-    status,
-  }: ingredientRecipeSelectStatus) => {
-    setIngredientsSelectIsOpen(preState =>
-      preState.map(select => {
-        if (select.type === type) {
-          select.status = status;
-        }
-        return select;
-      }),
-    );
   };
 
   return (
@@ -220,8 +203,6 @@ const CreateCocktail = () => {
             handleRecipeIngredient={handleRecipeIngredient}
             addIngredient={addIngredient}
             deleteIngredient={deleteIngredient}
-            ingredientsSelectStatus={ingredientsSelectIsOpen}
-            toggleSelect={handleIngredientSelect}
           />
           <FormButton>Save</FormButton>
         </FormStyled>

@@ -1,33 +1,37 @@
+import { ErrorMessage, Field, FieldProps } from 'formik';
 import { ChangeEventHandler } from 'react';
-import { InputStyled } from './Input.styled';
+import { ErrorText, InputStyled } from './Input.styled';
 
 interface IProps {
-  changeInput: ChangeEventHandler<HTMLInputElement>;
+  changeInput?: ChangeEventHandler<HTMLInputElement>;
   placeholder: string;
   name: string;
-  value: string;
+  value?: string;
   isRecipeIngredient?: boolean;
   type?: string;
+  errors?: any;
+  touched?: any;
 }
 
 const Input: React.FC<IProps> = ({
-  changeInput,
   placeholder,
   name,
-  value,
   isRecipeIngredient,
+  value,
   type = 'text',
+  changeInput,
 }) => {
   return (
-    <InputStyled
-      onChange={changeInput}
-      placeholder={placeholder}
-      type={type}
-      name={name}
-      value={value}
-      isRecipeIngredient={isRecipeIngredient || false}
-      required
-    />
+    <label htmlFor={name}>
+      <InputStyled
+        type={type}
+        value={value}
+        name={name}
+        onChange={changeInput}
+        placeholder={placeholder}
+      />
+      <ErrorMessage name={name} component={ErrorText} />
+    </label>
   );
 };
 

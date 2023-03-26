@@ -1,5 +1,5 @@
 export const initialRecipeIngredient = {
-  name: '',
+  ingredientId: '',
   measureType: '',
   measure: '',
   garnish: false,

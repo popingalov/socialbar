@@ -30,3 +30,8 @@ export const TextareaStyled = styled.textarea`
     ${({ theme }) => theme.colors.secondaryText};
   }
 `;
+
+export const ErrorText = styled.p`
+  color: red;
+  font-size: ${p => p.theme.fontSizes.xs};
+`;

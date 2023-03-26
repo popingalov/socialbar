@@ -1,102 +1,96 @@
 import Box from 'components/box';
 import Checkbox from 'components/UI-kit/checkbox';
-import Input from 'components/UI-kit/form/input';
 import SecondaryButton from 'components/UI-kit/buttons/secondaryButton';
 import { ChangeEventHandler, useState } from 'react';
 import { RxCross2 } from 'react-icons/rx';
-import { recipeIngredientHandlerType } from 'types/handleRecipeIngredient';
-import { IIngredientRecipeData } from 'types/ingredientRecipeData';
-import {
-  DeleteButton,
-  Label,
-  MeasureBox,
-  RecipeIngredient,
-} from './IngredientRecipe.styled';
-import FormSelect from 'components/UI-kit/form/formSelect';
+import { DeleteButton, RecipeIngredient } from './IngredientRecipe.styled';
 import { measures } from 'constants/measures';
 import Measures from './measure/Measures';
-import { ingredientRecipeSelectStatus } from 'types/ingredientRecipeSelectStatus';
+import Name from './name';
+import { IRecipeIngredient } from 'types/recipeIngredient';
+import Substitute from './substitute';
 
 interface IProps {
   id: string;
-  onChange: recipeIngredientHandlerType;
+  onChange: any;
   deleteIngredient: (id: string) => void;
-  ingredientsSelectStatus: ingredientRecipeSelectStatus[];
-  toggleSelect: ({ type, status }: ingredientRecipeSelectStatus) => void;
 }
-
+interface IInitIng {
+  [key: string]: any;
+  name: string;
+  measure: string;
+  garnish: boolean;
+  optional: boolean;
+  measureType: string;
+  id: string;
+  ingredientId: string;
+}
+const initialIngredient: IRecipeIngredient = {
+  name: '',
+  measure: '10',
+  garnish: false,
+  optional: false,
+  measureType: 'ml',
+  id: '',
+  ingredientId: '',
+};
 const IngredientRecipe: React.FC<IProps> = ({
   onChange,
   id,
   deleteIngredient,
-  ingredientsSelectStatus,
-  toggleSelect,
 }) => {
-  const [name, setName] = useState('');
-  const [measure, setMeasure] = useState('');
-  const [garnish, setGarnish] = useState(false);
-  const [optional, setOptional] = useState(false);
-  const [measureType, setMeasureType] = useState('ml');
-
-  const measureTypeSelect = ingredientsSelectStatus.find(
-    ({ type }) => type === 'measureType',
-  );
-  const measureTypeSelectStatus = measureTypeSelect?.status || false;
+  const [ingredient, setIngredient] = useState<IRecipeIngredient>({
+    ...initialIngredient,
+    id,
+  });
+  const [substituteIsOpen, setSubstituteIsOpen] = useState(false);
 
   const handleFieldChange: ChangeEventHandler<HTMLInputElement> = event => {
     const { value, name, checked } = event.target;
-    const ingredientData: IIngredientRecipeData = {
-      name,
-      value: null,
-      checked: null,
-      id,
-    };
 
-    switch (name) {
-      case 'name':
-        setName(value);
-        ingredientData.value = value;
-        break;
-      case 'measure':
-        setMeasure(value);
-        ingredientData.value = value;
-        break;
-      case 'garnish':
-        setGarnish(checked);
-        ingredientData.checked = checked;
-        break;
-      case 'optional':
-        setOptional(checked);
-        ingredientData.checked = checked;
-        break;
-      default:
-        break;
-    }
+    const testOnChecked = value === 'iChecked';
+    setIngredient(state => {
+      state[name] = !testOnChecked ? value : checked;
+      // onChange(state);
+      return state;
+    });
+    onChange(ingredient);
+  };
 
-    onChange(ingredientData);
+  const helperHandler: ChangeEventHandler<HTMLInputElement> = event => {
+    event.target.value = 'iChecked';
+    handleFieldChange(event);
   };
 
   const handleSelect = (type: string, value: string) => {
-    if (type === 'measureType') setMeasureType(value);
-
-    const ingredientData: IIngredientRecipeData = {
-      name: type,
-      value: value,
-      checked: null,
-      id,
-    };
-
-    onChange(ingredientData);
+    if (type === 'measureType')
+      setIngredient(state => {
+        state[type] = value;
+        // onChange(state);
+        return state;
+      });
+    onChange(ingredient);
   };
 
-  const openSelectModal = (type: string) => {
-    toggleSelect({ type, status: true });
+  const handleIngredientChoose = ({
+    title,
+    id,
+  }: {
+    title: string;
+    id: string;
+  }) => {
+    setIngredient(state => {
+      state.name = title;
+      state.ingredientId = id;
+      // onChange(state);
+      return state;
+    });
+    onChange(ingredient);
   };
 
-  const closeSelectModal = (type: string) => {
-    toggleSelect({ type, status: false });
-  };
+  const handleSubstituteChoose = () => {};
 
+  const { garnish, measure, measureType, name, optional } = ingredient;
   return (
     <RecipeIngredient>
       <DeleteButton
@@ -107,44 +101,42 @@ const IngredientRecipe: React.FC<IProps> = ({
       >
         <RxCross2 aria-label="delete" />
       </DeleteButton>
-      <Label>
-        <Input
-          placeholder="Name"
-          changeInput={handleFieldChange}
-          name="name"
-          value={name}
-          isRecipeIngredient={true}
-        />
-      </Label>
+      <Name onChoose={handleIngredientChoose} />
       <Measures
         handleFieldChange={handleFieldChange}
         handleSelect={handleSelect}
         measure={measure}
         measureTypes={measures}
         measureType={measureType}
-        measureSelectIsOpen={measureTypeSelectStatus}
-        openSelect={() => {
-          openSelectModal('measureType');
-        }}
-        closeSelect={() => {
-          closeSelectModal('measureType');
-        }}
       />
       <Box display="flex" gridGap={3}>
         <Checkbox
           name="garnish"
           checked={garnish}
-          onChange={handleFieldChange}
+          onChange={helperHandler}
           label="Garnish"
         />
         <Checkbox
           name="optional"
           checked={optional}
-          onChange={handleFieldChange}
+          onChange={helperHandler}
           label="Optional"
         />
       </Box>
-      <SecondaryButton>Add substitute</SecondaryButton>
+      <SecondaryButton
+        onClick={() => {
+          setSubstituteIsOpen(true);
+        }}
+      >
+        Add substitute
+      </SecondaryButton>
+      <Substitute
+        onChoose={handleSubstituteChoose}
+        substituteIsOpen={substituteIsOpen}
+        closeSubstituteSelect={() => {
+          setSubstituteIsOpen(false);
+        }}
+      />
     </RecipeIngredient>
   );
 };

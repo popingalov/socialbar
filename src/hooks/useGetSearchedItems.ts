@@ -19,10 +19,10 @@ export const useGetSearchedItems = () => {
   }
 
   const filteredIngredients = ingredients?.filter(({ title }) =>
-    title.includes(searchValue),
+    title.toLowerCase().includes(searchValue.toLowerCase()),
   );
   const filteredCocktails = cocktails?.all.filter(({ title }) =>
-    title.includes(searchValue),
+    title.toLowerCase().includes(searchValue.toLowerCase()),
   );
 
   return {
