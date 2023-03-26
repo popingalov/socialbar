@@ -135,7 +135,7 @@ const CreateCocktail = () => {
       ingredients,
     };
     console.log('data all', data);
-    // reset();
+    reset();
   };
 
   const reset = () => {

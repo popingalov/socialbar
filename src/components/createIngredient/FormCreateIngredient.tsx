@@ -8,6 +8,8 @@ import FormIngridient from './form/formIngridient';
 import { useAddIngredientMutation } from '../../redux/api/ingredientApi';
 import Loader from 'components/loader/Loader';
 
+import Notification from 'components/notification';
+
 const FormCreateIngredient: React.FC = () => {
   const [ingredientName, setIngredientName] = useState<string>('');
   const [ingredientImg, setIngredientImg] = useState<string>('');
@@ -18,6 +20,8 @@ const FormCreateIngredient: React.FC = () => {
 
   const [adding, { isLoading: isAddingIngredient }] =
     useAddIngredientMutation();
+
+  const [showNotification, setShowNotification] = useState<boolean>(false);
 
   const navigate = useNavigate();
 
@@ -52,17 +56,16 @@ const FormCreateIngredient: React.FC = () => {
     event.preventDefault();
     if (!(event.currentTarget instanceof HTMLElement)) return;
     // Add preview img
-    const target = event.target as HTMLInputElement;
-    const files = target.files;
-
-    console.log(files);
-
+    const files = (event.target as HTMLInputElement).files;
     if (files) {
       const newFile = files[0];
-      console.log(newFile.type);
-      if (newFile.type === 'video/mp4' || newFile.type === 'audio/mpeg') {
-        alert('Add correct photo!');
-        return;
+      if (
+        newFile.type === 'video/mp4' ||
+        newFile.type === 'audio/mpeg' ||
+        newFile.type === 'text/plain' ||
+        newFile.type === 'application/json'
+      ) {
+        return setShowNotification(true);
       } else {
         const reader = new FileReader();
         reader.onload = function (e: any) {
@@ -81,7 +84,6 @@ const FormCreateIngredient: React.FC = () => {
         break;
       case 'ingredientImg':
         setIngredientImg(event.currentTarget.files[0]);
-        // console.log(ingredientImg);
         break;
       case 'ingredientDescription':
         setIngredientDescription(value);
@@ -93,6 +95,12 @@ const FormCreateIngredient: React.FC = () => {
         return;
     }
   };
+
+  const clickButton = (event: any) => {
+    event.preventDefault();
+    setShowNotification(false);
+  };
+
   const addIngredientHandle = async () => {
     try {
       const respond = new FormData();
@@ -145,6 +153,13 @@ const FormCreateIngredient: React.FC = () => {
           />
         </FormIngridient>
       </ContainerCreateIngridient>
+      {showNotification && (
+        <Notification
+          message={'Add correct photo!'}
+          buttonSelect={['ok']}
+          handleClick={clickButton}
+        />
+      )}
     </>
   );
 };

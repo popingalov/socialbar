@@ -4,3 +4,7 @@ export interface INewIngredient extends FormData {
   picture?: Blob;
   category: string[];
 }
+
+export interface IUpdateIngredient {
+  ingredient: any;
+}
