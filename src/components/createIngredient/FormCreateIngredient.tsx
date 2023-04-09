@@ -7,6 +7,9 @@ import FormIngridient from './form/formIngridient';
 
 import { useAddIngredientMutation } from '../../redux/api/ingredientApi';
 import Loader from 'components/loader/Loader';
+import PreviewImg from 'components/previewImg/PreviewImg';
+
+import Notification from 'components/notification';
 
 const FormCreateIngredient: React.FC = () => {
   const [ingredientName, setIngredientName] = useState<string>('');
@@ -19,6 +22,8 @@ const FormCreateIngredient: React.FC = () => {
   const [adding, { isLoading: isAddingIngredient }] =
     useAddIngredientMutation();
 
+  const [showNotification, setShowNotification] = useState<boolean>(false);
+
   const navigate = useNavigate();
 
   const handleShowMenu = () => setOpen(isOpen => !isOpen);
@@ -30,50 +35,32 @@ const FormCreateIngredient: React.FC = () => {
     setTextCategory(chooseText);
   };
 
-  const CreatePreviewImg = (addImg: HTMLElement | null, target: string) => {
-    if (!addImg) {
-      const firstImg = document.createElement('img');
-      firstImg.setAttribute('src', `${target}`);
-      firstImg.setAttribute('id', 'old');
-      firstImg.setAttribute('alt', 'preview');
-      document.getElementById('preview-photo')?.appendChild(firstImg);
-    } else {
-      const previewImg = document.createElement('img');
-      previewImg.setAttribute('src', `${target}`);
-      previewImg.setAttribute('id', 'old');
-      previewImg.setAttribute('alt', 'preview');
-      document
-        .getElementById('preview-photo')
-        ?.replaceChild(previewImg, addImg);
-    }
-  };
-
   const handleInputChange = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (!(event.currentTarget instanceof HTMLElement)) return;
-    // Add preview img
-    const target = event.target as HTMLInputElement;
-    const files = target.files;
 
-    console.log(files);
-
+    const files = (event.target as HTMLInputElement).files;
+    console.log('files', files);
     if (files) {
       const newFile = files[0];
-      console.log(newFile.type);
-      if (newFile.type === 'video/mp4' || newFile.type === 'audio/mpeg') {
-        alert('Add correct photo!');
-        return;
+      if (
+        newFile.type === 'video/mp4' ||
+        newFile.type === 'audio/mpeg' ||
+        newFile.type === 'text/plain' ||
+        newFile.type === 'application/json' ||
+        newFile.type === 'application/pdf'
+      ) {
+        return setShowNotification(true);
       } else {
         const reader = new FileReader();
         reader.onload = function (e: any) {
           const oldImg = document.getElementById('old');
           const value = e.target.result;
-          CreatePreviewImg(oldImg, value);
+          PreviewImg(oldImg, value);
         };
         reader.readAsDataURL(newFile);
       }
     }
-    // --------------
     const { name, value } = event.currentTarget;
     switch (name) {
       case 'ingredientName':
@@ -81,7 +68,6 @@ const FormCreateIngredient: React.FC = () => {
         break;
       case 'ingredientImg':
         setIngredientImg(event.currentTarget.files[0]);
-        // console.log(ingredientImg);
         break;
       case 'ingredientDescription':
         setIngredientDescription(value);
@@ -93,6 +79,12 @@ const FormCreateIngredient: React.FC = () => {
         return;
     }
   };
+
+  const clickButton = (event: any) => {
+    event.preventDefault();
+    setShowNotification(false);
+  };
+
   const addIngredientHandle = async () => {
     try {
       const respond = new FormData();
@@ -145,6 +137,13 @@ const FormCreateIngredient: React.FC = () => {
           />
         </FormIngridient>
       </ContainerCreateIngridient>
+      {showNotification && (
+        <Notification
+          message={'Add correct photo!'}
+          buttonSelect={['ok']}
+          handleClick={clickButton}
+        />
+      )}
     </>
   );
 };

@@ -13,6 +13,8 @@ export const theme = {
 
     modal: '#f5f4fa',
 
+    backdropNotificationColor: ' rgba(0, 0, 0, 0.5)', // backdrop grey shadow color
+
     backdropColor: ' rgba(0, 0, 0, 0.2)', // backdrop grey shadow color
     inputError: ' rgba(142, 22, 0, 0.08)', // red input error color
     borderBottom: 'rgba(0, 0, 0, 0.13)',

@@ -235,7 +235,6 @@ export default CreateCocktail;
 
 /**
  * import { Formik, Field, FieldArray } from 'formik';
-
 function MyForm() {
   return (
     <Formik
@@ -267,11 +266,5 @@ function MyForm() {
   );
 }
 In this example, the subFields array is managed by the FieldArray component. Each item in the array represents a sub-form with two fields (subField1 and subField2). When the "Add Sub-Field" button is clicked, a new empty sub-form is added to the array. The name attribute of the Field components is set to a string that includes the index of the sub-form in the subFields array, so that Formik can correctly manage the nested state.
-
 Note that this example does not actually nest a <form> element inside another <form> element. Instead, the sub-forms are rendered as groups of fields within the main form. This approach should work for most use cases where you need to create nested forms.
-
-
-
-
-
  */

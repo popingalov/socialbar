@@ -22,7 +22,7 @@ interface IProps {
   ingredientImg: string;
   ingredientDescription: string;
   submitForm: any;
-  newPreviewPhoto: any;
+  newPreviewPhoto?: any;
 }
 
 const FormIngridient: React.FC<IProps> = ({
@@ -53,11 +53,10 @@ const FormIngridient: React.FC<IProps> = ({
             <ButtonAddPhoto
               onChange={changeInput}
               placeholder=""
-              // value={ingredientImg}
               type="file"
               name="ingredientImg"
               id="file"
-              accept=".png, .jpg, .jpeg, .gif, .web"
+              accept="image/*"
             ></ButtonAddPhoto>
             {!newPreviewPhoto ? (
               <FaCamera size={40} />

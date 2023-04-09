@@ -1,10 +1,41 @@
-import { ContainerNotificatio } from './Notification.styled';
+import uuid from 'react-uuid';
+// import Loader from 'components/loader/Loader';
 
-const Notification: React.FC = () => {
+import {
+  Container,
+  ContainerNotificatio,
+  TextMessage,
+  NotificationButton,
+} from './Notification.styled';
+
+interface IProps {
+  message: string;
+  buttonSelect: string[];
+  handleClick: any;
+}
+
+const Notification: React.FC<IProps> = ({
+  message,
+  buttonSelect,
+  handleClick,
+}) => {
   return (
-    <ContainerNotificatio>
-      <h1>Notification</h1>
-    </ContainerNotificatio>
+    <Container>
+      <ContainerNotificatio>
+        <TextMessage>{message}</TextMessage>
+        {buttonSelect &&
+          buttonSelect.map(elem => (
+            <NotificationButton
+              type="button"
+              key={uuid()}
+              onClick={handleClick}
+              id={elem}
+            >
+              {elem}
+            </NotificationButton>
+          ))}
+      </ContainerNotificatio>
+    </Container>
   );
 };
 export default Notification;
