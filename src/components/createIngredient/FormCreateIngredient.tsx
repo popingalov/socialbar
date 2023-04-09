@@ -7,6 +7,7 @@ import FormIngridient from './form/formIngridient';
 
 import { useAddIngredientMutation } from '../../redux/api/ingredientApi';
 import Loader from 'components/loader/Loader';
+import PreviewImg from 'components/previewImg/PreviewImg';
 
 import Notification from 'components/notification';
 
@@ -34,36 +35,20 @@ const FormCreateIngredient: React.FC = () => {
     setTextCategory(chooseText);
   };
 
-  const CreatePreviewImg = (addImg: HTMLElement | null, target: string) => {
-    if (!addImg) {
-      const firstImg = document.createElement('img');
-      firstImg.setAttribute('src', `${target}`);
-      firstImg.setAttribute('id', 'old');
-      firstImg.setAttribute('alt', 'preview');
-      document.getElementById('preview-photo')?.appendChild(firstImg);
-    } else {
-      const previewImg = document.createElement('img');
-      previewImg.setAttribute('src', `${target}`);
-      previewImg.setAttribute('id', 'old');
-      previewImg.setAttribute('alt', 'preview');
-      document
-        .getElementById('preview-photo')
-        ?.replaceChild(previewImg, addImg);
-    }
-  };
-
   const handleInputChange = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (!(event.currentTarget instanceof HTMLElement)) return;
-    // Add preview img
+
     const files = (event.target as HTMLInputElement).files;
+    console.log('files', files);
     if (files) {
       const newFile = files[0];
       if (
         newFile.type === 'video/mp4' ||
         newFile.type === 'audio/mpeg' ||
         newFile.type === 'text/plain' ||
-        newFile.type === 'application/json'
+        newFile.type === 'application/json' ||
+        newFile.type === 'application/pdf'
       ) {
         return setShowNotification(true);
       } else {
@@ -71,12 +56,11 @@ const FormCreateIngredient: React.FC = () => {
         reader.onload = function (e: any) {
           const oldImg = document.getElementById('old');
           const value = e.target.result;
-          CreatePreviewImg(oldImg, value);
+          PreviewImg(oldImg, value);
         };
         reader.readAsDataURL(newFile);
       }
     }
-    // --------------
     const { name, value } = event.currentTarget;
     switch (name) {
       case 'ingredientName':

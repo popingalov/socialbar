@@ -22,7 +22,7 @@ interface IProps {
   ingredientImg: string;
   ingredientDescription: string;
   submitForm: any;
-  newPreviewPhoto: any;
+  newPreviewPhoto?: any;
 }
 
 const FormIngridient: React.FC<IProps> = ({

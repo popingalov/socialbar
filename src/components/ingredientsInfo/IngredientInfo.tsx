@@ -33,11 +33,9 @@ import Loader from 'components/loader';
 
 import Notification from 'components/notification';
 
-// import FormCreateIngredient from 'components/createIngredient';
 import FormIngridient from 'components/createIngredient/form/formIngridient';
 import SelectMenu from 'components/createIngredient/select/select';
 import { ContainerCreateIngridient } from 'components/createIngredient/FormCreateIngridient.styled';
-import PreviewImg from 'components/previewImg/PreviewImg';
 
 interface IProps {
   ingredient: IIngredient;
@@ -82,11 +80,8 @@ const IngredientInfo: React.FC<IProps> = ({ ingredient }) => {
   const [showMore, setShowMore] = useState<boolean>(false);
   const [showNotification, setShowNotification] = useState<boolean>(false);
   const [update, setUpdate] = useState<boolean>(true);
-  const [showNotificationPhoto, setShowNotificationPhoto] =
-    useState<boolean>(false);
 
   const [newTitle, setNewTitle] = useState<string>(title);
-  const [newPicture, setNewPicture] = useState<string>(picture);
   const [newCategory, setNewCategory] = useState<string>(category);
   const [newDescription, setNewDescription] = useState<string>(description);
   const [open, setOpen] = useState<boolean>(false);
@@ -104,7 +99,7 @@ const IngredientInfo: React.FC<IProps> = ({ ingredient }) => {
   const showDescription = () => {
     setShowMore(prev => !prev);
   };
-  // ------------------------------
+
   const onClickEdit = (isDefault: boolean) => {
     if (isDefault) {
       setUpdate(false);
@@ -122,43 +117,13 @@ const IngredientInfo: React.FC<IProps> = ({ ingredient }) => {
     setNewCategory(chooseText);
   };
 
-  const clickButtonPhoto = (event: any) => {
-    event.preventDefault();
-    setShowNotificationPhoto(false);
-  };
-
   const handleInputChange = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (!(event.currentTarget instanceof HTMLElement)) return;
-
-    const files = (event.target as HTMLInputElement).files;
-    if (files) {
-      const newFile = files[0];
-      if (
-        newFile.type === 'video/mp4' ||
-        newFile.type === 'audio/mpeg' ||
-        newFile.type === 'text/plain' ||
-        newFile.type === 'application/json'
-      ) {
-        return setShowNotificationPhoto(true);
-      } else {
-        const reader = new FileReader();
-        reader.onload = function (e: any) {
-          const oldImg = document.getElementById('old');
-          const value = e.target.result;
-          PreviewImg(oldImg, value);
-        };
-        reader.readAsDataURL(newFile);
-      }
-    }
 
     const { name, value } = event.currentTarget;
     switch (name) {
       case 'ingredientName':
         setNewTitle(value);
-        break;
-      case 'ingredientImg':
-        setNewPicture(event.currentTarget.files[0]);
         break;
       case 'ingredientDescription':
         setNewDescription(value);
@@ -171,11 +136,6 @@ const IngredientInfo: React.FC<IProps> = ({ ingredient }) => {
     }
   };
 
-  // const clickButtonPhoto = (event: any) => {
-  //   event.preventDefault();
-  //   setShowNotificationPhoto(false);
-  // };
-
   const handleSubmitForm = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const ingredient = new FormData();
@@ -183,21 +143,18 @@ const IngredientInfo: React.FC<IProps> = ({ ingredient }) => {
     ingredient.append('description', newDescription);
     ingredient.append('category', newCategory);
     if (isDefault) {
-      const newIngredient = (await adding(ingredient)) as {
+      (await adding(ingredient)) as {
         data: { id: string };
       };
-      const id: string = newIngredient.data.id;
-      navigate(`/ingredients/${id}`);
+      setUpdate(true);
     } else {
       await UpdateIngredientMutation({
         id,
         respond: ingredient,
       });
     }
-    navigate(`/ingredients/${id}`);
+    setUpdate(true);
   };
-
-  // ----------------------------------------------------------
 
   const toggleCart = (isInShopping: boolean, id: string) => {
     console.log('isInShopping', isInShopping);
@@ -246,7 +203,6 @@ const IngredientInfo: React.FC<IProps> = ({ ingredient }) => {
             ingredientImg={picture}
             ingredientDescription={newDescription}
             submitForm={handleSubmitForm}
-            newPreviewPhoto={newPicture}
           >
             <SelectMenu
               text={newCategory}
@@ -273,20 +229,7 @@ const IngredientInfo: React.FC<IProps> = ({ ingredient }) => {
               gridGap={1}
             >
               <ItemButton>
-                <EditBtn
-                  onClick={() =>
-                    onClickEdit(
-                      update,
-                      // id,
-                      // title,
-                      // picture,
-                      // description,
-                      // isDefault,
-                      // category,
-                    )
-                  }
-                  isUpdate={update}
-                >
+                <EditBtn onClick={() => onClickEdit(update)} isUpdate={update}>
                   <HiPencil size={24} />
                 </EditBtn>
               </ItemButton>
@@ -333,13 +276,6 @@ const IngredientInfo: React.FC<IProps> = ({ ingredient }) => {
               message={`Are you sure you want to remove the ingredient "${title}"? `}
               buttonSelect={['ok', 'no']}
               handleClick={clickButton}
-            />
-          )}
-          {showNotificationPhoto && (
-            <Notification
-              message={'Add correct photo!'}
-              buttonSelect={['ok']}
-              handleClick={clickButtonPhoto}
             />
           )}
         </Box>
