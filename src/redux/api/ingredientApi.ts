@@ -70,17 +70,18 @@ export const ingredientApi = createApi({
       }),
       invalidatesTags: [{ type: TAGS_TYPES.ingredients, id: 'LIST' }],
     }),
-
-    updateIngredient: builder.mutation<IUpdateIngredient, any>({
-      query: ({ id, ...ingredient }) => ({
-        url: `${INGREDIENT_URL}/${id}`,
-        method: 'PUT',
-        body: ingredient,
-      }),
-      invalidatesTags: (result, error, arg) => [
-        { type: TAGS_TYPES.ingredients, id: arg.id },
-      ],
-    }),
+    updateIngredient: builder.mutation<IIngredient, Partial<IUpdateIngredient>>(
+      {
+        query: ({ id, respond }) => ({
+          url: `${INGREDIENT_URL}/${id}`,
+          method: 'PUT',
+          body: respond,
+        }),
+        invalidatesTags: (result, error, arg) => [
+          { type: TAGS_TYPES.ingredients, id: arg.id },
+        ],
+      },
+    ),
 
     deleteIngredient: builder.mutation<IIngredient, string>({
       query: id => ({

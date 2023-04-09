@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router';
-// import { useParams } from 'react-router-dom';
 import Box from 'components/box/Box';
 import { BiChevronUp, BiChevronDown } from 'react-icons/bi';
 import { HiPencil, HiShoppingCart, HiTrash } from 'react-icons/hi';
@@ -27,6 +26,7 @@ import {
 import {
   useDeleteIngredientMutation,
   useUpdateIngredientMutation,
+  useAddIngredientMutation,
 } from 'redux/api/ingredientApi';
 import { IIngredient } from 'types/ingredient';
 import Loader from 'components/loader';
@@ -37,12 +37,11 @@ import Notification from 'components/notification';
 import FormIngridient from 'components/createIngredient/form/formIngridient';
 import SelectMenu from 'components/createIngredient/select/select';
 import { ContainerCreateIngridient } from 'components/createIngredient/FormCreateIngridient.styled';
-import { useAddIngredientMutation } from '../../redux/api/ingredientApi';
+import PreviewImg from 'components/previewImg/PreviewImg';
 
 interface IProps {
   ingredient: IIngredient;
 }
-
 const IngredientInfo: React.FC<IProps> = ({ ingredient }) => {
   const {
     title,
@@ -83,8 +82,8 @@ const IngredientInfo: React.FC<IProps> = ({ ingredient }) => {
   const [showMore, setShowMore] = useState<boolean>(false);
   const [showNotification, setShowNotification] = useState<boolean>(false);
   const [update, setUpdate] = useState<boolean>(true);
-  // const [showNotificationPhoto, setShowNotificationPhoto] =
-  //   useState<boolean>(false);
+  const [showNotificationPhoto, setShowNotificationPhoto] =
+    useState<boolean>(false);
 
   const [newTitle, setNewTitle] = useState<string>(title);
   const [newPicture, setNewPicture] = useState<string>(picture);
@@ -92,7 +91,6 @@ const IngredientInfo: React.FC<IProps> = ({ ingredient }) => {
   const [newDescription, setNewDescription] = useState<string>(description);
   const [open, setOpen] = useState<boolean>(false);
   const [adding] = useAddIngredientMutation();
-  // const { ingredientId } = useParams<string>();
 
   const refComponent = useRef<HTMLParagraphElement>(null);
 
@@ -107,20 +105,10 @@ const IngredientInfo: React.FC<IProps> = ({ ingredient }) => {
     setShowMore(prev => !prev);
   };
   // ------------------------------
-  const onClickEdit = (
-    isUpdate: boolean,
-    id: string,
-    title: string,
-    picture: string,
-    description: string,
-    isDefault: boolean,
-    category: string,
-  ) => {
+  const onClickEdit = (isDefault: boolean) => {
     if (isDefault) {
-      console.log('isDefault false');
       setUpdate(false);
     } else {
-      console.log('isDefault true');
       setUpdate(false);
     }
   };
@@ -134,22 +122,9 @@ const IngredientInfo: React.FC<IProps> = ({ ingredient }) => {
     setNewCategory(chooseText);
   };
 
-  const CreatePreviewImg = (addImg: HTMLElement | null, target: string) => {
-    if (!addImg) {
-      const firstImg = document.createElement('img');
-      firstImg.setAttribute('src', `${target}`);
-      firstImg.setAttribute('id', 'old');
-      firstImg.setAttribute('alt', 'preview');
-      document.getElementById('preview-photo')?.appendChild(firstImg);
-    } else {
-      const previewImg = document.createElement('img');
-      previewImg.setAttribute('src', `${target}`);
-      previewImg.setAttribute('id', 'old');
-      previewImg.setAttribute('alt', 'preview');
-      document
-        .getElementById('preview-photo')
-        ?.replaceChild(previewImg, addImg);
-    }
+  const clickButtonPhoto = (event: any) => {
+    event.preventDefault();
+    setShowNotificationPhoto(false);
   };
 
   const handleInputChange = (event: React.FormEvent<HTMLFormElement>) => {
@@ -165,14 +140,13 @@ const IngredientInfo: React.FC<IProps> = ({ ingredient }) => {
         newFile.type === 'text/plain' ||
         newFile.type === 'application/json'
       ) {
-        // return setShowNotificationPhoto(true);
-        return;
+        return setShowNotificationPhoto(true);
       } else {
         const reader = new FileReader();
         reader.onload = function (e: any) {
           const oldImg = document.getElementById('old');
           const value = e.target.result;
-          CreatePreviewImg(oldImg, value);
+          PreviewImg(oldImg, value);
         };
         reader.readAsDataURL(newFile);
       }
@@ -202,59 +176,27 @@ const IngredientInfo: React.FC<IProps> = ({ ingredient }) => {
   //   setShowNotificationPhoto(false);
   // };
 
-  const updateIngredientHandle = async () => {
-    try {
-      const respond = new FormData();
-      respond.append('title', newTitle);
-      respond.append('description', newDescription);
-      respond.append('picture', newPicture);
-      respond.append('category', newCategory);
-      const newIngredient = (await adding(respond)) as {
+  const handleSubmitForm = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const ingredient = new FormData();
+    ingredient.append('title', newTitle);
+    ingredient.append('description', newDescription);
+    ingredient.append('category', newCategory);
+    if (isDefault) {
+      const newIngredient = (await adding(ingredient)) as {
         data: { id: string };
       };
-      console.log(newIngredient);
       const id: string = newIngredient.data.id;
-      if (!id) {
-        return <Loader isLoading={!id} />;
-      }
       navigate(`/ingredients/${id}`);
-    } catch (error: any) {
-      console.log(error);
-    }
-  };
-
-  const updateCurrentIngredientHandle = async () => {
-    try {
-      const respond: any = new FormData();
-      respond.append('title', newTitle);
-      respond.append('description', newDescription);
-      respond.append('category', newCategory);
-      respond.append('id', id);
-
-      const updateIngredient = await UpdateIngredientMutation({
-        id,
-        ingredient: respond,
-      });
-
-      if (!id) {
-        return <Loader isLoading={!id} />;
-      }
-      // navigate(`/ingredients/${id}`);
-      return updateIngredient;
-    } catch (error: any) {
-      console.log(error);
-    }
-  };
-
-  const handleSubmitForm = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    if (isDefault) {
-      updateIngredientHandle();
-      navigate('/ingredients');
     } else {
-      updateCurrentIngredientHandle();
+      await UpdateIngredientMutation({
+        id,
+        respond: ingredient,
+      });
     }
+    navigate(`/ingredients/${id}`);
   };
+
   // ----------------------------------------------------------
 
   const toggleCart = (isInShopping: boolean, id: string) => {
@@ -335,12 +277,12 @@ const IngredientInfo: React.FC<IProps> = ({ ingredient }) => {
                   onClick={() =>
                     onClickEdit(
                       update,
-                      id,
-                      title,
-                      picture,
-                      description,
-                      isDefault,
-                      category,
+                      // id,
+                      // title,
+                      // picture,
+                      // description,
+                      // isDefault,
+                      // category,
                     )
                   }
                   isUpdate={update}
@@ -393,13 +335,13 @@ const IngredientInfo: React.FC<IProps> = ({ ingredient }) => {
               handleClick={clickButton}
             />
           )}
-          {/* {showNotificationPhoto && (
+          {showNotificationPhoto && (
             <Notification
               message={'Add correct photo!'}
               buttonSelect={['ok']}
               handleClick={clickButtonPhoto}
             />
-          )} */}
+          )}
         </Box>
       )}
     </>
