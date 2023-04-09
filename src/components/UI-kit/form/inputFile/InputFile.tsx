@@ -1,28 +1,41 @@
-import { InputAddPhoto, LabelAddPhoto } from './InputFile.styled';
+import { ErrorText, InputAddPhoto, LabelAddPhoto } from './InputFile.styled';
 import { FaCamera } from 'react-icons/fa';
-import { ChangeEventHandler } from 'react';
 import { theme } from 'constants/theme';
+import { ErrorMessage } from 'formik';
 
 interface IProps {
-  changeInput: ChangeEventHandler<HTMLInputElement>;
   name: string;
   id: string;
 }
 
-const InputFile: React.FC<IProps> = ({ changeInput, name, id }) => {
+const InputFile: React.FC<IProps> = ({ name, id }) => {
   return (
-    <LabelAddPhoto>
+    <label
+      htmlFor={name}
+      style={{ position: 'relative', width: '24px', height: '24px' }}
+    >
       <InputAddPhoto
-        onChange={changeInput}
-        placeholder=""
+        placeholder="image"
         type="file"
         name={name}
         id={id}
         accept=".png, .jpg, .jpeg, .gif, .web"
       />
-      <FaCamera color={theme.colors.secondaryText} />
-    </LabelAddPhoto>
+      <ErrorMessage name={name} component={ErrorText} />
+      <FaCamera
+        name={name}
+        color={theme.colors.secondaryText}
+        style={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          pointerEvents: 'none',
+          width: '20px',
+          height: '20px',
+        }}
+      />
+    </label>
   );
 };
-
 export default InputFile;

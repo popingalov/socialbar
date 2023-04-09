@@ -48,10 +48,10 @@ export const cocktailApi = createApi({
     }),
 
     addCocktail: builder.mutation<ICocktail, Partial<ICocktail>>({
-      query: newIngredient => ({
+      query: newCocktail => ({
         url: `${COCKTAIL_URL}`,
         method: 'POST',
-        body: newIngredient,
+        body: newCocktail,
       }),
       invalidatesTags: [{ type: TAGS_TYPES.cocktails, id: 'LIST' }],
     }),
