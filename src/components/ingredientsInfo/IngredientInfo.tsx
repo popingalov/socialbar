@@ -31,11 +31,9 @@ import {
 import { IIngredient } from 'types/ingredient';
 import Loader from 'components/loader';
 
+import NewIngredientForm from 'components/newIngredientForm/NewIngredientForm';
 import Notification from 'components/notification';
-
-import FormIngridient from 'components/createIngredient/form/formIngridient';
-import SelectMenu from 'components/createIngredient/select/select';
-import { ContainerCreateIngridient } from 'components/createIngredient/FormCreateIngridient.styled';
+import PreviewImg from 'components/previewImg/PreviewImg';
 
 interface IProps {
   ingredient: IIngredient;
@@ -83,6 +81,7 @@ const IngredientInfo: React.FC<IProps> = ({ ingredient }) => {
 
   const [newTitle, setNewTitle] = useState<string>(title);
   const [newCategory, setNewCategory] = useState<string>(category);
+  const [newImg, setNewImg] = useState<string>(picture);
   const [newDescription, setNewDescription] = useState<string>(description);
   const [open, setOpen] = useState<boolean>(false);
   const [adding] = useAddIngredientMutation();
@@ -100,12 +99,8 @@ const IngredientInfo: React.FC<IProps> = ({ ingredient }) => {
     setShowMore(prev => !prev);
   };
 
-  const onClickEdit = (isDefault: boolean) => {
-    if (isDefault) {
-      setUpdate(false);
-    } else {
-      setUpdate(false);
-    }
+  const onClickEdit = () => {
+    setUpdate(false);
   };
 
   const handleShowMenu = () => setOpen(isOpen => !isOpen);
@@ -118,8 +113,29 @@ const IngredientInfo: React.FC<IProps> = ({ ingredient }) => {
   };
 
   const handleInputChange = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
+    if (!(event.currentTarget instanceof HTMLElement)) return;
+    const files = (event.target as HTMLInputElement).files;
+    console.log('files', files);
+    if (files) {
+      const newFile = files[0];
+      if (
+        newFile.type === 'video/mp4' ||
+        newFile.type === 'audio/mpeg' ||
+        newFile.type === 'text/plain' ||
+        newFile.type === 'application/json' ||
+        newFile.type === 'application/pdf'
+      ) {
+        return alert('photo not correct');
+      } else {
+        const reader = new FileReader();
+        reader.onload = function (e: any) {
+          const oldImg = document.getElementById('old');
+          const value = e.target.result;
+          PreviewImg(oldImg, value);
+        };
+        reader.readAsDataURL(newFile);
+      }
+    }
     const { name, value } = event.currentTarget;
     switch (name) {
       case 'ingredientName':
@@ -131,6 +147,9 @@ const IngredientInfo: React.FC<IProps> = ({ ingredient }) => {
       case 'textCategory':
         setNewCategory(value);
         break;
+      case 'ingredientImg':
+        setNewImg(event.currentTarget.files[0]);
+        break;
       default:
         return;
     }
@@ -141,6 +160,7 @@ const IngredientInfo: React.FC<IProps> = ({ ingredient }) => {
     const ingredient = new FormData();
     ingredient.append('title', newTitle);
     ingredient.append('description', newDescription);
+    ingredient.append('picture', newImg);
     ingredient.append('category', newCategory);
     if (isDefault) {
       (await adding(ingredient)) as {
@@ -182,13 +202,12 @@ const IngredientInfo: React.FC<IProps> = ({ ingredient }) => {
   const deleteCard = () => {
     setShowNotification(true);
   };
-  const clickButton = (event: any) => {
-    event.preventDefault();
+  const clickButton = async (event: any) => {
     setShowNotification(false);
     if (event.target.id !== 'ok') {
       return;
     } else {
-      deleteIngredientMutation(id);
+      await deleteIngredientMutation(id);
       navigate('/ingredients');
     }
   };
@@ -196,22 +215,17 @@ const IngredientInfo: React.FC<IProps> = ({ ingredient }) => {
     <>
       <Loader isLoading={isUpdating} />
       {!update ? (
-        <ContainerCreateIngridient>
-          <FormIngridient
-            changeInput={handleInputChange}
-            ingredientName={newTitle}
-            ingredientImg={picture}
-            ingredientDescription={newDescription}
-            submitForm={handleSubmitForm}
-          >
-            <SelectMenu
-              text={newCategory}
-              isMenuOpen={open}
-              clickFunction={handleShowMenu}
-              chooseFunction={handleChoose}
-            />
-          </FormIngridient>
-        </ContainerCreateIngridient>
+        <NewIngredientForm
+          handleInputChange={handleInputChange}
+          ingredientName={newTitle}
+          ingredientImg={newImg}
+          ingredientDescription={newDescription}
+          handleSubmitForm={handleSubmitForm}
+          textCategory={newCategory}
+          open={open}
+          handleShowMenu={handleShowMenu}
+          handleChoose={handleChoose}
+        />
       ) : (
         <Box px={3} py={3} backgroundColor="mainBackgroundColor">
           <Box
@@ -229,7 +243,7 @@ const IngredientInfo: React.FC<IProps> = ({ ingredient }) => {
               gridGap={1}
             >
               <ItemButton>
-                <EditBtn onClick={() => onClickEdit(update)} isUpdate={update}>
+                <EditBtn onClick={onClickEdit} isUpdate={update}>
                   <HiPencil size={24} />
                 </EditBtn>
               </ItemButton>

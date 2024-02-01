@@ -1,13 +1,12 @@
-import { ContainerCreateIngridient } from './FormCreateIngridient.styled';
 import React, { useState } from 'react';
 
 import { useNavigate } from 'react-router';
-import SelectMenu from './select/select';
-import FormIngridient from './form/formIngridient';
 
 import { useAddIngredientMutation } from '../../redux/api/ingredientApi';
 import Loader from 'components/loader/Loader';
 import PreviewImg from 'components/previewImg/PreviewImg';
+
+import NewIngredientForm from 'components/newIngredientForm/NewIngredientForm';
 
 import Notification from 'components/notification';
 
@@ -31,14 +30,12 @@ const FormCreateIngredient: React.FC = () => {
   const handleChoose: React.MouseEventHandler<HTMLLabelElement> = event => {
     if (!(event.target instanceof HTMLElement)) return;
     const chooseText = (event.target as HTMLElement).innerText;
-    setOpen(isOpen => !isOpen);
+    handleShowMenu();
     setTextCategory(chooseText);
   };
 
   const handleInputChange = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
     if (!(event.currentTarget instanceof HTMLElement)) return;
-
     const files = (event.target as HTMLInputElement).files;
     console.log('files', files);
     if (files) {
@@ -80,8 +77,7 @@ const FormCreateIngredient: React.FC = () => {
     }
   };
 
-  const clickButton = (event: any) => {
-    event.preventDefault();
+  const clickButton = () => {
     setShowNotification(false);
   };
 
@@ -107,36 +103,30 @@ const FormCreateIngredient: React.FC = () => {
   const handleSubmitForm = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     addIngredientHandle();
-    reset();
+    // reset();
   };
 
-  const reset = () => {
-    setIngredientName('');
-    setIngredientImg('');
-    setTextCategory('Strong alcohol');
-    setIngredientDescription('');
-  };
+  // const reset = () => {
+  //   setIngredientName('');
+  //   setIngredientImg('');
+  //   setTextCategory('Strong alcohol');
+  //   setIngredientDescription('');
+  // };
 
   return (
     <>
       <Loader isLoading={isAddingIngredient} />
-      <ContainerCreateIngridient>
-        <FormIngridient
-          changeInput={handleInputChange}
-          ingredientName={ingredientName}
-          ingredientImg={ingredientImg}
-          ingredientDescription={ingredientDescription}
-          submitForm={handleSubmitForm}
-          newPreviewPhoto={ingredientImg}
-        >
-          <SelectMenu
-            text={textCategory}
-            isMenuOpen={open}
-            clickFunction={handleShowMenu}
-            chooseFunction={handleChoose}
-          />
-        </FormIngridient>
-      </ContainerCreateIngridient>
+      <NewIngredientForm
+        handleInputChange={handleInputChange}
+        ingredientName={ingredientName}
+        ingredientImg={ingredientImg}
+        ingredientDescription={ingredientDescription}
+        handleSubmitForm={handleSubmitForm}
+        textCategory={textCategory}
+        open={open}
+        handleShowMenu={handleShowMenu}
+        handleChoose={handleChoose}
+      />
       {showNotification && (
         <Notification
           message={'Add correct photo!'}

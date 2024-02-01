@@ -5,7 +5,7 @@ import {
   SelectIcon,
   SelectBody,
   SelectItem,
-} from './select.styled';
+} from './SelectMenu.styled';
 
 import React from 'react';
 
